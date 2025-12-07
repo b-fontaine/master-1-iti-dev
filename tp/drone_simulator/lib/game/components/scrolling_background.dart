@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 
 /// A scrolling background component that creates an infinite tiling effect
 /// based on the rover's velocity, giving the impression of movement.
-class ScrollingBackground extends PositionComponent with HasGameRef {
+class ScrollingBackground extends PositionComponent with HasGameReference {
   late Sprite _backgroundSprite;
   Vector2 _offset = Vector2.zero();
   Vector2 _velocity = Vector2.zero();
@@ -14,7 +14,7 @@ class ScrollingBackground extends PositionComponent with HasGameRef {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    _backgroundSprite = await gameRef.loadSprite('mars_surface.png');
+    _backgroundSprite = await game.loadSprite('mars_surface.png');
     // Set priority to render behind everything
     priority = -10;
   }
@@ -47,7 +47,7 @@ class ScrollingBackground extends PositionComponent with HasGameRef {
   void render(Canvas canvas) {
     super.render(canvas);
 
-    final screenSize = gameRef.size;
+    final screenSize = game.size;
     final spriteWidth = _backgroundSprite.image.width.toDouble();
     final spriteHeight = _backgroundSprite.image.height.toDouble();
 
@@ -73,4 +73,3 @@ class ScrollingBackground extends PositionComponent with HasGameRef {
     }
   }
 }
-
