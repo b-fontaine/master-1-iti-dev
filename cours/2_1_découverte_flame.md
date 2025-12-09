@@ -14,18 +14,21 @@
 
 ### 1.1 Vue d'ensemble du marché de l'industrie du jeu vidéo
 
-L'industrie du jeu vidéo est l'une des industries du divertissement les plus dynamiques et lucratives au monde. En 2025, le marché mondial du jeu vidéo atteint environ **189 milliards de dollars**, avec une croissance continue prévue pour atteindre plus de **530 milliards de dollars d'ici 2030**, soit un taux de croissance annuel composé (CAGR) d'environ 12-13%.
+L'industrie du jeu vidéo est l'une des industries du divertissement les plus dynamiques et lucratives au monde. En 2025,
+le marché mondial du jeu vidéo atteint environ **189 milliards de dollars**, avec une croissance continue prévue pour
+atteindre plus de **530 milliards de dollars d'ici 2030**, soit un taux de croissance annuel composé (CAGR) d'environ
+12-13%.
 
 #### Les principaux acteurs du marché (2025)
 
-| Rang | Entreprise | Revenus estimés | Spécialités |
-|------|------------|-----------------|-------------|
-| 1 | Sony | ~25 milliards $ | PlayStation, studios first-party |
-| 2 | Tencent | ~24 milliards $ | Jeux mobiles, investissements |
-| 3 | Microsoft Gaming | ~22 milliards $ | Xbox, Activision Blizzard |
-| 4 | Nintendo | ~12 milliards $ | Switch, franchises iconiques |
-| 5 | NetEase | ~10 milliards $ | Jeux mobiles, MMO |
-| 6 | Electronic Arts | ~7 milliards $ | Sports, franchises AAA |
+| Rang | Entreprise       | Revenus estimés | Spécialités                      |
+|------|------------------|-----------------|----------------------------------|
+| 1    | Sony             | ~29 milliards $ | PlayStation, studios first-party |
+| 2    | Microsoft Gaming | ~26 milliards $ | Xbox, Activision Blizzard        |
+| 3    | Tencent          | ~25 milliards $ | Jeux mobiles, investissements    |
+| 4    | Nintendo         | ~15 milliards $ | Switch, franchises iconiques     |
+| 5    | NetEase          | ~11 milliards $ | Jeux mobiles, MMO                |
+| 6    | Electronic Arts  | ~7 milliards $  | Sports, franchises AAA           |
 
 #### Tendances actuelles du marché
 
@@ -41,64 +44,64 @@ Le développement d'un jeu vidéo nécessite une équipe pluridisciplinaire. Voi
 
 #### Programmation
 
-| Rôle | Responsabilités | Compétences clés |
-|------|-----------------|------------------|
-| **Programmeur gameplay** | Mécaniques de jeu, contrôles, règles | C++, C#, logique de jeu |
-| **Programmeur moteur** | Optimisation, systèmes bas niveau | C++, architecture système |
-| **Programmeur graphique** | Rendu, shaders, effets visuels | HLSL/GLSL, mathématiques 3D |
-| **Programmeur IA** | Comportements des PNJ, pathfinding | Algorithmes, arbres de décision |
-| **Programmeur réseau** | Multijoueur, synchronisation | Protocoles réseau, sécurité |
-| **Programmeur outils** | Éditeurs, pipelines de production | Python, C#, UX développeur |
+| Rôle                      | Responsabilités                      | Compétences clés                |
+|---------------------------|--------------------------------------|---------------------------------|
+| **Programmeur gameplay**  | Mécaniques de jeu, contrôles, règles | C++, C#, logique de jeu         |
+| **Programmeur moteur**    | Optimisation, systèmes bas niveau    | C++, architecture système       |
+| **Programmeur graphique** | Rendu, shaders, effets visuels       | HLSL/GLSL, mathématiques 3D     |
+| **Programmeur IA**        | Comportements des PNJ, pathfinding   | Algorithmes, arbres de décision |
+| **Programmeur réseau**    | Multijoueur, synchronisation         | Protocoles réseau, sécurité     |
+| **Programmeur outils**    | Éditeurs, pipelines de production    | Python, C#, UX développeur      |
 
 #### Design
 
-| Rôle | Responsabilités | Compétences clés |
-|------|-----------------|------------------|
-| **Game Designer** | Vision globale, mécaniques de jeu | Créativité, documentation |
-| **Level Designer** | Conception des niveaux, flow | Outils d'édition, game feel |
+| Rôle                   | Responsabilités                    | Compétences clés                  |
+|------------------------|------------------------------------|-----------------------------------|
+| **Game Designer**      | Vision globale, mécaniques de jeu  | Créativité, documentation         |
+| **Level Designer**     | Conception des niveaux, flow       | Outils d'édition, game feel       |
 | **Narrative Designer** | Histoire, dialogues, worldbuilding | Écriture, storytelling interactif |
-| **UX Designer** | Interface utilisateur, ergonomie | Psychologie, prototypage |
-| **Systems Designer** | Économie du jeu, progression | Mathématiques, équilibrage |
+| **UX Designer**        | Interface utilisateur, ergonomie   | Psychologie, prototypage          |
+| **Systems Designer**   | Économie du jeu, progression       | Mathématiques, équilibrage        |
 
 #### Art et Audio
 
-| Rôle | Responsabilités | Compétences clés |
-|------|-----------------|------------------|
-| **Concept Artist** | Visuels préliminaires, direction artistique | Dessin, Photoshop |
-| **Artiste 3D** | Modélisation, texturing | Maya, Blender, ZBrush |
-| **Animateur** | Animations de personnages et objets | Animation 2D/3D, rigging |
-| **Technical Artist** | Pont entre art et programmation | Shaders, optimisation |
-| **Sound Designer** | Effets sonores, ambiances | DAW, Wwise, FMOD |
-| **Compositeur** | Musique originale | Composition, orchestration |
+| Rôle                 | Responsabilités                             | Compétences clés           |
+|----------------------|---------------------------------------------|----------------------------|
+| **Concept Artist**   | Visuels préliminaires, direction artistique | Dessin, Photoshop          |
+| **Artiste 3D**       | Modélisation, texturing                     | Maya, Blender, ZBrush      |
+| **Animateur**        | Animations de personnages et objets         | Animation 2D/3D, rigging   |
+| **Technical Artist** | Pont entre art et programmation             | Shaders, optimisation      |
+| **Sound Designer**   | Effets sonores, ambiances                   | DAW, Wwise, FMOD           |
+| **Compositeur**      | Musique originale                           | Composition, orchestration |
 
 #### Production et Management
 
-| Rôle | Responsabilités |
-|------|-----------------|
-| **Producteur** | Gestion de projet, budget, planning |
-| **Chef de projet** | Coordination des équipes, méthodologies agiles |
-| **QA Lead** | Stratégie de test, gestion des bugs |
-| **Community Manager** | Relations avec la communauté |
+| Rôle                  | Responsabilités                                |
+|-----------------------|------------------------------------------------|
+| **Producteur**        | Gestion de projet, budget, planning            |
+| **Chef de projet**    | Coordination des équipes, méthodologies agiles |
+| **QA Lead**           | Stratégie de test, gestion des bugs            |
+| **Community Manager** | Relations avec la communauté                   |
 
 ### 1.3 Parcours éducatifs et compétences requises
 
 #### Formations académiques
 
 1. **Écoles spécialisées jeux vidéo**
-   - ISART Digital, Rubika, Supinfogame (France)
-   - Formation complète couvrant tous les aspects
+    - ISART Digital, Rubika, Supinfogame (France)
+    - Formation complète couvrant tous les aspects
 
 2. **Écoles d'ingénieurs / Informatique**
-   - EPITECH, EPITA, écoles d'ingénieurs généralistes
-   - Solide base technique, spécialisation en autodidacte
+    - EPITECH, EPITA, écoles d'ingénieurs généralistes
+    - Solide base technique, spécialisation en autodidacte
 
 3. **Écoles d'art et design**
-   - Gobelins, EMCA, écoles de beaux-arts
-   - Pour les métiers artistiques du jeu vidéo
+    - Gobelins, EMCA, écoles de beaux-arts
+    - Pour les métiers artistiques du jeu vidéo
 
 4. **Formations universitaires**
-   - Masters en informatique avec spécialisation jeux
-   - Licences professionnelles métiers du jeu vidéo
+    - Masters en informatique avec spécialisation jeux
+    - Licences professionnelles métiers du jeu vidéo
 
 #### Compétences techniques essentielles
 
@@ -128,12 +131,12 @@ Programmeur de jeux vidéo - Compétences fondamentales :
 
 #### Moteurs de jeu populaires
 
-| Moteur | Langage | Points forts | Utilisations typiques |
-|--------|---------|--------------|----------------------|
-| **Unity** | C# | Polyvalent, grande communauté | Mobile, indie, VR |
-| **Unreal Engine** | C++, Blueprints | Graphismes AAA, outils | AAA, simulations |
-| **Godot** | GDScript, C# | Open source, léger | Indie, 2D |
-| **GameMaker** | GML | Accessible, 2D | Jeux 2D, prototypes |
+| Moteur            | Langage         | Points forts                  | Utilisations typiques |
+|-------------------|-----------------|-------------------------------|-----------------------|
+| **Unity**         | C#              | Polyvalent, grande communauté | Mobile, indie, VR     |
+| **Unreal Engine** | C++, Blueprints | Graphismes AAA, outils        | AAA, simulations      |
+| **Godot**         | GDScript, C#    | Open source, léger            | Indie, 2D             |
+| **GameMaker**     | GML             | Accessible, 2D                | Jeux 2D, prototypes   |
 
 #### Outils de production
 
@@ -146,19 +149,19 @@ Programmeur de jeux vidéo - Compétences fondamentales :
 #### Bonnes pratiques
 
 1. **Code propre et maintenable**
-   - Conventions de nommage cohérentes
-   - Documentation du code
-   - Revues de code régulières
+    - Conventions de nommage cohérentes
+    - Documentation du code
+    - Revues de code régulières
 
 2. **Tests**
-   - Tests unitaires pour les systèmes critiques
-   - Tests d'intégration automatisés
-   - Playtests réguliers
+    - Tests unitaires pour les systèmes critiques
+    - Tests d'intégration automatisés
+    - Playtests réguliers
 
 3. **Optimisation**
-   - Profilage régulier (CPU, GPU, mémoire)
-   - Budgets de performance définis
-   - Optimisation ciblée (pas prématurée)
+    - Profilage régulier (CPU, GPU, mémoire)
+    - Budgets de performance définis
+    - Optimisation ciblée (pas prématurée)
 
 ### 1.5 Workflows et méthodologies de développement
 
@@ -214,62 +217,66 @@ L'industrie du jeu vidéo a largement adopté les méthodologies agiles, avec qu
 
 #### Architecture
 
-| Aspect | Jeux vidéo | Applications métier |
-|--------|------------|---------------------|
-| **Boucle principale** | Game loop temps réel (60 FPS) | Event-driven, requête/réponse |
-| **État** | État global complexe, simulation continue | État distribué, transactions |
-| **Rendu** | Rendu graphique chaque frame | Rendu UI à la demande |
-| **Données** | Assets binaires volumineux | Données structurées (SQL, JSON) |
+| Aspect                | Jeux vidéo                                | Applications métier             |
+|-----------------------|-------------------------------------------|---------------------------------|
+| **Boucle principale** | Game loop temps réel (60 FPS)             | Event-driven, requête/réponse   |
+| **État**              | État global complexe, simulation continue | État distribué, transactions    |
+| **Rendu**             | Rendu graphique chaque frame              | Rendu UI à la demande           |
+| **Données**           | Assets binaires volumineux                | Données structurées (SQL, JSON) |
 
 **La Game Loop** est le cœur d'un jeu vidéo :
 
 ```dart
 // Pseudo-code d'une game loop classique
 while (gameIsRunning) {
-  double deltaTime = calculateDeltaTime();
+double deltaTime = calculateDeltaTime();
 
-  processInput();      // Gérer les entrées utilisateur
-  update(deltaTime);   // Mettre à jour la logique du jeu
-  render();            // Dessiner le frame
+processInput(); // Gérer les entrées utilisateur
+update(deltaTime); // Mettre à jour la logique du jeu
+render(); // Dessiner le frame
 
-  // Synchronisation pour maintenir le framerate cible
-  waitForNextFrame();
+// Synchronisation pour maintenir le framerate cible
+waitForNextFrame();
 }
 ```
 
-Cette boucle tourne typiquement **60 fois par seconde** (60 FPS), soit un frame toutes les ~16.67 millisecondes. Chaque frame doit :
+Cette boucle tourne typiquement **60 fois par seconde** (60 FPS), soit un frame toutes les ~16.67 millisecondes. Chaque
+frame doit :
+
 1. Traiter les entrées sans bloquer
 2. Mettre à jour la physique, l'IA, les animations
 3. Rendre la scène complète
 
 #### Exigences de performance
 
-| Métrique | Jeux vidéo | Applications métier |
-|----------|------------|---------------------|
-| **Latence** | < 16ms par frame | < 200ms acceptable |
-| **Mémoire** | Gestion fine, pools | Garbage collection OK |
-| **CPU** | Utilisation maximale | Efficacité énergétique |
-| **GPU** | Critique | Rarement utilisé |
+| Métrique    | Jeux vidéo           | Applications métier    |
+|-------------|----------------------|------------------------|
+| **Latence** | < 16ms par frame     | < 200ms acceptable     |
+| **Mémoire** | Gestion fine, pools  | Garbage collection OK  |
+| **CPU**     | Utilisation maximale | Efficacité énergétique |
+| **GPU**     | Critique             | Rarement utilisé       |
 
 #### Conception de l'expérience utilisateur
 
-| Aspect | Jeux vidéo | Applications métier |
-|--------|------------|---------------------|
-| **Objectif** | Engagement, fun, immersion | Productivité, efficacité |
-| **Feedback** | Immédiat, viscéral | Informatif, clair |
+| Aspect            | Jeux vidéo                               | Applications métier      |
+|-------------------|------------------------------------------|--------------------------|
+| **Objectif**      | Engagement, fun, immersion               | Productivité, efficacité |
+| **Feedback**      | Immédiat, viscéral                       | Informatif, clair        |
 | **Apprentissage** | Tutoriels intégrés, courbe de difficulté | Documentation, formation |
-| **Erreurs** | Partie du gameplay | À éviter absolument |
+| **Erreurs**       | Partie du gameplay                       | À éviter absolument      |
 
 ### 2.2 Similarités en génie logiciel
 
 Malgré leurs différences, les deux domaines partagent des principes fondamentaux :
 
 #### Contrôle de version
+
 - Git est standard dans les deux domaines
 - Branches feature, pull requests, code reviews
 - CI/CD pour l'intégration continue
 
 #### Tests
+
 ```
 Types de tests communs :
 ├── Tests unitaires
@@ -283,7 +290,9 @@ Types de tests communs :
 ```
 
 #### Patterns de conception
+
 Les deux domaines utilisent des patterns similaires :
+
 - **Singleton** : Gestionnaires globaux
 - **Observer** : Systèmes d'événements
 - **Factory** : Création d'objets
@@ -291,6 +300,7 @@ Les deux domaines utilisent des patterns similaires :
 - **Command** : Actions annulables
 
 #### Déploiement
+
 - Pipelines de build automatisés
 - Environnements de staging
 - Déploiement progressif (feature flags)
@@ -298,7 +308,8 @@ Les deux domaines utilisent des patterns similaires :
 
 ### 2.3 Innovations du jeu vidéo influençant le développement logiciel
 
-L'industrie du jeu vidéo a été pionnière dans de nombreuses techniques aujourd'hui utilisées dans le développement logiciel mainstream :
+L'industrie du jeu vidéo a été pionnière dans de nombreuses techniques aujourd'hui utilisées dans le développement
+logiciel mainstream :
 
 #### 1. Rendu temps réel dans les interfaces utilisateur
 
@@ -348,23 +359,25 @@ Avantages :
 ```
 
 Cette approche influence :
+
 - Les architectures de microservices
 - Les bases de données orientées colonnes
 - Les frameworks UI modernes (composition de composants)
 
 #### 4. Techniques d'optimisation
 
-| Technique jeu vidéo | Application moderne |
-|---------------------|---------------------|
-| Object pooling | Réutilisation de connexions DB |
-| Spatial partitioning | Indexation géospatiale |
-| LOD (Level of Detail) | Lazy loading, pagination |
-| Frustum culling | Virtualisation de listes |
-| Delta compression | Sync incrémentale |
+| Technique jeu vidéo   | Application moderne            |
+|-----------------------|--------------------------------|
+| Object pooling        | Réutilisation de connexions DB |
+| Spatial partitioning  | Indexation géospatiale         |
+| LOD (Level of Detail) | Lazy loading, pagination       |
+| Frustum culling       | Virtualisation de listes       |
+| Delta compression     | Sync incrémentale              |
 
 #### 5. Hot Reload
 
 Le hot reload, popularisé par les moteurs de jeu pour itérer rapidement, est maintenant standard :
+
 - **Flutter** : Hot reload en < 1 seconde
 - **React** : Fast Refresh
 - **Webpack** : Hot Module Replacement
@@ -373,21 +386,21 @@ Le hot reload, popularisé par les moteurs de jeu pour itérer rapidement, est m
 
 #### Du jeu vidéo vers les applications
 
-| Concept | Origine jeu vidéo | Application moderne |
-|---------|-------------------|---------------------|
-| Gamification | Mécaniques de jeu | Apps fitness, éducation |
-| Achievements | Systèmes de progression | Badges LinkedIn, Duolingo |
-| Tutoriels interactifs | Onboarding de jeux | UX onboarding apps |
-| Feedback haptique | Retour de force manettes | Vibrations smartphones |
+| Concept               | Origine jeu vidéo        | Application moderne       |
+|-----------------------|--------------------------|---------------------------|
+| Gamification          | Mécaniques de jeu        | Apps fitness, éducation   |
+| Achievements          | Systèmes de progression  | Badges LinkedIn, Duolingo |
+| Tutoriels interactifs | Onboarding de jeux       | UX onboarding apps        |
+| Feedback haptique     | Retour de force manettes | Vibrations smartphones    |
 
 #### Des applications vers les jeux
 
-| Concept | Origine apps | Application jeux |
-|---------|--------------|------------------|
-| Analytics | Business intelligence | Telemetry, A/B testing |
-| Microservices | Architecture cloud | Backend multijoueur |
-| DevOps | Déploiement continu | Live ops, patches |
-| Machine Learning | IA prédictive | IA adaptative, matchmaking |
+| Concept          | Origine apps          | Application jeux           |
+|------------------|-----------------------|----------------------------|
+| Analytics        | Business intelligence | Telemetry, A/B testing     |
+| Microservices    | Architecture cloud    | Backend multijoueur        |
+| DevOps           | Déploiement continu   | Live ops, patches          |
+| Machine Learning | IA prédictive         | IA adaptative, matchmaking |
 
 ---
 
@@ -399,7 +412,8 @@ Pour comprendre Flame, il faut d'abord comprendre comment Flutter dessine à l'�
 
 #### Architecture de rendu de Flutter
 
-Flutter n'utilise pas les widgets natifs de la plateforme (contrairement à React Native). Il dessine **chaque pixel** lui-même, comme un moteur de jeu vidéo.
+Flutter n'utilise pas les widgets natifs de la plateforme (contrairement à React Native). Il dessine **chaque pixel**
+lui-même, comme un moteur de jeu vidéo.
 
 ```
 Architecture en couches de Flutter :
@@ -421,11 +435,13 @@ Architecture en couches de Flutter :
 #### Skia et Impeller : les moteurs graphiques
 
 **Skia** est une bibliothèque graphique 2D open source développée par Google :
+
 - Utilisée par Chrome, Android, et historiquement Flutter
 - Rendu vectoriel haute performance
 - Support multi-plateforme
 
 **Impeller** est le nouveau moteur de rendu de Flutter (par défaut depuis Flutter 3.29 sur iOS et Android) :
+
 - Conçu spécifiquement pour Flutter
 - Pré-compilation des shaders (élimine le "shader jank")
 - Meilleure performance et prévisibilité
@@ -452,6 +468,7 @@ Pipeline de rendu Flutter :
 ```
 
 Chaque frame (idéalement 60 fois par seconde), Flutter :
+
 1. Reconstruit les widgets modifiés
 2. Recalcule le layout si nécessaire
 3. Repeint les zones invalidées
@@ -461,7 +478,8 @@ Chaque frame (idéalement 60 fois par seconde), Flutter :
 
 #### Qu'est-ce qu'un shader ?
 
-Un **shader** est un petit programme qui s'exécute sur le GPU (processeur graphique). Le terme vient de "shade" (ombrer), car ils étaient initialement utilisés pour calculer l'éclairage.
+Un **shader** est un petit programme qui s'exécute sur le GPU (processeur graphique). Le terme vient de "shade" (
+ombrer), car ils étaient initialement utilisés pour calculer l'éclairage.
 
 ```
 Types de shaders :
@@ -481,6 +499,7 @@ Types de shaders :
 #### Pourquoi les shaders sont importants
 
 Les GPUs sont massivement parallèles :
+
 - Un CPU moderne : 8-16 cœurs
 - Un GPU moderne : des milliers de cœurs
 
@@ -502,17 +521,22 @@ Flutter permet d'utiliser des **fragment shaders** personnalisés :
 
 ```dart
 // Chargement d'un shader personnalisé
-final program = await FragmentProgram.fromAsset('shaders/my_effect.frag');
-final shader = program.fragmentShader();
+final program = await
+FragmentProgram.fromAsset
+('shaders/my_effect.frag
+'
+);final shader = program.fragmentShader();
 
 // Utilisation dans un CustomPainter
 canvas.drawRect(
-  rect,
-  Paint()..shader = shader,
+rect,
+Paint()..shader = shader
+,
 );
 ```
 
 Les shaders permettent des effets visuels avancés :
+
 - Effets de flou et de distorsion
 - Transitions personnalisées
 - Effets de particules
@@ -533,6 +557,7 @@ App → Framework → Moteur de rendu → GPU directement
 ```
 
 Avantages :
+
 - Comportement identique sur toutes les plateformes
 - Pas de limitations des widgets natifs
 - Performance prévisible
@@ -597,7 +622,8 @@ void frameCallback(Duration timestamp) {
 
 ### 3.4 Qu'est-ce que Flame ?
 
-**Flame** est un moteur de jeu 2D open source construit sur Flutter. Il étend les capacités de Flutter pour faciliter le développement de jeux.
+**Flame** est un moteur de jeu 2D open source construit sur Flutter. Il étend les capacités de Flutter pour faciliter le
+développement de jeux.
 
 #### Objectif de Flame
 
@@ -658,6 +684,7 @@ class MyGame extends FlameGame {
 ```
 
 Le paramètre `dt` (delta time) est crucial :
+
 - Représente le temps écoulé depuis le dernier frame
 - Permet un mouvement indépendant du framerate
 - Typiquement ~0.016 secondes à 60 FPS
@@ -781,8 +808,8 @@ class AnimatedCharacter extends SpriteAnimationComponent {
     animation = await SpriteAnimation.load(
       'character_run.png',
       SpriteAnimationData.sequenced(
-        amount: 8,        // Nombre de frames
-        stepTime: 0.1,    // Durée de chaque frame
+        amount: 8, // Nombre de frames
+        stepTime: 0.1, // Durée de chaque frame
         textureSize: Vector2(32, 32),
       ),
     );
@@ -809,17 +836,17 @@ enum PlayerState { idle, run, jump }
 
 #### Comparaison avec d'autres moteurs
 
-| Critère | Flame | Unity | Godot | Unreal Engine |
-|---------|-------|-------|-------|---------------|
-| **Langage** | Dart | C# | GDScript, C# | C++, Blueprints |
-| **Type** | 2D principalement | 2D et 3D | 2D et 3D | 3D principalement |
-| **Licence** | MIT (gratuit) | Gratuit + royalties | MIT (gratuit) | Royalties > 1M$ |
-| **Taille build** | Très léger | Moyen | Léger | Lourd |
-| **Courbe d'apprentissage** | Facile (si Flutter connu) | Moyenne | Facile | Difficile |
-| **Écosystème** | Flutter packages | Asset Store énorme | Croissant | Marketplace |
-| **Plateformes** | Mobile, Web, Desktop | Toutes | Toutes | Toutes |
-| **3D** | Limité | Excellent | Bon | Excellent |
-| **Éditeur visuel** | Non (code only) | Oui | Oui | Oui |
+| Critère                    | Flame                     | Unity               | Godot         | Unreal Engine     |
+|----------------------------|---------------------------|---------------------|---------------|-------------------|
+| **Langage**                | Dart                      | C#                  | GDScript, C#  | C++, Blueprints   |
+| **Type**                   | 2D principalement         | 2D et 3D            | 2D et 3D      | 3D principalement |
+| **Licence**                | MIT (gratuit)             | Gratuit + royalties | MIT (gratuit) | Royalties > 1M$   |
+| **Taille build**           | Très léger                | Moyen               | Léger         | Lourd             |
+| **Courbe d'apprentissage** | Facile (si Flutter connu) | Moyenne             | Facile        | Difficile         |
+| **Écosystème**             | Flutter packages          | Asset Store énorme  | Croissant     | Marketplace       |
+| **Plateformes**            | Mobile, Web, Desktop      | Toutes              | Toutes        | Toutes            |
+| **3D**                     | Limité                    | Excellent           | Bon           | Excellent         |
+| **Éditeur visuel**         | Non (code only)           | Oui                 | Oui           | Oui               |
 
 #### Forces de Flame
 
@@ -848,16 +875,16 @@ enum PlayerState { idle, run, jump }
    ```
 
 2. **Hot reload pour le développement**
-   - Itération rapide comme pour les apps Flutter
-   - Voir les changements instantanément
+    - Itération rapide comme pour les apps Flutter
+    - Voir les changements instantanément
 
 3. **Écosystème de packages Flutter**
-   - Accès à tous les packages pub.dev
-   - Intégration facile avec Firebase, ads, analytics
+    - Accès à tous les packages pub.dev
+    - Intégration facile avec Firebase, ads, analytics
 
 4. **Déploiement multi-plateforme**
-   - Un seul code pour iOS, Android, Web, Desktop
-   - Même comportement partout
+    - Un seul code pour iOS, Android, Web, Desktop
+    - Même comportement partout
 
 #### Packages complémentaires de Flame
 
@@ -883,17 +910,18 @@ enum PlayerState { idle, run, jump }
 
 #### Quand utiliser Flame ✅
 
-| Cas d'utilisation | Pourquoi Flame est adapté |
-|-------------------|---------------------------|
-| **Jeux casual 2D** | Léger, rapide à développer |
-| **Jeux mobiles simples** | Excellent support mobile |
-| **Prototypes** | Hot reload, itération rapide |
-| **Jeux avec UI complexe** | Intégration Flutter native |
-| **Apps gamifiées** | Mélange app/jeu facile |
-| **Jeux éducatifs** | Simple à maintenir |
-| **Équipe Flutter existante** | Pas de nouveau langage |
+| Cas d'utilisation            | Pourquoi Flame est adapté    |
+|------------------------------|------------------------------|
+| **Jeux casual 2D**           | Léger, rapide à développer   |
+| **Jeux mobiles simples**     | Excellent support mobile     |
+| **Prototypes**               | Hot reload, itération rapide |
+| **Jeux avec UI complexe**    | Intégration Flutter native   |
+| **Apps gamifiées**           | Mélange app/jeu facile       |
+| **Jeux éducatifs**           | Simple à maintenir           |
+| **Équipe Flutter existante** | Pas de nouveau langage       |
 
 **Exemples de jeux adaptés à Flame :**
+
 - Puzzle games (Tetris, Candy Crush-like)
 - Platformers 2D simples
 - Jeux de cartes
@@ -904,16 +932,17 @@ enum PlayerState { idle, run, jump }
 
 #### Quand préférer un moteur traditionnel ❌
 
-| Cas d'utilisation | Pourquoi un autre moteur |
-|-------------------|--------------------------|
-| **Jeux 3D** | Flame est principalement 2D |
-| **Jeux AAA** | Manque d'outils avancés |
-| **Physique complexe** | Moteurs physiques plus matures |
-| **Grands mondes ouverts** | Optimisations spécifiques nécessaires |
-| **Équipe de game designers** | Pas d'éditeur visuel |
-| **Assets marketplace** | Écosystème plus petit |
+| Cas d'utilisation            | Pourquoi un autre moteur              |
+|------------------------------|---------------------------------------|
+| **Jeux 3D**                  | Flame est principalement 2D           |
+| **Jeux AAA**                 | Manque d'outils avancés               |
+| **Physique complexe**        | Moteurs physiques plus matures        |
+| **Grands mondes ouverts**    | Optimisations spécifiques nécessaires |
+| **Équipe de game designers** | Pas d'éditeur visuel                  |
+| **Assets marketplace**       | Écosystème plus petit                 |
 
 **Pour ces cas, préférer :**
+
 - **Unity** : Polyvalent, énorme communauté, 2D et 3D
 - **Godot** : Open source, léger, excellent pour l'indie
 - **Unreal Engine** : AAA, graphismes de pointe
@@ -1061,9 +1090,13 @@ class Player extends SpriteAnimationComponent
 
 ## Conclusion
 
-Le développement de jeux vidéo est un domaine fascinant qui combine créativité artistique et excellence technique. L'industrie continue de croître et d'innover, influençant de nombreux autres domaines du développement logiciel.
+Le développement de jeux vidéo est un domaine fascinant qui combine créativité artistique et excellence technique.
+L'industrie continue de croître et d'innover, influençant de nombreux autres domaines du développement logiciel.
 
-Flutter Flame représente une approche moderne et accessible pour créer des jeux 2D, particulièrement adaptée aux développeurs Flutter souhaitant explorer le game development. Bien qu'il ne remplace pas les moteurs de jeu traditionnels pour les projets complexes, il offre un excellent point d'entrée et une solution efficace pour de nombreux types de jeux.
+Flutter Flame représente une approche moderne et accessible pour créer des jeux 2D, particulièrement adaptée aux
+développeurs Flutter souhaitant explorer le game development. Bien qu'il ne remplace pas les moteurs de jeu
+traditionnels pour les projets complexes, il offre un excellent point d'entrée et une solution efficace pour de nombreux
+types de jeux.
 
 ### Points clés à retenir
 
@@ -1071,7 +1104,8 @@ Flutter Flame représente une approche moderne et accessible pour créer des jeu
 2. **Les paradigmes du jeu vidéo** (game loop, ECS, rendu temps réel) ont influencé le développement logiciel moderne
 3. **Flutter** utilise une architecture de rendu inspirée des jeux vidéo
 4. **Flame** étend Flutter avec des outils spécifiques aux jeux (composants, collisions, sprites, audio)
-5. **Choisir le bon outil** dépend du projet : Flame pour les jeux 2D simples/moyens, Unity/Godot/Unreal pour les projets plus ambitieux
+5. **Choisir le bon outil** dépend du projet : Flame pour les jeux 2D simples/moyens, Unity/Godot/Unreal pour les
+   projets plus ambitieux
 
 ### Ressources pour aller plus loin
 
@@ -1080,4 +1114,5 @@ Flutter Flame représente une approche moderne et accessible pour créer des jeu
 - [Tutoriels Flame sur flame-engine.org](https://docs.flame-engine.org/latest/tutorials/tutorials.html)
 - [Game Programming Patterns](https://gameprogrammingpatterns.com/) - Livre gratuit en ligne
 - [Awesome Flame](https://github.com/flame-engine/awesome-flame) - Collection de ressources
+
 ```
