@@ -1849,3 +1849,5 @@ bugfix-1                                     ●───●──────�
 ```
 
 ---
+# Cheat Sheet Git
+![](./images/git_cheat_sheet.png)

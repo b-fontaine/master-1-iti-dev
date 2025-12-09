@@ -1,5 +1,7 @@
 # Développement de Jeux Vidéo et Introduction à Flutter Flame
 
+![](./images/convergeance_gaming_modern_apps.png)
+
 ## Table des matières
 
 1. [Introduction au développement de jeux vidéo](#1-introduction-au-développement-de-jeux-vidéo)
