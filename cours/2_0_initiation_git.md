@@ -90,17 +90,18 @@ rlog fichier.c     # Afficher l'historique
 
 **Architecture CVS :**
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    SERVEUR CENTRAL                          │
-│                    (Dépôt CVS)                              │
-└─────────────────────────────────────────────────────────────┘
-         ↑              ↑              ↑              ↑
-         │              │              │              │
-    ┌────┴────┐    ┌────┴────┐    ┌────┴────┐    ┌────┴────┐
-    │ Dev 1   │    │ Dev 2   │    │ Dev 3   │    │ Dev 4   │
-    │ (copie) │    │ (copie) │    │ (copie) │    │ (copie) │
-    └─────────┘    └─────────┘    └─────────┘    └─────────┘
+```mermaid
+graph TD
+    Server["SERVEUR CENTRAL<br/>(Dépôt CVS)"]
+    Dev1["Dev 1<br/>(copie)"]
+    Dev2["Dev 2<br/>(copie)"]
+    Dev3["Dev 3<br/>(copie)"]
+    Dev4["Dev 4<br/>(copie)"]
+
+    Dev1 <--> Server
+    Dev2 <--> Server
+    Dev3 <--> Server
+    Dev4 <--> Server
 ```
 
 **Limitations de CVS :**
@@ -154,17 +155,19 @@ Les **VCS distribués (DVCS)** représentent un changement fondamental : chaque 
 
 **Architecture DVCS :**
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    DÉPÔT DISTANT                            │
-│                    (GitHub, GitLab...)                      │
-└─────────────────────────────────────────────────────────────┘
-         ↑↓             ↑↓             ↑↓             ↑↓
-    ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐
-    │ Dev 1   │    │ Dev 2   │    │ Dev 3   │    │ Dev 4   │
-    │ (clone  │←──→│ (clone  │    │ (clone  │    │ (clone  │
-    │ complet)│    │ complet)│    │ complet)│    │ complet)│
-    └─────────┘    └─────────┘    └─────────┘    └─────────┘
+```mermaid
+graph TD
+    Remote["DÉPÔT DISTANT<br/>(GitHub, GitLab...)"]
+    Dev1["Dev 1<br/>(clone complet)"]
+    Dev2["Dev 2<br/>(clone complet)"]
+    Dev3["Dev 3<br/>(clone complet)"]
+    Dev4["Dev 4<br/>(clone complet)"]
+
+    Dev1 <--> Remote
+    Dev2 <--> Remote
+    Dev3 <--> Remote
+    Dev4 <--> Remote
+    Dev1 <--> Dev2
 ```
 
 #### Les principaux DVCS
@@ -205,18 +208,20 @@ Les **VCS distribués (DVCS)** représentent un changement fondamental : chaque 
 
 #### Chronologie synthétique
 
-```
-1972 ─── SCCS (Bell Labs) - Premier VCS
-1982 ─── RCS (Purdue) - Amélioration de SCCS
-1986 ─── CVS - Premier VCS concurrent
-1994 ─── CVS devient open source
-2000 ─── Subversion (SVN) - Successeur de CVS
-2000 ─── BitKeeper - Premier DVCS populaire
-2005 ─── Git et Mercurial - DVCS open source
-2008 ─── GitHub - Hébergement Git en ligne
-2011 ─── GitLab - Alternative open source
-2018 ─── Microsoft rachète GitHub
-2024 ─── Git domine avec >95% de parts de marché
+```mermaid
+timeline
+    title Évolution des systèmes de gestion de versions
+    1972 : SCCS (Bell Labs) - Premier VCS
+    1982 : RCS (Purdue) - Amélioration de SCCS
+    1986 : CVS - Premier VCS concurrent
+    1994 : CVS devient open source
+    2000 : Subversion (SVN) - Successeur de CVS
+         : BitKeeper - Premier DVCS populaire
+    2005 : Git et Mercurial - DVCS open source
+    2008 : GitHub - Hébergement Git en ligne
+    2011 : GitLab - Alternative open source
+    2018 : Microsoft rachète GitHub
+    2024 : Git domine avec >95% de parts de marché
 ```
 
 ---
@@ -350,31 +355,22 @@ Linus Torvalds décide de créer son propre outil. Ses critères :
 
 Git organise votre travail en **trois zones distinctes** :
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    WORKING DIRECTORY                        │
-│                 (Répertoire de travail)                     │
-│                                                             │
-│  Vos fichiers tels que vous les voyez et les modifiez      │
-└─────────────────────────────────────────────────────────────┘
-                           │
-                           │ git add
-                           ↓
-┌─────────────────────────────────────────────────────────────┐
-│                     STAGING AREA                            │
-│                   (Zone de transit / Index)                 │
-│                                                             │
-│  Préparation du prochain commit                             │
-└─────────────────────────────────────────────────────────────┘
-                           │
-                           │ git commit
-                           ↓
-┌─────────────────────────────────────────────────────────────┐
-│                      REPOSITORY                             │
-│                   (Dépôt / .git)                            │
-│                                                             │
-│  Historique complet des commits                             │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph WD["WORKING DIRECTORY<br/>(Répertoire de travail)"]
+        WD_desc["Vos fichiers tels que vous les voyez et les modifiez"]
+    end
+
+    subgraph SA["STAGING AREA<br/>(Zone de transit / Index)"]
+        SA_desc["Préparation du prochain commit"]
+    end
+
+    subgraph REPO["REPOSITORY<br/>(Dépôt / .git)"]
+        REPO_desc["Historique complet des commits"]
+    end
+
+    WD -->|"git add"| SA
+    SA -->|"git commit"| REPO
 ```
 
 **1. Working Directory (Répertoire de travail)** :
@@ -401,14 +397,14 @@ Git stocke tout sous forme de **quatre types d'objets**, identifiés par leur **
 
 Un **blob** représente le **contenu d'un fichier** :
 
-```
-┌─────────────────────────────────────┐
-│              BLOB                   │
-│  SHA-1: a1b2c3d4e5...               │
-│                                     │
-│  Contenu brut du fichier            │
-│  (sans nom, sans métadonnées)       │
-└─────────────────────────────────────┘
+```mermaid
+classDiagram
+    class BLOB {
+        SHA-1: a1b2c3d4e5...
+        ---
+        Contenu brut du fichier
+        Sans nom, sans métadonnées
+    }
 ```
 
 **Caractéristiques :**
@@ -420,15 +416,15 @@ Un **blob** représente le **contenu d'un fichier** :
 
 Un **tree** représente un **répertoire** :
 
-```
-┌─────────────────────────────────────┐
-│              TREE                   │
-│  SHA-1: f6g7h8i9j0...               │
-│                                     │
-│  100644 blob a1b2c3... README.md    │
-│  100644 blob d4e5f6... main.py      │
-│  040000 tree k1l2m3... src/         │
-└─────────────────────────────────────┘
+```mermaid
+classDiagram
+    class TREE {
+        SHA-1: f6g7h8i9j0...
+        ---
+        100644 blob a1b2c3... README.md
+        100644 blob d4e5f6... main.py
+        040000 tree k1l2m3... src/
+    }
 ```
 
 **Contenu d'un tree :**
@@ -441,19 +437,19 @@ Un **tree** représente un **répertoire** :
 
 Un **commit** est un **instantané** du projet à un moment donné :
 
-```
-┌─────────────────────────────────────┐
-│             COMMIT                  │
-│  SHA-1: n4o5p6q7r8...               │
-│                                     │
-│  tree f6g7h8i9j0...                 │
-│  parent s9t0u1v2w3...               │
-│  author Alice <alice@ex.com>        │
-│  committer Alice <alice@ex.com>     │
-│  date 2024-01-15 10:30:00           │
-│                                     │
-│  Message de commit                  │
-└─────────────────────────────────────┘
+```mermaid
+classDiagram
+    class COMMIT {
+        SHA-1: n4o5p6q7r8...
+        ---
+        tree f6g7h8i9j0...
+        parent s9t0u1v2w3...
+        author Alice alice@ex.com
+        committer Alice alice@ex.com
+        date 2024-01-15 10:30:00
+        ---
+        Message de commit
+    }
 ```
 
 **Contenu d'un commit :**
@@ -467,18 +463,18 @@ Un **commit** est un **instantané** du projet à un moment donné :
 
 Un **tag** est une **référence nommée** vers un commit :
 
-```
-┌─────────────────────────────────────┐
-│              TAG                    │
-│  SHA-1: x3y4z5a6b7...               │
-│                                     │
-│  object n4o5p6q7r8... (commit)      │
-│  type commit                        │
-│  tag v1.0.0                         │
-│  tagger Bob <bob@example.com>       │
-│                                     │
-│  Release version 1.0.0              │
-└─────────────────────────────────────┘
+```mermaid
+classDiagram
+    class TAG {
+        SHA-1: x3y4z5a6b7...
+        ---
+        object n4o5p6q7r8... (commit)
+        type commit
+        tag v1.0.0
+        tagger Bob bob@example.com
+        ---
+        Release version 1.0.0
+    }
 ```
 
 **Types de tags :**
@@ -501,33 +497,20 @@ mon-projet/
 
 **Structure des objets Git :**
 
-```
-                    ┌─────────────┐
-                    │   COMMIT    │
-                    │  abc123...  │
-                    └──────┬──────┘
-                           │
-                           ↓
-                    ┌─────────────┐
-                    │    TREE     │
-                    │  (racine)   │
-                    │  def456...  │
-                    └──────┬──────┘
-                           │
-          ┌────────────────┼────────────────┐
-          ↓                ↓                ↓
-    ┌───────────┐    ┌───────────┐    ┌───────────┐
-    │   BLOB    │    │   BLOB    │    │   TREE    │
-    │ README.md │    │  main.py  │    │   src/    │
-    │ 789abc... │    │ 012def... │    │ 345ghi... │
-    └───────────┘    └───────────┘    └─────┬─────┘
-                                            │
-                                            ↓
-                                      ┌───────────┐
-                                      │   BLOB    │
-                                      │ utils.py  │
-                                      │ 678jkl... │
-                                      └───────────┘
+```mermaid
+graph TD
+    COMMIT["COMMIT<br/>abc123..."]
+    TREE_ROOT["TREE<br/>(racine)<br/>def456..."]
+    BLOB_README["BLOB<br/>README.md<br/>789abc..."]
+    BLOB_MAIN["BLOB<br/>main.py<br/>012def..."]
+    TREE_SRC["TREE<br/>src/<br/>345ghi..."]
+    BLOB_UTILS["BLOB<br/>utils.py<br/>678jkl..."]
+
+    COMMIT --> TREE_ROOT
+    TREE_ROOT --> BLOB_README
+    TREE_ROOT --> BLOB_MAIN
+    TREE_ROOT --> TREE_SRC
+    TREE_SRC --> BLOB_UTILS
 ```
 
 ### 3.4 Branches et HEAD
@@ -536,16 +519,11 @@ mon-projet/
 
 Une **branche** est simplement un **pointeur mobile** vers un commit :
 
-```
-                    ┌─────────────┐
-                    │    main     │ ← branche (pointeur)
-                    └──────┬──────┘
-                           │
-                           ↓
-    ┌────────┐    ┌────────┐    ┌────────┐
-    │ Commit │───→│ Commit │───→│ Commit │
-    │   A    │    │   B    │    │   C    │
-    └────────┘    └────────┘    └────────┘
+```mermaid
+gitGraph
+    commit id: "A"
+    commit id: "B"
+    commit id: "C"
 ```
 
 **Caractéristiques :**
@@ -557,47 +535,26 @@ Une **branche** est simplement un **pointeur mobile** vers un commit :
 
 **HEAD** indique **où vous êtes** dans l'historique :
 
-```
-                              HEAD
-                                │
-                                ↓
-                    ┌─────────────┐
-                    │    main     │
-                    └──────┬──────┘
-                           │
-                           ↓
-    ┌────────┐    ┌────────┐    ┌────────┐
-    │ Commit │───→│ Commit │───→│ Commit │
-    │   A    │    │   B    │    │   C    │
-    └────────┘    └────────┘    └────────┘
+```mermaid
+gitGraph
+    commit id: "A"
+    commit id: "B"
+    commit id: "C" tag: "HEAD → main"
 ```
 
 **HEAD pointe généralement vers une branche**, qui elle-même pointe vers un commit.
 
 #### Branches multiples
 
-```
-                              HEAD
-                                │
-                                ↓
-                    ┌─────────────┐
-                    │   feature   │
-                    └──────┬──────┘
-                           │
-                           ↓
-                         ┌────────┐
-                         │ Commit │
-                         │   D    │
-                         └────┬───┘
-                              │
-    ┌────────┐    ┌────────┐  │  ┌────────┐
-    │ Commit │───→│ Commit │──┴─→│ Commit │
-    │   A    │    │   B    │     │   C    │
-    └────────┘    └────────┘     └────┬───┘
-                                      │
-                              ┌───────┴───────┐
-                              │     main      │
-                              └───────────────┘
+```mermaid
+gitGraph
+    commit id: "A"
+    commit id: "B"
+    branch feature
+    checkout main
+    commit id: "C"
+    checkout feature
+    commit id: "D" tag: "HEAD → feature"
 ```
 
 ### 3.5 Snapshots vs Deltas
@@ -606,12 +563,14 @@ Une **branche** est simplement un **pointeur mobile** vers un commit :
 
 Les VCS traditionnels (CVS, SVN) stockent les **différences** entre versions :
 
-```
-Version 1 ──→ Delta 1-2 ──→ Delta 2-3 ──→ Delta 3-4
-   │              │              │              │
-   ↓              ↓              ↓              ↓
-Fichier A    +3 lignes     -1 ligne      +5 lignes
-complet      +2 lignes     +4 lignes     -2 lignes
+```mermaid
+flowchart LR
+    V1["Version 1<br/>Fichier A complet"]
+    D12["Delta 1-2<br/>+3 lignes<br/>+2 lignes"]
+    D23["Delta 2-3<br/>-1 ligne<br/>+4 lignes"]
+    D34["Delta 3-4<br/>+5 lignes<br/>-2 lignes"]
+
+    V1 --> D12 --> D23 --> D34
 ```
 
 **Inconvénients :**
@@ -622,15 +581,30 @@ complet      +2 lignes     +4 lignes     -2 lignes
 
 Git stocke des **instantanés complets** (snapshots) :
 
-```
-Commit 1        Commit 2        Commit 3        Commit 4
-    │               │               │               │
-    ↓               ↓               ↓               ↓
-┌───────┐       ┌───────┐       ┌───────┐       ┌───────┐
-│ A (v1)│       │ A (v1)│       │ A (v2)│       │ A (v2)│
-│ B (v1)│       │ B (v2)│       │ B (v2)│       │ B (v3)│
-│ C (v1)│       │ C (v1)│       │ C (v1)│       │ C (v1)│
-└───────┘       └───────┘       └───────┘       └───────┘
+```mermaid
+flowchart LR
+    subgraph C1["Commit 1"]
+        C1A["A (v1)"]
+        C1B["B (v1)"]
+        C1C["C (v1)"]
+    end
+    subgraph C2["Commit 2"]
+        C2A["A (v1)"]
+        C2B["B (v2)"]
+        C2C["C (v1)"]
+    end
+    subgraph C3["Commit 3"]
+        C3A["A (v2)"]
+        C3B["B (v2)"]
+        C3C["C (v1)"]
+    end
+    subgraph C4["Commit 4"]
+        C4A["A (v2)"]
+        C4B["B (v3)"]
+        C4C["C (v1)"]
+    end
+
+    C1 --> C2 --> C3 --> C4
 ```
 
 **Optimisation :** Git ne duplique pas les fichiers inchangés, il réutilise les blobs existants.
@@ -859,19 +833,38 @@ git merge --abort
 
 **Visualisation des types de merge :**
 
+*AVANT :*
+```mermaid
+gitGraph
+    commit id: "A"
+    commit id: "B"
+    commit id: "C"
+    branch feature
+    commit id: "D"
+    commit id: "E"
 ```
-AVANT :
-main:     A ── B ── C
-                     \
-feature:              D ── E
 
-APRÈS (fast-forward) :
-main:     A ── B ── C ── D ── E
+*APRÈS (fast-forward) :*
+```mermaid
+gitGraph
+    commit id: "A"
+    commit id: "B"
+    commit id: "C"
+    commit id: "D"
+    commit id: "E"
+```
 
-APRÈS (no-ff) :
-main:     A ── B ── C ────────── M (merge commit)
-                     \         /
-feature:              D ── E ─┘
+*APRÈS (no-ff) :*
+```mermaid
+gitGraph
+    commit id: "A"
+    commit id: "B"
+    commit id: "C"
+    branch feature
+    commit id: "D"
+    commit id: "E"
+    checkout main
+    merge feature id: "M" tag: "merge commit"
 ```
 
 #### Rebaser
@@ -893,16 +886,27 @@ git rebase --continue
 
 **Visualisation du rebase :**
 
+*AVANT :*
+```mermaid
+gitGraph
+    commit id: "A"
+    commit id: "B"
+    branch feature
+    commit id: "D"
+    commit id: "E"
+    checkout main
+    commit id: "C"
 ```
-AVANT :
-main:     A ── B ── C
-                \
-feature:         D ── E
 
-APRÈS rebase :
-main:     A ── B ── C
-                     \
-feature:              D' ── E'
+*APRÈS rebase :*
+```mermaid
+gitGraph
+    commit id: "A"
+    commit id: "B"
+    commit id: "C"
+    branch feature
+    commit id: "D'"
+    commit id: "E'"
 ```
 
 ### 4.4 Historique et inspection
@@ -1238,18 +1242,12 @@ Un **repository** (ou "repo") est un projet hébergé sur GitHub.
 
 Un **fork** est une **copie personnelle** d'un dépôt d'un autre utilisateur.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│              DÉPÔT ORIGINAL                                 │
-│         user-original/projet                                │
-└─────────────────────────────────────────────────────────────┘
-                           │
-                           │ Fork
-                           ↓
-┌─────────────────────────────────────────────────────────────┐
-│              VOTRE FORK                                     │
-│         votre-username/projet                               │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    Original["DÉPÔT ORIGINAL<br/>user-original/projet"]
+    Fork["VOTRE FORK<br/>votre-username/projet"]
+
+    Original -->|"Fork"| Fork
 ```
 
 **Utilité :**
@@ -1263,15 +1261,15 @@ Une **Pull Request** est une **demande de fusion** de vos modifications dans un 
 
 **Workflow typique :**
 
-```
-1. Fork du projet
-2. Clone de votre fork
-3. Création d'une branche
-4. Modifications et commits
-5. Push vers votre fork
-6. Création de la Pull Request
-7. Revue de code
-8. Merge (si approuvé)
+```mermaid
+flowchart TD
+    A["1. Fork du projet"] --> B["2. Clone de votre fork"]
+    B --> C["3. Création d'une branche"]
+    C --> D["4. Modifications et commits"]
+    D --> E["5. Push vers votre fork"]
+    E --> F["6. Création de la Pull Request"]
+    F --> G["7. Revue de code"]
+    G --> H["8. Merge (si approuvé)"]
 ```
 
 **Éléments d'une PR :**
@@ -1359,25 +1357,16 @@ git push
 
 #### Diagramme du workflow
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    DÉPÔT ORIGINAL                           │
-│                  (upstream/main)                            │
-└─────────────────────────────────────────────────────────────┘
-         ↑                                    │
-         │ Pull Request                       │ Fork
-         │                                    ↓
-┌─────────────────────────────────────────────────────────────┐
-│                    VOTRE FORK                               │
-│                  (origin/main)                              │
-└─────────────────────────────────────────────────────────────┘
-         ↑                                    │
-         │ Push                               │ Clone
-         │                                    ↓
-┌─────────────────────────────────────────────────────────────┐
-│                    LOCAL                                    │
-│              (votre ordinateur)                             │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    Upstream["DÉPÔT ORIGINAL<br/>(upstream/main)"]
+    Origin["VOTRE FORK<br/>(origin/main)"]
+    Local["LOCAL<br/>(votre ordinateur)"]
+
+    Upstream -->|"Fork"| Origin
+    Origin -->|"Clone"| Local
+    Local -->|"Push"| Origin
+    Origin -->|"Pull Request"| Upstream
 ```
 
 ### 5.4 GitHub Actions
@@ -1806,46 +1795,63 @@ git rebase --continue
 
 ### Workflow Git Flow
 
-```
-main        ─────●─────────────────────●─────────────────●─────
-                 │                     ↑                 ↑
-                 │                     │                 │
-develop     ─────●───●───●───●───●─────●───●───●───●─────●─────
-                     │       ↑         │       ↑
-                     │       │         │       │
-feature/A            ●───●───┘         │       │
-                                       │       │
-feature/B                              ●───●───┘
+```mermaid
+gitGraph
+    commit id: "init"
+    branch develop
+    commit id: "dev1"
+    branch feature/A
+    commit id: "A1"
+    commit id: "A2"
+    checkout develop
+    merge feature/A
+    commit id: "dev2"
+    checkout main
+    merge develop tag: "v1.0"
+    checkout develop
+    branch feature/B
+    commit id: "B1"
+    commit id: "B2"
+    checkout develop
+    merge feature/B
+    commit id: "dev3"
+    checkout main
+    merge develop tag: "v2.0"
 ```
 
 ### Workflow GitHub Flow
 
-```
-main        ─────●─────────────●─────────────●─────────────●─────
-                 │             ↑             ↑             ↑
-                 │             │             │             │
-feature-1        ●───●───●─────┘             │             │
-                                             │             │
-feature-2                      ●───●─────────┘             │
-                                                           │
-bugfix-1                                     ●───●─────────┘
+```mermaid
+gitGraph
+    commit id: "init"
+    branch feature-1
+    commit id: "f1-1"
+    commit id: "f1-2"
+    commit id: "f1-3"
+    checkout main
+    merge feature-1
+    branch feature-2
+    commit id: "f2-1"
+    commit id: "f2-2"
+    checkout main
+    merge feature-2
+    branch bugfix-1
+    commit id: "fix-1"
+    commit id: "fix-2"
+    checkout main
+    merge bugfix-1
 ```
 
 ### Cycle de vie d'un fichier
 
-```
-┌─────────────┐     git add      ┌─────────────┐    git commit    ┌─────────────┐
-│  Untracked  │ ───────────────→ │   Staged    │ ───────────────→ │  Committed  │
-│  (nouveau)  │                  │  (indexé)   │                  │  (validé)   │
-└─────────────┘                  └─────────────┘                  └─────────────┘
-                                       ↑                                │
-                                       │                                │
-                                       │         modification          │
-                                       │                                ↓
-                                 ┌─────────────┐                  ┌─────────────┐
-                                 │   Staged    │ ←──────────────  │  Modified   │
-                                 │  (indexé)   │     git add      │  (modifié)  │
-                                 └─────────────┘                  └─────────────┘
+```mermaid
+stateDiagram-v2
+    [*] --> Untracked: Nouveau fichier
+    Untracked --> Staged: git add
+    Staged --> Committed: git commit
+    Committed --> Modified: modification
+    Modified --> Staged: git add
+    Staged --> Committed: git commit
 ```
 
 ---
