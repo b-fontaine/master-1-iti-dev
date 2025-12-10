@@ -124,7 +124,7 @@ L’objectif n’est pas de faire d’eux des développeurs, mais de leur permet
 
 #### 🧩 Contenu :
 
-- IA no-code (2h30) :
+- IA no-code:
     1. **Introduction aux IA génératives pour le dev (30 min)**
         - Différence entre IA copilote et IA autonome
         - Présentation de **V0.dev** (interface UI → code) et **Cursor.dev** (IDE AI-first)
