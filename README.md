@@ -124,8 +124,6 @@ L’objectif n’est pas de faire d’eux des développeurs, mais de leur permet
 
 #### 🧩 Contenu :
 
-- VBA (1h30) : créer un outil dans Excel
-    - Générer des données aléatoires, ajouter des boutons, appliquer des formules
 - IA no-code (2h30) :
     1. **Introduction aux IA génératives pour le dev (30 min)**
         - Différence entre IA copilote et IA autonome
