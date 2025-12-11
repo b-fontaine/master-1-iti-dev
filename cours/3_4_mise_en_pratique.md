@@ -1,5 +1,7 @@
 # 3.4 Mise en Pratique : Vibe Coding avec un Agent IA
 
+![](./images/vibe_coding.png)
+
 ## 🚀 Bienvenue dans le futur du développement
 
 Vous avez découvert les agents IA, les techniques de prompting, et les outils comme Gemini et Antigravity. Il est temps

@@ -1,5 +1,7 @@
 # Exemples Pratiques de Prompting par Profil Professionnel
 
+![](./images/prompting.png)
+
 ## Table des matières
 
 1. [Introduction au prompting professionnel](#1-introduction-au-prompting-professionnel)

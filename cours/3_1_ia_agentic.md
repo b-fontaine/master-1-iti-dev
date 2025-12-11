@@ -1,5 +1,7 @@
 # Intelligence Artificielle Agentique : Histoire, Fonctionnement et Techniques de Prompting
 
+![](./images/3_1_visual.png)
+
 ## Table des matières
 
 1. [Histoire de l'IA et des agents IA](#1-histoire-de-lia-et-des-agents-ia)
