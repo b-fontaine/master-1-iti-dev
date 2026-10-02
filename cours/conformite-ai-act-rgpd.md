@@ -41,7 +41,7 @@ Trois raisons, qui correspondent aux trois objectifs de la formation.
 2. **Faire valider par le RSSI.** Réflexe professionnel : aucun applicatif ne touche des données réelles ni n'est mis à disposition d'autres personnes sans validation du responsable de la sécurité des systèmes d'information (et du DPO si des données personnelles sont en jeu). Dans la formation, le RSSI est **simulé par l'enseignant** ou **tenu par le RSSI de l'établissement** (choix à faire par l'enseignant avant S3 ; dans les deux cas le déroulé est le même). En S4, trois tables en parallèle : un RSSI par table (enseignant, RSSI de l'établissement, aide ou second intervenant ; à défaut étudiant volontaire avec la grille).
 3. **Connaître ses droits de citoyen européen.** Ces règles protègent aussi les étudiants : ils sont des personnes concernées (courriels, notes, vœux, données de connexion, usage de services d'IA).
 
-**Règle d'or dès S1** : aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public. Les dépôts de la formation sont publics : tout ce qui y entre est publié.
+**Règle d'or dès S1** : aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public. Les dépôts de la formation sont publics : tout ce qui y entre est publié. Il en va de même du build web Flutter publié sur GitHub Pages : il est public, tout ce qu'il contient (code, données embarquées, fichiers d'actifs) est lisible par n'importe qui. Donnée fictive uniquement, aucun secret dans l'application ni dans le bundle web.
 
 ## 2. Le RGPD en une page
 
@@ -161,14 +161,14 @@ Chemin unique pour toutes les équipes. Les rubriques résumées dans `themes.md
 3. Personnes concernées (qui ? combien ?) :
 4. Base légale ou justification (art. 6 RGPD) / justification « données fictives » :
 5. Durée de conservation et date de suppression :
-6. Hébergement et sous-traitants (dont le fournisseur de modèle d'IA ; pays) :
+6. Hébergement et sous-traitants (ex. : build web publié sur GitHub Pages, public, données fictives uniquement ; stockage local drift/SQLite non chiffré dans l'application ; dont le fournisseur de modèle d'IA ; pays) :
 7. Ce qui part dans les prompts (rien de personnel : confirmer) :
 8. Décision automatisée (art. 22) ? Humain dans la boucle (qui ?) :
 9. Rôle AI Act : fournisseur ou déployeur ? (justification) :
    Classement AI Act, une case : [ ] hors champ  [ ] minimal  [ ] obligations de transparence (art. 50)  [ ] haut risque  [ ] interdit
    Justification (commencer par : est-ce un système d'IA au sens de l'art. 3, point 1 ?) :
 10. Droits : comment une personne accède, corrige, efface ses données :
-11. Mesures (minimisation, pseudonymes, accès par rôle, journaux sans données personnelles, tests d'autorisation ; contrôles de l'import CSV : taille max, rejet motivé, pas de donnée réelle) :
+11. Mesures (minimisation, pseudonymes, accès par rôle, journaux sans données personnelles, tests d'autorisation ; contrôles de l'import CSV via file_picker : taille max, rejet motivé, pas de donnée réelle) :
 12. Risques résiduels et limites d'usage (« n'utilisez pas cet outil pour... ») :
 13. Validation RSSI (rôle : enseignant simulant le RSSI, ou RSSI de l'établissement ; pas de nom) : date, décision (go / go sous conditions / no-go), conditions :
 ```
@@ -199,8 +199,8 @@ Rappel : tous les thèmes de la formation sont en données **fictives**. L'analy
 ### Thème A : carnet de campagne de jeu de rôle
 - **Données** : noms de personnages (fictifs), identifiant de connexion du joueur (`proprietaire`), historique de jets. Dès que l'identifiant renvoie à une personne réelle, c'est une donnée personnelle (RGPD) ; un compte pseudonymisé reste personnel.
 - **Risque AI Act probable** : minimal. Pas de décision sur des personnes ; un assistant conversationnel éventuel relève de la transparence (art. 50).
-- **Mesures** : identifiants minimaux, accès par rôle (403 testé), pas de données réelles en prompt, durée de vie de la campagne. **Obligatoires** : une mention d'information (finalité, durée, droits) et un script de suppression documenté des données d'un joueur. **En extension** : l'export des données du joueur (portabilité).
-- **Pourquoi le RSSI** : hébergement, comptes, secrets, export CSV (injection de formule), droit d'effacement d'un joueur.
+- **Mesures** : identifiants minimaux, accès par rôle (garde d'accès de la couche domain, refus testé), pas de données réelles en prompt, durée de vie de la campagne. **Obligatoires** : une mention d'information (finalité, durée, droits) et un script de suppression documenté des données d'un joueur. **En extension** : l'export des données du joueur (portabilité).
+- **Pourquoi le RSSI** : publication sur GitHub Pages (public), stockage local non chiffré, comptes, secrets, export CSV (injection de formule), droit d'effacement d'un joueur.
 
 ### Thème B : TRS d'un atelier de câblage
 - **Données** : productions, arrêts, postes. **Aucun identifiant d'opérateur n'est stocké dans les données métier** (seul le compte de connexion existe). Les données de poste sont de la donnée industrielle confidentielle ; en usage réel, toute donnée liée à un opérateur nommé serait personnelle et concernerait des salariés.
