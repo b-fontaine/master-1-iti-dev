@@ -52,19 +52,19 @@ Les assistants de programmation fondés sur l'intelligence artificielle changent
 | Travail d'équipe | du 4 au 14 décembre | Finalisation du projet |
 | **S5** | mer. 16 décembre 2026 | Retouches finales et soutenance |
 
-**S1 · Comprendre et s'équiper.** Moitié théorie, moitié installations (à prévoir largement, compte tenu de l'effectif). Histoire du savoir-faire logiciel (*software craftsmanship*) et pourquoi la qualité compte ; notions de code et de développement guidé par les tests ; fonctionnement et limites des modèles d'IA et de leur cadre de contrôle ; intégration et déploiement continus en ligne ; première sensibilisation à la protection des données. Installations : environnement de développement, gestion de versions, assistant de code, Python et outils de conteneurisation ; découverte d'outils de développement mobile.
+**S1 · Comprendre et s'équiper.** Moitié théorie, moitié installations (à prévoir largement, compte tenu de l'effectif). Histoire du savoir-faire logiciel (*software craftsmanship*) en neuf jalons, de la crise du logiciel de 1968 à la livraison continue, en passant par le développement guidé par les tests, la conception pilotée par le domaine et le développement guidé par le comportement ; pourquoi la qualité compte ; notions de code (en Dart) et de développement guidé par les tests ; fonctionnement et limites des modèles d'IA et de leur cadre de contrôle ; intégration et déploiement continus en ligne ; première sensibilisation à la protection des données. Installations indispensables : environnement de développement (VS Code), gestion de versions (git et GitHub), assistant de code (Claude Code et Claude Desktop) et Flutter (SDK, exécution dans Chrome). Installations facultatives, utiles plus tard : Docker, Rust et Antigravity.
 
 **S2 · Git, configurer son assistant, lancer le projet.** Séance de mise en pratique. Gestion de versions au clavier (enregistrements, branches, demandes de fusion, résolution de conflits). Configuration de l'assistant de code : consignes, droits d'accès, automatisations, extensions, connecteurs, agents spécialisés. Validation des équipes et des thèmes (constitués par formulaire entre S1 et S2), prise en main du dépôt de projet préparé par l'enseignant, cadrage du besoin, première demande de fusion relue par un pair.
 
-**S3 · Première règle métier, données et RGPD.** Reprise après l'interruption de deux mois. Première règle métier développée par les tests. Modélisation des données, contraintes d'intégrité, migrations de base de données. RGPD : principes, bases légales, droits des personnes, décision automatisée, fournisseurs de modèles d'IA. Début de la fiche de conformité ; relecture croisée entre équipes.
+**S3 · Première règle métier, données et RGPD.** Reprise après l'interruption de deux mois. Première règle métier développée par les tests. Modélisation des données, contraintes d'intégrité, migrations de base de données (drift). RGPD : principes, bases légales, droits des personnes, décision automatisée, fournisseurs de modèles d'IA. Début de la fiche de conformité ; relecture croisée entre équipes.
 
-**S4 · Qualité, sécurité et règlement européen sur l'IA.** Test d'acceptation écrit avant le code produit par l'assistant. Intégration continue, publication d'une image de conteneur, démonstration d'un déploiement en ligne, sécurité des applications. Règlement européen sur l'IA : niveaux de risque, rôles, obligations de transparence, domaines sensibles. Passage de la fiche de conformité devant le RSSI. Audit croisé entre équipes ; première version publiée si le projet passe les contrôles automatiques.
+**S4 · Qualité, sécurité et règlement européen sur l'IA.** Test d'acceptation (scénarios Gherkin) écrit avant le code produit par l'assistant. Intégration continue, publication automatique de la version web sur GitHub Pages par chaque équipe, sécurité des applications. Règlement européen sur l'IA : niveaux de risque, rôles, obligations de transparence, domaines sensibles. Passage de la fiche de conformité devant le RSSI. Audit croisé entre équipes ; première version publiée si le projet passe les contrôles automatiques.
 
 **S5 · Retouches finales et soutenance.** Retouches bloquantes, gel du code, puis soutenance de chaque équipe : démonstration, explication technique, questions individuelles.
 
 ## Projet commun
 
-Chaque équipe classe les trois thèmes par préférence et se voit attribuer l'un d'eux (au plus trois équipes par thème, tirage au sort en cas de litige). Chacun correspond à un **besoin ponctuel** : un outil de courte durée de vie. Les trois thèmes sont des cas d'école **fictifs** : aucun n'est déployé dans l'établissement, aucune donnée réelle n'y est utilisée, et tous les personnages et organisations sont inventés. La pile technique par défaut est Python.
+Chaque équipe classe les trois thèmes par préférence et se voit attribuer l'un d'eux (au plus trois équipes par thème, tirage au sort en cas de litige). Chacun correspond à un **besoin ponctuel** : un outil de courte durée de vie. Les trois thèmes sont des cas d'école **fictifs** : aucun n'est déployé dans l'établissement, aucune donnée réelle n'y est utilisée, et tous les personnages et organisations sont inventés. La pile technique est commune : une application Flutter (Dart) en Clean Architecture, avec injection de dépendances (get_it), gestion d'état par BLoC (flutter_bloc), développement guidé par les tests et par le comportement (bdd_widget_test), et persistance dans une base SQLite gérée avec drift. Le dépôt-modèle fourni par l'enseignant contient un squelette et un premier contexte pour l'assistant.
 
 | Thème | Situation | Difficulté propre |
 |---|---|---|
@@ -72,7 +72,7 @@ Chaque équipe classe les trois thèmes par préférence et se voit attribuer l'
 | **B · Ligne 4** (industrie) | Calcul du taux de rendement synthétique d'un atelier de câblage à partir des événements de production | Arithmétique des temps et des unités |
 | **C · Vœux de projet** (département de formation fictif, sans lien avec Nantes Université) | Répartition de sujets de projet entre étudiants fictifs selon leurs vœux classés, avec explication pour chacun | Algorithme d'affectation, et cas le plus sensible au regard du RGPD et du règlement sur l'IA |
 
-Socle commun obligatoire : un modèle de données relationnel (au moins 4 entités liées) avec migrations, une règle métier centrale testée automatiquement, un jeu de données fictif reproductible, un import de fichier, des tests et une intégration continue, des mesures de sécurité, et une fiche de conformité soumise au RSSI. Le tableau de bord et l'export de données sont souhaitables.
+Socle commun obligatoire : un modèle de données relationnel (au moins 4 entités liées) avec migrations versionnées, une règle métier centrale testée automatiquement, un jeu de données fictif reproductible, un import de fichier CSV, des tests et une intégration continue avec publication web sur GitHub Pages, des mesures de sécurité, et une fiche de conformité soumise au RSSI. Le tableau de bord et l'export de données sont souhaitables.
 
 ## Protection des données et conformité
 
@@ -103,18 +103,22 @@ Un bonus d'un point au plus (règle métier avancée facultative) peut s'ajouter
 
 ## Moyens nécessaires
 
-- **Étudiants** : un ordinateur portable personnel permettant d'installer des logiciels, une connexion internet et un compte GitHub gratuit. Les accès à un assistant de code par IA pour les 32 étudiants sont mis à disposition pour la durée de l'enseignement (comptes ou crédits nominatifs, modalités et financement précisés avant la première séance).
+- **Étudiants** : un ordinateur portable personnel permettant d'installer des logiciels, une connexion internet et un compte GitHub gratuit. Le SDK Flutter est téléchargé chez soi avant la première séance ; Docker n'est pas requis. Les accès à un assistant de code par IA pour les 32 étudiants sont mis à disposition pour la durée de l'enseignement (comptes ou crédits nominatifs, modalités et financement précisés avant la première séance).
 - **Salle** : une salle avec tables d'équipe, vidéoprojecteur, prises électriques pour 32 ordinateurs portables et réseau sans fil dimensionné pour 32 postes (téléchargements simultanés lors de la séance 1). Pour la soutenance du 16 décembre, deux salles simultanées.
 - **Encadrement** : 2 à 3 assistants en renfort de l'enseignant lors des séances 1 et 2 (installations), 1 en séance 3 et 2 en séance 4. Lors de la séance 4, trois intervenants tiennent le rôle du RSSI pour les passages en parallèle ; un second évaluateur par salle est souhaité pour la soutenance.
 - **RSSI** : le rôle est tenu soit par l'enseignant (simulation), soit par le RSSI de l'établissement, invité lors de la séance 4 ou répondant par écrit avant le 11 décembre. L'établissement est invité à indiquer s'il peut mettre à disposition cette ressource.
-- **Hébergement** : les dépôts de projet sont hébergés dans une organisation GitHub dédiée à l'enseignement.
+- **Hébergement** : les dépôts de projet sont hébergés dans une organisation GitHub dédiée à l'enseignement. Chaque équipe publie sa version web sur GitHub Pages, publique : données fictives uniquement, et rien de secret dans l'application.
 
 ## Termes utilisés
 
 - **Git, dépôt** : outil de gestion de l'historique et de partage du travail ; espace de stockage d'un projet.
 - **Demande de fusion** : proposition de modification relue par un pair avant intégration au projet.
 - **Intégration continue** : vérification automatique du projet à chaque modification.
+- **Clean Architecture** : organisation du code en couches (domaine, données, présentation) où le métier ne dépend pas des détails techniques.
+- **Injection de dépendances** : fournir à un composant ce dont il a besoin au lieu de le laisser le créer lui-même (ici avec get_it).
+- **BLoC** : composant qui reçoit des événements et émet des états, séparant l'interface de la logique (ici avec flutter_bloc).
 - **Développement guidé par les tests** : écrire le test qui décrit le comportement attendu avant d'écrire le code.
+- **Développement guidé par le comportement (BDD)** : décrire le comportement attendu en scénarios lisibles par tous (Gherkin), qui deviennent des tests automatiques.
 - **RSSI** : responsable de la sécurité des systèmes d'information.
 - **RGPD** : règlement européen sur la protection des données personnelles.
 - **Taux de rendement synthétique** : indicateur de performance d'une ligne de production.
