@@ -169,18 +169,6 @@ body.overview .step{opacity:1;transform:none;filter:none}
 /* ---- ajouts séance 1 complète ---- */
 .me{width:34rem;height:34rem;border-radius:50%;background:url(day-1-assets/img/bio.png) no-repeat;background-size:217.6rem auto;background-position:-91.9rem -25.2rem;background-origin:border-box;border:.7rem solid #fff;box-shadow:0 0 0 .3rem var(--indigo),0 1.6rem 4rem rgba(67,56,245,.3)}
 .logo-sep{mix-blend-mode:multiply;width:42.5rem;height:11.5rem;background:url(day-1-assets/img/bio.png) no-repeat;background-size:192rem auto;background-position:-112.5rem -25.5rem}
-.book{background:url(day-1-assets/img/merci.png) no-repeat;background-size:192rem auto;filter:drop-shadow(0 1.2rem 1.6rem rgba(40,50,120,.28))}
-.step-list{display:grid;gap:2.6rem}
-.step-list>div{display:flex;align-items:center;gap:3rem;background:var(--glass);border-radius:2.2rem;padding:2.4rem 3.4rem;box-shadow:0 1rem 3rem rgba(40,50,120,.08)}
-.step-list .n{flex:0 0 7rem;height:7rem;border-radius:2rem;background:var(--grad);color:#fff;font:700 4rem var(--display);display:grid;place-items:center}
-.tl{display:flex;gap:.4rem;height:12rem;border-radius:1.6rem;overflow:hidden;margin-top:2rem}
-.tl b{flex:var(--m) 1 0;min-width:0;display:grid;place-items:center;font:700 2rem var(--mono);color:#fff;overflow:hidden;white-space:nowrap}
-.tl b.e{background:linear-gradient(120deg,#4338F5,#7B3FF2)}.tl b.i{background:linear-gradient(120deg,#00A8C6,#4F8CFF)}.tl b.p{background:#B8BEDB}.tl b.d{background:#7B3FF2}
-.ticks{position:relative;height:5rem;margin-top:1.4rem;font:700 2.2rem var(--mono);color:var(--ink-3)}.ticks span{position:absolute;transform:translateX(-50%)}.ticks span:first-child{transform:none}.ticks span:last-child{transform:translateX(-100%)}
-.board{display:grid;gap:1.2rem}
-.board .r{display:grid;grid-template-columns:20rem repeat(4,1fr);align-items:center;gap:1.6rem;background:var(--glass);border-radius:1.6rem;padding:1.6rem 2.4rem;font:700 2.6rem var(--mono);color:var(--ink-2)}
-.board .r.h{background:none;box-shadow:none;color:var(--ink-3);font-size:2.2rem}
-.board i{justify-self:center;width:3.4rem;height:3.4rem;border-radius:50%}.board i.ok{background:var(--lime)}.board i.ko{background:var(--coral)}.board i.wip{background:var(--amber)}
 .orb{border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0,#9FB4FF 28%,#4338F5 70%,#00A8C6 100%);box-shadow:0 1.6rem 4rem rgba(67,56,245,.35);flex:0 0 auto}
 .dial{position:relative;height:1.4rem;background:#D6DBF0;border-radius:1rem;margin:3rem 2rem 0}
 .dial i{position:absolute;top:50%;width:4rem;height:4rem;border-radius:50%;background:#fff;border:.6rem solid var(--indigo);transform:translate(-50%,-50%)}
@@ -203,7 +191,7 @@ body.overview .step{opacity:1;transform:none;filter:none}
 .status{display:inline-grid;place-items:center;width:8rem;height:8rem;border-radius:50%}.status.ok{background:var(--lime)}.status.ko{background:var(--coral)}
 .term.code pre{font-size:3rem}
 .divider.title-slide{justify-content:center}
-@media (max-aspect-ratio:5/4){.flow{flex-direction:column}.flow>span{transform:rotate(90deg)}.board .r{grid-template-columns:12rem repeat(4,1fr)}}
+@media (max-aspect-ratio:5/4){.flow{flex-direction:column}.flow>span{transform:rotate(90deg)}}
 </style>
 </head>
 <body>
@@ -233,22 +221,11 @@ body.overview .step{opacity:1;transform:none;filter:none}
     <div class="step" style="flex:0 0 auto"><div class="me"></div></div>
     <div class="grow">
       <h2 style="font-size:10rem">Benoît<br><span class="grad">Fontaine</span></h2>
-      <p class="mt step" style="font-size:4.6rem;color:var(--ink)">Lead Architect</p>
+      <p class="mt step" style="font-size:4.6rem;color:var(--ink)">Staff Engineer</p>
       <div class="logo-sep mt step" aria-label="Septeo"></div>
       <div class="chips mt step"><span class="chip">medium.benoitfontaine.fr</span><span class="chip">linkedin.com/in/b-fontaine</span></div>
     </div>
   </div>
-</section>
-
-<section class="slide" data-id="lectures">
-  <div class="label">Mes lectures de chevet</div>
-  <div class="row grow" style="justify-content:center;gap:5rem;align-items:center">
-    <div class="book step" style="width:18.8rem;height:24.8rem;background-position:-8.8rem -50.6rem"></div>
-    <div class="book step" style="width:20.4rem;height:24.8rem;background-position:-35rem -50.6rem"></div>
-    <div class="book step" style="width:19.2rem;height:25rem;background-position:-59.8rem -50.4rem"></div>
-    <div class="book step" style="width:19.6rem;height:25rem;background-position:-83.6rem -50.6rem"></div>
-  </div>
-  <div class="chips step" style="justify-content:center"><span class="chip">Clean Architecture</span><span class="chip">Software Craftsmanship</span><span class="chip">Domain-Driven Design</span><span class="chip">Culture Code</span></div>
 </section>
 
 <section class="slide" data-id="objectifs-formation">
@@ -259,17 +236,6 @@ body.overview .step{opacity:1;transform:none;filter:none}
     <div class="card step center" style="align-items:center;gap:3rem"><svg viewBox="0 0 100 100" style="width:15rem"><path d="M50 10l34 12v26c0 22-14 36-34 44C30 84 16 70 16 48V22z" fill="none" stroke="#EE3D5F" stroke-width="6" stroke-linejoin="round"/><path d="M36 50l10 10 18-20" fill="none" stroke="#EE3D5F" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>En connaître<br>les limites</h3></div>
   </div>
   <div class="chips step mt2" style="justify-content:center"><span class="chip">dépôt</span><span class="chip">branche</span><span class="chip">PR</span><span class="chip">test</span><span class="chip">CI/CD</span><span class="chip">migration</span><span class="chip">release</span></div>
-</section>
-
-<section class="slide" data-id="competences">
-  <div class="label">À la fin de la formation, vous saurez…</div>
-  <div class="step-list">
-    <div class="step"><span class="n">1</span><h3>expliquer ce que fait une équipe de dev</h3></div>
-    <div class="step"><span class="n">2</span><h3>cadrer un agent de code</h3></div>
-    <div class="step"><span class="n">3</span><h3>travailler en équipe avec git et GitHub</h3></div>
-    <div class="step"><span class="n">4</span><h3>justifier ce que vous livrez</h3></div>
-    <div class="step"><span class="n">5</span><h3>reconnaître les limites légales et de sécurité</h3></div>
-  </div>
 </section>
 
 <section class="slide" data-id="calendrier">
@@ -285,64 +251,22 @@ body.overview .step{opacity:1;transform:none;filter:none}
   <p class="cap mt2 step">2 jours · 8 semaines · 2 jours · 12 jours</p>
 </section>
 
-<section class="slide" data-id="themes-projet">
-  <div class="label">Un projet fil rouge</div>
-  <div class="cols c3" style="flex:0 0 auto">
-    <div class="card step"><span class="chip c" style="align-self:flex-start">A</span><h3 class="mt">Les Marches<br>de Cendrelune</h3><p class="mt cap">jeu de rôle · un état qui progresse</p></div>
-    <div class="card step"><span class="chip c" style="align-self:flex-start">B</span><h3 class="mt">Ligne 4</h3><p class="mt cap">atelier de câblage · le TRS</p></div>
-    <div class="card step"><span class="chip c" style="align-self:flex-start">C</span><h3 class="mt">Vœux<br>de projet</h3><p class="mt cap">répartition équitable</p></div>
-  </div>
-  <div class="chips step mt2" style="justify-content:center"><span class="chip i">32 étudiants</span><span class="chip i">équipes de 3 à 5</span><span class="chip i">un seul thème par équipe</span></div>
-</section>
-
-<section class="slide" data-id="deroule">
-  <div class="label">Le déroulé · 8h15 → 12h15</div>
-  <div class="tl step"><b class="d" style="--m:5" title="Accueil · 5 min"></b><b class="i" style="--m:25" title="Install. · 25 min">Install.</b><b class="e" style="--m:20" title="Histoire · 20 min">Histoire</b><b class="i" style="--m:25" title="Install. · 25 min">Install.</b><b class="e" style="--m:20" title="Code, TDD · 20 min">Code, TDD</b><b class="p" style="--m:10" title="Pause · 10 min">Pause</b><b class="i" style="--m:25" title="Install. · 25 min">Install.</b><b class="e" style="--m:15" title="Modèles · 15 min">Modèles</b><b class="e" style="--m:15" title="Agent · 15 min">Agent</b><b class="i" style="--m:30" title="Install. · 30 min">Install.</b><b class="p" style="--m:10" title="Pause · 10 min">Pause</b><b class="e" style="--m:10" title="CI/CD · 10 min">CI/CD</b><b class="e" style="--m:10" title="Règle · 10 min">Règle</b><b class="i" style="--m:15" title="Rattrap. · 15 min">Rattrap.</b><b class="d" style="--m:5" title="Fin · 5 min"></b></div>
-  <div class="ticks step"><span style="left:0">8h15</span><span style="left:25%">9h15</span><span style="left:50%">10h15</span><span style="left:75%">11h15</span><span style="left:100%">12h15</span></div>
-  <div class="chips mt2 step"><span class="chip i">exposés et démo</span><span class="chip c">installations · 120 min</span><span class="chip">pauses</span></div>
-  <p class="mt step">Les téléchargements lourds tournent <span class="ind">pendant</span> les exposés.</p>
-</section>
-
-<section class="slide" data-id="cartes-suivi">
-  <div class="label">Pour avancer à 32</div>
-  <div class="row grow" style="gap:7rem">
-    <div class="step" style="display:grid;gap:3rem;flex:0 0 52rem">
-      <div class="card bad center" style="align-items:center"><div class="num neg" style="font-size:9rem">■</div><h3>Carte rouge</h3><p class="cap mt">je suis bloqué</p></div>
-      <div class="card good center" style="align-items:center"><div class="num pos" style="font-size:9rem">■</div><h3>Carte verte</h3><p class="cap mt">ça avance</p></div>
-    </div>
-    <div class="grow step">
-      <h3 style="margin-bottom:2.4rem">Tableau de suivi des postes</h3>
-      <div class="board">
-        <div class="r h"><span></span><span>git</span><span>VS Code</span><span>Claude</span><span>uv</span></div>
-        <div class="r"><span>Poste 01</span><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i></div>
-        <div class="r"><span>Poste 02</span><i class="ok"></i><i class="ok"></i><i class="ko"></i><i class="ok"></i></div>
-        <div class="r"><span>Poste 03</span><i class="ok"></i><i class="wip"></i><i class="ko"></i><i class="ko"></i></div>
-        <div class="r"><span>Poste 04</span><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="wip"></i></div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="slide" data-id="outils">
   <div class="label">Les outils de la formation</div>
   <div class="cols c2" style="flex:0 0 auto;gap:5rem">
-    <div class="card hl step"><span class="chip i" style="align-self:flex-start">indispensable · pour S2</span>
-      <div class="chips mt2" style="flex-direction:column;align-items:flex-start;gap:2rem"><span class="chip">git + GitHub (gh)</span><span class="chip">VS Code</span><span class="chip">Claude Code</span><span class="chip">uv + Python</span></div></div>
+    <div class="card hl step"><span class="chip i" style="align-self:flex-start">indispensable</span>
+      <div class="chips mt2" style="flex-direction:column;align-items:flex-start;gap:2rem"><span class="chip">git + GitHub</span><span class="chip">VS Code</span><span class="chip">Claude Code + Claude Desktop</span><span class="chip">Flutter</span></div></div>
     <div class="card step"><span class="chip c" style="align-self:flex-start">utile plus tard</span>
-      <div class="chips mt2" style="flex-direction:column;align-items:flex-start;gap:2rem"><span class="chip">Docker</span><span class="chip">Flutter</span><span class="chip">Rust</span><span class="chip">Antigravity</span></div></div>
+      <div class="chips mt2" style="flex-direction:column;align-items:flex-start;gap:2rem"><span class="chip">Docker</span><span class="chip">Rust</span><span class="chip">Antigravity</span></div></div>
   </div>
-  <p class="mt2 step">Les « utiles plus tard » peuvent glisser <span class="ind">sans bloquer</span> la séance 2.</p>
+  <p class="mt2 step">Les « utiles plus tard » peuvent glisser <span class="ind">sans bloquer</span> la suite.</p>
 </section>
 
 <section class="slide" data-id="objectifs-seance">
   <div class="label">À la fin de cette séance</div>
-  <div class="cols c3" style="flex:0 0 auto;gap:3rem">
-    <div class="card step"><span class="num grad" style="font-size:7rem">01</span><h3 class="mt">Situer six jalons du génie logiciel</h3></div>
-    <div class="card step"><span class="num grad" style="font-size:7rem">02</span><h3 class="mt">Lire un test : rouge, vert, refactor</h3></div>
-    <div class="card step"><span class="num grad" style="font-size:7rem">03</span><h3 class="mt">Distinguer modèles, harnais, contexte</h3></div>
-    <div class="card step"><span class="num grad" style="font-size:7rem">04</span><h3 class="mt">Expliquer CI et CD</h3></div>
-    <div class="card step"><span class="num grad" style="font-size:7rem">05</span><h3 class="mt">Énoncer la règle d'or</h3></div>
-    <div class="card step"><span class="num grad" style="font-size:7rem">06</span><h3 class="mt">Avoir un poste opérationnel</h3></div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
+    <div class="card step" style="min-height:48rem;justify-content:center"><span class="num grad" style="font-size:12rem">01</span><h3 class="mt" style="font-size:5.4rem">Connaissances théoriques sur les bases du génie logiciel et de l'IA agentique</h3></div>
+    <div class="card step" style="min-height:48rem;justify-content:center"><span class="num grad" style="font-size:12rem">02</span><h3 class="mt" style="font-size:5.4rem">Avoir un poste opérationnel pour démarrer un projet</h3></div>
   </div>
 </section>
 
@@ -448,8 +372,36 @@ body.overview .step{opacity:1;transform:none;filter:none}
   </div>
 </section>
 
+<section class="slide" data-id="ddd">
+  <div class="label">Jalon 6 · 2003</div>
+  <div class="row grow" style="gap:9rem">
+    <div class="shot hud tilt step" style="flex:0 0 46rem"><div class="crop" style="aspect-ratio:818/1080"><img src="day-1-assets/img/ddd.png" alt="Domain-Driven Design, d'Eric Evans" style="width:234.72%;max-width:none;height:auto;margin-left:-67.24%"></div></div>
+    <div class="grow">
+      <h2 style="font-size:8.4rem">Le code parle<br><span class="grad">la langue du métier</span></h2>
+      <div class="step" style="display:flex;gap:2.4rem;align-items:center;margin-top:5rem"><span class="chip">experts métier</span><span class="mono ind" style="font-size:3rem">+</span><span class="chip">développeurs</span><span class="mono ind" style="font-size:3rem">→</span><span class="chip i">un seul langage</span></div>
+      <div class="chips mt step"><span class="chip c">ubiquitous language</span><span class="chip c">bounded context</span></div>
+      <p class="cap mt step">Eric Evans · préface de Martin Fowler</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="bdd">
+  <div class="label">Jalon 7 · 2006</div>
+  <div class="row grow" style="gap:8rem">
+    <div class="shot hud tilt2 step" style="flex:0 0 66rem"><div class="crop" style="aspect-ratio:995/640"><img src="day-1-assets/img/bdd.png" alt="Introducing BDD, article de Dan North" style="width:192.96%;max-width:none;height:auto;margin-left:-46.23%;margin-top:-14.07%"></div></div>
+    <div class="grow">
+      <h2 style="font-size:9rem">Décrire le<br><span class="grad">comportement</span></h2>
+      <div class="term code mt step"><div class="bar"><i></i><i></i><i></i><span>jet.feature</span></div><pre><span class="c">Scénario</span> : jet égal au DD
+  <span class="c">Soit</span> un degré de difficulté de <span class="g">12</span>
+  <span class="c">Quand</span> le total du jet est <span class="g">12</span>
+  <span class="c">Alors</span> c'est une <span class="y">réussite</span></pre></div>
+      <p class="cap mt step">Dan North · lisible par le métier, exécutable comme un test</p>
+    </div>
+  </div>
+</section>
+
 <section class="slide" data-id="craft-2009">
-  <div class="label">Jalon 6 · 2001 → 2009</div>
+  <div class="label">Jalon 8 · 2001 → 2009</div>
   <div class="row grow" style="gap:9rem">
     <div class="shot hud tilt step" style="flex:0 0 46rem;height:62rem"><img src="day-1-assets/img/mcbreen.png" alt="Software Craftsmanship : The New Imperative" style="object-fit:contain"></div>
     <div class="grow">
@@ -473,7 +425,7 @@ body.overview .step{opacity:1;transform:none;filter:none}
 </section>
 
 <section class="slide" data-id="git-cd">
-  <div class="label">Jalon 7 · 2005 → 2018</div>
+  <div class="label">Jalon 9 · 2005 → 2018</div>
   <div class="row grow" style="gap:8rem">
     <div class="vrail grow">
       <div class="node step"><b>2005 · Git</b><span>Linus Torvalds</span></div>
@@ -683,9 +635,9 @@ body.overview .step{opacity:1;transform:none;filter:none}
   <div class="label">Notion 1 sur 6</div>
   <div class="row grow" style="gap:8rem">
     <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Variable</h2><p class="mt2 step">Une valeur qui porte un nom.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre>jet = <span class="g">11</span>
-bonus = <span class="g">3</span>
-total = jet + bonus<span class="d">   # 14</span></pre></div></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">final</span> jet = <span class="g">11</span>;
+<span class="c">final</span> bonus = <span class="g">3</span>;
+<span class="c">final</span> total = jet + bonus;<span class="d">   // 14</span></pre></div></div>
   </div>
 </section>
 
@@ -693,10 +645,11 @@ total = jet + bonus<span class="d">   # 14</span></pre></div></div>
   <div class="label">Notion 2 sur 6</div>
   <div class="row grow" style="gap:8rem">
     <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Fonction</h2><p class="mt2 step">Une recette réutilisable.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">def</span> ajouter_bonus(jet, bonus):
-    <span class="c">return</span> jet + bonus
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">int</span> ajouterBonus(<span class="c">int</span> jet, <span class="c">int</span> bonus) {
+  <span class="c">return</span> jet + bonus;
+}
 
-ajouter_bonus(<span class="g">11</span>, <span class="g">3</span>)<span class="d">   # 14</span></pre></div></div>
+ajouterBonus(<span class="g">11</span>, <span class="g">3</span>);<span class="d">   // 14</span></pre></div></div>
   </div>
 </section>
 
@@ -704,10 +657,11 @@ ajouter_bonus(<span class="g">11</span>, <span class="g">3</span>)<span class="d
   <div class="label">Notion 3 sur 6</div>
   <div class="row grow" style="gap:8rem">
     <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Condition</h2><p class="mt2 step">Un choix : si… sinon…</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">if</span> total &gt;= dd:
-    print(<span class="y">"Réussite"</span>)
-<span class="c">else</span>:
-    print(<span class="y">"Échec"</span>)</pre></div></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">if</span> (total &gt;= dd) {
+  print(<span class="y">'Réussite'</span>);
+} <span class="c">else</span> {
+  print(<span class="y">'Échec'</span>);
+}</pre></div></div>
   </div>
 </section>
 
@@ -715,8 +669,9 @@ ajouter_bonus(<span class="g">11</span>, <span class="g">3</span>)<span class="d
   <div class="label">Notion 4 sur 6</div>
   <div class="row grow" style="gap:8rem">
     <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Boucle</h2><p class="mt2 step">Répéter pour chaque élément.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">for</span> quete <span class="c">in</span> [<span class="y">"Forêt"</span>, <span class="y">"Donjon"</span>, <span class="y">"Marais"</span>]:
-    print(<span class="y">"Quête :"</span>, quete)</pre></div></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">for</span> (<span class="c">final</span> quete <span class="c">in</span> [<span class="y">'Forêt'</span>, <span class="y">'Donjon'</span>, <span class="y">'Marais'</span>]) {
+  print(<span class="y">'Quête : $quete'</span>);
+}</pre></div></div>
   </div>
 </section>
 
@@ -724,8 +679,9 @@ ajouter_bonus(<span class="g">11</span>, <span class="g">3</span>)<span class="d
   <div class="label">Notion 5 sur 6</div>
   <div class="row grow" style="gap:8rem">
     <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Fichier</h2><p class="mt2 step">Lire et écrire sur le disque.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">with</span> open(<span class="y">"journal.txt"</span>, <span class="y">"w"</span>) <span class="c">as</span> f:
-    f.write(<span class="y">"Quête terminée"</span>)</pre></div></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">import</span> <span class="y">'dart:io'</span>;
+
+File(<span class="y">'journal.txt'</span>).writeAsStringSync(<span class="y">'Quête terminée'</span>);</pre></div></div>
   </div>
 </section>
 
@@ -735,23 +691,28 @@ ajouter_bonus(<span class="g">11</span>, <span class="g">3</span>)<span class="d
     <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Ligne de commande</h2><p class="mt2 step">Parler à l'ordinateur en texte.</p></div>
     <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">cd</span> mon-projet
 <span class="d">$</span> <span class="c">ls</span>
-jeu.py  journal.txt
-<span class="d">$</span> <span class="c">uv run</span> python jeu.py
-Réussite</pre></div></div>
+lib  test  pubspec.yaml
+<span class="d">$</span> <span class="c">flutter test</span>
+<span class="g">00:01 +1: All tests passed!</span></pre></div></div>
   </div>
 </section>
 
 <section class="slide" data-id="code-lire">
   <div class="label">Lire un code, c'est reconnaître ces six briques</div>
   <div class="row grow" style="gap:6rem">
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre>dd = <span class="g">12</span><span class="d">                       # variable</span>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">const</span> dd = <span class="g">12</span>;<span class="d">                      // variable</span>
 
-<span class="c">def</span> est_reussite(total, dd):<span class="d">  # fonction</span>
-    <span class="c">return</span> total &gt;= dd
+<span class="c">bool</span> estReussite(<span class="c">int</span> total, <span class="c">int</span> dd) {<span class="d"> // fonction</span>
+  <span class="c">return</span> total &gt;= dd;
+}
 
-<span class="c">for</span> jet <span class="c">in</span> [<span class="g">8</span>, <span class="g">12</span>, <span class="g">17</span>]:<span class="d">       # boucle</span>
-    <span class="c">if</span> est_reussite(jet, dd):<span class="d"> # condition</span>
-        print(jet, <span class="y">"réussite"</span>)</pre></div></div>
+<span class="c">void</span> main() {
+  <span class="c">for</span> (<span class="c">final</span> jet <span class="c">in</span> [<span class="g">8</span>, <span class="g">12</span>, <span class="g">17</span>]) {<span class="d"> // boucle</span>
+    <span class="c">if</span> (estReussite(jet, dd)) {<span class="d">      // condition</span>
+      print(<span class="y">'$jet réussite'</span>);
+    }
+  }
+}</pre></div></div>
     <div class="chips step" style="flex-direction:column;align-items:flex-start;gap:2rem;flex:0 0 auto"><span class="chip">variable</span><span class="chip">fonction</span><span class="chip">condition</span><span class="chip">boucle</span><span class="chip">fichier</span><span class="chip">ligne de commande</span></div>
   </div>
 </section>
@@ -760,8 +721,9 @@ Réussite</pre></div></div>
   <div class="label">Démonstration · TDD</div>
   <div class="row grow" style="gap:8rem">
     <div style="flex:0 0 56rem"><h2 style="font-size:9rem">Un test,<br><span class="grad">une spécification</span><br>exécutable</h2></div>
-    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>test_jeu.py</span></div><pre><span class="c">def</span> test_reussite_si_total_egal_dd():
-    <span class="c">assert</span> est_reussite(<span class="g">12</span>, <span class="g">12</span>) <span class="c">is</span> <span class="c">True</span></pre></div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>jeu_test.dart</span></div><pre>test(<span class="y">'réussite si total égal au dd'</span>, () {
+  expect(estReussite(<span class="g">12</span>, <span class="g">12</span>), isTrue);
+});</pre></div>
     <div class="chips mt2 step"><span class="chip">total = jet + bonus</span><span class="chip">dd = degré de difficulté</span></div></div>
   </div>
 </section>
@@ -770,53 +732,60 @@ Réussite</pre></div></div>
   <div class="label">Étape 1 · test rouge</div>
   <div class="row grow" style="gap:7rem">
     <div style="flex:0 0 48rem"><div class="num neg" style="font-size:22rem">●</div><h2 style="font-size:9rem">Rouge</h2><p class="mt step">Le test échoue : la fonction n'existe pas encore.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">uv run</span> pytest
-<span class="r">FAILED</span> test_jeu.py::test_reussite_si_total_egal_dd
-<span class="r">NameError</span>: name 'est_reussite' is not defined
-<span class="r">=== 1 failed in 0.02s ===</span></pre></div></div></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">flutter test</span>
+<span class="r">Error</span>: Method not found: 'estReussite'.
+<span class="r">00:01 +0 -1: Some tests failed.</span></pre></div></div></div>
 </section>
 
 <section class="slide" data-id="tdd-vert1">
   <div class="label">Étape 2 · code vert</div>
   <div class="row grow" style="gap:7rem">
     <div style="flex:0 0 48rem"><div class="num pos" style="font-size:22rem">●</div><h2 style="font-size:9rem">Vert</h2><p class="mt step">Le code <em class="ind" style="font-style:normal">le plus simple</em> qui passe.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">def</span> est_reussite(total, dd):
-    <span class="c">return</span> <span class="c">True</span></pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">uv run</span> pytest
-<span class="g">=== 1 passed in 0.01s ===</span></pre></div></div></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">bool</span> estReussite(<span class="c">int</span> total, <span class="c">int</span> dd) {
+  <span class="c">return</span> <span class="c">true</span>;
+}</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">flutter test</span>
+<span class="g">00:01 +1: All tests passed!</span></pre></div></div></div>
 </section>
 
 <section class="slide" data-id="tdd-rouge2">
   <div class="label">Étape 3 · on précise : nouveau test rouge</div>
   <div class="row grow" style="gap:7rem">
     <div style="flex:0 0 48rem"><div class="num neg" style="font-size:22rem">●</div><h2 style="font-size:9rem">Rouge</h2><p class="mt step">Un cas d'échec : 11 contre 12.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>test_jeu.py</span></div><pre><span class="c">def</span> test_echec_si_total_inferieur_au_dd():
-    <span class="c">assert</span> est_reussite(<span class="g">11</span>, <span class="g">12</span>) <span class="c">is</span> <span class="c">False</span></pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">uv run</span> pytest
-<span class="r">FAILED</span> test_echec_si_total_inferieur_au_dd
-<span class="r">AssertionError</span>: assert True is False
-<span class="r">=== 1 failed, 1 passed ===</span></pre></div></div></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu_test.dart</span></div><pre>test(<span class="y">'échec si total inférieur au dd'</span>, () {
+  expect(estReussite(<span class="g">11</span>, <span class="g">12</span>), isFalse);
+});</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">flutter test</span>
+<span class="r">Expected</span>: false
+  <span class="r">Actual</span>: &lt;true&gt;
+<span class="r">00:01 +1 -1: Some tests failed.</span></pre></div></div></div>
 </section>
 
 <section class="slide" data-id="tdd-vert2">
   <div class="label">Étape 4 · code vert</div>
   <div class="row grow" style="gap:7rem">
     <div style="flex:0 0 48rem"><div class="num pos" style="font-size:22rem">●</div><h2 style="font-size:9rem">Vert</h2><p class="mt step">Maintenant, la vraie règle.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">def</span> est_reussite(total, dd):
-    <span class="c">return</span> total &gt;= dd</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">uv run</span> pytest
-<span class="g">=== 2 passed in 0.01s ===</span></pre></div></div></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">bool</span> estReussite(<span class="c">int</span> total, <span class="c">int</span> dd) {
+  <span class="c">return</span> total &gt;= dd;
+}</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">flutter test</span>
+<span class="g">00:01 +2: All tests passed!</span></pre></div></div></div>
 </section>
 
 <section class="slide" data-id="tdd-refactor">
   <div class="label">Étape 5 · refactor</div>
   <div class="row grow" style="gap:7rem">
     <div style="flex:0 0 48rem"><div class="num ind" style="font-size:22rem">●</div><h2 style="font-size:9rem">Refactor</h2><p class="mt step">Je nettoie. Les tests me protègent.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>test_jeu.py</span></div><pre>@pytest.mark.parametrize(<span class="y">"total, dd, attendu"</span>, [
-    (<span class="g">12</span>, <span class="g">12</span>, <span class="c">True</span>),
-    (<span class="g">11</span>, <span class="g">12</span>, <span class="c">False</span>),
-    (<span class="g">15</span>, <span class="g">12</span>, <span class="c">True</span>),
-])
-<span class="c">def</span> test_est_reussite(total, dd, attendu):
-    <span class="c">assert</span> est_reussite(total, dd) <span class="c">is</span> attendu</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">uv run</span> pytest
-<span class="g">=== 3 passed in 0.01s ===</span></pre></div></div></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu_test.dart</span></div><pre><span class="c">void</span> main() {
+  <span class="c">const</span> cas = [
+    (<span class="g">12</span>, <span class="g">12</span>, <span class="c">true</span>),
+    (<span class="g">11</span>, <span class="g">12</span>, <span class="c">false</span>),
+    (<span class="g">15</span>, <span class="g">12</span>, <span class="c">true</span>),
+  ];
+  <span class="c">for</span> (<span class="c">final</span> (total, dd, attendu) <span class="c">in</span> cas) {
+    test(<span class="y">'estReussite($total, $dd)'</span>, () {
+      expect(estReussite(total, dd), attendu);
+    });
+  }
+}</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">flutter test</span>
+<span class="g">00:01 +3: All tests passed!</span></pre></div></div></div>
 </section>
 
 <section class="slide" data-id="tdd-message">
@@ -911,9 +880,10 @@ Réussite</pre></div></div>
   <div class="label">Le fichier d'instructions</div>
   <div class="row grow" style="gap:8rem">
     <div style="flex:0 0 50rem"><h2 style="font-size:10rem"><span class="grad">CLAUDE</span>.md</h2><p class="mt2 step">Court. Précis. Lu à chaque session.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>CLAUDE.md</span></div><pre><span class="y"># Projet Cendrelune</span>
-<span class="d">-</span> Tests : <span class="c">uv run pytest</span>
-<span class="d">-</span> Python 3.12, code dans <span class="c">src/</span>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>CLAUDE.md</span></div><pre><span class="y"># Mon projet</span>
+<span class="d">-</span> Tests : <span class="c">flutter test</span>
+<span class="d">-</span> Flutter 3.x, code dans <span class="c">lib/</span>
+<span class="d">-</span> Clean Architecture (domain, data, presentation)
 <span class="d">-</span> Un test avant chaque fonction
 <span class="d">-</span> Jamais de données réelles
 <span class="d">-</span> Jamais de clé dans le dépôt</pre></div></div></div>
@@ -966,6 +936,19 @@ Réussite</pre></div></div>
   <div class="chips mt2 step" style="justify-content:center"><span class="chip i">Séance 2 : on le construit</span></div>
 </section>
 
+<section class="slide" data-id="pile-projet">
+  <div class="label">Le projet fil rouge</div>
+  <h2 style="font-size:9rem">Le projet : <span class="grad">Flutter</span></h2>
+  <div class="cols c3 mt2" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><h3>Clean Architecture</h3><p class="cap mt">domain · data · presentation</p></div>
+    <div class="card step"><h3>Injection de dépendances</h3><p class="cap mt">get_it</p></div>
+    <div class="card step"><h3>flutter_bloc</h3><p class="cap mt">l'état de l'écran</p></div>
+    <div class="card step"><h3>TDD</h3><p class="cap mt">le test d'abord</p></div>
+    <div class="card step"><h3>BDD</h3><p class="cap mt">scénarios en français</p></div>
+    <div class="card step"><h3>drift</h3><p class="cap mt">base SQLite versionnée</p></div>
+  </div>
+</section>
+
 <section class="slide divider" data-id="div-cicd">
   <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
   <div class="big grad">07</div>
@@ -991,7 +974,7 @@ Réussite</pre></div></div>
     <div class="card step"><h3>Runner</h3><p class="cap mt">la machine qui exécute</p></div>
     <div class="card step"><h3>Workflow</h3><p class="cap mt">le fichier qui décrit</p></div>
     <div class="card step"><h3>Artefact</h3><p class="cap mt">le fichier produit</p></div>
-    <div class="card step"><h3>Image Docker</h3><p class="cap mt">le logiciel emballé</p></div>
+    <div class="card step"><h3>Build web</h3><p class="cap mt">le logiciel emballé</p></div>
     <div class="card step"><h3>Environnement</h3><p class="cap mt">test, production</p></div>
   </div>
 </section>
@@ -1006,10 +989,10 @@ Réussite</pre></div></div>
     <span class="c">runs-on</span>: ubuntu-latest
     <span class="c">steps</span>:
       - <span class="c">uses</span>: actions/checkout@v4
-      - <span class="c">uses</span>: actions/setup-python@v5
-        <span class="c">with</span>: { python-version: <span class="y">"3.12"</span> }
-      - <span class="c">run</span>: pip install pytest
-      - <span class="c">run</span>: pytest</pre></div></div>
+      - <span class="c">uses</span>: subosito/flutter-action@v2
+      - <span class="c">run</span>: flutter pub get
+      - <span class="c">run</span>: flutter analyze
+      - <span class="c">run</span>: flutter test</pre></div></div>
     <div class="step" style="display:grid;gap:4rem;align-content:center"><div class="row" style="gap:3rem"><div class="status ok" style="width:11rem;height:11rem"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M24 52l18 18 34-38" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Les tests passent</h3></div><div class="row" style="gap:3rem"><div class="status ko" style="width:11rem;height:11rem"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M28 28l44 44M72 28L28 72" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/></svg></div><h3>Un test échoue</h3></div></div>
   </div>
 </section>
@@ -1054,23 +1037,11 @@ Réussite</pre></div></div>
 
 <section class="slide" data-id="cloture">
   <div class="label">Clôture · et pour vendredi</div>
-  <div class="cols c3" style="flex:0 0 auto;gap:4rem">
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
     <div class="card step"><span class="chip i" style="align-self:flex-start">S2 · ven. 9 oct.</span><h3 class="mt">Git, agent,<br>lancement du projet</h3></div>
-    <div class="card step"><span class="chip c" style="align-self:flex-start">À lire</span><h3 class="mt">Les trois thèmes<br>A · B · C</h3></div>
-    <div class="card hl step"><span class="chip r" style="align-self:flex-start">Avant jeu. 8 oct. 12h</span><h3 class="mt">Formulaire<br>d'équipes</h3><p class="cap mt">équipe · 3 thèmes classés · identifiants GitHub</p></div>
+    <div class="card hl step"><span class="chip r" style="align-self:flex-start">Avant jeu. 8 oct. 12h</span><h3 class="mt">Formulaire<br>d'équipes</h3><p class="cap mt">équipe · identifiants GitHub</p></div>
   </div>
   <p class="mt2 step" style="text-align:center;font-size:4.4rem;color:var(--ink)">Et la règle d'or ?</p>
-</section>
-
-<section class="slide" data-id="merci">
-  <div class="label">Merci</div>
-  <div class="row grow" style="gap:9rem">
-    <div class="step" style="flex:0 0 auto"><div class="me"></div></div>
-    <div class="grow">
-      <h2 style="font-size:13rem">Des<br><span class="grad">questions</span> ?</h2>
-      <div class="chips mt2 step"><span class="chip">medium.benoitfontaine.fr</span><span class="chip">linkedin.com/in/b-fontaine</span></div>
-    </div>
-  </div>
 </section>
 
 </div>
@@ -1085,17 +1056,40 @@ Réussite</pre></div></div>
   var cells=document.getElementById('cells');
   if(cells){for(var k=0;k<60;k++){var c=document.createElement('i');if(k<14)c.className='w';cells.appendChild(c)}}
 
+  var calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var START=calm?0:350,GAP=calm?0:80,FALLBACK=calm?0:900,timer=null,run=0;
   function steps(sl){return [].slice.call(sl.querySelectorAll('.step'))}
+  function pending(sl){return steps(sl).filter(function(e){return !e.classList.contains('on')})}
+  function stop(){run++;clearTimeout(timer)}
+  /* chaque étape démarre quand l'animation de la précédente se termine */
+  function reveal(sl){
+    stop();var me=run,list=pending(sl),k=0;
+    function go(){
+      if(me!==run||k>=list.length)return;
+      var el=list[k++],done=false;
+      function fin(){
+        if(done)return;done=true;el.removeEventListener('transitionend',onEnd);clearTimeout(timer);
+        if(me===run)timer=setTimeout(go,GAP);
+      }
+      function onEnd(e){if(e.target===el&&e.propertyName==='opacity')fin()}
+      el.addEventListener('transitionend',onEnd);
+      timer=setTimeout(fin,FALLBACK);
+      el.classList.add('on');
+    }
+    timer=setTimeout(go,START);
+  }
   function show(n,all){
-    n=Math.max(0,Math.min(slides.length-1,n));i=n;
+    n=Math.max(0,Math.min(slides.length-1,n));i=n;stop();
     slides.forEach(function(s,k){s.classList.toggle('active',k===n);s.classList.toggle('past',k<n);if(k>n)steps(s).forEach(function(e){e.classList.remove('on')})});
     steps(slides[n]).forEach(function(e){e.classList.toggle('on',!!all)});
+    if(!all)reveal(slides[n]);
     prog.style.width=((n+1)/slides.length*100)+'%';cur.textContent=n+1;
     try{history.replaceState(null,'','#'+(n+1))}catch(e){}
     if(notesWin&&!notesWin.closed){try{notesWin.location.hash=slides[n].dataset.id}catch(e){}}
   }
-  function next(){var p=steps(slides[i]).filter(function(e){return !e.classList.contains('on')});if(p.length){p[0].classList.add('on');return}if(i<slides.length-1)show(i+1,false)}
-  function prev(){var o=steps(slides[i]).filter(function(e){return e.classList.contains('on')});if(o.length){o[o.length-1].classList.remove('on');return}if(i>0)show(i-1,true)}
+  /* suivant : termine d'abord l'apparition en cours, sinon passe à la slide suivante */
+  function next(){var p=pending(slides[i]);if(p.length){stop();p.forEach(function(e){e.classList.add('on')});return}if(i<slides.length-1)show(i+1,false)}
+  function prev(){if(i>0)show(i-1,true)}
   function overview(){document.body.classList.toggle('overview');if(!document.body.classList.contains('overview'))show(i,true)}
   document.addEventListener('keydown',function(e){
     if(e.metaKey||e.ctrlKey||e.altKey)return;var k=e.key;
@@ -1111,7 +1105,7 @@ Réussite</pre></div></div>
   document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
   document.addEventListener('touchend',function(e){if(tx===null)return;var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60){d<0?next():prev()}tx=null});
   document.addEventListener('click',function(e){if(document.body.classList.contains('overview'))return;e.clientX>innerWidth*0.3?next():prev()});
-  window.addEventListener('beforeprint',function(){slides.forEach(function(s){steps(s).forEach(function(e){e.classList.add('on')})})});
+  window.addEventListener('beforeprint',function(){stop();slides.forEach(function(s){steps(s).forEach(function(e){e.classList.add('on')})})});
   var h=parseInt((location.hash||'').slice(1),10);show(isNaN(h)?0:h-1,false);
 
   /* fond : réseau de nœuds */
