@@ -1,0 +1,25 @@
+- generic [active] [ref=f24e1]:
+  - generic [ref=f24e2]:
+    - generic [ref=f24e5]:
+      - generic [ref=f24e6]:
+        - generic [ref=f24e8]: ITI
+        - text: // S1 · Pourquoi le craft ?
+      - generic [ref=f24e9]: 18 / 31
+    - generic [ref=f24e10]:
+      - generic [ref=f24e11]: // Agentic engineering
+      - generic [ref=f24e12]:
+        - generic [ref=f24e13]:
+          - img "Simon Willison" [ref=f24e14]
+          - generic [ref=f24e15]: Simon Willison
+          - generic [ref=f24e16]: 2025 – 2026
+        - img [ref=f24e17]:
+          - generic [ref=f24e19]: Agent
+          - generic [ref=f24e20]: modèle + harnais
+          - generic [ref=f24e21]:
+            - generic [ref=f24e23]: GUIDES
+            - generic [ref=f24e24]: CLAUDE.md · specs
+            - generic [ref=f24e26]: CAPTEURS
+            - generic [ref=f24e27]: tests · linters · CI
+            - generic [ref=f24e29]: CADRE
+            - generic [ref=f24e30]: permissions · bac à sable
+  - generic [ref=f24e32]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

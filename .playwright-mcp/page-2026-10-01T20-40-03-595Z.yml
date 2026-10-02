@@ -1,0 +1,14 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e17]: Séance 1 · Partie 1
+      - heading "Pourquoi le craft ?" [level=1] [ref=e18]
+      - paragraph [ref=e19]: "De la crise du logiciel aux agents de code : ce qui change, et ce qui ne change pas."
+      - generic [ref=e20]:
+        - generic [ref=e21]: Master ITI · Nantes Université
+        - generic [ref=e22]: Mercredi 7 octobre 2026
+        - generic [ref=e23]: Ingénierie logicielle à l'ère des agents
+    - generic [ref=e24]:
+      - generic [ref=e25]: Ouverture
+      - generic [ref=e26]: 1 / 32
+  - generic [ref=e27]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

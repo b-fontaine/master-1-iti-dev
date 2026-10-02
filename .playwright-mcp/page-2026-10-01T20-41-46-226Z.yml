@@ -1,0 +1,32 @@
+- generic [active] [ref=f6e1]:
+  - generic [ref=f6e3]:
+    - generic [ref=f6e5]:
+      - generic [ref=f6e6]: Le débat ouvert de 2026
+      - 'heading "Où placer la qualité : dans la revue, ou dans les garde-fous ?" [level=2] [ref=f6e7]'
+      - generic [ref=f6e8]:
+        - generic [ref=f6e9]:
+          - generic [ref=f6e10]: Sandro Mancuso
+          - heading "Garder l'humain dans la boucle" [level=3] [ref=f6e11]
+          - paragraph [ref=f6e12]: Petites PR, vraie revue, pair programming. « L'IA est le moteur. Le craft est la boussole. »
+        - generic [ref=f6e13]:
+          - generic [ref=f6e14]: Robert C. Martin · juillet 2026
+          - heading "Remplacer la lecture par un « gauntlet »" [level=3] [ref=f6e15]
+          - paragraph [ref=f6e16]: "Il ne lit plus le code de ses agents : tests unitaires et d'acceptation, mutation testing, complexité, couverture."
+        - generic [ref=f6e17]:
+          - generic [ref=f6e18]: Grady Booch
+          - heading "Les métriques sont aveugles" [level=3] [ref=f6e19]
+          - paragraph [ref=f6e20]:
+            - text: Elles ne voient ni les
+            - strong [ref=f6e21]: failles
+            - text: ni le
+            - strong [ref=f6e22]: code mort
+            - text: qu'un ingénieur expérimenté repère à l'œil.
+      - paragraph [ref=f6e23]:
+        - strong [ref=f6e24]: "Position défendable aujourd'hui :"
+        - text: "des garde-fous automatisés partout, et la revue humaine concentrée là où ils sont aveugles :"
+        - emphasis [ref=f6e25]: sécurité, intention métier, conception
+        - text: .
+    - generic [ref=f6e26]:
+      - generic [ref=f6e27]: 03 · Qualité
+      - generic [ref=f6e28]: 27 / 32
+  - generic [ref=f6e29]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

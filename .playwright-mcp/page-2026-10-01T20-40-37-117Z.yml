@@ -1,0 +1,43 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e28]:
+      - generic [ref=e29]: Qualité · ce que montrent les mesures
+      - heading "Sans garde-fous, la qualité se dégrade" [level=2] [ref=e30]
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - generic [ref=e33]: académique · causal
+          - generic [ref=e34]: ↗
+          - heading "Complexité durable" [level=3] [ref=e35]
+          - paragraph [ref=e36]:
+            - text: "806 dépôts qui adoptent Cursor : vélocité en hausse"
+            - emphasis [ref=e37]: transitoire
+            - text: ", complexité et alertes en hausse"
+            - emphasis [ref=e38]: persistante
+            - text: ", qui finit par ralentir l'équipe."
+          - paragraph [ref=e39]: CMU, He et al., MSR 2026
+        - generic [ref=e40]:
+          - generic [ref=e41]: DORA · corrélation
+          - generic [ref=e42]: −7,2 %
+          - heading "Stabilité de livraison" [level=3] [ref=e43]
+          - paragraph [ref=e44]: "Pour chaque +25 % d'adoption de l'IA (débit : −1,5 %)."
+          - paragraph [ref=e45]: DORA 2024, Google
+        - generic [ref=e46]:
+          - generic [ref=e47]: éditeur
+          - generic [ref=e48]: −70 %
+          - heading "Refactoring" [level=3] [ref=e49]
+          - paragraph [ref=e50]: "Part des lignes « déplacées » : 25 % en 2021, moins de 10 % en 2024. Duplication de blocs : +81 %."
+          - paragraph [ref=e51]: GitClear 2026 · corrélation
+        - generic [ref=e52]:
+          - generic [ref=e53]: éditeur
+          - generic [ref=e54]: 45 %
+          - heading "Code vulnérable" [level=3] [ref=e55]
+          - paragraph [ref=e56]: Du code généré introduit une faille OWASP Top 10. Stagnation sur deux ans.
+          - paragraph [ref=e57]: Veracode 2025
+      - paragraph [ref=e58]:
+        - text: Les éditeurs vendent un produit lié au problème qu'ils mesurent. Seules l'étude CMU (quasi-expérimentale) et METR (essai randomisé) établissent une
+        - strong [ref=e59]: causalité
+        - text: ", sur des périmètres limités."
+    - generic [ref=e24]:
+      - generic [ref=e25]: Ouverture
+      - generic [ref=e26]: 1 / 32
+  - generic [ref=e27]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

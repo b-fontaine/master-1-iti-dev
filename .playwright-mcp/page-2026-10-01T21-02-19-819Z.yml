@@ -1,0 +1,19 @@
+- generic [active] [ref=f16e1]:
+  - generic [ref=f16e2]:
+    - generic [ref=f16e5]:
+      - generic [ref=f16e6]:
+        - generic [ref=f16e8]: ITI
+        - text: // S1 · Pourquoi le craft ?
+      - generic [ref=f16e9]: 7 / 31
+    - generic [ref=f16e10]:
+      - generic [ref=f16e11]: // Jalon 3 · 1992
+      - generic [ref=f16e12]:
+        - img "Citron moisi" [ref=f16e15]
+        - generic [ref=f16e16]:
+          - heading "Dette technique" [level=2] [ref=f16e17]: Dettetechnique
+          - generic [ref=f16e18]:
+            - img "Ward Cunningham" [ref=f16e19]
+            - generic [ref=f16e20]:
+              - generic [ref=f16e21]: Ward Cunningham
+              - generic [ref=f16e22]: "1992"
+  - generic [ref=f16e23]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

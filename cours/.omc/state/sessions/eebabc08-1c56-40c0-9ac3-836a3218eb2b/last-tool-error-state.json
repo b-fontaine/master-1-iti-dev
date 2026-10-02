@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"sed -n 10,60p programme-detaille.md | cut -c1-700; echo ======; grep -n -i 'carte rouge\\\\|cartes rouge\\\\|carton\\\\|feux\\\\|tableau de suivi' programme-detaille.md | cut -c1-260 | head -12; e...",
+  "error": "Exit code 1\n\n## 1. Synopsis\n\n### Objectif général\n\nLes étudiants ne sont pas des développeurs et ne le deviendront pas. La formation vise deux compétences, qui se renforcent l'une l'autre.\n\n1. **Échanger avec une équipe de développement.** Comprendre le vocabulaire (dépôt, branche, PR, test, CI/CD, migration, release), le cycle de vie d'un logiciel, ce que coûtent la qualité et la sécurité, et poser les bonnes questions sur les risques et les contraintes.\n2. **Créer eux-mêmes, avec l'IA, un appl...",
+  "timestamp": "2026-10-01T21:30:13.992Z",
+  "retry_count": 1
+}

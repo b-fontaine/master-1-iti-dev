@@ -1,0 +1,46 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e3]:
+    - generic [ref=f1e5]:
+      - generic [ref=f1e6]: Qualité · ce que montrent les mesures
+      - heading "Sans garde-fous, la qualité se dégrade" [level=2] [ref=f1e7]
+      - generic [ref=f1e8]:
+        - generic [ref=f1e9]:
+          - generic [ref=f1e10]: académique · causal
+          - generic [ref=f1e11]: ↗
+          - heading "Complexité durable" [level=3] [ref=f1e12]
+          - paragraph [ref=f1e13]:
+            - text: "806 dépôts passés à Cursor : vitesse en hausse"
+            - emphasis [ref=f1e14]: transitoire
+            - text: ", complexité en hausse"
+            - emphasis [ref=f1e15]: persistante
+            - text: .
+          - paragraph [ref=f1e16]: CMU, MSR 2026
+        - generic [ref=f1e17]:
+          - generic [ref=f1e18]: DORA · corrélation
+          - generic [ref=f1e19]: −7,2 %
+          - heading "Stabilité de livraison" [level=3] [ref=f1e20]
+          - paragraph [ref=f1e21]: Pour chaque +25 % d'adoption de l'IA.
+          - paragraph [ref=f1e22]: DORA 2024, Google
+        - generic [ref=f1e23]:
+          - generic [ref=f1e24]: éditeur
+          - generic [ref=f1e25]: −70 %
+          - heading "Refactoring" [level=3] [ref=f1e26]
+          - paragraph [ref=f1e27]:
+            - text: "Duplication de blocs :"
+            - strong [ref=f1e28]: +81 %
+            - text: .
+          - paragraph [ref=f1e29]: GitClear 2026
+        - generic [ref=f1e30]:
+          - generic [ref=f1e31]: éditeur
+          - generic [ref=f1e32]: 45 %
+          - heading "Code vulnérable" [level=3] [ref=f1e33]
+          - paragraph [ref=f1e34]: Du code généré contient une faille OWASP Top 10.
+          - paragraph [ref=f1e35]: Veracode 2025
+      - paragraph [ref=f1e36]:
+        - text: Les éditeurs vendent un produit lié au problème qu'ils mesurent. Seules l'étude CMU et METR établissent une
+        - strong [ref=f1e37]: causalité
+        - text: ", sur des périmètres limités."
+    - generic [ref=f1e38]:
+      - generic [ref=f1e39]: 03 · Qualité
+      - generic [ref=f1e40]: 24 / 32
+  - generic [ref=f1e41]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

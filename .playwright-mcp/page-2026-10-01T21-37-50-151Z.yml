@@ -1,0 +1,17 @@
+- generic [active] [ref=f31e1]:
+  - generic [ref=f31e2]:
+    - generic [ref=f31e5]:
+      - generic [ref=f31e6]:
+        - generic [ref=f31e8]: ITI
+        - text: // S1 · Comprendre et s'équiper
+      - generic [ref=f31e9]: 2 / 80
+    - generic [ref=f31e10]:
+      - generic [ref=f31e11]: // Accueil
+      - generic [ref=f31e15]:
+        - heading "Benoît Fontaine" [level=2] [ref=f31e16]: BenoîtFontaine
+        - paragraph [ref=f31e17]: Lead Architect
+        - generic "Septeo" [ref=f31e18]
+        - generic [ref=f31e19]:
+          - generic [ref=f31e20]: medium.benoitfontaine.fr
+          - generic [ref=f31e21]: linkedin.com/in/b-fontaine
+  - generic [ref=f31e22]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

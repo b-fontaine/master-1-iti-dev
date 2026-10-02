@@ -1,0 +1,16 @@
+- generic [active] [ref=f30e1]:
+  - generic [ref=f30e2]:
+    - generic [ref=f30e5]:
+      - generic [ref=f30e6]:
+        - generic [ref=f30e8]: ITI
+        - text: // S1 · Comprendre et s'équiper
+      - generic [ref=f30e9]: 1 / 80
+    - generic [ref=f30e10]:
+      - generic [ref=f30e23]: // Master ITI · Séance 1
+      - heading "Ingénierie logicielle à l'ère des agents" [level=1] [ref=f30e24]: Ingénierielogicielle à l'èredes agents
+      - paragraph [ref=f30e25]: Comprendre et s'équiper
+      - generic [ref=f30e26]:
+        - generic [ref=f30e27]: Nantes Université
+        - generic [ref=f30e28]: Mercredi 7 oct. 2026
+        - generic [ref=f30e29]: Benoît Fontaine
+  - generic [ref=f30e30]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

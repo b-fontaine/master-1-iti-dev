@@ -1,0 +1,56 @@
+{
+ "beck": {
+  "file": "Kent_Beck_no_Workshop_Mapping_XP.jpg",
+  "license": "CC BY-SA 2.0",
+  "author": "Improve It",
+  "page": "https://commons.wikimedia.org/wiki/File:Kent_Beck_no_Workshop_Mapping_XP.jpg"
+ },
+ "martin": {
+  "file": "Robert_C._Martin_surrounded_by_computers_(cropped).jpg",
+  "license": "CC BY-SA 4.0",
+  "author": "Angelacleancoder",
+  "page": "https://commons.wikimedia.org/wiki/File:Robert_C._Martin_surrounded_by_computers_(cropped).jpg"
+ },
+ "brooks": {
+  "file": "Fred_Brooks_(cropped_square).jpg",
+  "license": "CC BY-SA 3.0",
+  "author": "Copyright owned by SD&amp;M (www.sdm.de)",
+  "page": "https://commons.wikimedia.org/wiki/File:Fred_Brooks_(cropped_square).jpg"
+ },
+ "karpathy": {
+  "file": "Andrej_Karpathy,_OpenAI.png",
+  "license": "CC BY 3.0",
+  "author": "Gladwin Analytics",
+  "page": "https://commons.wikimedia.org/wiki/File:Andrej_Karpathy,_OpenAI.png"
+ },
+ "willison": {
+  "file": "Simon_Willison_(2929211382)_(cropped).jpg",
+  "license": "CC BY 2.0",
+  "author": "Paul Downey from Berkhamsted, UK",
+  "page": "https://commons.wikimedia.org/wiki/File:Simon_Willison_(2929211382)_(cropped).jpg"
+ },
+ "torvalds": {
+  "file": "LinuxCon_Europe_Linus_Torvalds_03_(cropped).jpg",
+  "license": "CC BY-SA 4.0",
+  "author": "Krd (photo)Von Sprat (crop/extraction)",
+  "page": "https://commons.wikimedia.org/wiki/File:LinuxCon_Europe_Linus_Torvalds_03_(cropped).jpg"
+ },
+ "booch": {
+  "file": "Grady_Booch,_CHM_2011_2_cropped.jpg",
+  "license": "CC BY-SA 2.0",
+  "author": "Grady_Booch,_CHM_2011_2.jpg: vonguard from Oakland, Nmibia\nderivative work: YMS",
+  "page": "https://commons.wikimedia.org/wiki/File:Grady_Booch,_CHM_2011_2_cropped.jpg"
+ },
+ "cunningham": {
+  "file": "Ward_Cunningham_-_Commons-1_(cropped).jpg",
+  "license": "CC BY-SA 3.0",
+  "author": "Carrigg Photography for the Wikimedia Foundation",
+  "page": "https://commons.wikimedia.org/wiki/File:Ward_Cunningham_-_Commons-1_(cropped).jpg"
+ },
+ "fowler": {
+  "file": "Martin_Fowler_(2008).jpg",
+  "license": "CC BY 2.0",
+  "author": "Ade Oshineye",
+  "page": "https://commons.wikimedia.org/wiki/File:Martin_Fowler_(2008).jpg"
+ }
+}

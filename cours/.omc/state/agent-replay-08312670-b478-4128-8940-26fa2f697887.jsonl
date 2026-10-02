@@ -1,0 +1,6 @@
+{"t":0,"agent":"a3c68f9","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}
+{"t":0,"agent":"ad9ca1f","agent_type":"workflow-subagent","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a0ca251","agent_type":"workflow-subagent","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ad9ca1f","agent_type":"workflow-subagent","event":"agent_stop","success":true,"duration_ms":69725}
+{"t":0,"agent":"a0ca251","agent_type":"workflow-subagent","event":"agent_stop","success":true,"duration_ms":245616}
+{"t":0,"agent":"a38a9f1","agent_type":"untracked-native-fork","event":"agent_stop","success":true,"synthetic":true,"telemetry_status":"unmatched_stop","reason":"SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."}

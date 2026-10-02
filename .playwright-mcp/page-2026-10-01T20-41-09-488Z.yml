@@ -1,0 +1,31 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - generic [ref=f3e5]: Gain de productivité selon le contexte
+      - heading "Le gain s'effondre sur l'existant complexe" [level=2] [ref=f3e6]
+      - generic [ref=f3e7]:
+        - generic [ref=f3e8]:
+          - generic [ref=f3e9]: Neuf et simple
+          - generic [ref=f3e10]: 30-40 %
+        - generic [ref=f3e13]:
+          - generic [ref=f3e14]: Neuf et complexe
+          - generic [ref=f3e15]: 10-15 %
+        - generic [ref=f3e18]:
+          - generic [ref=f3e19]: Existant et simple
+          - generic [ref=f3e20]: 15-20 %
+        - generic [ref=f3e23]:
+          - generic [ref=f3e24]: Existant et complexe
+          - generic [ref=f3e25]: 0-10 %, parfois négatif
+      - generic [ref=f3e28]:
+        - generic [ref=f3e29]: 10-15 %
+        - paragraph [ref=f3e30]:
+          - text: de gain
+          - strong [ref=f3e31]: médian
+          - text: sur ~120 000 développeurs, et non les 60 % du marketing. Environ la
+          - strong [ref=f3e32]: moitié
+          - text: du gain brut est absorbée par la reprise (bugs, conventions ignorées).
+      - generic [ref=f3e33]: "Stanford, Denisov-Blanch, 2025 · axe des barres : 0 à 50 % de gain · source académique"
+    - generic [ref=f3e34]:
+      - generic [ref=f3e35]: 03 · Qualité
+      - generic [ref=f3e36]: 23 / 32
+  - generic [ref=f3e37]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

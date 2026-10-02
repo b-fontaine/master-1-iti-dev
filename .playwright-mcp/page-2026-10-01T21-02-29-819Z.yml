@@ -1,0 +1,21 @@
+- generic [active] [ref=f17e1]:
+  - generic [ref=f17e2]:
+    - generic [ref=f17e5]:
+      - generic [ref=f17e6]:
+        - generic [ref=f17e8]: ITI
+        - text: // S1 · Pourquoi le craft ?
+      - generic [ref=f17e9]: 8 / 31
+    - generic [ref=f17e10]:
+      - generic [ref=f17e11]: // Jalon 4 · 1996 → 2002
+      - generic [ref=f17e12]:
+        - generic [ref=f17e13]:
+          - img "Kent Beck" [ref=f17e14]
+          - generic [ref=f17e15]: Kent Beck
+          - generic [ref=f17e16]: XP · TDD
+        - img [ref=f17e18]:
+          - generic [ref=f17e24]: TDD
+          - generic [ref=f17e25]: petits pas
+          - generic [ref=f17e26]: ROUGE
+          - generic [ref=f17e27]: VERT
+          - generic [ref=f17e28]: REFACTOR
+  - generic [ref=f17e29]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

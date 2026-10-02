@@ -1,0 +1,16 @@
+- generic [active] [ref=f20e1]:
+  - generic [ref=f20e2]:
+    - generic [ref=f20e5]:
+      - generic [ref=f20e6]:
+        - generic [ref=f20e8]: ITI
+        - text: // S1 · Pourquoi le craft ?
+      - generic [ref=f20e9]: 9 / 31
+    - generic [ref=f20e10]:
+      - generic [ref=f20e11]: // Jalon 5 · 2001
+      - generic [ref=f20e12]:
+        - img "Les 17 signataires du Manifeste Agile" [ref=f20e15]
+        - generic [ref=f20e16]:
+          - generic [ref=f20e17]: "17"
+          - heading "signataires" [level=3] [ref=f20e18]
+          - paragraph [ref=f20e19]: Snowbird · Utah
+  - generic [ref=f20e20]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

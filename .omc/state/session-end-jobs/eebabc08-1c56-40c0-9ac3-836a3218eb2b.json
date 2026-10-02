@@ -1,0 +1,343 @@
+{
+  "version": 1,
+  "jobId": "3fdfe3dc-f150-4085-890d-ceeee45d093d",
+  "sessionId": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+  "scopeKey": "25340d605d018b5f1832da18259b684a149e1348e7d22a2484a8462523331809",
+  "revision": 57,
+  "createdAt": "2026-10-01T23:51:37.365Z",
+  "updatedAt": "2026-10-01T23:52:08.247Z",
+  "producerGraceExpiresAt": "2026-10-01T23:52:07.366Z",
+  "bestEffortDeadlineAt": "2026-10-01T23:52:58.366Z",
+  "producers": {
+    "core": {
+      "state": "sealed",
+      "intentKey": "dd74681312c4006155be4c2637550df8562cccf1b299195b2eaa6f6b0d0455a4",
+      "payloadDigest": "dd74681312c4006155be4c2637550df8562cccf1b299195b2eaa6f6b0d0455a4",
+      "sealedAt": "2026-10-01T23:52:07.570Z",
+      "sealedBy": "recovery"
+    },
+    "wiki": {
+      "state": "no-op",
+      "sealedAt": "2026-10-01T23:51:37.385Z",
+      "sealedBy": "wiki-producer"
+    }
+  },
+  "actions": {
+    "foreground-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "completed",
+      "attempts": 1,
+      "idempotencyKey": "ea604659ae5ba60ad308057bca8f46940d29b3072b8d2bbabfede9f9f5ab2ba2",
+      "payload": {
+        "transcriptPath": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+        "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+        "reason": "other",
+        "input": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "transcript_path": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+          "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+          "scratchpad_dir": "/tmp/claude-1000/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b/scratchpad",
+          "prompt_id": "e5b61b8c-7a37-45c9-9c75-4a0ac3732226",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {},
+        "metrics": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "ended_at": "2026-10-01T23:52:07.505Z",
+          "reason": "other",
+          "agents_spawned": 0,
+          "agents_completed": 0,
+          "modes_used": []
+        }
+      },
+      "budgetMs": 9000,
+      "claimedAt": "2026-10-01T23:52:07.419Z",
+      "runner": {
+        "attempt": 1,
+        "runnerNonce": "59972050-93ad-4b20-9ec0-b8d5d7095dd6",
+        "phase": "terminal",
+        "deadlineAt": "2026-10-01T23:52:17.396Z"
+      },
+      "lastOutcomeCode": "completed",
+      "completedAt": "2026-10-01T23:52:07.568Z"
+    },
+    "wiki-capture": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "completed",
+      "attempts": 0,
+      "idempotencyKey": "c64690f6c48de471994e9699bb1fcfcb42fb24a39685b872fea556dc312193fe",
+      "payload": {
+        "transcriptPath": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+        "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+        "reason": "other",
+        "input": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "transcript_path": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+          "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+          "scratchpad_dir": "/tmp/claude-1000/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b/scratchpad",
+          "prompt_id": "e5b61b8c-7a37-45c9-9c75-4a0ac3732226",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000,
+      "completedAt": "2026-10-01T23:51:37.385Z"
+    },
+    "team-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "completed",
+      "attempts": 1,
+      "idempotencyKey": "d3ba74b94fbe7095815887b5e092e2f15d806c34eb13e654f63529f420613138",
+      "payload": {
+        "transcriptPath": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+        "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+        "reason": "other",
+        "input": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "transcript_path": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+          "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+          "scratchpad_dir": "/tmp/claude-1000/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b/scratchpad",
+          "prompt_id": "e5b61b8c-7a37-45c9-9c75-4a0ac3732226",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {},
+        "metrics": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "ended_at": "2026-10-01T23:52:07.505Z",
+          "reason": "other",
+          "agents_spawned": 0,
+          "agents_completed": 0,
+          "modes_used": []
+        }
+      },
+      "budgetMs": 9000,
+      "claimedAt": "2026-10-01T23:52:07.576Z",
+      "runner": {
+        "attempt": 1,
+        "runnerNonce": "ac3643c0-0ad8-4b3d-a7e9-efea10f50d32",
+        "phase": "terminal",
+        "deadlineAt": "2026-10-01T23:52:17.396Z"
+      },
+      "lastOutcomeCode": "completed",
+      "completedAt": "2026-10-01T23:52:07.666Z"
+    },
+    "python-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "completed",
+      "attempts": 1,
+      "idempotencyKey": "4905c62b988b418f0f0dbbc88853bf5ba713e4dc885275ebb02283796c979fd8",
+      "payload": {
+        "transcriptPath": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+        "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+        "reason": "other",
+        "input": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "transcript_path": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+          "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+          "scratchpad_dir": "/tmp/claude-1000/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b/scratchpad",
+          "prompt_id": "e5b61b8c-7a37-45c9-9c75-4a0ac3732226",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {},
+        "metrics": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "ended_at": "2026-10-01T23:52:07.505Z",
+          "reason": "other",
+          "agents_spawned": 0,
+          "agents_completed": 0,
+          "modes_used": []
+        }
+      },
+      "budgetMs": 9000,
+      "claimedAt": "2026-10-01T23:52:07.671Z",
+      "runner": {
+        "attempt": 1,
+        "runnerNonce": "29898652-a9d7-4241-9dfd-a100cf1f3503",
+        "phase": "terminal",
+        "deadlineAt": "2026-10-01T23:52:17.396Z"
+      },
+      "lastOutcomeCode": "completed",
+      "completedAt": "2026-10-01T23:52:07.858Z"
+    },
+    "reply-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "completed",
+      "attempts": 1,
+      "idempotencyKey": "c3b487331a618089e4fdf9d1784586fcae474f8f2a89e15e6da481a0cf849d72",
+      "payload": {
+        "transcriptPath": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+        "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+        "reason": "other",
+        "input": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "transcript_path": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+          "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+          "scratchpad_dir": "/tmp/claude-1000/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b/scratchpad",
+          "prompt_id": "e5b61b8c-7a37-45c9-9c75-4a0ac3732226",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000,
+      "claimedAt": "2026-10-01T23:52:07.863Z",
+      "runner": {
+        "attempt": 1,
+        "runnerNonce": "89dd621d-8dd0-468f-a56b-6cf9a065b1a2",
+        "phase": "terminal",
+        "deadlineAt": "2026-10-01T23:52:17.396Z"
+      },
+      "lastOutcomeCode": "completed",
+      "completedAt": "2026-10-01T23:52:07.955Z"
+    },
+    "callback": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "completed",
+      "attempts": 1,
+      "idempotencyKey": "8a797c8ebeffcd2878a0b99b8c0718c5973654ad008a6e3fa553353c05155413",
+      "payload": {
+        "transcriptPath": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+        "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+        "reason": "other",
+        "input": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "transcript_path": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+          "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+          "scratchpad_dir": "/tmp/claude-1000/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b/scratchpad",
+          "prompt_id": "e5b61b8c-7a37-45c9-9c75-4a0ac3732226",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {},
+        "metrics": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "ended_at": "2026-10-01T23:52:07.505Z",
+          "reason": "other",
+          "agents_spawned": 0,
+          "agents_completed": 0,
+          "modes_used": []
+        }
+      },
+      "budgetMs": 2000,
+      "claimedAt": "2026-10-01T23:52:07.959Z",
+      "runner": {
+        "attempt": 1,
+        "runnerNonce": "4dfcc63c-bbdb-4c77-abf5-6d83b22ab14b",
+        "phase": "terminal",
+        "deadlineAt": "2026-10-01T23:52:17.396Z"
+      },
+      "lastOutcomeCode": "completed",
+      "completedAt": "2026-10-01T23:52:08.050Z"
+    },
+    "notification": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "completed",
+      "attempts": 1,
+      "idempotencyKey": "2d01dac004eb2671954b162a10b4bf5e6e3fbe31176afd786b82fc6ac1f54d46",
+      "payload": {
+        "transcriptPath": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+        "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+        "reason": "other",
+        "input": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "transcript_path": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+          "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+          "scratchpad_dir": "/tmp/claude-1000/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b/scratchpad",
+          "prompt_id": "e5b61b8c-7a37-45c9-9c75-4a0ac3732226",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {},
+        "metrics": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "ended_at": "2026-10-01T23:52:07.505Z",
+          "reason": "other",
+          "agents_spawned": 0,
+          "agents_completed": 0,
+          "modes_used": []
+        }
+      },
+      "budgetMs": 2000,
+      "claimedAt": "2026-10-01T23:52:08.055Z",
+      "runner": {
+        "attempt": 1,
+        "runnerNonce": "574c89bf-df00-408d-9cc7-ce28973a2c27",
+        "phase": "terminal",
+        "deadlineAt": "2026-10-01T23:52:17.396Z"
+      },
+      "lastOutcomeCode": "completed",
+      "completedAt": "2026-10-01T23:52:08.140Z"
+    },
+    "openclaw": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "completed",
+      "attempts": 1,
+      "idempotencyKey": "df57b3ae7bb894cd3c9c3b5cda5a8a6779e16f383cfa31fe036d1f30a85e3ada",
+      "payload": {
+        "transcriptPath": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+        "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+        "reason": "other",
+        "input": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "transcript_path": "/home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b.jsonl",
+          "cwd": "/home/bfontaine/git/master-1-iti-dev/cours/presentations",
+          "scratchpad_dir": "/tmp/claude-1000/-home-bfontaine-git-master-1-iti-dev/eebabc08-1c56-40c0-9ac3-836a3218eb2b/scratchpad",
+          "prompt_id": "e5b61b8c-7a37-45c9-9c75-4a0ac3732226",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {},
+        "metrics": {
+          "session_id": "eebabc08-1c56-40c0-9ac3-836a3218eb2b",
+          "ended_at": "2026-10-01T23:52:07.505Z",
+          "reason": "other",
+          "agents_spawned": 0,
+          "agents_completed": 0,
+          "modes_used": []
+        }
+      },
+      "budgetMs": 2000,
+      "claimedAt": "2026-10-01T23:52:08.147Z",
+      "runner": {
+        "attempt": 1,
+        "runnerNonce": "20f58fa5-8012-4e2f-a9a2-8b9bde86a1af",
+        "phase": "terminal",
+        "deadlineAt": "2026-10-01T23:52:17.396Z"
+      },
+      "lastOutcomeCode": "completed",
+      "completedAt": "2026-10-01T23:52:08.237Z"
+    }
+  },
+  "owner": null,
+  "phase": "complete",
+  "recoverableFailure": {
+    "reason": "actions-settled",
+    "releasedAt": "2026-10-01T23:52:08.243Z",
+    "ownerNonce": "4c292b80-39d1-41ec-a87f-bbc843c54971"
+  },
+  "completion": {
+    "completedAt": "2026-10-01T23:52:08.243Z",
+    "terminalDigest": "23deb999a39cdb49abfe7d0518f03450dc3710fe52f1fd029fe8cfb72d711e6a",
+    "terminalRevision": 56
+  }
+}

@@ -1,0 +1,1134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séance 1 · Comprendre et s'équiper · Master ITI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* 1rem = 1/192 de la largeur (ou 1/108 de la hauteur) : tout suit la taille de la fenêtre */
+:root{
+  --bg:#F4F6FD; --ink:#0C1030; --ink-2:#3E4566; --ink-3:#7780A3; --line:#D6DBF0;
+  --indigo:#4338F5; --violet:#7B3FF2; --cyan:#00A8C6; --lime:#46A000; --coral:#EE3D5F; --amber:#E58A00;
+  --grad:linear-gradient(120deg,#4338F5 0%,#7B3FF2 48%,#00A8C6 100%);
+  --glass:rgba(255,255,255,.74);
+  --display:'Space Grotesk','Segoe UI',system-ui,sans-serif; --body:'Inter','Segoe UI',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:min(calc(100vw/192),calc(100vh/108))}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--body)}
+#stage{position:fixed;inset:0;overflow:hidden;background:
+  radial-gradient(90rem 60rem at 108% -12%,rgba(67,56,245,.16),transparent 60%),
+  radial-gradient(80rem 60rem at -8% 112%,rgba(0,168,198,.18),transparent 60%),var(--bg)}
+#bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+#grid{position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:9.6rem 9.6rem;
+  -webkit-mask-image:radial-gradient(110rem 70rem at 88% 8%,#000 0%,transparent 72%);mask-image:radial-gradient(110rem 70rem at 88% 8%,#000 0%,transparent 72%)}
+
+.slide{position:absolute;inset:0;z-index:1;padding:11rem 11rem 9rem;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateY(2rem);filter:blur(.6rem);transition:opacity .45s,transform .45s,filter .45s,visibility 0s .45s}
+.slide.active{opacity:1;visibility:visible;transform:none;filter:none;transition:opacity .45s,transform .45s,filter .45s}
+.slide.past{transform:translateY(-2rem)}
+.slide:not(:has(.grow)){justify-content:center}
+.slide:not(:has(.grow)) .label{margin-bottom:5rem}
+
+/* typo */
+.label{font-family:var(--mono);font-weight:700;font-size:2.2rem;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo);display:flex;align-items:center;gap:1.4rem;margin-bottom:2.4rem}
+.label::before{content:"//";color:var(--cyan)}
+h1{font-family:var(--display);font-weight:700;font-size:14rem;line-height:.98;letter-spacing:-.04em}
+h2{font-family:var(--display);font-weight:700;font-size:8rem;line-height:1.02;letter-spacing:-.03em;max-width:150rem}
+h3{font-family:var(--display);font-weight:600;font-size:4rem;line-height:1.1;letter-spacing:-.015em}
+p{font-size:3.6rem;line-height:1.3;color:var(--ink-2)}
+strong{color:var(--ink)}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font-family:var(--mono)}
+.sub{font-size:4.6rem;color:var(--ink-2);max-width:100rem;line-height:1.25;margin-top:4rem}
+.cap{font-family:var(--mono);font-size:2.2rem;color:var(--ink-3);letter-spacing:.04em}
+.num{font-family:var(--display);font-weight:700;letter-spacing:-.05em;line-height:.9}
+.neg{color:var(--coral)}.pos{color:var(--lime)}.ind{color:var(--indigo)}
+
+/* briques */
+.row{display:flex;gap:6rem;align-items:center}.grow{flex:1;min-width:0;min-height:0}
+.cols{display:grid;gap:4rem;flex:1;min-height:0}.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:repeat(3,1fr)}.c4{grid-template-columns:repeat(4,1fr)}
+.center{align-items:center;justify-content:center;text-align:center}
+.mt{margin-top:4rem}.mt2{margin-top:7rem}
+.card{position:relative;background:var(--glass);backdrop-filter:blur(1rem);-webkit-backdrop-filter:blur(1rem);border-radius:2.6rem;padding:4rem 4.4rem;display:flex;flex-direction:column;min-width:0;box-shadow:0 1.4rem 4rem rgba(40,50,120,.09)}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:.2rem;background:linear-gradient(140deg,rgba(67,56,245,.55),rgba(0,168,198,.25) 40%,rgba(214,219,240,.9) 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.card.good::before{background:linear-gradient(140deg,#7CC83A,#BFE08F)}.card.bad::before{background:linear-gradient(140deg,#EE3D5F,#F6B3C0)}.card.warn::before{background:linear-gradient(140deg,#E58A00,#F2D08A)}
+.chip{display:inline-flex;align-items:center;gap:1rem;font-family:var(--mono);font-weight:700;font-size:2.4rem;padding:.8rem 2rem;border-radius:99rem;background:#fff;border:.2rem solid var(--line);color:var(--ink);white-space:nowrap}
+.chip.i{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.chip.n{background:#E8F6D6;border-color:#BFE08F;color:#3C8000}.chip.v{background:#FFF0D2;border-color:#F2D08A;color:#A55F00}.chip.r{background:#FFE4EA;border-color:#F6B3C0;color:#C21F42}.chip.c{background:#DDF6FB;border-color:#A5E0EC;color:#007C93}
+.bigchip .chip{font-size:3.6rem;padding:1.4rem 3rem}
+.chips{display:flex;gap:1.6rem;flex-wrap:wrap}
+.dot{width:1.4rem;height:1.4rem;border-radius:50%;background:var(--coral);box-shadow:0 0 0 0 rgba(238,61,95,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 1.6rem rgba(238,61,95,0)}100%{box-shadow:0 0 0 0 rgba(238,61,95,0)}}
+
+/* portraits */
+.face{width:19rem;height:19rem;border-radius:50%;object-fit:cover;object-position:50% 22%;border:.6rem solid #fff;box-shadow:0 0 0 .3rem var(--indigo),0 1.6rem 4rem rgba(67,56,245,.3);background:#fff;flex:0 0 auto}
+.face.l{width:27rem;height:27rem}.face.s{width:14rem;height:14rem}
+.who{display:flex;flex-direction:column;align-items:center;gap:1.6rem;text-align:center}
+.who b{font-family:var(--display);font-size:3.4rem}.who span{font-family:var(--mono);font-size:2.2rem;color:var(--ink-3)}
+.avatar{display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:8rem;color:#fff;background:var(--grad)}
+
+/* images */
+.shot{border-radius:2rem;overflow:hidden;background:#fff;box-shadow:0 2rem 6rem rgba(40,50,120,.22);border:.2rem solid var(--line);position:relative;min-height:0}
+.shot img{display:block;width:100%;height:100%;object-fit:cover}
+.shot.a{aspect-ratio:1795/1080}.shot.a img{width:106.96%;height:auto}      /* rogne le badge de numéro des captures */
+.hud{position:relative}
+.hud::after,.hud::before{content:"";position:absolute;width:3.4rem;height:3.4rem;border:.4rem solid var(--indigo);pointer-events:none;z-index:3}
+.hud::before{left:-1rem;top:-1rem;border-right:0;border-bottom:0}.hud::after{right:-1rem;bottom:-1rem;border-left:0;border-top:0}
+.hud.shot{overflow:visible}.hud.shot img{border-radius:1.8rem}.hud.shot.a{overflow:visible}
+.stamp{position:absolute;left:93.2%;top:4.4%;width:5%;height:8%;background:var(--indigo);color:#fff;font:700 1.6rem var(--mono);display:grid;place-items:center;border-radius:.8rem;z-index:2}
+.shot{min-width:0}.crop{width:100%;overflow:hidden;border-radius:1.8rem}
+
+/* terminal */
+.term{border-radius:2.2rem;overflow:hidden;background:#0E1333;box-shadow:0 2rem 6rem rgba(40,50,120,.28);display:flex;flex-direction:column;min-width:0}
+.term .bar{display:flex;gap:1rem;align-items:center;padding:1.8rem 2.4rem;background:#171D4A;font-family:var(--mono);font-size:2rem;color:#9AA3D8}
+.term .bar i{width:1.6rem;height:1.6rem;border-radius:50%;background:#EE3D5F}.term .bar i:nth-child(2){background:#E5B800}.term .bar i:nth-child(3){background:#46C060}
+.term .bar span{margin-left:1.4rem}
+.term pre{font-family:var(--mono);font-size:3.2rem;line-height:1.5;color:#DDE3FF;padding:3rem 3.4rem;white-space:pre-wrap}
+.term .g{color:#6BE08A}.term .r{color:#FF6B86}.term .c{color:#5AD8F0}.term .y{color:#FFD35A}.term .d{color:#7C86C0}
+.cur::after{content:"▌";animation:blink 1s steps(1) infinite;color:#5AD8F0}
+@keyframes blink{50%{opacity:0}}
+
+/* frise */
+.rail{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;margin-top:5rem}
+.rail::before{content:"";position:absolute;left:0;right:0;top:3.4rem;height:.6rem;border-radius:.3rem;background:var(--grad);background-size:200% 100%;animation:flow 6s linear infinite}
+@keyframes flow{to{background-position:-200% 0}}
+.node{position:relative;padding-top:9rem;padding-right:2rem}
+.node::before{content:"";position:absolute;top:1.8rem;left:0;width:3.8rem;height:3.8rem;border-radius:50%;background:#fff;border:.8rem solid var(--indigo)}
+.node.now::before{border-color:var(--coral);box-shadow:0 0 0 1rem rgba(238,61,95,.18)}
+.node b{display:block;font-family:var(--display);font-size:5rem;letter-spacing:-.02em}
+.node span{display:block;font-size:3rem;line-height:1.25;color:var(--ink-2);margin-top:.6rem}
+.vrail{position:relative;display:grid;gap:4.4rem}
+.vrail::before{content:"";position:absolute;left:1.5rem;top:2rem;bottom:2rem;width:.6rem;border-radius:.3rem;background:var(--grad)}
+.vrail .node{padding:0 0 0 7.6rem}.vrail .node::before{top:1rem}
+
+/* barres */
+.bars{display:grid;gap:3rem}
+.bar2{display:grid;grid-template-columns:44rem 1fr;align-items:center;gap:3rem}
+.bar2 label{font-size:3.4rem;font-weight:600;color:var(--ink)}
+.track{position:relative;height:6.6rem;background:#E3E7F6;border-radius:1.6rem;overflow:hidden}
+.fill{position:absolute;top:0;bottom:0;border-radius:1.6rem;background:var(--grad)}.fill.low{background:linear-gradient(90deg,#EE3D5F,#E58A00)}
+.lab{position:absolute;top:50%;transform:translateY(-50%);font-family:var(--mono);font-weight:700;font-size:3rem;white-space:nowrap}
+
+/* cases « lire / écrire » */
+.cells{display:grid;grid-template-columns:repeat(20,1fr);gap:.8rem;width:100%}
+.cells i{aspect-ratio:1;border-radius:.8rem;background:#DDE2F5}
+.cells i.w{background:var(--grad);box-shadow:0 0 1.6rem rgba(67,56,245,.45)}
+
+/* titres de partie */
+.title-slide,.divider{justify-content:center}
+.divider .big{font-family:var(--display);font-weight:700;font-size:44rem;line-height:.78;letter-spacing:-.07em}
+.divider h2{font-size:11rem;margin-top:3rem}
+.ringart{position:absolute;right:-14rem;top:50%;transform:translateY(-50%);width:100rem;height:100rem;z-index:-1;opacity:.9}
+.ringart g{transform-origin:50% 50%}.spin{animation:spin 40s linear infinite}.spin2{animation:spin 70s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.meta{position:absolute;left:11rem;bottom:9rem;display:flex;gap:2rem}
+
+/* étapes */
+.step{opacity:0;transform:translateY(2.4rem);filter:blur(.5rem);transition:opacity .5s,transform .5s,filter .5s}
+.step.on{opacity:1;transform:none;filter:none}
+.tilt.step.on{transform:rotate(-2deg)}.tilt2.step.on{transform:rotate(2.2deg)}
+
+/* chrome */
+#prog{position:absolute;left:0;top:0;height:.7rem;background:var(--grad);width:0;z-index:20;transition:width .35s}
+#top{position:absolute;left:4rem;right:4rem;top:2.6rem;display:flex;justify-content:space-between;font-family:var(--mono);font-size:2rem;color:var(--ink-3);letter-spacing:.14em;z-index:20;text-transform:uppercase}
+#top b{color:var(--indigo)}
+#top .l{display:flex;align-items:center;gap:1.4rem}
+#help{position:fixed;right:1.4rem;bottom:1rem;font:500 1.6rem var(--mono);color:#6A7194;z-index:40;opacity:.7}
+
+/* vue d'ensemble */
+html:has(body.overview){overflow:auto;height:auto}
+body.overview{overflow:auto}
+body.overview #stage{position:relative;height:auto;min-height:100%;overflow:visible;padding:4rem;display:grid;grid-template-columns:repeat(4,38.4rem);gap:3rem;align-content:start;justify-content:center}
+body.overview #bg,body.overview #grid,body.overview #prog,body.overview #top{display:none}
+body.overview .slide{position:relative;inset:auto;opacity:1;visibility:visible;filter:none;transform:scale(.2);transform-origin:0 0;width:192rem;height:108rem;margin:0 -153.6rem -86.4rem 0;cursor:pointer;background:var(--bg);outline:.6rem solid var(--line);transition:none}
+body.overview .slide.active{outline-color:var(--indigo)}
+body.overview .step{opacity:1;transform:none;filter:none}
+
+/* fenêtre étroite ou portrait : on empile */
+@media (max-aspect-ratio:5/4){
+  html{font-size:min(calc(100vw/110),calc(100vh/108))}
+  .slide{padding:9rem 6rem 7rem;overflow:auto}
+  .c2,.c3,.c4{grid-template-columns:1fr}.row{flex-direction:column;align-items:flex-start;gap:3rem}
+  h1{font-size:10rem}h2{font-size:6.4rem}.divider .big{font-size:28rem}
+  .rail{grid-auto-flow:row;grid-auto-columns:auto}.rail::before{display:none}.rail .node{padding-top:0;padding-left:5.4rem;margin-bottom:2rem}.rail .node::before{top:.6rem}
+  .bar2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  html{font-size:10px}html,body{overflow:visible;height:auto}
+  #stage{position:static;overflow:visible;background:var(--bg)}#bg,#grid,#prog,#top,#help{display:none}
+  .slide{position:relative;inset:auto;opacity:1;visibility:visible;transform:none;filter:none;width:1920px;height:1080px;break-after:page;background:var(--bg)}
+  .step{opacity:1;transform:none;filter:none}
+}
+
+/* ---- ajouts séance 1 complète ---- */
+.me{width:34rem;height:34rem;border-radius:50%;background:url(day-1-assets/img/bio.png) no-repeat;background-size:217.6rem auto;background-position:-91.9rem -25.2rem;background-origin:border-box;border:.7rem solid #fff;box-shadow:0 0 0 .3rem var(--indigo),0 1.6rem 4rem rgba(67,56,245,.3)}
+.logo-sep{mix-blend-mode:multiply;width:42.5rem;height:11.5rem;background:url(day-1-assets/img/bio.png) no-repeat;background-size:192rem auto;background-position:-112.5rem -25.5rem}
+.book{background:url(day-1-assets/img/merci.png) no-repeat;background-size:192rem auto;filter:drop-shadow(0 1.2rem 1.6rem rgba(40,50,120,.28))}
+.step-list{display:grid;gap:2.6rem}
+.step-list>div{display:flex;align-items:center;gap:3rem;background:var(--glass);border-radius:2.2rem;padding:2.4rem 3.4rem;box-shadow:0 1rem 3rem rgba(40,50,120,.08)}
+.step-list .n{flex:0 0 7rem;height:7rem;border-radius:2rem;background:var(--grad);color:#fff;font:700 4rem var(--display);display:grid;place-items:center}
+.tl{display:flex;gap:.4rem;height:12rem;border-radius:1.6rem;overflow:hidden;margin-top:2rem}
+.tl b{flex:var(--m) 1 0;min-width:0;display:grid;place-items:center;font:700 2rem var(--mono);color:#fff;overflow:hidden;white-space:nowrap}
+.tl b.e{background:linear-gradient(120deg,#4338F5,#7B3FF2)}.tl b.i{background:linear-gradient(120deg,#00A8C6,#4F8CFF)}.tl b.p{background:#B8BEDB}.tl b.d{background:#7B3FF2}
+.ticks{position:relative;height:5rem;margin-top:1.4rem;font:700 2.2rem var(--mono);color:var(--ink-3)}.ticks span{position:absolute;transform:translateX(-50%)}.ticks span:first-child{transform:none}.ticks span:last-child{transform:translateX(-100%)}
+.board{display:grid;gap:1.2rem}
+.board .r{display:grid;grid-template-columns:20rem repeat(4,1fr);align-items:center;gap:1.6rem;background:var(--glass);border-radius:1.6rem;padding:1.6rem 2.4rem;font:700 2.6rem var(--mono);color:var(--ink-2)}
+.board .r.h{background:none;box-shadow:none;color:var(--ink-3);font-size:2.2rem}
+.board i{justify-self:center;width:3.4rem;height:3.4rem;border-radius:50%}.board i.ok{background:var(--lime)}.board i.ko{background:var(--coral)}.board i.wip{background:var(--amber)}
+.orb{border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0,#9FB4FF 28%,#4338F5 70%,#00A8C6 100%);box-shadow:0 1.6rem 4rem rgba(67,56,245,.35);flex:0 0 auto}
+.dial{position:relative;height:1.4rem;background:#D6DBF0;border-radius:1rem;margin:3rem 2rem 0}
+.dial i{position:absolute;top:50%;width:4rem;height:4rem;border-radius:50%;background:#fff;border:.6rem solid var(--indigo);transform:translate(-50%,-50%)}
+.dial b{position:absolute;left:0;top:0;bottom:0;border-radius:1rem;background:var(--grad);animation:dialgrow 5s ease-in-out infinite alternate}
+@keyframes dialgrow{from{width:0}to{width:100%}}
+.ticks2{display:flex;justify-content:space-between;margin-top:3.4rem;font:700 2.6rem var(--mono);color:var(--ink-2)}
+.gauge{position:relative;height:9rem;border-radius:2rem;background:#E3E7F6;overflow:hidden}
+.gauge i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,#46A000 0,#46A000 38%,#E58A00 68%,#EE3D5F 100%);background-size:100vw 100%;transition:width 3s ease .4s}
+.slide.active .gauge i{width:94%}
+.gtick{display:flex;justify-content:space-between;margin-top:2rem;font:700 2.6rem var(--mono)}
+.stack{display:grid;gap:1.6rem}
+.blk{border-radius:2rem;padding:3rem 3.4rem;font:700 3.2rem var(--display);color:#fff;display:grid;gap:.6rem}
+.blk span{font:500 2.4rem var(--mono);opacity:.9}
+.blk.a{background:linear-gradient(120deg,#4338F5,#7B3FF2);min-height:20rem;align-content:center}.blk.b{background:linear-gradient(120deg,#7B3FF2,#00A8C6);min-height:14rem;align-content:center}.blk.c{background:#B8BEDB;color:var(--ink)}
+.flow{display:flex;align-items:center;gap:3rem;flex-wrap:nowrap}
+.flow>span{font:700 6rem var(--mono);color:var(--indigo)}
+.fn{flex:1;min-width:0;background:var(--glass);border-radius:2.4rem;padding:3.6rem 2.4rem;font:700 4rem var(--display);text-align:center;box-shadow:0 1.4rem 4rem rgba(40,50,120,.1);display:grid;gap:1.2rem;justify-items:center}
+.fn.i{background:var(--grad);color:#fff}
+.fn small{font:500 2.4rem var(--mono);opacity:.8}
+.status{display:inline-grid;place-items:center;width:8rem;height:8rem;border-radius:50%}.status.ok{background:var(--lime)}.status.ko{background:var(--coral)}
+.term.code pre{font-size:3rem}
+.divider.title-slide{justify-content:center}
+@media (max-aspect-ratio:5/4){.flow{flex-direction:column}.flow>span{transform:rotate(90deg)}.board .r{grid-template-columns:12rem repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div id="stage">
+<canvas id="bg"></canvas><div id="grid"></div>
+<div id="prog"></div>
+<div id="top"><span class="l"><span class="dot"></span><b>ITI</b> // S1 · Comprendre et s'équiper</span><span><b id="cur">1</b> / <span id="tot">1</span></span></div>
+
+<section class="slide title-slide" data-id="titre">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true">
+    <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4338F5"/><stop offset=".55" stop-color="#7B3FF2"/><stop offset="1" stop-color="#00A8C6"/></linearGradient></defs>
+    <g class="spin"><circle cx="400" cy="400" r="260" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="140" r="14" fill="url(#gg)"/><circle cx="660" cy="400" r="9" fill="url(#gg)"/></g>
+    <g class="spin2"><circle cx="400" cy="400" r="340" stroke="url(#gg)" stroke-width="2" opacity=".5"/><circle cx="160" cy="580" r="12" fill="url(#gg)"/><circle cx="640" cy="170" r="8" fill="url(#gg)"/></g>
+    <circle cx="400" cy="400" r="150" stroke="url(#gg)" stroke-width="4"/>
+    <path d="M330 400h-50M470 400h50M400 330v-50M400 470v50" stroke="url(#gg)" stroke-width="4" stroke-linecap="round"/>
+    <rect x="360" y="360" width="80" height="80" rx="16" stroke="url(#gg)" stroke-width="4"/>
+  </svg>
+  <div class="label">Master ITI · Séance 1</div>
+  <h1 style="font-size:11.5rem">Ingénierie<br>logicielle à l'ère<br>des <span class="grad">agents</span></h1>
+  <p class="sub">Comprendre et s'équiper</p>
+  <div class="meta"><span class="chip">Nantes Université</span><span class="chip">Mercredi 7 oct. 2026</span><span class="chip">Benoît Fontaine</span></div>
+</section>
+
+<section class="slide" data-id="qui-suis-je">
+  <div class="label">Accueil</div>
+  <div class="row grow" style="gap:9rem">
+    <div class="step" style="flex:0 0 auto"><div class="me"></div></div>
+    <div class="grow">
+      <h2 style="font-size:10rem">Benoît<br><span class="grad">Fontaine</span></h2>
+      <p class="mt step" style="font-size:4.6rem;color:var(--ink)">Lead Architect</p>
+      <div class="logo-sep mt step" aria-label="Septeo"></div>
+      <div class="chips mt step"><span class="chip">medium.benoitfontaine.fr</span><span class="chip">linkedin.com/in/b-fontaine</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="lectures">
+  <div class="label">Mes lectures de chevet</div>
+  <div class="row grow" style="justify-content:center;gap:5rem;align-items:center">
+    <div class="book step" style="width:18.8rem;height:24.8rem;background-position:-8.8rem -50.6rem"></div>
+    <div class="book step" style="width:20.4rem;height:24.8rem;background-position:-35rem -50.6rem"></div>
+    <div class="book step" style="width:19.2rem;height:25rem;background-position:-59.8rem -50.4rem"></div>
+    <div class="book step" style="width:19.6rem;height:25rem;background-position:-83.6rem -50.6rem"></div>
+  </div>
+  <div class="chips step" style="justify-content:center"><span class="chip">Clean Architecture</span><span class="chip">Software Craftsmanship</span><span class="chip">Domain-Driven Design</span><span class="chip">Culture Code</span></div>
+</section>
+
+<section class="slide" data-id="objectifs-formation">
+  <div class="label">La formation</div>
+  <div class="cols c3" style="flex:0 0 auto">
+    <div class="card step center" style="align-items:center;gap:3rem"><svg viewBox="0 0 100 100" style="width:15rem"><path d="M12 22h48v34H34l-14 12V56H12z" fill="none" stroke="#4338F5" stroke-width="6" stroke-linejoin="round"/><path d="M60 40h28v30h-8v10L68 70H44" fill="none" stroke="#00A8C6" stroke-width="6" stroke-linejoin="round"/></svg><h3>Échanger avec<br>une équipe de dev</h3></div>
+    <div class="card step center" style="align-items:center;gap:3rem"><svg viewBox="0 0 100 100" style="width:15rem"><path d="M62 18a20 20 0 0 0-18 28L14 76l10 10 30-30a20 20 0 0 0 28-18L70 50 58 42z" fill="none" stroke="#4338F5" stroke-width="6" stroke-linejoin="round"/></svg><h3>Créer un outil<br>ponctuel avec l'IA</h3></div>
+    <div class="card step center" style="align-items:center;gap:3rem"><svg viewBox="0 0 100 100" style="width:15rem"><path d="M50 10l34 12v26c0 22-14 36-34 44C30 84 16 70 16 48V22z" fill="none" stroke="#EE3D5F" stroke-width="6" stroke-linejoin="round"/><path d="M36 50l10 10 18-20" fill="none" stroke="#EE3D5F" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>En connaître<br>les limites</h3></div>
+  </div>
+  <div class="chips step mt2" style="justify-content:center"><span class="chip">dépôt</span><span class="chip">branche</span><span class="chip">PR</span><span class="chip">test</span><span class="chip">CI/CD</span><span class="chip">migration</span><span class="chip">release</span></div>
+</section>
+
+<section class="slide" data-id="competences">
+  <div class="label">À la fin de la formation, vous saurez…</div>
+  <div class="step-list">
+    <div class="step"><span class="n">1</span><h3>expliquer ce que fait une équipe de dev</h3></div>
+    <div class="step"><span class="n">2</span><h3>cadrer un agent de code</h3></div>
+    <div class="step"><span class="n">3</span><h3>travailler en équipe avec git et GitHub</h3></div>
+    <div class="step"><span class="n">4</span><h3>justifier ce que vous livrez</h3></div>
+    <div class="step"><span class="n">5</span><h3>reconnaître les limites légales et de sécurité</h3></div>
+  </div>
+</section>
+
+<section class="slide" data-id="calendrier">
+  <div class="label">Calendrier</div>
+  <div class="rail" style="margin-top:3rem">
+    <div class="node now step"><b>7 oct.</b><span class="mono ind" style="font-size:2.6rem">S1</span><span>Comprendre<br>et s'équiper</span></div>
+    <div class="node step"><b>9 oct.</b><span class="mono ind" style="font-size:2.6rem">S2</span><span>Git, agent,<br>lancer le projet</span></div>
+    <div class="node step"><b>2 déc.</b><span class="mono ind" style="font-size:2.6rem">S3</span><span>User story,<br>données, RGPD</span></div>
+    <div class="node step"><b>4 déc.</b><span class="mono ind" style="font-size:2.6rem">S4</span><span>Qualité, CI/CD,<br>AI Act</span></div>
+    <div class="node step"><b>4 → 14 déc.</b><span class="mono ind" style="font-size:2.6rem">Sprint</span><span>Finir le<br>périmètre</span></div>
+    <div class="node step"><b>16 déc.</b><span class="mono ind" style="font-size:2.6rem">S5</span><span>Soutenance</span></div>
+  </div>
+  <p class="cap mt2 step">2 jours · 8 semaines · 2 jours · 12 jours</p>
+</section>
+
+<section class="slide" data-id="themes-projet">
+  <div class="label">Un projet fil rouge</div>
+  <div class="cols c3" style="flex:0 0 auto">
+    <div class="card step"><span class="chip c" style="align-self:flex-start">A</span><h3 class="mt">Les Marches<br>de Cendrelune</h3><p class="mt cap">jeu de rôle · un état qui progresse</p></div>
+    <div class="card step"><span class="chip c" style="align-self:flex-start">B</span><h3 class="mt">Ligne 4</h3><p class="mt cap">atelier de câblage · le TRS</p></div>
+    <div class="card step"><span class="chip c" style="align-self:flex-start">C</span><h3 class="mt">Vœux<br>de projet</h3><p class="mt cap">répartition équitable</p></div>
+  </div>
+  <div class="chips step mt2" style="justify-content:center"><span class="chip i">32 étudiants</span><span class="chip i">équipes de 3 à 5</span><span class="chip i">un seul thème par équipe</span></div>
+</section>
+
+<section class="slide" data-id="deroule">
+  <div class="label">Le déroulé · 8h15 → 12h15</div>
+  <div class="tl step"><b class="d" style="--m:5" title="Accueil · 5 min"></b><b class="i" style="--m:25" title="Install. · 25 min">Install.</b><b class="e" style="--m:20" title="Histoire · 20 min">Histoire</b><b class="i" style="--m:25" title="Install. · 25 min">Install.</b><b class="e" style="--m:20" title="Code, TDD · 20 min">Code, TDD</b><b class="p" style="--m:10" title="Pause · 10 min">Pause</b><b class="i" style="--m:25" title="Install. · 25 min">Install.</b><b class="e" style="--m:15" title="Modèles · 15 min">Modèles</b><b class="e" style="--m:15" title="Agent · 15 min">Agent</b><b class="i" style="--m:30" title="Install. · 30 min">Install.</b><b class="p" style="--m:10" title="Pause · 10 min">Pause</b><b class="e" style="--m:10" title="CI/CD · 10 min">CI/CD</b><b class="e" style="--m:10" title="Règle · 10 min">Règle</b><b class="i" style="--m:15" title="Rattrap. · 15 min">Rattrap.</b><b class="d" style="--m:5" title="Fin · 5 min"></b></div>
+  <div class="ticks step"><span style="left:0">8h15</span><span style="left:25%">9h15</span><span style="left:50%">10h15</span><span style="left:75%">11h15</span><span style="left:100%">12h15</span></div>
+  <div class="chips mt2 step"><span class="chip i">exposés et démo</span><span class="chip c">installations · 120 min</span><span class="chip">pauses</span></div>
+  <p class="mt step">Les téléchargements lourds tournent <span class="ind">pendant</span> les exposés.</p>
+</section>
+
+<section class="slide" data-id="cartes-suivi">
+  <div class="label">Pour avancer à 32</div>
+  <div class="row grow" style="gap:7rem">
+    <div class="step" style="display:grid;gap:3rem;flex:0 0 52rem">
+      <div class="card bad center" style="align-items:center"><div class="num neg" style="font-size:9rem">■</div><h3>Carte rouge</h3><p class="cap mt">je suis bloqué</p></div>
+      <div class="card good center" style="align-items:center"><div class="num pos" style="font-size:9rem">■</div><h3>Carte verte</h3><p class="cap mt">ça avance</p></div>
+    </div>
+    <div class="grow step">
+      <h3 style="margin-bottom:2.4rem">Tableau de suivi des postes</h3>
+      <div class="board">
+        <div class="r h"><span></span><span>git</span><span>VS Code</span><span>Claude</span><span>uv</span></div>
+        <div class="r"><span>Poste 01</span><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="ok"></i></div>
+        <div class="r"><span>Poste 02</span><i class="ok"></i><i class="ok"></i><i class="ko"></i><i class="ok"></i></div>
+        <div class="r"><span>Poste 03</span><i class="ok"></i><i class="wip"></i><i class="ko"></i><i class="ko"></i></div>
+        <div class="r"><span>Poste 04</span><i class="ok"></i><i class="ok"></i><i class="ok"></i><i class="wip"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="outils">
+  <div class="label">Les outils de la formation</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
+    <div class="card hl step"><span class="chip i" style="align-self:flex-start">indispensable · pour S2</span>
+      <div class="chips mt2" style="flex-direction:column;align-items:flex-start;gap:2rem"><span class="chip">git + GitHub (gh)</span><span class="chip">VS Code</span><span class="chip">Claude Code</span><span class="chip">uv + Python</span></div></div>
+    <div class="card step"><span class="chip c" style="align-self:flex-start">utile plus tard</span>
+      <div class="chips mt2" style="flex-direction:column;align-items:flex-start;gap:2rem"><span class="chip">Docker</span><span class="chip">Flutter</span><span class="chip">Rust</span><span class="chip">Antigravity</span></div></div>
+  </div>
+  <p class="mt2 step">Les « utiles plus tard » peuvent glisser <span class="ind">sans bloquer</span> la séance 2.</p>
+</section>
+
+<section class="slide" data-id="objectifs-seance">
+  <div class="label">À la fin de cette séance</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="num grad" style="font-size:7rem">01</span><h3 class="mt">Situer six jalons du génie logiciel</h3></div>
+    <div class="card step"><span class="num grad" style="font-size:7rem">02</span><h3 class="mt">Lire un test : rouge, vert, refactor</h3></div>
+    <div class="card step"><span class="num grad" style="font-size:7rem">03</span><h3 class="mt">Distinguer modèles, harnais, contexte</h3></div>
+    <div class="card step"><span class="num grad" style="font-size:7rem">04</span><h3 class="mt">Expliquer CI et CD</h3></div>
+    <div class="card step"><span class="num grad" style="font-size:7rem">05</span><h3 class="mt">Énoncer la règle d'or</h3></div>
+    <div class="card step"><span class="num grad" style="font-size:7rem">06</span><h3 class="mt">Avoir un poste opérationnel</h3></div>
+  </div>
+</section>
+
+<section class="slide" data-id="vote">
+  <div class="label">Pour commencer</div>
+  <h2 style="font-size:10rem">L'agent écrit le code.<br>Que reste-t-il <span class="grad">à maîtriser</span> ?</h2>
+  <div class="cols c3 mt2" style="flex:0 0 auto">
+    <div class="card step center"><div class="num grad" style="font-size:16rem">A</div><h3>Plus rien</h3></div>
+    <div class="card step center"><div class="num grad" style="font-size:16rem">B</div><h3>Autre chose</h3></div>
+    <div class="card step center"><div class="num grad" style="font-size:16rem">C</div><h3>Plus encore</h3></div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-histoire">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="big grad">01</div>
+  <h2>D'où vient<br>le craft ?</h2>
+</section>
+
+<section class="slide" data-id="denver">
+  <div class="label">1995</div>
+  <div class="row grow" style="gap:9rem">
+    <div class="shot hud tilt step" style="flex:0 0 72rem;height:56rem"><img src="day-1-assets/img/denver.png" alt="Une du Denver Post : « Airborne… at last »"></div>
+    <div>
+      <div class="num grad step" style="font-size:30rem">16</div>
+      <h3 class="step" style="font-size:6rem">mois de retard</h3>
+      <p class="mt step">Aéroport de Denver.<br>Un logiciel de bagages.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="crise-1968">
+  <div class="label">Jalon 1</div>
+  <div class="row grow">
+    <div class="grow">
+      <div class="num grad" style="font-size:34rem">1968</div>
+      <h3 class="step" style="font-size:6.4rem;margin-top:2rem">« Software engineering »</h3>
+      <p class="step mt">Garmisch · OTAN</p>
+      <div class="chips mt step"><span class="chip r">retard</span><span class="chip r">coût</span><span class="chip r">fiabilité</span></div>
+    </div>
+    <div class="shot a hud tilt2 step" style="flex:0 0 66rem"><div class="crop"><img src="day-1-assets/img/chaos.png" alt="CHAOS Report"></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="brooks">
+  <div class="label">Jalon 2 · 1975 · 1986</div>
+  <div class="row grow" style="gap:8rem">
+    <div class="who step"><img class="face l" src="day-1-assets/people/brooks.jpg" alt="Fred Brooks"><b>Fred Brooks</b><span>1931 – 2022</span></div>
+    <div class="grow">
+      <h2 style="font-size:9rem">Pas de<br><span class="grad">balle d'argent</span></h2>
+      <div class="mt2 step">
+        <div style="display:flex;height:11rem;border-radius:2rem;overflow:hidden;font-family:var(--mono);font-weight:700;font-size:3rem;color:#fff">
+          <div style="flex:3;background:linear-gradient(90deg,#00A8C6,#4F8CFF);display:grid;place-items:center">accidentel</div>
+          <div style="flex:5;background:linear-gradient(90deg,#7B3FF2,#4338F5);display:grid;place-items:center">essentiel</div>
+        </div>
+        <p class="cap mt">l'outil mange l'accidentel, jamais l'essentiel</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="dette">
+  <div class="label">Jalon 3 · 1992</div>
+  <div class="row grow" style="gap:9rem">
+    <div class="shot hud step" style="flex:0 0 72rem;height:60rem"><div class="crop" style="height:100%"><img src="day-1-assets/img/lemon.png" alt="Citron moisi" style="width:116%;height:116%;transform-origin:0 100%;transform:none;object-position:0 100%"></div></div>
+    <div>
+      <h2 style="font-size:10rem">Dette<br><span class="grad">technique</span></h2>
+      <div class="row mt2 step" style="gap:3rem"><img class="face s" src="day-1-assets/people/cunningham.jpg" alt="Ward Cunningham"><div class="who" style="align-items:flex-start;text-align:left"><b>Ward Cunningham</b><span>1992</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="xp-tdd">
+  <div class="label">Jalon 4 · 1996 → 2002</div>
+  <div class="row grow" style="gap:8rem">
+    <div class="who step"><img class="face l" src="day-1-assets/people/beck.jpg" alt="Kent Beck"><b>Kent Beck</b><span>XP · TDD</span></div>
+    <div class="grow center" style="display:flex;justify-content:center">
+      <svg viewBox="0 0 520 520" style="width:min(62rem,100%);overflow:visible" class="step">
+        <circle cx="260" cy="260" r="190" fill="none" stroke="#D6DBF0" stroke-width="3"/>
+        <path d="M260 70A190 190 0 0 1 424.5 355" fill="none" stroke="#EE3D5F" stroke-width="22" stroke-linecap="round"/>
+        <path d="M424.5 355A190 190 0 0 1 95.5 355" fill="none" stroke="#46A000" stroke-width="22" stroke-linecap="round"/>
+        <path d="M95.5 355A190 190 0 0 1 260 70" fill="none" stroke="#4338F5" stroke-width="22" stroke-linecap="round"/>
+        <circle r="14" fill="#fff" stroke="#0C1030" stroke-width="5"><animateMotion dur="7s" repeatCount="indefinite" path="M260 70A190 190 0 1 1 259.9 70"/></circle>
+        <text x="260" y="262" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="84" fill="#0C1030">TDD</text>
+        <text x="260" y="306" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="24" fill="#7780A3">petits pas</text>
+        <text x="462" y="160" font-family="JetBrains Mono" font-weight="700" font-size="30" fill="#EE3D5F">ROUGE</text>
+        <text x="260" y="510" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="30" fill="#46A000">VERT</text>
+        <text x="58" y="160" text-anchor="end" font-family="JetBrains Mono" font-weight="700" font-size="30" fill="#4338F5">REFACTOR</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="agile">
+  <div class="label">Jalon 5 · 2001</div>
+  <div class="row grow" style="gap:8rem">
+    <div class="shot hud step" style="flex:0 0 98rem;aspect-ratio:16/9"><img src="day-1-assets/img/signatories.png" alt="Les 17 signataires du Manifeste Agile"><span class="stamp">2001</span></div>
+    <div>
+      <div class="num grad" style="font-size:26rem">17</div>
+      <h3 class="step" style="font-size:5.6rem">signataires</h3>
+      <p class="mt step">Snowbird · Utah</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="craft-2009">
+  <div class="label">Jalon 6 · 2001 → 2009</div>
+  <div class="row grow" style="gap:9rem">
+    <div class="shot hud tilt step" style="flex:0 0 46rem;height:62rem"><img src="day-1-assets/img/mcbreen.png" alt="Software Craftsmanship : The New Imperative" style="object-fit:contain"></div>
+    <div class="grow">
+      <h2 style="font-size:8.4rem">Pas seulement…<br><span class="grad">mais aussi</span></h2>
+      <div style="display:grid;gap:2rem;margin-top:5rem">
+        <div class="step" style="display:flex;gap:2.4rem;align-items:center"><span class="chip">opérationnel</span><span class="mono ind" style="font-size:3rem">→</span><span class="chip i">bien conçu</span></div>
+        <div class="step" style="display:flex;gap:2.4rem;align-items:center"><span class="chip">adaptation</span><span class="mono ind" style="font-size:3rem">→</span><span class="chip i">valeur ajoutée</span></div>
+        <div class="step" style="display:flex;gap:2.4rem;align-items:center"><span class="chip">individus</span><span class="mono ind" style="font-size:3rem">→</span><span class="chip i">communauté</span></div>
+        <div class="step" style="display:flex;gap:2.4rem;align-items:center"><span class="chip">clients</span><span class="mono ind" style="font-size:3rem">→</span><span class="chip i">partenaires</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="craft-concret">
+  <div class="label">Le craft, concrètement</div>
+  <div class="row grow" style="gap:8rem">
+    <div class="shot hud step" style="flex:0 0 104rem;height:62rem"><img src="day-1-assets/img/wordcloud.png" alt="Nuage de mots : craftsmanship, TDD, clean, SOLID…" style="object-fit:contain"></div>
+    <div class="who step"><img class="face l" src="day-1-assets/people/martin.jpg" alt="Robert C. Martin"><b>Robert C. Martin</b><span>Clean Code · 2008</span></div>
+  </div>
+</section>
+
+<section class="slide" data-id="git-cd">
+  <div class="label">Jalon 7 · 2005 → 2018</div>
+  <div class="row grow" style="gap:8rem">
+    <div class="vrail grow">
+      <div class="node step"><b>2005 · Git</b><span>Linus Torvalds</span></div>
+      <div class="node step"><b>2010 · Continuous Delivery</b><span>Humble · Farley</span></div>
+      <div class="node step now"><b>2018 · Accelerate</b><span>les 4 indicateurs DORA</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4rem;flex:0 0 66rem">
+      <img class="face l step" src="day-1-assets/people/torvalds.jpg" alt="Linus Torvalds">
+      <div class="shot hud step" style="width:100%;height:36rem"><img src="day-1-assets/img/devops.png" alt="Boucle DevOps" style="object-fit:contain"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="lire">
+  <div class="label">Le fait qui structure la suite</div>
+  <div class="row" style="gap:8rem;align-items:flex-end">
+    <div class="num grad" style="font-size:40rem;flex:0 0 auto">&lt;25<span style="font-size:20rem">%</span></div>
+    <h3 style="font-size:6rem;padding-bottom:5rem">du temps à<br><span class="ind">écrire</span> du code</h3>
+  </div>
+  <div class="cells mt2 step" id="cells"></div>
+  <p class="cap mt">Microsoft Research 2019, cité par Mancuso</p>
+</section>
+
+<section class="slide divider" data-id="div-agents">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="big grad">02</div>
+  <h2>Le craft face<br>aux agents</h2>
+</section>
+
+<section class="slide" data-id="frise-agents">
+  <div class="label">2021 → 2026</div>
+  <div class="rail">
+    <div class="node step"><b>2021</b><span>Copilot</span></div>
+    <div class="node step"><b>2022</b><span>ChatGPT</span></div>
+    <div class="node step"><b>févr. 2025</b><span>Vibe coding<br><img class="face s" style="margin-top:2rem" src="day-1-assets/people/karpathy.png" alt="Andrej Karpathy"></span></div>
+    <div class="node step"><b>juin 2025</b><span>Augmented coding<br><img class="face s" style="margin-top:2rem" src="day-1-assets/people/beck.jpg" alt="Kent Beck"></span></div>
+    <div class="node step now"><b>2026</b><span>Agentic engineering<br><img class="face s" style="margin-top:2rem" src="day-1-assets/people/willison.jpg" alt="Simon Willison"></span></div>
+  </div>
+  <p class="mt2 step" style="text-align:center;font-size:4.4rem;color:var(--ink)">L'agent <span class="ind">génère</span> et <span class="ind">exécute</span>.</p>
+</section>
+
+<section class="slide" data-id="vibe-aug">
+  <div class="label">Deux usages, deux valeurs</div>
+  <div class="cols c2" style="gap:5rem;flex:0 0 auto">
+    <div class="term step"><div class="bar"><i></i><i></i><i></i><span>vibe-coding</span></div>
+      <pre><span class="d">$</span> <span class="c">agent</span> "fais-moi une appli"
+<span class="g">✓ terminé</span>
+<span class="d">// code lu : </span><span class="r">0 ligne</span>
+<span class="d">// tests    : </span><span class="r">aucun</span><span class="cur"></span></pre></div>
+    <div class="term step"><div class="bar"><i></i><i></i><i></i><span>augmented-coding</span></div>
+      <pre><span class="d">$</span> <span class="c">agent</span> --tdd --tidy
+<span class="r">● rouge</span>  <span class="g">● vert</span>  <span class="c">● refactor</span>
+<span class="d">// code lu : </span><span class="g">oui</span>
+<span class="d">// tests    : </span><span class="g">d'abord</span><span class="cur"></span></pre></div>
+  </div>
+  <div class="row mt2 step" style="justify-content:space-around;gap:4rem">
+    <div class="who"><img class="face" src="day-1-assets/people/karpathy.png" alt="Andrej Karpathy"><b>Karpathy</b><span>févr. 2025</span></div>
+    <div class="who"><img class="face" src="day-1-assets/people/beck.jpg" alt="Kent Beck"><b>Beck</b><span>juin 2025</span></div>
+  </div>
+</section>
+
+<section class="slide" data-id="alertes-beck">
+  <div class="label">Kent Beck surveille</div>
+  <div class="cols c3" style="flex:0 0 auto;margin-top:3rem">
+    <div class="card bad step center" style="min-height:52rem;justify-content:center;align-items:center"><svg viewBox="0 0 100 100" style="width:20rem"><path d="M50 14a36 36 0 1 1-30 16" fill="none" stroke="#EE3D5F" stroke-width="8" stroke-linecap="round"/><path d="M14 20l8 20 20-8" fill="none" stroke="#EE3D5F" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg><h3 class="mt">Boucles</h3></div>
+    <div class="card warn step center" style="min-height:52rem;justify-content:center;align-items:center"><svg viewBox="0 0 100 100" style="width:20rem"><path d="M50 20v60M20 50h60" stroke="#E58A00" stroke-width="10" stroke-linecap="round"/></svg><h3 class="mt">Fonctions<br>non demandées</h3></div>
+    <div class="card bad step center" style="min-height:52rem;justify-content:center;align-items:center"><svg viewBox="0 0 100 100" style="width:20rem"><rect x="18" y="26" width="64" height="48" rx="8" fill="none" stroke="#EE3D5F" stroke-width="8"/><path d="M38 44l24 14M62 44L38 58" stroke="#EE3D5F" stroke-width="8" stroke-linecap="round"/></svg><h3 class="mt">Triche<br>sur les tests</h3></div>
+  </div>
+</section>
+
+<section class="slide" data-id="amplifie">
+  <div class="row grow" style="gap:8rem">
+    <div class="grow">
+      <div class="label">Le consensus</div>
+      <h2 style="font-size:12rem">L'IA<br><span class="grad">amplifie.</span></h2>
+      <p class="mt2 step" style="font-size:4.4rem;color:var(--ink)">« Un trou plus profond,<br>plus vite. »</p>
+      <p class="cap mt step">Dave Farley</p>
+    </div>
+    <div class="shot hud step" style="flex:0 0 74rem;height:64rem"><div class="crop" style="height:100%"><img src="day-1-assets/img/babel.png" alt="Tour de Babel en flammes" style="width:116%;height:116%;object-position:0 100%"></div></div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-qualite">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="big grad">03</div>
+  <h2>Où va la qualité<br>du code ?</h2>
+</section>
+
+<section class="slide" data-id="metr">
+  <div class="label">Vitesse · essai randomisé</div>
+  <div class="cols c2" style="gap:5rem">
+    <div class="card bad step center" style="justify-content:center"><span class="chip r" style="align-self:center">mesuré</span><div class="num neg" style="font-size:28rem;margin-top:3rem">+19%</div><h3 style="margin-top:3rem">de temps</h3></div>
+    <div class="card good step center" style="justify-content:center"><span class="chip n" style="align-self:center">ressenti</span><div class="num pos" style="font-size:28rem;margin-top:3rem">−20%</div><h3 style="margin-top:3rem">de temps</h3></div>
+  </div>
+  <div class="row mt step" style="justify-content:center"><span class="chip n">METR · 2025 · 16 devs · 246 tâches</span></div>
+</section>
+
+<section class="slide" data-id="stanford">
+  <div class="label">Gain selon le contexte</div>
+  <div class="bars mt">
+    <div class="bar2 step"><label>Neuf · simple</label><div class="track"><div class="fill" style="left:60%;width:20%"></div><span class="lab" style="left:calc(80% + 1.8rem);color:var(--indigo)">30-40 %</span></div></div>
+    <div class="bar2 step"><label>Neuf · complexe</label><div class="track"><div class="fill" style="left:20%;width:10%"></div><span class="lab" style="left:calc(30% + 1.8rem);color:var(--indigo)">10-15 %</span></div></div>
+    <div class="bar2 step"><label>Existant · simple</label><div class="track"><div class="fill" style="left:30%;width:10%"></div><span class="lab" style="left:calc(40% + 1.8rem);color:var(--indigo)">15-20 %</span></div></div>
+    <div class="bar2 step"><label>Existant · complexe</label><div class="track"><div class="fill low" style="left:0;width:20%"></div><span class="lab" style="left:calc(20% + 1.8rem);color:var(--coral)">0-10 %, parfois négatif</span></div></div>
+  </div>
+  <div class="row mt2 step" style="gap:4rem"><div class="num grad" style="font-size:15rem;white-space:nowrap">10-15 %</div><h3>gain médian,<br>pas 60 %</h3><span class="chip n" style="margin-left:auto">Stanford · ~120 000 devs</span></div>
+</section>
+
+<section class="slide" data-id="mesures">
+  <div class="label">Sans garde-fous</div>
+  <div class="cols c4" style="flex:0 0 auto;margin-top:2rem">
+    <div class="card step center"><span class="chip n" style="align-self:center">causal</span><div class="num neg" style="font-size:15rem;margin-top:3rem">↗</div><h3 style="margin-top:3rem">Complexité</h3><p class="cap mt">CMU · 806 dépôts</p></div>
+    <div class="card step center"><span class="chip n" style="align-self:center">DORA</span><div class="num neg" style="font-size:11rem;margin-top:5rem">−7,2%</div><h3 style="margin-top:3rem">Stabilité</h3><p class="cap mt">par +25 % d'IA</p></div>
+    <div class="card step center"><span class="chip v" style="align-self:center">éditeur</span><div class="num neg" style="font-size:11rem;margin-top:5rem">−70%</div><h3 style="margin-top:3rem">Refactoring</h3><p class="cap mt">GitClear</p></div>
+    <div class="card step center"><span class="chip v" style="align-self:center">éditeur</span><div class="num neg" style="font-size:11rem;margin-top:5rem">45%</div><h3 style="margin-top:3rem">Failles</h3><p class="cap mt">Veracode</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="mecanisme">
+  <div class="label">Le mécanisme</div>
+  <div class="cols c2" style="gap:5rem;flex:0 0 auto;margin-top:2rem">
+    <div class="card good step center" style="min-height:44rem;justify-content:center"><div class="chips" style="justify-content:center"><span class="chip n">code sain</span><span class="mono ind" style="font-size:3rem">→</span><span class="chip n">bons modèles</span></div><div class="num pos" style="font-size:16rem;margin-top:3rem">⟳</div><h3>La qualité se propage</h3></div>
+    <div class="card bad step center" style="min-height:44rem;justify-content:center"><div class="chips" style="justify-content:center"><span class="chip r">code embrouillé</span><span class="mono ind" style="font-size:3rem">→</span><span class="chip r">désordre copié</span></div><div class="num neg" style="font-size:16rem;margin-top:3rem">⟳</div><h3>Le désordre aussi</h3></div>
+  </div>
+  <div class="row mt step" style="justify-content:center;gap:3rem"><span class="num neg" style="font-size:10rem">+30%</span><h3>de risque de défaut, au minimum</h3><span class="chip n">CodeScene · pairs</span></div>
+</section>
+
+<section class="slide" data-id="pratiques">
+  <div class="label">Les pratiques à l'épreuve</div>
+  <div class="cols c3 bigchip" style="margin-top:2rem">
+    <div class="card good step"><div class="num pos" style="font-size:12rem">↑</div><div class="chips mt" style="flex-direction:column;align-items:flex-start"><span class="chip">TDD</span><span class="chip">tests d'acceptation</span><span class="chip">petites PR</span><span class="chip">contexte</span></div></div>
+    <div class="card warn step"><div class="num" style="font-size:12rem;color:var(--amber)">⇄</div><div class="chips mt" style="flex-direction:column;align-items:flex-start"><span class="chip">revue</span><span class="chip">pair</span><span class="chip">lisibilité</span></div></div>
+    <div class="card bad step"><div class="num neg" style="font-size:12rem">↓</div><div class="chips mt" style="flex-direction:column;align-items:flex-start"><span class="chip">refactoring</span><span class="chip">compréhension</span></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="debat">
+  <div class="label">Le débat de 2026</div>
+  <div class="cols c3" style="margin-top:2rem">
+    <div class="card step center" style="justify-content:center;align-items:center;gap:2.4rem"><div class="face l avatar">SM</div><h3>Mancuso</h3><span class="chip c">revue humaine</span></div>
+    <div class="card step center" style="justify-content:center;align-items:center;gap:2.4rem"><img class="face l" src="day-1-assets/people/martin.jpg" alt="Robert C. Martin"><h3>Martin</h3><span class="chip i">gauntlet</span></div>
+    <div class="card warn step center" style="justify-content:center;align-items:center;gap:2.4rem"><img class="face l" src="day-1-assets/people/booch.jpg" alt="Grady Booch"><h3>Booch</h3><span class="chip v">angles morts</span></div>
+  </div>
+</section>
+
+<section class="slide" data-id="lisibilite">
+  <div class="label">Pour qui écrit-on ?</div>
+  <div class="row grow" style="justify-content:center;gap:7rem">
+    <div class="who step"><svg viewBox="0 0 100 100" style="width:22rem"><circle cx="50" cy="34" r="18" fill="none" stroke="#4338F5" stroke-width="6"/><path d="M16 88c0-22 14-32 34-32s34 10 34 32" fill="none" stroke="#4338F5" stroke-width="6" stroke-linecap="round"/></svg><h3>humains</h3></div>
+    <div class="num grad step" style="font-size:16rem">+</div>
+    <div class="who step"><svg viewBox="0 0 100 100" style="width:22rem"><rect x="20" y="28" width="60" height="50" rx="12" fill="none" stroke="#00A8C6" stroke-width="6"/><circle cx="38" cy="53" r="6" fill="#00A8C6"/><circle cx="62" cy="53" r="6" fill="#00A8C6"/><path d="M50 28V14M44 14h12" stroke="#00A8C6" stroke-width="6" stroke-linecap="round"/></svg><h3>agents</h3></div>
+    <div class="num grad step" style="font-size:16rem">=</div>
+    <div class="term step"><div class="bar"><i></i><i></i><i></i><span>un seul code</span></div><pre><span class="c">sain</span> · <span class="c">modulaire</span>
+<span class="c">nommé</span> · <span class="c">testé</span></pre></div>
+  </div>
+</section>
+
+<section class="slide" data-id="jetable">
+  <div class="label">La thèse adverse</div>
+  <div class="row grow" style="gap:6rem">
+    <div class="grow">
+      <h2 style="font-size:9rem">Le code<br><span class="grad">est jetable</span> ?</h2>
+      <div class="term mt step" style="max-width:76rem"><div class="bar"><i></i><i></i><i></i><span>spec → code</span></div><pre><span class="y">spec.md</span> <span class="d">──▶</span> <span class="g">code</span> <span class="d">(régénérable)</span></pre></div>
+    </div>
+    <div style="display:grid;gap:2.4rem;align-content:center">
+      <div class="card bad step"><h3>Non-déterminisme</h3></div>
+      <div class="card bad step"><h3>La spec devient du code</h3></div>
+      <div class="card bad step"><h3>Re-vérifier à chaque fois</h3></div>
+      <p class="cap step">Tessl · « Software 3.0 » · non démontré en production</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="esprit-critique">
+  <div class="label">Garder son esprit critique</div>
+  <div class="cols c3" style="flex:0 0 auto;margin-top:2rem">
+    <div class="card step center" style="min-height:44rem;justify-content:center"><div class="num grad" style="font-size:18rem">?</div><h3 class="mt">Qui mesure,<br>et que vend-il ?</h3></div>
+    <div class="card step center" style="min-height:44rem;justify-content:center"><div class="num grad" style="font-size:18rem">≠</div><h3 class="mt">Corrélation<br>ou cause ?</h3></div>
+    <div class="card step center" style="min-height:44rem;justify-content:center"><div class="num grad" style="font-size:18rem">∞</div><h3 class="mt">Sur quel<br>contexte ?</h3></div>
+  </div>
+  <p class="cap mt step" style="text-align:center">Aucune étude sur 3 ans de bases de code écrites avec l'IA.</p>
+</section>
+
+<section class="slide" data-id="synthese">
+  <div class="label">À retenir</div>
+  <h2 style="font-size:11rem">La qualité,<br><span class="grad">facteur limitant</span><br>de l'agent.</h2>
+  <div class="chips mt2 step"><span class="chip i" style="font-size:3.4rem;padding:1.4rem 3rem">jugement</span><span class="chip i" style="font-size:3.4rem;padding:1.4rem 3rem">garde-fous</span><span class="chip i" style="font-size:3.4rem;padding:1.4rem 3rem">responsabilité</span></div>
+</section>
+
+<section class="slide" data-id="retour-vote">
+  <div class="label">Retour sur votre vote</div>
+  <div class="cols c3" style="flex:0 0 auto;margin-top:2rem">
+    <div class="card step center"><div class="num" style="font-size:16rem;color:var(--ink-3)">A</div><h3>Plus rien</h3><p class="cap mt">jetable seulement</p></div>
+    <div class="card good step center"><div class="num pos" style="font-size:16rem">B</div><h3>Autre chose</h3><p class="cap mt">jugement, tests, revue</p></div>
+    <div class="card good step center"><div class="num pos" style="font-size:16rem">C</div><h3>Plus encore</h3><p class="cap mt">sur l'existant</p></div>
+  </div>
+  <div class="term mt2 step"><div class="bar"><i></i><i></i><i></i><span>règle du projet</span></div><pre><span class="y">PR</span> <span class="d">=</span> petits pas <span class="d">+</span> tests d'abord <span class="d">+</span> <span class="g">je sais l'expliquer</span><span class="cur"></span></pre></div>
+</section>
+
+<section class="slide divider" data-id="div-code">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="big grad">04</div>
+  <h2>Quelques notions<br>de code et le TDD</h2>
+</section>
+
+<section class="slide" data-id="code-variable">
+  <div class="label">Notion 1 sur 6</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Variable</h2><p class="mt2 step">Une valeur qui porte un nom.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre>jet = <span class="g">11</span>
+bonus = <span class="g">3</span>
+total = jet + bonus<span class="d">   # 14</span></pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="code-fonction">
+  <div class="label">Notion 2 sur 6</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Fonction</h2><p class="mt2 step">Une recette réutilisable.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">def</span> ajouter_bonus(jet, bonus):
+    <span class="c">return</span> jet + bonus
+
+ajouter_bonus(<span class="g">11</span>, <span class="g">3</span>)<span class="d">   # 14</span></pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="code-condition">
+  <div class="label">Notion 3 sur 6</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Condition</h2><p class="mt2 step">Un choix : si… sinon…</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">if</span> total &gt;= dd:
+    print(<span class="y">"Réussite"</span>)
+<span class="c">else</span>:
+    print(<span class="y">"Échec"</span>)</pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="code-boucle">
+  <div class="label">Notion 4 sur 6</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Boucle</h2><p class="mt2 step">Répéter pour chaque élément.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">for</span> quete <span class="c">in</span> [<span class="y">"Forêt"</span>, <span class="y">"Donjon"</span>, <span class="y">"Marais"</span>]:
+    print(<span class="y">"Quête :"</span>, quete)</pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="code-fichier">
+  <div class="label">Notion 5 sur 6</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Fichier</h2><p class="mt2 step">Lire et écrire sur le disque.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">with</span> open(<span class="y">"journal.txt"</span>, <span class="y">"w"</span>) <span class="c">as</span> f:
+    f.write(<span class="y">"Quête terminée"</span>)</pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="code-cli">
+  <div class="label">Notion 6 sur 6</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Ligne de commande</h2><p class="mt2 step">Parler à l'ordinateur en texte.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">cd</span> mon-projet
+<span class="d">$</span> <span class="c">ls</span>
+jeu.py  journal.txt
+<span class="d">$</span> <span class="c">uv run</span> python jeu.py
+Réussite</pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="code-lire">
+  <div class="label">Lire un code, c'est reconnaître ces six briques</div>
+  <div class="row grow" style="gap:6rem">
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre>dd = <span class="g">12</span><span class="d">                       # variable</span>
+
+<span class="c">def</span> est_reussite(total, dd):<span class="d">  # fonction</span>
+    <span class="c">return</span> total &gt;= dd
+
+<span class="c">for</span> jet <span class="c">in</span> [<span class="g">8</span>, <span class="g">12</span>, <span class="g">17</span>]:<span class="d">       # boucle</span>
+    <span class="c">if</span> est_reussite(jet, dd):<span class="d"> # condition</span>
+        print(jet, <span class="y">"réussite"</span>)</pre></div></div>
+    <div class="chips step" style="flex-direction:column;align-items:flex-start;gap:2rem;flex:0 0 auto"><span class="chip">variable</span><span class="chip">fonction</span><span class="chip">condition</span><span class="chip">boucle</span><span class="chip">fichier</span><span class="chip">ligne de commande</span></div>
+  </div>
+</section>
+
+<section class="slide" data-id="tdd-spec">
+  <div class="label">Démonstration · TDD</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 56rem"><h2 style="font-size:9rem">Un test,<br><span class="grad">une spécification</span><br>exécutable</h2></div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>test_jeu.py</span></div><pre><span class="c">def</span> test_reussite_si_total_egal_dd():
+    <span class="c">assert</span> est_reussite(<span class="g">12</span>, <span class="g">12</span>) <span class="c">is</span> <span class="c">True</span></pre></div>
+    <div class="chips mt2 step"><span class="chip">total = jet + bonus</span><span class="chip">dd = degré de difficulté</span></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="tdd-rouge1">
+  <div class="label">Étape 1 · test rouge</div>
+  <div class="row grow" style="gap:7rem">
+    <div style="flex:0 0 48rem"><div class="num neg" style="font-size:22rem">●</div><h2 style="font-size:9rem">Rouge</h2><p class="mt step">Le test échoue : la fonction n'existe pas encore.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">uv run</span> pytest
+<span class="r">FAILED</span> test_jeu.py::test_reussite_si_total_egal_dd
+<span class="r">NameError</span>: name 'est_reussite' is not defined
+<span class="r">=== 1 failed in 0.02s ===</span></pre></div></div></div>
+</section>
+
+<section class="slide" data-id="tdd-vert1">
+  <div class="label">Étape 2 · code vert</div>
+  <div class="row grow" style="gap:7rem">
+    <div style="flex:0 0 48rem"><div class="num pos" style="font-size:22rem">●</div><h2 style="font-size:9rem">Vert</h2><p class="mt step">Le code <em class="ind" style="font-style:normal">le plus simple</em> qui passe.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">def</span> est_reussite(total, dd):
+    <span class="c">return</span> <span class="c">True</span></pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">uv run</span> pytest
+<span class="g">=== 1 passed in 0.01s ===</span></pre></div></div></div>
+</section>
+
+<section class="slide" data-id="tdd-rouge2">
+  <div class="label">Étape 3 · on précise : nouveau test rouge</div>
+  <div class="row grow" style="gap:7rem">
+    <div style="flex:0 0 48rem"><div class="num neg" style="font-size:22rem">●</div><h2 style="font-size:9rem">Rouge</h2><p class="mt step">Un cas d'échec : 11 contre 12.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>test_jeu.py</span></div><pre><span class="c">def</span> test_echec_si_total_inferieur_au_dd():
+    <span class="c">assert</span> est_reussite(<span class="g">11</span>, <span class="g">12</span>) <span class="c">is</span> <span class="c">False</span></pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">uv run</span> pytest
+<span class="r">FAILED</span> test_echec_si_total_inferieur_au_dd
+<span class="r">AssertionError</span>: assert True is False
+<span class="r">=== 1 failed, 1 passed ===</span></pre></div></div></div>
+</section>
+
+<section class="slide" data-id="tdd-vert2">
+  <div class="label">Étape 4 · code vert</div>
+  <div class="row grow" style="gap:7rem">
+    <div style="flex:0 0 48rem"><div class="num pos" style="font-size:22rem">●</div><h2 style="font-size:9rem">Vert</h2><p class="mt step">Maintenant, la vraie règle.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.py</span></div><pre><span class="c">def</span> est_reussite(total, dd):
+    <span class="c">return</span> total &gt;= dd</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">uv run</span> pytest
+<span class="g">=== 2 passed in 0.01s ===</span></pre></div></div></div>
+</section>
+
+<section class="slide" data-id="tdd-refactor">
+  <div class="label">Étape 5 · refactor</div>
+  <div class="row grow" style="gap:7rem">
+    <div style="flex:0 0 48rem"><div class="num ind" style="font-size:22rem">●</div><h2 style="font-size:9rem">Refactor</h2><p class="mt step">Je nettoie. Les tests me protègent.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>test_jeu.py</span></div><pre>@pytest.mark.parametrize(<span class="y">"total, dd, attendu"</span>, [
+    (<span class="g">12</span>, <span class="g">12</span>, <span class="c">True</span>),
+    (<span class="g">11</span>, <span class="g">12</span>, <span class="c">False</span>),
+    (<span class="g">15</span>, <span class="g">12</span>, <span class="c">True</span>),
+])
+<span class="c">def</span> test_est_reussite(total, dd, attendu):
+    <span class="c">assert</span> est_reussite(total, dd) <span class="c">is</span> attendu</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">uv run</span> pytest
+<span class="g">=== 3 passed in 0.01s ===</span></pre></div></div></div>
+</section>
+
+<section class="slide" data-id="tdd-message">
+  <div class="label">Ce qu'il faut retenir</div>
+  <h2 style="font-size:10.5rem">Un test,<br>c'est une <span class="grad">spécification</span><br>exécutable.</h2>
+  <p class="mt2 step" style="font-size:4.4rem;color:var(--ink)">On ne sait pas lire le code ?<br>On peut <span class="ind">lire les tests</span>.</p>
+</section>
+
+<section class="slide divider" data-id="div-modeles">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="big grad">05</div>
+  <h2>Les modèles d'IA</h2>
+</section>
+
+<section class="slide" data-id="slm-llm">
+  <div class="label">Petit ou grand ?</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
+    <div class="card step"><div class="row" style="gap:3rem"><div class="orb" style="width:11rem;height:11rem"></div><div><h3>SLM</h3><p class="cap">petit modèle de langage</p></div></div>
+      <div class="chips mt2"><span class="chip n">rapide</span><span class="chip n">économique</span><span class="chip n">peut rester chez vous</span><span class="chip r">moins puissant</span></div></div>
+    <div class="card hl step"><div class="row" style="gap:3rem"><div class="orb" style="width:24rem;height:24rem;margin:-6rem 0"></div><div><h3>LLM</h3><p class="cap">grand modèle de langage</p></div></div>
+      <div class="chips mt2"><span class="chip n">puissant</span><span class="chip r">plus lent</span><span class="chip r">plus cher</span><span class="chip v">hébergé chez un tiers</span></div></div>
+  </div>
+  <div class="chips step mt2" style="justify-content:center"><span class="chip i">taille</span><span class="chip i">coût</span><span class="chip i">vitesse</span><span class="chip i">confidentialité</span></div>
+</section>
+
+<section class="slide" data-id="types-modeles">
+  <div class="label">Des modèles pour chaque tâche</div>
+  <div class="cols c4" style="flex:0 0 auto;gap:3rem">
+    <div class="card step center" style="align-items:center"><div class="num grad" style="font-size:11rem">Aa</div><h3 class="mt">Généralistes</h3></div>
+    <div class="card step center" style="align-items:center"><div class="num grad" style="font-size:11rem">&lt;/&gt;</div><h3 class="mt">Spécialisés code</h3></div>
+    <div class="card step center" style="align-items:center"><div class="num grad" style="font-size:11rem">∴</div><h3 class="mt">Raisonnement</h3></div>
+    <div class="card step center" style="align-items:center"><div class="num grad" style="font-size:11rem">◐</div><h3 class="mt">Multimodaux</h3><p class="cap mt">texte · image · son</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="effort">
+  <div class="label">Niveau d'effort</div>
+  <h2 style="font-size:9rem">Réfléchir plus<br>coûte plus.</h2>
+  <div class="mt2 step"><div class="dial"><i style="left:0"></i><i style="left:33%"></i><i style="left:66%"></i><i style="left:100%"></i><b></b></div>
+    <div class="ticks2"><span>faible</span><span>moyen</span><span>élevé</span><span>maximal</span></div></div>
+  <div class="chips mt2 step"><span class="chip n">réponses souvent meilleures</span><span class="chip r">plus de temps</span><span class="chip r">plus de jetons</span></div>
+</section>
+
+<section class="slide" data-id="edge-ai">
+  <div class="label">Edge AI</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
+    <div class="card step center" style="align-items:center;gap:2rem"><svg viewBox="0 0 100 100" style="width:13rem"><path d="M28 72a16 16 0 0 1-2-32 22 22 0 0 1 42-4 18 18 0 0 1 4 36z" fill="none" stroke="#00A8C6" stroke-width="6" stroke-linejoin="round"/></svg><h3>Dans le cloud</h3><p class="cap">vos données <span class="neg">partent</span></p></div>
+    <div class="card good step center" style="align-items:center;gap:2rem"><svg viewBox="0 0 100 100" style="width:13rem"><rect x="22" y="44" width="56" height="42" rx="8" fill="none" stroke="#46A000" stroke-width="6"/><path d="M34 44V32a16 16 0 0 1 32 0v12" fill="none" stroke="#46A000" stroke-width="6"/></svg><h3>Sur votre poste</h3><p class="cap">vos données <span class="pos">restent</span></p></div>
+  </div>
+  <div class="chips step mt2" style="justify-content:center"><span class="chip n">confidentialité</span><span class="chip r">puissance limitée</span></div>
+</section>
+
+<section class="slide divider" data-id="div-agent">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="big grad">06</div>
+  <h2>L'agent et son<br>environnement</h2>
+</section>
+
+<section class="slide" data-id="harnais">
+  <div class="label">Agentic engineering</div>
+  <div class="row grow" style="gap:6rem">
+    <div class="who step"><img class="face l" src="day-1-assets/people/willison.jpg" alt="Simon Willison"><b>Simon Willison</b><span>2025 – 2026</span></div>
+    <svg viewBox="0 0 1000 600" class="grow step" style="width:100%;max-height:72rem">
+      <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4338F5"/><stop offset="1" stop-color="#00A8C6"/></linearGradient>
+        <marker id="m1" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" refX="16" refY="11" orient="auto"><path d="M0 0L22 11L0 22z" fill="#4338F5"/></marker>
+        <marker id="m2" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" refX="16" refY="11" orient="auto"><path d="M0 0L22 11L0 22z" fill="#EE3D5F"/></marker></defs>
+      <rect x="390" y="200" width="220" height="180" rx="36" fill="url(#g2)"/>
+      <text x="500" y="278" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="52" fill="#fff">Agent</text>
+      <text x="500" y="326" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="20" fill="#DDE3FF">modèle + harnais</text>
+      <g font-family="JetBrains Mono" font-weight="700" text-anchor="middle">
+        <rect x="0" y="210" width="290" height="160" rx="28" fill="#fff" stroke="#4338F5" stroke-width="4"/><text x="145" y="280" font-size="34" fill="#4338F5">GUIDES</text><text x="145" y="326" font-size="20" fill="#7780A3">CLAUDE.md · specs</text>
+        <rect x="710" y="210" width="290" height="160" rx="28" fill="#fff" stroke="#00A8C6" stroke-width="4"/><text x="855" y="280" font-size="34" fill="#007C93">CAPTEURS</text><text x="855" y="326" font-size="20" fill="#7780A3">tests · linters · CI</text>
+        <rect x="330" y="470" width="340" height="110" rx="28" fill="#fff" stroke="#EE3D5F" stroke-width="4"/><text x="500" y="518" font-size="34" fill="#C21F42">CADRE</text><text x="500" y="556" font-size="20" fill="#7780A3">permissions · bac à sable</text>
+      </g>
+      <path d="M294 290H386" fill="none" stroke="#4338F5" stroke-width="5" stroke-dasharray="14 12" marker-end="url(#m1)"><animate attributeName="stroke-dashoffset" from="52" to="0" dur="1.6s" repeatCount="indefinite"/></path>
+      <path d="M614 290H706" fill="none" stroke="#00A8C6" stroke-width="5" stroke-dasharray="14 12"><animate attributeName="stroke-dashoffset" from="0" to="52" dur="1.6s" repeatCount="indefinite"/></path>
+      <path d="M855 204C855 70 500 70 500 194" fill="none" stroke="#00A8C6" stroke-width="5" stroke-dasharray="14 12" marker-end="url(#m1)"><animate attributeName="stroke-dashoffset" from="52" to="0" dur="1.6s" repeatCount="indefinite"/></path>
+      <path d="M500 466V386" fill="none" stroke="#EE3D5F" stroke-width="5" stroke-dasharray="14 12" marker-end="url(#m2)"/>
+    </svg>
+  </div>
+</section>
+
+<section class="slide" data-id="contexte">
+  <div class="label">Le contexte</div>
+  <h2 style="font-size:9rem">La fenêtre est<br><span class="grad">limitée</span>.</h2>
+  <div class="mt2 step"><div class="gauge"><i></i></div>
+    <div class="gtick"><span style="color:var(--lime)">tout va bien</span><span style="color:var(--amber)">ça se dilue</span><span style="color:var(--coral)">l'agent perd le fil</span></div></div>
+  <div class="chips mt2 step"><span class="chip i">context rot</span><span class="chip">sessions courtes</span><span class="chip">CLAUDE.md court</span></div>
+</section>
+
+<section class="slide" data-id="claudemd">
+  <div class="label">Le fichier d'instructions</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 50rem"><h2 style="font-size:10rem"><span class="grad">CLAUDE</span>.md</h2><p class="mt2 step">Court. Précis. Lu à chaque session.</p></div>
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>CLAUDE.md</span></div><pre><span class="y"># Projet Cendrelune</span>
+<span class="d">-</span> Tests : <span class="c">uv run pytest</span>
+<span class="d">-</span> Python 3.12, code dans <span class="c">src/</span>
+<span class="d">-</span> Un test avant chaque fonction
+<span class="d">-</span> Jamais de données réelles
+<span class="d">-</span> Jamais de clé dans le dépôt</pre></div></div></div>
+</section>
+
+<section class="slide" data-id="cache">
+  <div class="label">Le cache de prompt</div>
+  <div class="row grow" style="gap:7rem">
+    <div class="grow step">
+      <div class="stack">
+        <div class="blk a">instructions · outils · CLAUDE.md<span>stable · relu à tarif réduit</span></div>
+        <div class="blk b">échanges précédents<span>stable tant qu'on n'y touche pas</span></div>
+        <div class="blk c">votre nouvelle question<span>nouveau</span></div>
+      </div>
+    </div>
+    <div style="flex:0 0 52rem">
+      <h2 style="font-size:8rem">Ne réécrivez pas<br>sans cesse<br>le début.</h2>
+      <div class="chips mt2 step"><span class="chip c">5 min</span><span class="chip c">ou 1 h</span></div>
+      <p class="cap mt step">durée de vie du cache selon l'offre</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="sdd">
+  <div class="label">Spec-driven development</div>
+  <h2 style="font-size:9rem">La spécification<br>d'<span class="grad">abord</span>.</h2>
+  <div class="flow mt2 step"><div class="fn">Intention</div><span>→</span><div class="fn i">Spécification<small>critères d'acceptation</small></div><span>→</span><div class="fn">Code</div><span>→</span><div class="fn">Tests</div></div>
+  <p class="mt2 step">La spec devient le <span class="ind">document de référence</span>.</p>
+</section>
+
+<section class="slide" data-id="outils-sdd">
+  <div class="label">Des outils, pas un standard</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:4rem">
+    <div class="card step center" style="align-items:center"><h3>GitHub spec-kit</h3><p class="cap mt">outil open source</p></div>
+    <div class="card step center" style="align-items:center"><h3>BMAD</h3><p class="cap mt">agents + workflows</p></div>
+    <div class="card step center" style="align-items:center"><h3>AI-DLC</h3><p class="cap mt">méthode d'AWS</p></div>
+  </div>
+  <p class="mt2 step cap center" style="text-align:center">Pas de méthode prouvée. Reprise en pratique à la séance 2.</p>
+</section>
+
+<section class="slide" data-id="synthese-agent">
+  <div class="label">En une page</div>
+  <h2 style="font-size:10rem">Agent = modèle + <span class="grad">harnais</span></h2>
+  <div class="cols c4 mt2" style="flex:0 0 auto;gap:3rem">
+    <div class="card step center"><div class="num grad" style="font-size:9rem">⚙</div><h3 class="mt">Harnais</h3><p class="cap mt">règles · outils · tests</p></div>
+    <div class="card step center"><div class="num grad" style="font-size:9rem">▤</div><h3 class="mt">Contexte</h3><p class="cap mt">limité, à soigner</p></div>
+    <div class="card step center"><div class="num grad" style="font-size:9rem">⚡</div><h3 class="mt">Cache</h3><p class="cap mt">stable = moins cher</p></div>
+    <div class="card step center"><div class="num grad" style="font-size:9rem">✎</div><h3 class="mt">Spec</h3><p class="cap mt">l'intention d'abord</p></div>
+  </div>
+  <div class="chips mt2 step" style="justify-content:center"><span class="chip i">Séance 2 : on le construit</span></div>
+</section>
+
+<section class="slide divider" data-id="div-cicd">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="big grad">07</div>
+  <h2>CI/CD dans<br>le cloud</h2>
+</section>
+
+<section class="slide" data-id="ci">
+  <div class="label">Intégration continue</div>
+  <div class="flow step"><div class="fn">Je modifie<small>git push</small></div><span>→</span><div class="fn i">Machine distante<small>lint · tests</small></div><span>→</span><div class="fn"><div class="status ok"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M24 52l18 18 34-38" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg></div><small>ou</small><div class="status ko"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M28 28l44 44M72 28L28 72" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/></svg></div></div></div>
+  <p class="mt2 step">À chaque modification, une machine <span class="ind">contrôle</span> automatiquement.</p>
+</section>
+
+<section class="slide" data-id="cd">
+  <div class="label">Livraison et déploiement continus</div>
+  <div class="flow step"><div class="fn"><div class="status ok"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M24 52l18 18 34-38" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg></div><small>c'est vert</small></div><span>→</span><div class="fn">Test<small>environnement</small></div><span>→</span><div class="fn i">Production<small>publié automatiquement</small></div></div>
+  <p class="mt2 step">Si c'est vert, le logiciel est <span class="ind">publié</span>. Sans clic.</p>
+</section>
+
+<section class="slide" data-id="cicd-vocab">
+  <div class="label">Les mots à connaître</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><h3>Pipeline</h3><p class="cap mt">la chaîne d'étapes</p></div>
+    <div class="card step"><h3>Runner</h3><p class="cap mt">la machine qui exécute</p></div>
+    <div class="card step"><h3>Workflow</h3><p class="cap mt">le fichier qui décrit</p></div>
+    <div class="card step"><h3>Artefact</h3><p class="cap mt">le fichier produit</p></div>
+    <div class="card step"><h3>Image Docker</h3><p class="cap mt">le logiciel emballé</p></div>
+    <div class="card step"><h3>Environnement</h3><p class="cap mt">test, production</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="workflow">
+  <div class="label">Un workflow GitHub Actions</div>
+  <div class="row grow" style="gap:7rem">
+    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>.github/workflows/ci.yml</span></div><pre><span class="c">name</span>: ci
+<span class="c">on</span>: [push, pull_request]
+<span class="c">jobs</span>:
+  <span class="c">tests</span>:
+    <span class="c">runs-on</span>: ubuntu-latest
+    <span class="c">steps</span>:
+      - <span class="c">uses</span>: actions/checkout@v4
+      - <span class="c">uses</span>: actions/setup-python@v5
+        <span class="c">with</span>: { python-version: <span class="y">"3.12"</span> }
+      - <span class="c">run</span>: pip install pytest
+      - <span class="c">run</span>: pytest</pre></div></div>
+    <div class="step" style="display:grid;gap:4rem;align-content:center"><div class="row" style="gap:3rem"><div class="status ok" style="width:11rem;height:11rem"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M24 52l18 18 34-38" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Les tests passent</h3></div><div class="row" style="gap:3rem"><div class="status ko" style="width:11rem;height:11rem"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M28 28l44 44M72 28L28 72" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/></svg></div><h3>Un test échoue</h3></div></div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-regle">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="big grad">08</div>
+  <h2>La règle d'or</h2>
+</section>
+
+<section class="slide" data-id="regle-pourquoi">
+  <div class="label">Pourquoi</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
+    <div class="card step center" style="align-items:center;gap:2rem"><svg viewBox="0 0 100 100" style="width:13rem"><path d="M28 72a16 16 0 0 1-2-32 22 22 0 0 1 42-4 18 18 0 0 1 4 36z" fill="none" stroke="#00A8C6" stroke-width="6" stroke-linejoin="round"/></svg><h3>Un prompt</h3><p class="cap">part chez un <span class="neg">tiers</span>, souvent hors UE</p></div>
+    <div class="card step center" style="align-items:center;gap:2rem"><svg viewBox="0 0 100 100" style="width:13rem"><circle cx="50" cy="50" r="36" fill="none" stroke="#EE3D5F" stroke-width="6"/><path d="M14 50h72M50 14c-20 20-20 52 0 72M50 14c20 20 20 52 0 72" fill="none" stroke="#EE3D5F" stroke-width="5"/></svg><h3>Un dépôt public</h3><p class="cap">lisible par <span class="neg">tout le monde</span></p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="regle-enonce">
+  <div class="label">La règle d'or</div>
+  <h2 style="font-size:9.6rem;max-width:none">Aucune donnée <span class="grad">personnelle</span><br>ni <span class="grad">confidentielle</span> dans un prompt<br>ni dans un dépôt public.</h2>
+  <div class="chips mt2 step"><span class="chip i">données fictives uniquement</span><span class="chip i">aucune clé</span><span class="chip i">aucun mot de passe</span></div>
+</section>
+
+<section class="slide" data-id="regle-exemples">
+  <div class="label">Concrètement</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
+    <div class="card bad step"><div class="row" style="gap:2rem"><div class="status ko"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M28 28l44 44M72 28L28 72" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/></svg></div><h3>Jamais</h3></div><div class="chips mt" style="flex-direction:column;align-items:flex-start"><span class="chip">le nom d'une vraie personne</span><span class="chip">un extrait de base réelle</span><span class="chip">une clé d'API</span><span class="chip">un mot de passe</span></div></div>
+    <div class="card good step"><div class="row" style="gap:2rem"><div class="status ok"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M24 52l18 18 34-38" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Toujours</h3></div><div class="chips mt" style="flex-direction:column;align-items:flex-start"><span class="chip">un personnage fictif</span><span class="chip">des données générées</span><span class="chip">un fichier .env hors dépôt</span></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="regle-suite">
+  <div class="label">La suite</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:4rem">
+    <div class="card step center" style="align-items:center"><span class="num grad" style="font-size:8rem">S3</span><h3 class="mt">RGPD</h3></div>
+    <div class="card step center" style="align-items:center"><span class="num grad" style="font-size:8rem">S4</span><h3 class="mt">AI Act<br>et RSSI</h3></div>
+    <div class="card hl step center" style="align-items:center"><span class="num grad" style="font-size:8rem">1 p.</span><h3 class="mt">Fiche de conformité<br>évaluée</h3></div>
+  </div>
+  <p class="mt2 step" style="text-align:center;font-size:4.4rem;color:var(--ink)">Chacun la <span class="ind">signe oralement</span>.</p>
+</section>
+
+<section class="slide" data-id="cloture">
+  <div class="label">Clôture · et pour vendredi</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:4rem">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">S2 · ven. 9 oct.</span><h3 class="mt">Git, agent,<br>lancement du projet</h3></div>
+    <div class="card step"><span class="chip c" style="align-self:flex-start">À lire</span><h3 class="mt">Les trois thèmes<br>A · B · C</h3></div>
+    <div class="card hl step"><span class="chip r" style="align-self:flex-start">Avant jeu. 8 oct. 12h</span><h3 class="mt">Formulaire<br>d'équipes</h3><p class="cap mt">équipe · 3 thèmes classés · identifiants GitHub</p></div>
+  </div>
+  <p class="mt2 step" style="text-align:center;font-size:4.4rem;color:var(--ink)">Et la règle d'or ?</p>
+</section>
+
+<section class="slide" data-id="merci">
+  <div class="label">Merci</div>
+  <div class="row grow" style="gap:9rem">
+    <div class="step" style="flex:0 0 auto"><div class="me"></div></div>
+    <div class="grow">
+      <h2 style="font-size:13rem">Des<br><span class="grad">questions</span> ?</h2>
+      <div class="chips mt2 step"><span class="chip">medium.benoitfontaine.fr</span><span class="chip">linkedin.com/in/b-fontaine</span></div>
+    </div>
+  </div>
+</section>
+
+</div>
+<div id="help">← → naviguer · F plein écran · N notes · O vue d'ensemble</div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var prog=document.getElementById('prog'),cur=document.getElementById('cur'),tot=document.getElementById('tot');
+  var i=0,notesWin=null;tot.textContent=slides.length;
+
+  var cells=document.getElementById('cells');
+  if(cells){for(var k=0;k<60;k++){var c=document.createElement('i');if(k<14)c.className='w';cells.appendChild(c)}}
+
+  function steps(sl){return [].slice.call(sl.querySelectorAll('.step'))}
+  function show(n,all){
+    n=Math.max(0,Math.min(slides.length-1,n));i=n;
+    slides.forEach(function(s,k){s.classList.toggle('active',k===n);s.classList.toggle('past',k<n);if(k>n)steps(s).forEach(function(e){e.classList.remove('on')})});
+    steps(slides[n]).forEach(function(e){e.classList.toggle('on',!!all)});
+    prog.style.width=((n+1)/slides.length*100)+'%';cur.textContent=n+1;
+    try{history.replaceState(null,'','#'+(n+1))}catch(e){}
+    if(notesWin&&!notesWin.closed){try{notesWin.location.hash=slides[n].dataset.id}catch(e){}}
+  }
+  function next(){var p=steps(slides[i]).filter(function(e){return !e.classList.contains('on')});if(p.length){p[0].classList.add('on');return}if(i<slides.length-1)show(i+1,false)}
+  function prev(){var o=steps(slides[i]).filter(function(e){return e.classList.contains('on')});if(o.length){o[o.length-1].classList.remove('on');return}if(i>0)show(i-1,true)}
+  function overview(){document.body.classList.toggle('overview');if(!document.body.classList.contains('overview'))show(i,true)}
+  document.addEventListener('keydown',function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey)return;var k=e.key;
+    if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Enter'){e.preventDefault();next()}
+    else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev()}
+    else if(k==='Home')show(0,false);else if(k==='End')show(slides.length-1,true);
+    else if(k==='f'||k==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}
+    else if(k==='n'||k==='N'){notesWin=window.open('day-1-notes.html#'+slides[i].dataset.id,'day1notes')}
+    else if(k==='o'||k==='O'||(k==='Escape'&&document.body.classList.contains('overview')))overview();
+  });
+  slides.forEach(function(s,k){s.addEventListener('click',function(e){if(document.body.classList.contains('overview')){e.stopPropagation();i=k;overview()}})});
+  var tx=null;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){if(tx===null)return;var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60){d<0?next():prev()}tx=null});
+  document.addEventListener('click',function(e){if(document.body.classList.contains('overview'))return;e.clientX>innerWidth*0.3?next():prev()});
+  window.addEventListener('beforeprint',function(){slides.forEach(function(s){steps(s).forEach(function(e){e.classList.add('on')})})});
+  var h=parseInt((location.hash||'').slice(1),10);show(isNaN(h)?0:h-1,false);
+
+  /* fond : réseau de nœuds */
+  var cv=document.getElementById('bg'),cx=cv.getContext('2d'),pts=[],W=0,H=0;
+  var cols=['67,56,245','123,63,242','0,168,198'];
+  function size(){var dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.round(W*H/26000);pts=[];for(var k=0;k<n;k++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,c:k%3})}
+  function draw(){
+    cx.clearRect(0,0,W,H);var L=Math.min(W,H)*.17;
+    for(var a=0;a<pts.length;a++){var p=pts[a];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      for(var b=a+1;b<pts.length;b++){var q=pts[b],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);if(d<L){cx.strokeStyle='rgba('+cols[p.c]+','+(.2*(1-d/L))+')';cx.lineWidth=1;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(q.x,q.y);cx.stroke()}}
+      cx.fillStyle='rgba('+cols[p.c]+',.35)';cx.beginPath();cx.arc(p.x,p.y,2.2,0,6.283);cx.fill()}
+  }
+  function loop(){if(!document.body.classList.contains('overview'))draw();requestAnimationFrame(loop)}
+  size();window.addEventListener('resize',size);
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)draw();else loop();
+})();
+</script>
+</body>
+</html>

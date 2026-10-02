@@ -1,0 +1,31 @@
+- generic [active] [ref=f19e1]:
+  - generic [ref=f19e2]:
+    - generic [ref=f19e5]:
+      - generic [ref=f19e6]:
+        - generic [ref=f19e8]: ITI
+        - text: // S1 · Pourquoi le craft ?
+      - generic [ref=f19e9]: 23 / 31
+    - generic [ref=f19e10]:
+      - generic [ref=f19e11]: // Sans garde-fous
+      - generic [ref=f19e12]:
+        - generic [ref=f19e13]:
+          - generic [ref=f19e14]: causal
+          - generic [ref=f19e15]: ↗
+          - heading "Complexité" [level=3] [ref=f19e16]
+          - paragraph [ref=f19e17]: CMU · 806 dépôts
+        - generic [ref=f19e18]:
+          - generic [ref=f19e19]: DORA
+          - generic [ref=f19e20]: −7,2%
+          - heading "Stabilité" [level=3] [ref=f19e21]
+          - paragraph [ref=f19e22]: par +25 % d'IA
+        - generic [ref=f19e23]:
+          - generic [ref=f19e24]: éditeur
+          - generic [ref=f19e25]: −70%
+          - heading "Refactoring" [level=3] [ref=f19e26]
+          - paragraph [ref=f19e27]: GitClear
+        - generic [ref=f19e28]:
+          - generic [ref=f19e29]: éditeur
+          - generic [ref=f19e30]: 45%
+          - heading "Failles" [level=3] [ref=f19e31]
+          - paragraph [ref=f19e32]: Veracode
+  - generic [ref=f19e33]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

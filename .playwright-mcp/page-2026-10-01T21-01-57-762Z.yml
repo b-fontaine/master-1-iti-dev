@@ -1,0 +1,15 @@
+- generic [active] [ref=f15e1]:
+  - generic [ref=f15e2]:
+    - generic [ref=f15e5]:
+      - generic [ref=f15e6]:
+        - generic [ref=f15e8]: ITI
+        - text: // S1 · Pourquoi le craft ?
+      - generic [ref=f15e9]: 1 / 31
+    - generic [ref=f15e10]:
+      - generic [ref=f15e23]: // Séance 1 · Partie 1
+      - heading "Pourquoi le craft ?" [level=1] [ref=f15e24]: Pourquoile craft ?
+      - paragraph [ref=f15e25]: Du code écrit à la mainaux agents de code.
+      - generic [ref=f15e26]:
+        - generic [ref=f15e27]: Master ITI · Nantes Université
+        - generic [ref=f15e28]: 7 oct. 2026
+  - generic [ref=f15e29]: ← → naviguer · F plein écran · N notes · O vue d'ensemble

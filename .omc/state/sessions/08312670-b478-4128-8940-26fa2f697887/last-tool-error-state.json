@@ -1,0 +1,7 @@
+{
+  "tool_name": "StructuredOutput",
+  "tool_input_preview": "{\"input\":\"{\\\"summary\\\":\\\"Tous les points de vThemes (l. 36 à 49) et les points de cohérence des l. 6 à 8 ont été appliqués dans /home/bfontaine/git/master-1-iti-dev/cours/projets/themes.md. Les modifi...",
+  "error": "Output does not match required schema: root: must have required property 'summary'",
+  "timestamp": "2026-10-01T20:42:00.310Z",
+  "retry_count": 1
+}

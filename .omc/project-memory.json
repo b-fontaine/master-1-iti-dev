@@ -1,0 +1,165 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1790886300169,
+  "projectRoot": "/home/bfontaine/git/master-1-iti-dev",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "cours": {
+      "path": "cours",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1790886300166,
+      "keyFiles": [
+        "1_1_decouverte_genie_logiciel.md",
+        "1_2_revolution_agentique.md",
+        "2_0_initiation_git.md",
+        "programme-detaille.md"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "cours/programme-detaille.md",
+      "accessCount": 133,
+      "lastAccessed": 1790890691415,
+      "type": "file"
+    },
+    {
+      "path": "cours/conformite-ai-act-rgpd.md",
+      "accessCount": 43,
+      "lastAccessed": 1790888329780,
+      "type": "file"
+    },
+    {
+      "path": "cours/projets/lot-3.md",
+      "accessCount": 33,
+      "lastAccessed": 1790778770793,
+      "type": "file"
+    },
+    {
+      "path": "cours/projets/lot-2.md",
+      "accessCount": 31,
+      "lastAccessed": 1790887017133,
+      "type": "file"
+    },
+    {
+      "path": "cours/projets/lot-1.md",
+      "accessCount": 27,
+      "lastAccessed": 1790778770201,
+      "type": "file"
+    },
+    {
+      "path": "cours/projets/themes.md",
+      "accessCount": 22,
+      "lastAccessed": 1790888336717,
+      "type": "file"
+    },
+    {
+      "path": "cours/projets/lot-5.md",
+      "accessCount": 17,
+      "lastAccessed": 1790778848621,
+      "type": "file"
+    },
+    {
+      "path": "cours/projets/lot-4.md",
+      "accessCount": 13,
+      "lastAccessed": 1790778848338,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 8,
+      "lastAccessed": 1790888490733,
+      "type": "file"
+    },
+    {
+      "path": "cours/sources/craft.md",
+      "accessCount": 7,
+      "lastAccessed": 1790886962996,
+      "type": "file"
+    },
+    {
+      "path": "cours/sources/agentic-engineering.md",
+      "accessCount": 7,
+      "lastAccessed": 1790887009917,
+      "type": "file"
+    },
+    {
+      "path": "cours/presentations/day-1.html",
+      "accessCount": 5,
+      "lastAccessed": 1790888501275,
+      "type": "file"
+    },
+    {
+      "path": "cours/sources/ai-dlc.md",
+      "accessCount": 3,
+      "lastAccessed": 1790777054602,
+      "type": "file"
+    },
+    {
+      "path": "cours/sources/spec-driven.md",
+      "accessCount": 3,
+      "lastAccessed": 1790777055048,
+      "type": "file"
+    },
+    {
+      "path": "cours/sources/craft-ai/Slide1.png",
+      "accessCount": 1,
+      "lastAccessed": 1790886971247,
+      "type": "file"
+    },
+    {
+      "path": "cours/sources/craft-ai/Slide5.png",
+      "accessCount": 1,
+      "lastAccessed": 1790886971282,
+      "type": "file"
+    },
+    {
+      "path": "cours/presentations/day-1-notes.html",
+      "accessCount": 1,
+      "lastAccessed": 1790888696500,
+      "type": "file"
+    },
+    {
+      "path": "cours/sources/talk_flutter_clean/Slide4.png",
+      "accessCount": 1,
+      "lastAccessed": 1790890212362,
+      "type": "file"
+    },
+    {
+      "path": "cours/sources/talk_flutter_clean/Slide35.png",
+      "accessCount": 1,
+      "lastAccessed": 1790890212459,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

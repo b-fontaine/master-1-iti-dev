@@ -1,0 +1,47 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e3]:
+    - generic [ref=f4e5]:
+      - generic [ref=f4e6]: Les pratiques du craft à l'épreuve
+      - heading "Ce qui se renforce, ce qui se transforme, ce qui s'effondre" [level=2] [ref=f4e7]
+      - generic [ref=f4e8]:
+        - generic [ref=f4e9]:
+          - generic [ref=f4e10]: Se renforce
+          - list [ref=f4e11]:
+            - listitem [ref=f4e12]:
+              - strong [ref=f4e13]: TDD
+              - text: ": garde-fou de l'agent"
+            - listitem [ref=f4e14]:
+              - strong [ref=f4e15]: Tests
+              - text: d'acceptation et d'architecture
+            - listitem [ref=f4e16]:
+              - strong [ref=f4e17]: Petites PR
+              - text: ", petits commits"
+            - listitem [ref=f4e18]:
+              - strong [ref=f4e19]: Contexte
+              - text: ": CLAUDE.md, AGENTS.md"
+        - generic [ref=f4e20]:
+          - generic [ref=f4e21]: Se transforme
+          - list [ref=f4e22]:
+            - listitem [ref=f4e23]:
+              - strong [ref=f4e24]: Revue de code
+              - text: ": le goulot (temps de revue +91 %, PR fusionnées +98 %)"
+            - listitem [ref=f4e25]:
+              - strong [ref=f4e26]: Pair programming
+              - text: ": humain + agent"
+            - listitem [ref=f4e27]:
+              - strong [ref=f4e28]: Lisibilité
+              - text: ": pour qui écrit-on ?"
+        - generic [ref=f4e29]:
+          - generic [ref=f4e30]: S'effondre
+          - list [ref=f4e31]:
+            - listitem [ref=f4e32]:
+              - strong [ref=f4e33]: Refactoring manuel
+              - text: ": on ne le fait plus, faute de temps"
+            - listitem [ref=f4e34]:
+              - strong [ref=f4e35]: Compréhension
+              - text: ": un développeur ne sait plus expliquer sa propre PR"
+      - generic [ref=f4e36]: Faros AI, 2025 (éditeur) · Mancuso, 2026 · GitClear, 2024-2026
+    - generic [ref=f4e37]:
+      - generic [ref=f4e38]: 03 · Qualité
+      - generic [ref=f4e39]: 26 / 32
+  - generic [ref=f4e40]: ← → naviguer · F plein écran · N notes · O vue d'ensemble
