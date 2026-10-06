@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd /home/bfontaine/.claude/projects/-home-bfontaine-git-master-1-iti-dev/d23f8d3a-3a49-463b-8078-f2bec091248e/tool-results/\\ng(){ f=$1; shift; grep -o -i -E \\\".{0,200}($1).{0,250}\\\" $f | h...",
+  "error": "Exit code 1\n(eval):2: defining function based on alias `g'\n(eval):2: parse error near `()'",
+  "timestamp": "2026-10-06T22:11:08.282Z",
+  "retry_count": 2
+}
