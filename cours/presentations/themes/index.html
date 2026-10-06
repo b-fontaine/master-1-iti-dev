@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les trois projets · Master ITI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/deck.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body data-deck="themes" data-notes="notes.html">
+<div id="stage">
+<canvas id="bg"></canvas><div id="grid"></div>
+<div id="prog"></div>
+<div id="top"><span class="l"><span class="dot"></span><b>ITI</b> // Le projet fil rouge</span><span><b id="cur">1</b> / <span id="tot">1</span></span></div>
+
+<!-- 1 · TITRE -->
+<section class="slide title-slide" data-id="titre">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true">
+    <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4338F5"/><stop offset=".55" stop-color="#7B3FF2"/><stop offset="1" stop-color="#00A8C6"/></linearGradient></defs>
+    <g class="spin"><circle cx="400" cy="400" r="260" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="140" r="14" fill="url(#gg)"/><circle cx="660" cy="400" r="9" fill="url(#gg)"/></g>
+    <g class="spin2"><circle cx="400" cy="400" r="340" stroke="url(#gg)" stroke-width="2" opacity=".5"/><circle cx="160" cy="580" r="12" fill="url(#gg)"/><circle cx="640" cy="170" r="8" fill="url(#gg)"/></g>
+    <circle cx="400" cy="400" r="150" stroke="url(#gg)" stroke-width="4"/>
+    <text x="400" y="440" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="120" fill="url(#gg)">3</text>
+  </svg>
+  <div class="label">Master ITI · Le projet fil rouge</div>
+  <h1 style="font-size:12.5rem">Trois projets.<br>Un seul à <span class="grad">construire</span>.</h1>
+  <p class="sub">Choisissez celui qui vous donne envie.</p>
+  <div class="meta"><span class="chip">Un carnet de campagne</span><span class="chip">Un tableau de rendement</span><span class="chip">Une répartition équitable</span></div>
+</section>
+
+<!-- 2 · LE PRINCIPE -->
+<section class="slide" data-id="principe">
+  <div class="label">Le principe</div>
+  <h2 style="font-size:9rem">Un outil <span class="grad">utile</span>,<br>pour de vrai.</h2>
+  <div class="cols c4 mt2" style="flex:0 0 auto;gap:3rem">
+    <div class="card step center" style="align-items:center"><svg viewBox="0 0 100 100" style="width:12rem"><circle cx="50" cy="50" r="34" fill="none" stroke="#4338F5" stroke-width="6"/><path d="M50 28v24l16 10" fill="none" stroke="#4338F5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg><h3 class="mt">Un besoin ponctuel</h3><p class="cap mt">une saison, un trimestre, une campagne</p></div>
+    <div class="card step center" style="align-items:center"><svg viewBox="0 0 100 100" style="width:12rem"><circle cx="34" cy="38" r="12" fill="none" stroke="#00A8C6" stroke-width="6"/><circle cx="68" cy="38" r="12" fill="none" stroke="#00A8C6" stroke-width="6"/><path d="M12 82c0-14 10-22 22-22s22 8 22 22M46 82c0-14 10-22 22-22s22 8 22 22" fill="none" stroke="#00A8C6" stroke-width="6" stroke-linecap="round"/></svg><h3 class="mt">Une équipe</h3><p class="cap mt">3 à 5 personnes</p></div>
+    <div class="card step center" style="align-items:center"><svg viewBox="0 0 100 100" style="width:12rem"><rect x="14" y="30" width="72" height="44" rx="10" fill="none" stroke="#7B3FF2" stroke-width="6"/><circle cx="38" cy="52" r="5" fill="#7B3FF2"/><circle cx="62" cy="52" r="5" fill="#7B3FF2"/><path d="M50 30V16" stroke="#7B3FF2" stroke-width="6" stroke-linecap="round"/></svg><h3 class="mt">Un agent IA</h3><p class="cap mt">vous pilotez, il exécute</p></div>
+    <div class="card step center" style="align-items:center"><svg viewBox="0 0 100 100" style="width:12rem"><path d="M50 10l34 12v26c0 22-14 36-34 44C30 84 16 70 16 48V22z" fill="none" stroke="#EE3D5F" stroke-width="6" stroke-linejoin="round"/><path d="M36 50l10 10 18-20" fill="none" stroke="#EE3D5F" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg><h3 class="mt">Des limites connues</h3><p class="cap mt">données fictives, fiche de conformité</p></div>
+  </div>
+  <p class="mt2 step" style="font-size:4.2rem;color:var(--ink)">Un outil <span class="ind">jetable</span> ne dispense pas d'un outil <span class="ind">bien fait</span>.</p>
+</section>
+
+<!-- 3 · LE SOCLE COMMUN -->
+<section class="slide" data-id="socle">
+  <div class="label">Ce que les trois ont en commun</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="num grad" style="font-size:9rem">5</span><h3 class="mt">entités liées</h3><p class="cap mt">un vrai modèle de données</p></div>
+    <div class="card step"><span class="num grad" style="font-size:9rem">1</span><h3 class="mt">règle métier centrale</h3><p class="cap mt">testée automatiquement</p></div>
+    <div class="card step"><span class="num grad" style="font-size:9rem">4</span><h3 class="mt">vues de tableau de bord</h3><p class="cap mt">pour lire le résultat</p></div>
+    <div class="card step"><span class="num grad" style="font-size:9rem">CSV</span><h3 class="mt">un import de fichier</h3><p class="cap mt">avec rejet motivé des lignes</p></div>
+    <div class="card step"><span class="num grad" style="font-size:9rem">✓</span><h3 class="mt">CI et publication web</h3><p class="cap mt">chaque modification est contrôlée</p></div>
+    <div class="card hl step"><span class="num grad" style="font-size:9rem">1 p.</span><h3 class="mt">fiche de conformité</h3><p class="cap mt">soumise au RSSI</p></div>
+  </div>
+  <div class="chips step mt2" style="justify-content:center"><span class="chip i">Flutter</span><span class="chip i">Clean Architecture</span><span class="chip i">TDD</span><span class="chip i">BDD</span></div>
+</section>
+
+<!-- 4 · TROIS DIFFICULTÉS -->
+<section class="slide" data-id="trois">
+  <div class="label">Trois thèmes, trois difficultés</div>
+  <div class="big3" style="flex:1;min-height:0;margin-top:1rem">
+    <div class="tile a step"><div class="L">A</div><div><h3>Les Marches de Cendrelune</h3><p>Un état qui progresse, un hasard à maîtriser.</p></div></div>
+    <div class="tile b step"><div class="L">B</div><div><h3>Ligne 4</h3><p>Des temps, des unités, des arrondis.</p></div></div>
+    <div class="tile c step"><div class="L">C</div><div><h3>Vœux de projet</h3><p>Un algorithme équitable, à expliquer à chacun.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ THÈME A ============ -->
+<section class="slide hero" data-theme="a" data-id="a-hero">
+  <div class="initial">A</div>
+  <div class="label">Thème A · ludique</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 84rem">
+      <h1>Les Marches<br>de <span class="tg">Cendrelune</span></h1>
+      <p class="tag step">Qui est à terre ? Qui monte de niveau ? <b>Le carnet s'en souvient.</b></p>
+      <div class="chips mt step"><span class="chip a">fiches de personnage</span><span class="chip a">quêtes</span><span class="chip a">jets de d20</span></div>
+    </div>
+    <div class="win grow step" style="transform:rotate(1.4deg)">
+      <div class="tb"><i></i><i></i><i></i><u>…github.io/carnet-cendrelune</u></div>
+      <div class="bd">
+        <div class="mrow"><span>Brindille · voleuse</span><small>NIVEAU 4</small></div>
+        <div><div class="mrow"><small>POINTS DE VIE</small><small>31 / 46</small></div><div class="mbar hp" style="margin-top:.8rem"><b style="width:67%"></b></div></div>
+        <div><div class="mrow"><small>EXPÉRIENCE</small><small>740 / 1000</small></div><div class="mbar" style="margin-top:.8rem"><b style="width:74%"></b></div></div>
+        <div class="log"><div><span><b>Embuscade au gué</b> · ruse</span><b style="color:var(--lime)">réussite</b></div><div><span><b>Le pont brumeux</b> · force</span><b style="color:var(--coral)">échec · −6 PV</b></div><div><span><b>La porte close</b> · ruse</span><b style="color:var(--amber)">critique ! +150 XP</b></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-theme="a" data-id="a-besoin">
+  <div class="label">Thème A · le besoin</div>
+  <div class="row grow" style="gap:8rem;align-items:center">
+    <div style="flex:0 0 72rem;display:grid;gap:4rem">
+      <div class="persona step"><div class="av">GH</div><div><b>Gaspard Hallier</b><span>maître de jeu · personnage fictif</span></div></div>
+      <div class="quote step">Mêmes dés, mêmes conséquences.</div>
+      <div class="chips step"><span class="chip a">durée de vie : une saison</span><span class="chip a">12 joueurs</span></div>
+    </div>
+    <div class="stories grow">
+      <div class="step"><i>1</i>Je crée un personnage d'une classe donnée.</div>
+      <div class="step"><i>2</i>Je publie une quête avec sa difficulté.</div>
+      <div class="step"><i>3</i>Je résous la quête : jet, issue, PV, expérience.</div>
+      <div class="step"><i>4</i>Je consulte la fiche et son historique.</div>
+      <div class="step"><i>5</i>Je vois qui est à terre et qui monte de niveau.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-theme="a" data-id="a-regle">
+  <div class="label">Thème A · le cœur du projet</div>
+  <div class="row grow" style="gap:6rem;align-items:flex-start">
+    <div class="card demo step" data-ui style="flex:0 0 100rem">
+      <div style="display:flex;gap:4rem;align-items:center">
+        <div class="die" id="a-die">11</div>
+        <div style="display:grid;gap:1.2rem"><h3>Guerrier, niveau 1</h3><p class="cap" style="font-size:2.4rem">quête de <b>force</b> · DD 17 · danger 6 · 100 XP</p><div><button class="btn" id="a-roll" type="button">Lancer le d20</button></div></div>
+      </div>
+      <div class="ctl"><label>Jet imposé à la règle <span id="a-jet-v">11</span></label><input type="range" id="a-jet" min="1" max="20" value="11"></div>
+      <div class="res">
+        <div class="mrow" style="font-size:3.4rem"><span id="a-tot">11 + 5 + 1 = 17 (DD 17)</span><span class="badge ok" id="a-out">réussite</span></div>
+        <div><div class="mrow"><small>POINTS DE VIE</small><small id="a-pvt">40 / 40</small></div><div class="mbar hp" style="margin-top:.8rem"><b id="a-pv" style="width:100%"></b></div></div>
+        <div><div class="mrow"><small id="a-xpt">EXPÉRIENCE 100</small><small id="a-lvl">niveau 2</small></div><div class="mbar" style="margin-top:.8rem"><b id="a-xp" style="width:0%"></b></div></div>
+      </div>
+    </div>
+    <div class="grow step" style="display:grid;gap:3rem">
+      <h3 style="font-size:4.6rem">Six règles, dans cet ordre</h3>
+      <ol class="rules">
+        <li>Personnage à terre : refus</li><li>Jets critiques : 20 et 1</li><li>Total = jet + bonus + niveau</li><li>Dégâts, plancher à zéro</li><li>Expérience selon l'issue</li><li>Niveau, PV gagnés</li>
+      </ol>
+      <p class="cap">Les valeurs sont celles des cas d'acceptation. Le jet arrive en paramètre : la règle ne tire jamais le dé.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-theme="a" data-id="a-defis">
+  <div class="label">Thème A · les défis</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem;margin-top:1rem">
+    <div class="card bad step"><span class="chip r" style="align-self:flex-start">le piège de l'agent</span><h3 class="mt">Les dés en dur</h3><p class="mt" style="font-size:3rem">Pour passer un test, l'agent glisse un hasard dans la règle. Les tests deviennent verts… par chance.</p></div>
+    <div class="card good step"><span class="chip n" style="align-self:flex-start">le garde-fou</span><h3 class="mt">Le dé vient de l'extérieur</h3><p class="mt" style="font-size:3rem">Un test d'architecture échoue si le domaine importe du hasard. Le dé est injecté, rejouable.</p></div>
+    <div class="card warn step"><span class="chip v" style="align-self:flex-start">conformité</span><h3 class="mt">Les joueurs sont des personnes</h3><div class="meter l1 mt"><i></i><i></i><i></i></div><p class="mt" style="font-size:3rem">Sensibilité faible. Un pseudonyme de joueur reste une donnée personnelle : information et suppression.</p></div>
+  </div>
+  <div class="chips step mt2"><span class="chip a">fiche de personnage</span><span class="chip a">journal de campagne</span><span class="chip a">état de la compagnie</span><span class="chip a">réussite par classe</span></div>
+</section>
+
+<!-- ============ THÈME B ============ -->
+<section class="slide hero" data-theme="b" data-id="b-hero">
+  <div class="initial">B</div>
+  <div class="label">Thème B · industrie</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 84rem">
+      <h1>Ligne <span class="tg">4</span></h1>
+      <p class="tag step">Le TRS de l'atelier de câblage, calculé <b>de la même façon pour tout le monde</b>.</p>
+      <div class="chips mt step"><span class="chip a">disponibilité</span><span class="chip a">performance</span><span class="chip a">qualité</span></div>
+    </div>
+    <div class="win grow step" style="transform:rotate(-1.4deg)">
+      <div class="tb"><i></i><i></i><i></i><u>…github.io/ligne-4</u></div>
+      <div class="bd">
+        <div class="mrow"><span>Poste 2 · quart du matin</span><small>CAS D'ACCEPTATION N° 2</small></div>
+        <div style="display:flex;gap:4rem;align-items:center">
+          <div class="ring" style="width:30rem;height:30rem"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="#E3E7F6" stroke-width="22"/><circle cx="100" cy="100" r="80" fill="none" stroke="url(#gb)" stroke-width="22" stroke-linecap="round" stroke-dasharray="502.65" stroke-dashoffset="170.9"/><defs><linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00A8C6"/><stop offset="1" stop-color="#4338F5"/></linearGradient></defs></svg><div class="v" style="font-size:5.4rem">66,0 %<small>OEE</small></div></div>
+          <div class="dpq grow"><div class="mrow"><span>Disponibilité</span><b>86,7 %</b></div><div class="mbar"><b style="width:86.7%"></b></div><div class="mrow"><span>Performance</span><b>84,6 %</b></div><div class="mbar"><b style="width:84.6%"></b></div><div class="mrow"><span>Qualité</span><b>90,0 %</b></div><div class="mbar"><b style="width:90%"></b></div></div>
+        </div>
+        <div class="mini"><span>panne 45 min</span><span>pause 30 min</span><span>changement de série 15 min</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-theme="b" data-id="b-besoin">
+  <div class="label">Thème B · le besoin</div>
+  <div class="row grow" style="gap:8rem;align-items:center">
+    <div style="flex:0 0 72rem;display:grid;gap:4rem">
+      <div class="persona step"><div class="av">HG</div><div><b>Hélène Gaudry</b><span>amélioration continue · personnage fictif</span></div></div>
+      <div class="quote step">La même formule pour tout le monde.</div>
+      <div class="chips step"><span class="chip a">durée de vie : un trimestre de mesure</span></div>
+    </div>
+    <div class="stories grow">
+      <div class="step"><i>1</i>Je décris les postes et je crée les quarts.</div>
+      <div class="step"><i>2</i>Je saisis un ordre de fabrication et son temps de cycle.</div>
+      <div class="step"><i>3</i>Je déclare pièces, rebuts et arrêts d'un quart.</div>
+      <div class="step"><i>4</i>Je consulte le TRS d'un poste, décomposé.</div>
+      <div class="step"><i>5</i>Je vois les causes d'arrêt classées par minutes perdues.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-theme="b" data-id="b-regle">
+  <div class="label">Thème B · le cœur du projet</div>
+  <div class="row grow" style="gap:6rem;align-items:flex-start">
+    <div class="card demo step" data-ui style="flex:0 0 104rem">
+      <div style="display:flex;gap:4rem;align-items:center">
+        <div class="ring" style="width:36rem;height:36rem"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="#E3E7F6" stroke-width="22"/><circle id="b-arc" cx="100" cy="100" r="80" fill="none" stroke="url(#gb2)" stroke-width="22" stroke-linecap="round" stroke-dasharray="502.65" stroke-dashoffset="170.9" style="transition:stroke-dashoffset .5s"/><defs><linearGradient id="gb2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00A8C6"/><stop offset="1" stop-color="#4338F5"/></linearGradient></defs></svg><div class="v" style="font-size:6.2rem"><span id="b-oee">66,0 %</span><small>OEE</small></div></div>
+        <div class="dpq grow">
+          <div class="mrow"><span>Disponibilité</span><b id="b-d">86,7 %</b></div><div class="mbar"><b id="b-db" style="width:86.7%"></b></div>
+          <div class="mrow"><span>Performance</span><b id="b-p">84,6 %</b></div><div class="mbar"><b id="b-pb" style="width:84.6%"></b></div>
+          <div class="mrow"><span>Qualité</span><b id="b-q">90,0 %</b></div><div class="mbar"><b id="b-qb" style="width:90%"></b></div>
+        </div>
+      </div>
+      <div class="ctl"><label>Panne <span id="b-panne-v">45 min</span></label><input type="range" id="b-panne" min="0" max="300" value="45"></div>
+      <div class="ctl"><label>Pièces produites <span id="b-prod-v">330</span></label><input type="range" id="b-prod" min="0" max="600" value="330"></div>
+      <div class="ctl"><label>Pièces rebutées <span id="b-reb-v">33</span></label><input type="range" id="b-reb" min="0" max="100" value="33"></div>
+      <p class="cap" id="b-note" style="font-size:2.2rem">Quart de 480 min · pause 30 · changement de série 15 · cycle 60 s</p>
+    </div>
+    <div class="grow step" style="display:grid;gap:3rem">
+      <h3 style="font-size:4.6rem">Six règles, dans cet ordre</h3>
+      <ol class="rules">
+        <li>Durée réelle du quart, en UTC</li><li>Arrêts tronqués aux bornes</li><li>Disponibilité</li><li>Performance, plafonnée à 100 %</li><li>Qualité</li><li>OEE = D × P × Q</li>
+      </ol>
+      <p class="cap">Bougez les curseurs : c'est l'effet « wow » de la soutenance.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-theme="b" data-id="b-defis">
+  <div class="label">Thème B · les défis</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem;margin-top:1rem">
+    <div class="card bad step"><span class="chip r" style="align-self:flex-start">le piège de l'agent</span><h3 class="mt">Les unités mélangées</h3><p class="mt" style="font-size:3rem">Secondes divisées par des minutes : la performance est 60 fois trop haute, et le plafond à 100 % cache l'erreur.</p></div>
+    <div class="card good step"><span class="chip n" style="align-self:flex-start">le garde-fou</span><h3 class="mt">Un seul endroit pour convertir</h3><p class="mt" style="font-size:3rem">Suffixes d'unités obligatoires. Un test échoue si 60 ou 3600 apparaissent ailleurs.</p></div>
+    <div class="card warn step"><span class="chip v" style="align-self:flex-start">conformité</span><h3 class="mt">Mesurer une machine, pas une personne</h3><div class="meter l2 mt"><i></i><i></i><i></i></div><p class="mt" style="font-size:3rem">Sensibilité moyenne. Un TRS par quart peut évaluer indirectement un opérateur.</p></div>
+  </div>
+  <div class="chips step mt2"><span class="chip a">OEE par poste et quart</span><span class="chip a">Pareto des arrêts</span><span class="chip a">avancement des OF</span><span class="chip a">pannes sans ticket</span></div>
+  <p class="cap step mt" style="font-size:2.6rem">Le test du changement d'heure : la nuit du 24 au 25 octobre dure 9 heures.</p>
+</section>
+
+<!-- ============ THÈME C ============ -->
+<section class="slide hero" data-theme="c" data-id="c-hero">
+  <div class="initial">C</div>
+  <div class="label">Thème C · équité</div>
+  <div class="row grow" style="gap:8rem">
+    <div style="flex:0 0 84rem">
+      <h1>Vœux<br>de <span class="tg">projet</span></h1>
+      <p class="tag step">Mêmes vœux, même résultat. <b>Et chacun sait pourquoi.</b></p>
+      <div class="chips mt step"><span class="chip a">80 étudiants fictifs</span><span class="chip a">30 sujets</span><span class="chip a">1 algorithme</span></div>
+    </div>
+    <div class="win grow step" style="transform:rotate(1.2deg)">
+      <div class="tb"><i></i><i></i><i></i><u>…github.io/voeux-de-projet</u></div>
+      <div class="bd">
+        <div class="mrow"><span>etu_003 · mon résultat</span><small>PARCOURS VISION</small></div>
+        <div class="card" style="padding:2.6rem 3rem;box-shadow:none;background:#E8F6D6"><div class="mrow"><span>Sujet obtenu</span><b style="font-size:4.4rem">J4</b></div><p class="cap" style="font-size:2.4rem">vœu n° 3 sur 3</p></div>
+        <div class="log"><div><span>Vœu 1 · J3</span><b>réservé à la robotique</b></div><div><span>Vœu 2 · J1</span><b>complet</b></div><div><span>Vœu 3 · J4</span><b style="color:var(--lime)">attribué</b></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-theme="c" data-id="c-besoin">
+  <div class="label">Thème C · le besoin</div>
+  <div class="row grow" style="gap:8rem;align-items:center">
+    <div style="flex:0 0 72rem;display:grid;gap:4rem">
+      <div class="persona step"><div class="av">GH</div><div><b>Gwenaëlle Hérault</b><span>responsable des projets · personnage fictif</span></div></div>
+      <div class="quote step">Mêmes vœux, même résultat.</div>
+      <div class="chips step"><span class="chip a">durée de vie : une campagne de vœux</span></div>
+    </div>
+    <div class="stories grow">
+      <div class="step"><i>1</i>Je crée les sujets avec leurs capacités.</div>
+      <div class="step"><i>2</i>J'importe les étudiants et leurs vœux.</div>
+      <div class="step"><i>3</i>Je lance la répartition.</div>
+      <div class="step"><i>4</i>Je vois le motif de chaque non-affecté.</div>
+      <div class="step"><i>5</i>Étudiant, je consulte mon résultat et le rang du vœu obtenu.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-theme="c" data-id="c-regle">
+  <div class="label">Thème C · le cœur du projet</div>
+  <div class="row grow" style="gap:6rem;align-items:flex-start">
+    <div class="card demo step" data-ui style="flex:0 0 118rem;gap:2rem;padding:3rem 3.4rem">
+      <div class="subs" id="c-subs"></div>
+      <div class="stu" id="c-stu"></div>
+      <div class="exp" id="c-exp">Cinq étudiants, quatre sujets. Appuyez pour dérouler l'algorithme.</div>
+      <div style="display:flex;gap:2rem"><button class="btn" id="c-next" type="button">Étape suivante</button><button class="btn ghost" id="c-reset" type="button">Recommencer</button></div>
+    </div>
+    <div class="grow step" style="display:grid;gap:3rem">
+      <h3 style="font-size:4.6rem">Six règles, dans cet ordre</h3>
+      <ol class="rules">
+        <li>Validation : 3 à 5 vœux</li><li>Priorité par rang</li><li>Filtre de parcours</li><li>Capacité des sujets</li><li>Non-affectation motivée</li><li>Statut : confirmé ou sous-effectif</li>
+      </ol>
+      <p class="cap">Le jeu de référence du cas d'acceptation n° 1.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-theme="c" data-id="c-defis">
+  <div class="label">Thème C · les défis</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem;margin-top:1rem">
+    <div class="card bad step"><span class="chip r" style="align-self:flex-start">le piège de l'agent</span><h3 class="mt">Les données réelles collées</h3><p class="mt" style="font-size:3rem">Pour des tests « réalistes », l'agent colle une vraie liste de classement. Dans un dépôt public, elle ne se retire plus.</p></div>
+    <div class="card good step"><span class="chip n" style="align-self:flex-start">le garde-fou</span><h3 class="mt">Tous les étudiants sont etu_NNN</h3><p class="mt" style="font-size:3rem">Un test scanne les fichiers versionnés et refuse tout courriel ou toute donnée hors du seed fictif.</p></div>
+    <div class="card warn step"><span class="chip v" style="align-self:flex-start">conformité</span><h3 class="mt">Une décision sur des personnes</h3><div class="meter l3 mt"><i></i><i></i><i></i></div><p class="mt" style="font-size:3rem">Sensibilité élevée. Décision d'affectation (art. 22 RGPD) : plus de travail de conformité, à connaître avant de choisir.</p></div>
+  </div>
+  <div class="chips step mt2"><span class="chip a">remplissage des sujets</span><span class="chip a">mon résultat</span><span class="chip a">non-affectés par motif</span><span class="chip a">satisfaction</span></div>
+</section>
+
+<!-- ============ CHOISIR ============ -->
+<section class="slide" data-id="comparer">
+  <div class="label">Pour choisir</div>
+  <div class="cmp step" style="margin-top:2rem">
+    <div class="h"></div><div class="h a">A · Cendrelune</div><div class="h b">B · Ligne 4</div><div class="h c">C · Vœux</div>
+    <div class="k">entités</div><div class="a">5</div><div class="b">5</div><div class="c">5</div>
+    <div class="k">cas d'acceptation</div><div class="a">7</div><div class="b">8</div><div class="c">7</div>
+    <div class="k">difficulté</div><div class="a">état et hasard</div><div class="b">unités et arrondis</div><div class="c">priorités et cas limites</div>
+    <div class="k">piège d'agent</div><div class="a">dés en dur</div><div class="b">unités mélangées</div><div class="c">données réelles</div>
+    <div class="k">conformité</div><div class="a"><div class="meter l1"><i></i><i></i><i></i></div></div><div class="b"><div class="meter l2"><i></i><i></i><i></i></div></div><div class="c"><div class="meter l3"><i></i><i></i><i></i></div></div>
+  </div>
+  <p class="mt step" style="font-size:3.6rem;color:var(--ink)">Charge d'équipe comparable : <span class="ind">15 à 20 heures</span> de sprint pour les trois.</p>
+</section>
+
+<section class="slide" data-id="comment">
+  <div class="label">Comment ça se passe</div>
+  <div class="vrail" style="margin-top:2rem">
+    <div class="node step"><b style="font-size:4.6rem">Votre équipe se forme</b><span>3 à 5 personnes · avant le jeudi 8 octobre, 12h</span></div>
+    <div class="node step"><b style="font-size:4.6rem">Vous classez les trois thèmes</b><span>au plus 3 équipes par thème · tirage au sort si besoin</span></div>
+    <div class="node step"><b style="font-size:4.6rem">Votre dépôt vous attend</b><span>un projet par équipe, public, fictif de bout en bout</span></div>
+    <div class="node step now"><b style="font-size:4.6rem">Vendredi 9 octobre : on démarre</b><span>validation des équipes, première PR</span></div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="fin">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="label">À vous</div>
+  <h2 style="font-size:15rem">Alors,<br><span class="grad">lequel</span> ?</h2>
+  <div class="chips step mt2 bigchip"><span class="chip" style="border-color:#E58A00">A · Cendrelune</span><span class="chip" style="border-color:#00A8C6">B · Ligne 4</span><span class="chip" style="border-color:#46A000">C · Vœux de projet</span></div>
+</section>
+
+</div>
+<div id="help">← → naviguer · F plein écran · N notes · O vue d'ensemble</div>
+<script src="../shared/deck.js"></script>
+<script src="demos.js"></script>
+</body>
+</html>

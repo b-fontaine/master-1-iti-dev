@@ -1,0 +1,14 @@
+{
+  "name": "iti-presentations",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Diaporamas du Master ITI avec fenêtre de notes synchronisée",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "day-1": "node scripts/present.mjs day-1",
+    "themes": "node scripts/present.mjs themes",
+    "day-1:serve": "node scripts/present.mjs day-1 --no-open",
+    "themes:serve": "node scripts/present.mjs themes --no-open"
+  }
+}

@@ -5,61 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Notes · Séance 1</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#F4F6FD;--ink:#0C1030;--ink2:#3E4566;--ink3:#7780A3;--line:#D6DBF0;--indigo:#4338F5;--cyan:#00A8C6;--coral:#EE3D5F;--lime:#46A000;--amber:#E58A00;
---grad:linear-gradient(120deg,#4338F5,#7B3FF2 48%,#00A8C6);--display:'Space Grotesk',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:2rem}
-body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:17px;
- background-image:radial-gradient(900px 500px at 105% -5%,rgba(67,56,245,.12),transparent 60%),radial-gradient(700px 500px at -5% 105%,rgba(0,168,198,.13),transparent 60%);background-attachment:fixed}
-.wrap{display:grid;grid-template-columns:300px 1fr;gap:0;max-width:1300px;margin:0 auto}
-nav{position:sticky;top:0;height:100vh;overflow:auto;padding:28px 20px 28px 28px;border-right:1px solid var(--line)}
-nav h1{font-family:var(--display);font-size:20px;margin-bottom:6px}
-nav .sub{font:500 12px var(--mono);color:var(--ink3);margin-bottom:18px;letter-spacing:.05em}
-nav a{display:flex;gap:10px;padding:5px 8px;border-radius:8px;color:var(--ink2);text-decoration:none;font-size:14px;line-height:1.35}
-nav a b{font:700 12px var(--mono);color:var(--indigo);min-width:22px;padding-top:2px}
-nav a:hover{background:#fff}
-nav .part{font:700 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin:16px 0 4px 8px}
-main{padding:36px 44px 120px}
-.top{margin-bottom:34px}
-.top .tag{font:700 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--indigo)}
-.top h1{font-family:var(--display);font-size:44px;letter-spacing:-.03em;line-height:1.05;margin:8px 0 12px}
-.top p{color:var(--ink2);max-width:60ch}
-.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.pill{font:700 12px var(--mono);padding:4px 12px;border-radius:99px;border:1.5px solid var(--line);background:#fff}
-.timing{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0 8px}
-.timing div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
-.timing b{display:block;font:700 22px var(--display)}.timing span{font:500 12px var(--mono);color:var(--ink3)}
-section.s{background:rgba(255,255,255,.78);border:1px solid var(--line);border-radius:18px;padding:22px 26px 20px;margin:18px 0;box-shadow:0 8px 28px rgba(40,50,120,.06);scroll-margin-top:24px}
-section.s:target{border-color:var(--indigo);box-shadow:0 0 0 4px rgba(67,56,245,.16),0 8px 28px rgba(40,50,120,.1)}
-section.s header{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
-section.s header .n{font:700 13px var(--mono);color:#fff;background:var(--grad);padding:3px 10px;border-radius:8px}
-section.s header h2{font-family:var(--display);font-size:22px;letter-spacing:-.015em}
-section.s header .t{margin-left:auto;font:500 12px var(--mono);color:var(--ink3)}
-h3{font:700 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--indigo);margin:14px 0 4px}
-h3.w{color:var(--amber)}h3.q{color:var(--cyan)}
-p,li{color:var(--ink2)}
-ul{padding-left:20px;margin:4px 0}li{margin:3px 0}
-strong{color:var(--ink)}
-.shows{font:500 13px var(--mono);color:var(--ink3);margin-bottom:6px}
-.warn{background:#FFF6E0;border:1px solid #F2D08A;border-radius:10px;padding:8px 12px;margin-top:10px;font-size:15px}
-.part-h{font:700 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin:46px 0 4px}
-table{border-collapse:collapse;width:100%;font-size:14px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
-td,th{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#EEF0FB;font:700 12px var(--mono)}
-a{color:var(--indigo)}
-@media(max-width:900px){.wrap{grid-template-columns:1fr}nav{position:static;height:auto;border:0}main{padding:20px}.timing{grid-template-columns:1fr 1fr}}
-@media print{nav{display:none}.wrap{display:block}body{background:#fff}}
-main{counter-reset:s}section.s{counter-increment:s}section.s header .n::before{content:counter(s)}
-</style>
+<link rel="stylesheet" href="../shared/notes.css">
 </head>
-<body>
+<body data-deck="day-1">
 <div class="wrap">
-<nav><h1>Notes · S1</h1><div class="sub">SÉANCE 1 COMPLÈTE</div><div class="part">Accueil</div><a href="#titre"><b>1</b>Titre</a><a href="#qui-suis-je"><b>2</b>Qui suis-je ?</a><a href="#objectifs-formation"><b>3</b>Les objectifs de la formation</a><a href="#calendrier"><b>4</b>Calendrier</a><a href="#outils"><b>5</b>Les outils de la formation</a><a href="#objectifs-seance"><b>6</b>Objectifs de la séance</a><div class="part">01 · Histoire</div><a href="#vote"><b>7</b>Vote d'ouverture</a><a href="#div-histoire"><b>8</b>Titre de partie : d'où vient le craft ?</a><a href="#denver"><b>9</b>Denver, 1995</a><a href="#crise-1968"><b>10</b>1968 · La crise du logiciel</a><a href="#brooks"><b>11</b>1975 · 1986 · Brooks</a><a href="#dette"><b>12</b>1992 · Dette technique</a><a href="#xp-tdd"><b>13</b>1996 → 2002 · XP et TDD</a><a href="#agile"><b>14</b>2001 · Manifeste Agile</a><a href="#ddd"><b>15</b>2003 · Domain-Driven Design</a><a href="#bdd"><b>16</b>2006 · Behavior-Driven Development</a><a href="#craft-2009"><b>17</b>2001 → 2009 · Manifeste du craft</a><a href="#craft-concret"><b>18</b>Le craft, concrètement</a><a href="#git-cd"><b>19</b>2005 → 2018 · Git, livraison continue, DORA</a><a href="#lire"><b>20</b>Lire plus qu'écrire</a><a href="#div-agents"><b>21</b>Titre de partie : le craft face aux agents</a><a href="#frise-agents"><b>22</b>2021 → 2026</a><a href="#vibe-aug"><b>23</b>Vibe coding contre augmented coding</a><a href="#alertes-beck"><b>24</b>Les trois alertes de Kent Beck</a><a href="#amplifie"><b>25</b>L'IA amplifie</a><a href="#div-qualite"><b>26</b>Titre de partie : où va la qualité du code ?</a><a href="#metr"><b>27</b>METR · vitesse perçue</a><a href="#stanford"><b>28</b>Stanford · le contexte compte</a><a href="#mesures"><b>29</b>Sans garde-fous, la qualité se dégrade</a><a href="#mecanisme"><b>30</b>Le code existant est le contexte de l'agent</a><a href="#pratiques"><b>31</b>Les pratiques du craft à l'épreuve</a><a href="#debat"><b>32</b>Le débat de 2026</a><a href="#lisibilite"><b>33</b>Pour qui écrit-on ?</a><a href="#jetable"><b>34</b>La thèse du code jetable</a><a href="#esprit-critique"><b>35</b>Garder son esprit critique</a><a href="#synthese"><b>36</b>Synthèse</a><a href="#retour-vote"><b>37</b>Retour sur le vote</a><div class="part">04 · Code et TDD</div><a href="#div-code"><b>38</b>Titre de partie : notions de code et TDD</a><a href="#code-variable"><b>39</b>Notion 1 · Variable</a><a href="#code-fonction"><b>40</b>Notion 2 · Fonction</a><a href="#code-condition"><b>41</b>Notion 3 · Condition</a><a href="#code-boucle"><b>42</b>Notion 4 · Boucle</a><a href="#code-fichier"><b>43</b>Notion 5 · Fichier</a><a href="#code-cli"><b>44</b>Notion 6 · Ligne de commande</a><a href="#code-lire"><b>45</b>Lire un code : six briques</a><a href="#tdd-spec"><b>46</b>TDD : un test est une spécification</a><a href="#tdd-rouge1"><b>47</b>TDD · 1 · rouge</a><a href="#tdd-vert1"><b>48</b>TDD · 2 · vert</a><a href="#tdd-rouge2"><b>49</b>TDD · 3 · nouveau test rouge</a><a href="#tdd-vert2"><b>50</b>TDD · 4 · vert</a><a href="#tdd-refactor"><b>51</b>TDD · 5 · refactor</a><a href="#tdd-message"><b>52</b>Un test est une spécification exécutable</a><div class="part">05 · Modèles</div><a href="#div-modeles"><b>53</b>Titre de partie : les modèles d'IA</a><a href="#slm-llm"><b>54</b>SLM et LLM</a><a href="#types-modeles"><b>55</b>Types de modèles</a><a href="#effort"><b>56</b>Niveau d'effort</a><a href="#edge-ai"><b>57</b>Edge AI</a><div class="part">06 · Agent</div><a href="#div-agent"><b>58</b>Titre de partie : l'agent et son environnement</a><a href="#harnais"><b>59</b>Agent = modèle + harnais</a><a href="#contexte"><b>60</b>Le contexte</a><a href="#claudemd"><b>61</b>Le fichier d'instructions</a><a href="#cache"><b>62</b>Le cache de prompt</a><a href="#sdd"><b>63</b>Spec-driven development</a><a href="#outils-sdd"><b>64</b>Des outils, pas un standard</a><a href="#synthese-agent"><b>65</b>Synthèse : agent = modèle + harnais</a><a href="#pile-projet"><b>66</b>Le projet : Flutter</a><div class="part">07 · CI/CD</div><a href="#div-cicd"><b>67</b>Titre de partie : CI/CD dans le cloud</a><a href="#ci"><b>68</b>Intégration continue</a><a href="#cd"><b>69</b>Livraison et déploiement continus</a><a href="#cicd-vocab"><b>70</b>Les mots à connaître</a><a href="#workflow"><b>71</b>Un workflow GitHub Actions</a><div class="part">08 · Règle d'or</div><a href="#div-regle"><b>72</b>Titre de partie : la règle d'or</a><a href="#regle-pourquoi"><b>73</b>Pourquoi une règle d'or</a><a href="#regle-enonce"><b>74</b>L'énoncé de la règle</a><a href="#regle-exemples"><b>75</b>La règle en pratique</a><a href="#regle-suite"><b>76</b>La suite : RGPD, AI Act, fiche de conformité</a><div class="part">Clôture</div><a href="#cloture"><b>77</b>Clôture : consignes pour la séance 2</a><div class="part">Annexes</div><a href="#verif"><b>!</b>À vérifier</a><a href="#credits"><b>©</b>Crédits images</a></nav>
+<nav><h1>Notes · S1</h1><div class="sub">SÉANCE 1 COMPLÈTE</div></nav>
 <main>
 <div class="top">
   <div class="tag">Master ITI · 7 octobre 2026</div>
   <h1>Notes du conférencier<br>Séance 1 complète</h1>
-  <p>Les diapositives portent peu de mots. Tout ce qu'il faut dire, les sources et les pièges sont ici. Dans le diaporama, la touche <b>N</b> ouvre cette page à la slide en cours. Les blocs d'installation ne sont pas dans le diaporama : vous les placerez vous-même.</p>
+  <p>Les diapositives portent peu de mots. Tout ce qu'il faut dire, les sources et les pièges sont ici. Cette page suit le diaporama : lancée avec <code>npm run day-1</code>, elle se synchronise avec lui (barre du haut, flèches du clavier et liens de gauche pilotent la présentation). Le bouton <b>Focus</b> n'affiche que les notes de la slide courante. Les blocs d'installation ne sont pas dans le diaporama : vous les placerez vous-même.</p>
   <div class="legend"><span class="pill">À dire</span><span class="pill" style="color:#A55F00">À savoir</span><span class="pill" style="color:#007C93">Question à poser</span></div>
 </div>
 <div class="part-h">Accueil</div>
@@ -271,5 +226,6 @@ main{counter-reset:s}section.s{counter-increment:s}section.s header .n::before{c
 <p style="margin-top:12px">Les autres images (Denver Post, CHAOS Report, signataires du Manifeste Agile, citron, tour de Babel, couvertures de livres, nuage de mots, boucle DevOps) viennent de vos propres supports (<code>cours/sources/craft-ai</code> et <code>talk_flutter_clean</code>), ainsi que le portrait, le logo et les couvertures de livres de la présentation de Benoît Fontaine (diapos 4 et 35 de « Flutter clean et modulaire »). Je n'en connais pas les droits : à vérifier si le support sort de la salle de cours.</p></section>
 </main>
 </div>
+<script src="../shared/notes.js"></script>
 </body>
 </html>

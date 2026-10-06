@@ -1,0 +1,10 @@
+{
+  "name": "master-1-iti-dev",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Master ITI · Ingénierie logicielle à l'ère de l'IA agentique",
+  "scripts": {
+    "day-1": "npm --prefix cours/presentations run day-1",
+    "themes": "npm --prefix cours/presentations run themes"
+  }
+}
