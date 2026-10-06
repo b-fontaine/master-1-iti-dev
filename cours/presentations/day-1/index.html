@@ -39,7 +39,7 @@
       <h2 style="font-size:10rem">Benoît<br><span class="grad">Fontaine</span></h2>
       <p class="mt step" style="font-size:4.6rem;color:var(--ink)">Staff Engineer</p>
       <div class="logo-sep mt step" aria-label="Septeo"></div>
-      <div class="chips mt step"><span class="chip">medium.benoitfontaine.fr</span><span class="chip">linkedin.com/in/b-fontaine</span></div>
+      <div class="chips mt step"><span class="chip">medium.benoitfontaine.fr</span><span class="chip">linkedin.com/in/b-fontaine</span><span class="chip">benoit.fontaine@univ-nantes.fr</span></div>
     </div>
   </div>
 </section>
@@ -69,13 +69,24 @@
 
 <section class="slide" data-id="outils">
   <div class="label">Les outils de la formation</div>
-  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
-    <div class="card hl step"><span class="chip i" style="align-self:flex-start">indispensable</span>
-      <div class="chips mt2" style="flex-direction:column;align-items:flex-start;gap:2rem"><span class="chip">git + GitHub</span><span class="chip">VS Code</span><span class="chip">Claude Code + Claude Desktop</span><span class="chip">Flutter</span></div></div>
-    <div class="card step"><span class="chip c" style="align-self:flex-start">utile plus tard</span>
-      <div class="chips mt2" style="flex-direction:column;align-items:flex-start;gap:2rem"><span class="chip">Docker</span><span class="chip">Rust</span><span class="chip">Antigravity</span></div></div>
+  <div class="cols c3 tools" style="flex:0 0 auto;gap:3rem">
+    <div class="card hl step"><span class="chip i" style="align-self:flex-start">Outils de développement</span>
+      <div class="trow"><b>git</b><span>git-scm.com</span></div>
+      <div class="trow"><b>GitHub</b><span>github.com</span></div>
+      <div class="trow"><b>VS Code · Zed · Antigravity IDE</b><span>code.visualstudio.com · zed.dev · antigravity.google</span></div>
+      <div class="trow"><b>Flutter</b><span>docs.flutter.dev/get-started</span></div>
+      <div class="trow"><b>Rust</b><span>rustup.rs</span></div>
+      <div class="trow"><b>Docker</b><span>docker.com</span></div></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Outils IA</span>
+      <div class="trow"><b>Claude Code</b><span>claude.com/product/claude-code</span></div>
+      <div class="trow"><b>Claude Desktop</b><span>claude.com/download</span></div>
+      <div class="trow"><b>Antigravity</b><span>antigravity.google</span></div>
+      <div class="trow"><b>Codex</b><span>developers.openai.com/codex</span></div>
+      <p class="cap mt">selon votre abonnement</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Offres étudiantes</span>
+      <div class="trow"><b>Gemini</b><span>gemini.google/fr/students</span></div>
+      <p class="cap mt">avec votre adresse universitaire</p></div>
   </div>
-  <p class="mt2 step">Les « utiles plus tard » peuvent glisser <span class="ind">sans bloquer</span> la suite.</p>
 </section>
 
 <section class="slide" data-id="objectifs-seance">
@@ -444,170 +455,97 @@
 <section class="slide divider" data-id="div-code">
   <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
   <div class="big grad">04</div>
-  <h2>Quelques notions<br>de code et le TDD</h2>
+  <h2>Quelques notions<br>de code, TDD et BDD</h2>
 </section>
 
-<section class="slide" data-id="code-variable">
-  <div class="label">Notion 1 sur 6</div>
-  <div class="row grow" style="gap:8rem">
-    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Variable</h2><p class="mt2 step">Une valeur qui porte un nom.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">final</span> jet = <span class="g">11</span>;
-<span class="c">final</span> bonus = <span class="g">3</span>;
-<span class="c">final</span> total = jet + bonus;<span class="d">   // 14</span></pre></div></div>
-  </div>
-</section>
+<section class="slide" data-id="code-dart">
+  <div class="label">Les notions de code · Python → Dart</div>
+  <div class="cols c2 pydart" style="flex:0 0 auto;gap:4rem">
+    <div class="term code step"><div class="bar"><i></i><i></i><i></i><span>jeu.py · ce que vous connaissez</span></div><pre><span class="c">jet</span> = <span class="g">11</span><span class="d">                      # variable</span>
 
-<section class="slide" data-id="code-fonction">
-  <div class="label">Notion 2 sur 6</div>
-  <div class="row grow" style="gap:8rem">
-    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Fonction</h2><p class="mt2 step">Une recette réutilisable.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">int</span> ajouterBonus(<span class="c">int</span> jet, <span class="c">int</span> bonus) {
+<span class="c">def</span> ajouter(jet, bonus):<span class="d">  # fonction</span>
+    <span class="c">return</span> jet + bonus
+
+<span class="c">if</span> total &gt;= dd:<span class="d">             # condition</span>
+    print(<span class="y">"Réussite"</span>)
+<span class="c">else</span>:
+    print(<span class="y">"Échec"</span>)
+
+<span class="c">for</span> quete <span class="c">in</span> quetes:<span class="d">      # boucle</span>
+    print(quete)</pre></div>
+    <div class="term code step"><div class="bar"><i></i><i></i><i></i><span>jeu.dart · le même programme</span></div><pre><span class="c">final</span> jet = <span class="g">11</span>;<span class="d">                // variable</span>
+
+<span class="c">int</span> ajouter(<span class="c">int</span> jet, <span class="c">int</span> bonus) {<span class="d"> // fonction</span>
   <span class="c">return</span> jet + bonus;
 }
 
-ajouterBonus(<span class="g">11</span>, <span class="g">3</span>);<span class="d">   // 14</span></pre></div></div>
-  </div>
-</section>
-
-<section class="slide" data-id="code-condition">
-  <div class="label">Notion 3 sur 6</div>
-  <div class="row grow" style="gap:8rem">
-    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Condition</h2><p class="mt2 step">Un choix : si… sinon…</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">if</span> (total &gt;= dd) {
+<span class="c">if</span> (total &gt;= dd) {<span class="d">            // condition</span>
   print(<span class="y">'Réussite'</span>);
 } <span class="c">else</span> {
   print(<span class="y">'Échec'</span>);
-}</pre></div></div>
-  </div>
-</section>
-
-<section class="slide" data-id="code-boucle">
-  <div class="label">Notion 4 sur 6</div>
-  <div class="row grow" style="gap:8rem">
-    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Boucle</h2><p class="mt2 step">Répéter pour chaque élément.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">for</span> (<span class="c">final</span> quete <span class="c">in</span> [<span class="y">'Forêt'</span>, <span class="y">'Donjon'</span>, <span class="y">'Marais'</span>]) {
-  print(<span class="y">'Quête : $quete'</span>);
-}</pre></div></div>
-  </div>
-</section>
-
-<section class="slide" data-id="code-fichier">
-  <div class="label">Notion 5 sur 6</div>
-  <div class="row grow" style="gap:8rem">
-    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Fichier</h2><p class="mt2 step">Lire et écrire sur le disque.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">import</span> <span class="y">'dart:io'</span>;
-
-File(<span class="y">'journal.txt'</span>).writeAsStringSync(<span class="y">'Quête terminée'</span>);</pre></div></div>
-  </div>
-</section>
-
-<section class="slide" data-id="code-cli">
-  <div class="label">Notion 6 sur 6</div>
-  <div class="row grow" style="gap:8rem">
-    <div style="flex:0 0 52rem"><h2 style="font-size:10rem">Ligne de commande</h2><p class="mt2 step">Parler à l'ordinateur en texte.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">cd</span> mon-projet
-<span class="d">$</span> <span class="c">ls</span>
-lib  test  pubspec.yaml
-<span class="d">$</span> <span class="c">flutter test</span>
-<span class="g">00:01 +1: All tests passed!</span></pre></div></div>
-  </div>
-</section>
-
-<section class="slide" data-id="code-lire">
-  <div class="label">Lire un code, c'est reconnaître ces six briques</div>
-  <div class="row grow" style="gap:6rem">
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">const</span> dd = <span class="g">12</span>;<span class="d">                      // variable</span>
-
-<span class="c">bool</span> estReussite(<span class="c">int</span> total, <span class="c">int</span> dd) {<span class="d"> // fonction</span>
-  <span class="c">return</span> total &gt;= dd;
 }
 
-<span class="c">void</span> main() {
-  <span class="c">for</span> (<span class="c">final</span> jet <span class="c">in</span> [<span class="g">8</span>, <span class="g">12</span>, <span class="g">17</span>]) {<span class="d"> // boucle</span>
-    <span class="c">if</span> (estReussite(jet, dd)) {<span class="d">      // condition</span>
-      print(<span class="y">'$jet réussite'</span>);
-    }
-  }
-}</pre></div></div>
-    <div class="chips step" style="flex-direction:column;align-items:flex-start;gap:2rem;flex:0 0 auto"><span class="chip">variable</span><span class="chip">fonction</span><span class="chip">condition</span><span class="chip">boucle</span><span class="chip">fichier</span><span class="chip">ligne de commande</span></div>
+<span class="c">for</span> (<span class="c">final</span> quete <span class="c">in</span> quetes) {<span class="d"> // boucle</span>
+  print(quete);
+}</pre></div>
   </div>
+  <div class="chips mt2 step"><span class="chip i">des types : int, String, bool</span><span class="chip i">des { } et des ;</span><span class="chip i">final = ne change plus</span><span class="chip i">'$quete' = f"{quete}"</span></div>
 </section>
 
-<section class="slide" data-id="tdd-spec">
-  <div class="label">Démonstration · TDD</div>
-  <div class="row grow" style="gap:8rem">
-    <div style="flex:0 0 56rem"><h2 style="font-size:9rem">Un test,<br><span class="grad">une spécification</span><br>exécutable</h2></div>
-    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>jeu_test.dart</span></div><pre>test(<span class="y">'réussite si total égal au dd'</span>, () {
-  expect(estReussite(<span class="g">12</span>, <span class="g">12</span>), isTrue);
-});</pre></div>
-    <div class="chips mt2 step"><span class="chip">total = jet + bonus</span><span class="chip">dd = degré de difficulté</span></div></div>
-  </div>
-</section>
-
-<section class="slide" data-id="tdd-rouge1">
-  <div class="label">Étape 1 · test rouge</div>
-  <div class="row grow" style="gap:7rem">
-    <div style="flex:0 0 48rem"><div class="num neg" style="font-size:22rem">●</div><h2 style="font-size:9rem">Rouge</h2><p class="mt step">Le test échoue : la fonction n'existe pas encore.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">flutter test</span>
-<span class="r">Error</span>: Method not found: 'estReussite'.
-<span class="r">00:01 +0 -1: Some tests failed.</span></pre></div></div></div>
-</section>
-
-<section class="slide" data-id="tdd-vert1">
-  <div class="label">Étape 2 · code vert</div>
-  <div class="row grow" style="gap:7rem">
-    <div style="flex:0 0 48rem"><div class="num pos" style="font-size:22rem">●</div><h2 style="font-size:9rem">Vert</h2><p class="mt step">Le code <em class="ind" style="font-style:normal">le plus simple</em> qui passe.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">bool</span> estReussite(<span class="c">int</span> total, <span class="c">int</span> dd) {
-  <span class="c">return</span> <span class="c">true</span>;
-}</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">flutter test</span>
-<span class="g">00:01 +1: All tests passed!</span></pre></div></div></div>
-</section>
-
-<section class="slide" data-id="tdd-rouge2">
-  <div class="label">Étape 3 · on précise : nouveau test rouge</div>
-  <div class="row grow" style="gap:7rem">
-    <div style="flex:0 0 48rem"><div class="num neg" style="font-size:22rem">●</div><h2 style="font-size:9rem">Rouge</h2><p class="mt step">Un cas d'échec : 11 contre 12.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu_test.dart</span></div><pre>test(<span class="y">'échec si total inférieur au dd'</span>, () {
+<section class="slide" data-id="tdd-pas">
+  <div class="label">TDD · un petit pas</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><div class="row" style="gap:2rem"><div class="num neg" style="font-size:9rem">●</div><h3>Rouge</h3></div><p class="cap mt">j'écris le test d'abord</p>
+      <div class="term code mt"><div class="bar"><i></i><i></i><i></i><span>jeu_test.dart</span></div><pre>test(<span class="y">'échec : 11 < 12'</span>, () {
   expect(estReussite(<span class="g">11</span>, <span class="g">12</span>), isFalse);
-});</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">flutter test</span>
-<span class="r">Expected</span>: false
-  <span class="r">Actual</span>: &lt;true&gt;
-<span class="r">00:01 +1 -1: Some tests failed.</span></pre></div></div></div>
-</section>
-
-<section class="slide" data-id="tdd-vert2">
-  <div class="label">Étape 4 · code vert</div>
-  <div class="row grow" style="gap:7rem">
-    <div style="flex:0 0 48rem"><div class="num pos" style="font-size:22rem">●</div><h2 style="font-size:9rem">Vert</h2><p class="mt step">Maintenant, la vraie règle.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">bool</span> estReussite(<span class="c">int</span> total, <span class="c">int</span> dd) {
+});</pre></div>
+      <div class="term code mt"><div class="bar"><i></i><i></i><i></i><span>flutter test</span></div><pre><span class="r">Expected</span>: false
+  <span class="r">Actual</span>: &lt;true&gt;</pre></div></div>
+    <div class="card step"><div class="row" style="gap:2rem"><div class="num pos" style="font-size:9rem">●</div><h3>Vert</h3></div><p class="cap mt">le code le plus simple qui passe</p>
+      <div class="term code mt"><div class="bar"><i></i><i></i><i></i><span>jeu.dart</span></div><pre><span class="c">bool</span> estReussite(<span class="c">int</span> total, <span class="c">int</span> dd) {
   <span class="c">return</span> total &gt;= dd;
-}</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">flutter test</span>
-<span class="g">00:01 +2: All tests passed!</span></pre></div></div></div>
+}</pre></div>
+      <div class="term code mt"><div class="bar"><i></i><i></i><i></i><span>flutter test</span></div><pre><span class="g">+2: All tests passed!</span></pre></div></div>
+    <div class="card step"><div class="row" style="gap:2rem"><div class="num ind" style="font-size:9rem">●</div><h3>Refactor</h3></div><p class="cap mt">je nettoie, les tests me protègent</p>
+      <div class="term code mt"><div class="bar"><i></i><i></i><i></i><span>jeu_test.dart</span></div><pre><span class="c">const</span> cas = [
+  (<span class="g">12</span>, <span class="g">12</span>, <span class="c">true</span>),
+  (<span class="g">11</span>, <span class="g">12</span>, <span class="c">false</span>),
+];</pre></div>
+      <div class="term code mt"><div class="bar"><i></i><i></i><i></i><span>flutter test</span></div><pre><span class="g">+2: All tests passed!</span></pre></div></div>
+  </div>
 </section>
 
-<section class="slide" data-id="tdd-refactor">
-  <div class="label">Étape 5 · refactor</div>
-  <div class="row grow" style="gap:7rem">
-    <div style="flex:0 0 48rem"><div class="num ind" style="font-size:22rem">●</div><h2 style="font-size:9rem">Refactor</h2><p class="mt step">Je nettoie. Les tests me protègent.</p></div>
-    <div class="grow"><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>jeu_test.dart</span></div><pre><span class="c">void</span> main() {
-  <span class="c">const</span> cas = [
-    (<span class="g">12</span>, <span class="g">12</span>, <span class="c">true</span>),
-    (<span class="g">11</span>, <span class="g">12</span>, <span class="c">false</span>),
-    (<span class="g">15</span>, <span class="g">12</span>, <span class="c">true</span>),
-  ];
-  <span class="c">for</span> (<span class="c">final</span> (total, dd, attendu) <span class="c">in</span> cas) {
-    test(<span class="y">'estReussite($total, $dd)'</span>, () {
-      expect(estReussite(total, dd), attendu);
-    });
-  }
-}</pre></div><div class="mt"></div><div class="term code  step" ><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> <span class="c">flutter test</span>
-<span class="g">00:01 +3: All tests passed!</span></pre></div></div></div>
+<section class="slide" data-id="bdd-test">
+  <div class="label">BDD · bdd_widget_test</div>
+  <div class="row grow bddrow" style="gap:3rem;align-items:center">
+    <div style="flex:1 1 0;min-width:0"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>home.feature · écrit en français</span></div><pre><span class="c">Feature</span>: Page d'accueil
+  <span class="c">Scenario</span>: Affichage du titre
+    <span class="c">Given</span> l'application est lancée
+    <span class="c">Then</span> je vois le titre <span class="y">{'CityScope'}</span></pre></div>
+    <p class="cap mt step">Le scénario décrit ce que voit l'utilisateur.</p></div>
+    <div class="flow step" style="flex:0 0 auto;flex-direction:column;gap:1rem"><span style="transform:rotate(90deg)">→</span><span class="chip i" style="font-size:2.4rem">build_runner</span></div>
+    <div style="flex:1 1 0;min-width:0"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>home_test.dart · généré</span></div><pre>testWidgets(<span class="y">'Affichage du titre'</span>, (t) <span class="c">async</span> {
+  <span class="c">await</span> lapplicationEstLancee(t);
+  <span class="c">await</span> jeVoisLeTitre(t, <span class="y">'CityScope'</span>);
+});</pre></div>
+    <div class="term code mt step"><div class="bar"><i></i><i></i><i></i><span>je_vois_le_titre.dart · le step</span></div><pre><span class="c">expect</span>(find.text(param1), findsOneWidget);</pre></div></div>
+  </div>
 </section>
 
-<section class="slide" data-id="tdd-message">
-  <div class="label">Ce qu'il faut retenir</div>
-  <h2 style="font-size:10.5rem">Un test,<br>c'est une <span class="grad">spécification</span><br>exécutable.</h2>
-  <p class="mt2 step" style="font-size:4.4rem;color:var(--ink)">On ne sait pas lire le code ?<br>On peut <span class="ind">lire les tests</span>.</p>
+<section class="slide" data-id="bdd-tdd">
+  <div class="label">BDD + TDD · deux boucles imbriquées</div>
+  <div class="bddloop step">
+    <div class="cap">BDD · le <b>quoi</b> · un scénario Gherkin</div>
+    <div class="flow" style="margin-top:2rem">
+      <div class="fn"><span class="num neg" style="font-size:7rem">●</span>Scénario rouge<small>la spec échoue</small></div>
+      <span>→</span>
+      <div class="fn i tddbox"><span>TDD · le comment</span><small>test rouge → vert → refactor</small><small>↻ autant de fois que nécessaire</small></div>
+      <span>→</span>
+      <div class="fn"><span class="num pos" style="font-size:7rem">●</span>Scénario vert<small>la spec passe</small></div>
+    </div>
+  </div>
+  <h2 class="mt2 step" style="font-size:8rem;max-width:none">Rien de mieux qu'un <span class="grad">scénario Gherkin</span><br>comme spec pour une IA.</h2>
+  <div class="chips mt step"><span class="chip i">lisible par l'humain</span><span class="chip i">exécutable par la machine</span><span class="chip i">décrit le comportement</span><span class="chip i">l'agent sait quand il a fini</span></div>
 </section>
 
 <section class="slide divider" data-id="div-modeles">
@@ -816,48 +754,36 @@ lib  test  pubspec.yaml
 <section class="slide divider" data-id="div-regle">
   <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
   <div class="big grad">08</div>
-  <h2>La règle d'or</h2>
+  <h2>RGPD<br>et AI Act</h2>
 </section>
 
-<section class="slide" data-id="regle-pourquoi">
-  <div class="label">Pourquoi</div>
+<section class="slide" data-id="regle-textes">
+  <div class="label">Deux textes européens</div>
   <div class="cols c2" style="flex:0 0 auto;gap:5rem">
-    <div class="card step center" style="align-items:center;gap:2rem"><svg viewBox="0 0 100 100" style="width:13rem"><path d="M28 72a16 16 0 0 1-2-32 22 22 0 0 1 42-4 18 18 0 0 1 4 36z" fill="none" stroke="#00A8C6" stroke-width="6" stroke-linejoin="round"/></svg><h3>Un prompt</h3><p class="cap">part chez un <span class="neg">tiers</span>, souvent hors UE</p></div>
-    <div class="card step center" style="align-items:center;gap:2rem"><svg viewBox="0 0 100 100" style="width:13rem"><circle cx="50" cy="50" r="36" fill="none" stroke="#EE3D5F" stroke-width="6"/><path d="M14 50h72M50 14c-20 20-20 52 0 72M50 14c20 20 20 52 0 72" fill="none" stroke="#EE3D5F" stroke-width="5"/></svg><h3>Un dépôt public</h3><p class="cap">lisible par <span class="neg">tout le monde</span></p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">RGPD · depuis 2018</span><h3 class="mt">Protéger les <span class="ind">données personnelles</span></h3><p class="mt">On ne traite que le nécessaire, pour un but précis, et la personne garde ses droits.</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">AI Act · 2024</span><h3 class="mt">Encadrer l'IA selon le <span class="ind">risque</span></h3><p class="mt">Plus un usage touche aux personnes, plus les obligations sont lourdes.</p></div>
   </div>
 </section>
 
-<section class="slide" data-id="regle-enonce">
-  <div class="label">La règle d'or</div>
-  <h2 style="font-size:9.6rem;max-width:none">Aucune donnée <span class="grad">personnelle</span><br>ni <span class="grad">confidentielle</span> dans un prompt<br>ni dans un dépôt public.</h2>
-  <div class="chips mt2 step"><span class="chip i">données fictives uniquement</span><span class="chip i">aucune clé</span><span class="chip i">aucun mot de passe</span></div>
-</section>
-
-<section class="slide" data-id="regle-exemples">
-  <div class="label">Concrètement</div>
-  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
-    <div class="card bad step"><div class="row" style="gap:2rem"><div class="status ko"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M28 28l44 44M72 28L28 72" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/></svg></div><h3>Jamais</h3></div><div class="chips mt" style="flex-direction:column;align-items:flex-start"><span class="chip">le nom d'une vraie personne</span><span class="chip">un extrait de base réelle</span><span class="chip">une clé d'API</span><span class="chip">un mot de passe</span></div></div>
-    <div class="card good step"><div class="row" style="gap:2rem"><div class="status ok"><svg viewBox="0 0 100 100" style="width:5rem"><path d="M24 52l18 18 34-38" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Toujours</h3></div><div class="chips mt" style="flex-direction:column;align-items:flex-start"><span class="chip">un personnage fictif</span><span class="chip">des données générées</span><span class="chip">un fichier .env hors dépôt</span></div></div>
+<section class="slide" data-id="regle-liste">
+  <div class="label">À respecter dans vos projets</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:2.4rem 4rem">
+    <div class="card hl step"><div class="row" style="gap:2.4rem"><span class="num grad" style="font-size:7rem">1</span><h3>Aucune donnée personnelle ou confidentielle dans un prompt ni un dépôt public</h3></div></div>
+    <div class="card step"><div class="row" style="gap:2.4rem"><span class="num grad" style="font-size:7rem">2</span><h3>Des données fictives ou générées</h3></div></div>
+    <div class="card step"><div class="row" style="gap:2.4rem"><span class="num grad" style="font-size:7rem">3</span><h3>Aucune clé ni mot de passe : <code>.env</code> hors dépôt</h3></div></div>
+    <div class="card step"><div class="row" style="gap:2.4rem"><span class="num grad" style="font-size:7rem">4</span><h3>Ne collecter que le nécessaire, avec une date de suppression</h3></div></div>
+    <div class="card step"><div class="row" style="gap:2.4rem"><span class="num grad" style="font-size:7rem">5</span><h3>Dire quand on parle à une IA ou quand un contenu est généré</h3></div></div>
+    <div class="card step"><div class="row" style="gap:2.4rem"><span class="num grad" style="font-size:7rem">6</span><h3>Un humain relit et décide : validation du RSSI avant tout usage réel</h3></div></div>
   </div>
-</section>
-
-<section class="slide" data-id="regle-suite">
-  <div class="label">La suite</div>
-  <div class="cols c3" style="flex:0 0 auto;gap:4rem">
-    <div class="card step center" style="align-items:center"><span class="num grad" style="font-size:8rem">S3</span><h3 class="mt">RGPD</h3></div>
-    <div class="card step center" style="align-items:center"><span class="num grad" style="font-size:8rem">S4</span><h3 class="mt">AI Act<br>et RSSI</h3></div>
-    <div class="card hl step center" style="align-items:center"><span class="num grad" style="font-size:8rem">1 p.</span><h3 class="mt">Fiche de conformité<br>évaluée</h3></div>
-  </div>
-  <p class="mt2 step" style="text-align:center;font-size:4.4rem;color:var(--ink)">Chacun la <span class="ind">signe oralement</span>.</p>
 </section>
 
 <section class="slide" data-id="cloture">
-  <div class="label">Clôture · et pour vendredi</div>
-  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
-    <div class="card step"><span class="chip i" style="align-self:flex-start">S2 · ven. 9 oct.</span><h3 class="mt">Git, agent,<br>lancement du projet</h3></div>
-    <div class="card hl step"><span class="chip r" style="align-self:flex-start">Avant jeu. 8 oct. 12h</span><h3 class="mt">Formulaire<br>d'équipes</h3><p class="cap mt">équipe · identifiants GitHub</p></div>
+  <div class="label">La prochaine séance · vendredi 9 octobre</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:4rem">
+    <div class="card step"><span class="num grad" style="font-size:8rem">1</span><h3 class="mt">Git au clavier</h3><p class="cap mt">commit · branche · PR · conflit</p></div>
+    <div class="card step"><span class="num grad" style="font-size:8rem">2</span><h3 class="mt">Configurer Claude Code</h3><p class="cap mt">CLAUDE.md · permissions · hooks · skills</p></div>
+    <div class="card hl step"><span class="num grad" style="font-size:8rem">3</span><h3 class="mt">Lancer le projet</h3><p class="cap mt">dépôt d'équipe · PROJET.md · première PR</p></div>
   </div>
-  <p class="mt2 step" style="text-align:center;font-size:4.4rem;color:var(--ink)">Et la règle d'or ?</p>
 </section>
 
 </div>

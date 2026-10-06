@@ -23,3 +23,19 @@
 .status{display:inline-grid;place-items:center;width:8rem;height:8rem;border-radius:50%}.status.ok{background:var(--lime)}.status.ko{background:var(--coral)}
 .term.code pre{font-size:3rem}
 @media (max-aspect-ratio:5/4){.flow{flex-direction:column}.flow>span{transform:rotate(90deg)}}
+
+/* ---- séance 1 : Python → Dart, boucles BDD/TDD ---- */
+.pydart .term pre{font-size:2.6rem;line-height:1.45}
+.bddloop{border:.5rem dashed var(--indigo);border-radius:3rem;padding:2.6rem 3.4rem 3.4rem;background:rgba(255,255,255,.55)}
+.bddloop>.cap{font-size:2.6rem;color:var(--indigo)}
+.tddbox{border:.5rem solid #fff;box-shadow:0 1.4rem 4rem rgba(67,56,245,.35)}
+.bddrow .term pre{font-size:2.4rem;white-space:pre}
+#stage .slide[data-id="tdd-pas"] .term pre{font-size:1.95rem;white-space:pre;padding:2rem 2rem}
+#stage .slide[data-id="tdd-pas"] .card{padding:2.4rem 2.6rem}
+#stage .slide[data-id="tdd-pas"] .term .bar{padding:1.2rem 2rem}
+.tools .card{gap:0;padding:3rem 3rem}
+.trow{display:grid;gap:.3rem;padding:1.5rem 0;border-bottom:.2rem solid rgba(67,56,245,.12)}
+.trow:last-of-type{border-bottom:0}
+.trow b{font:600 3rem var(--display);color:var(--ink)}
+.trow span{font:500 2rem var(--mono);color:var(--ink-3);overflow-wrap:anywhere}
+.tools .chip{margin-bottom:1rem}
