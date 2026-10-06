@@ -1,6 +1,6 @@
 # Supports de cours · Séance 1 · Comprendre et s'équiper
 
-Huit chapitres à lire avant ou après la séance du 7 octobre 2026. Ils approfondissent les diapositives (`cours/presentations/day-1/`) et ne les contredisent pas. Chaque chapitre contient un résumé, un glossaire, des sources et une liste des points non vérifiés.
+Neuf chapitres à lire avant ou après la séance du 7 octobre 2026. Ils approfondissent les diapositives (`cours/presentations/day-1/`) et ne les contredisent pas. Chaque chapitre contient un résumé, un glossaire, des sources et une liste des points non vérifiés.
 
 | # | Chapitre | Contenu |
 |---|---|---|
@@ -12,12 +12,14 @@ Huit chapitres à lire avant ou après la séance du 7 octobre 2026. Ils approfo
 | 6 | [Outils de développement agentique](06-outils-developpement-agentique.md) | Harnais, modèles, contexte, permissions, consommation de jetons |
 | 7 | [EdgeAI et EdgeAI avec Flutter](07-edge-ai-flutter.md) | IA embarquée, écosystème, Flutter |
 | 8 | [CI/CD et DevOps](08-ci-cd-devops.md) | Intégration et livraison continues, GitHub Actions, déploiement |
+| 9 | [Les design patterns](09-design-patterns.md) | Patrons du GoF (création, structure, comportement), patrons d'architecture de Flutter, patrons et agents de code |
 
 ## Lecture conseillée
 
 - Avant la séance : chapitres 1 et 2 (vocabulaire et contexte).
 - Pendant les installations : chapitres 4 et 6.
 - Avant les ateliers : chapitres 5 et 8.
+- Pour comprendre le code du projet et le relire : chapitre 9.
 - Pour le projet : chapitres 3 et 7.
 
 ## Réserves

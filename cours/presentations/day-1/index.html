@@ -550,9 +550,275 @@
   <div class="chips mt step"><span class="chip i">lisible par l'humain</span><span class="chip i">exécutable par la machine</span><span class="chip i">décrit le comportement</span><span class="chip i">l'agent sait quand il a fini</span></div>
 </section>
 
-<section class="slide divider" data-id="div-modeles">
+<section class="slide divider" data-id="div-patterns">
   <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
   <div class="big grad">05</div>
+  <h2>Les design<br>patterns</h2>
+</section>
+
+<section class="slide" data-id="pat-panorama">
+  <div class="label">Les design patterns · 23 patrons classiques</div>
+  <div class="row" style="gap:3rem;flex:0 0 auto;margin-bottom:3rem"><span class="chip i step">Christopher Alexander · 1977 · architecture</span><span class="chip i step">Gamma, Helm, Johnson, Vlissides · 1994 · logiciel</span></div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="num grad" style="font-size:9rem">5</span><h3>Création</h3><p class="cap mt">comment fabriquer</p><p class="cap mt" style="font-size:2.4rem;line-height:1.6">Abstract Factory · <span class="ind">Builder</span> · <span class="ind">Factory Method</span> · Prototype · <span class="ind">Singleton</span></p></div>
+    <div class="card step"><span class="num grad" style="font-size:9rem">7</span><h3>Structure</h3><p class="cap mt">comment assembler</p><p class="cap mt" style="font-size:2.4rem;line-height:1.6"><span class="ind">Adapter</span> · Bridge · <span class="ind">Composite</span> · <span class="ind">Decorator</span> · Facade · Flyweight · Proxy</p></div>
+    <div class="card step"><span class="num grad" style="font-size:9rem">11</span><h3>Comportement</h3><p class="cap mt">comment collaborer</p><p class="cap mt" style="font-size:2.4rem;line-height:1.6">Chain of Responsibility · <span class="ind">Command</span> · Interpreter · Iterator · Mediator · Memento · <span class="ind">Observer</span> · State · <span class="ind">Strategy</span> · Template Method · Visitor</p></div>
+  </div>
+  <p class="mt2 step" style="font-size:3.8rem;color:var(--ink)">Un patron = un <span class="ind">nom</span> pour une solution connue à un problème qui revient.</p>
+</section>
+
+<section class="slide" data-id="pat-singleton">
+  <div class="label">Création · Singleton</div>
+  <div class="row grow pat" style="gap:6rem">
+    <div style="flex:0 0 66rem">
+      <span class="chip i step" style="align-self:flex-start">Création</span>
+      <h2 class="mt" style="font-size:9rem">Singleton</h2>
+      <p class="mt step" style="font-size:3.8rem;color:var(--ink)">Une seule instance, accessible depuis partout.</p>
+      <p class="cap mt step" style="font-size:2.3rem">Piège : un état global caché. On lui préfère l'injection de dépendances.</p>
+    </div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>journal.dart</span></div><pre><span class="c">class</span> Journal {
+  Journal._();                  <span class="d">// constructeur privé</span>
+  <span class="c">static</span> <span class="c">final</span> Journal instance = Journal._();
+
+  <span class="c">final</span> <span class="c">List</span>&lt;<span class="c">String</span>&gt; lignes = [];
+}
+
+<span class="d">// partout dans l'application :</span>
+Journal.instance.lignes.add(<span class="y">'Quête terminée'</span>);</pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="pat-factory">
+  <div class="label">Création · Factory Method</div>
+  <div class="row grow pat" style="gap:6rem">
+    <div style="flex:0 0 66rem">
+      <span class="chip i step" style="align-self:flex-start">Création</span>
+      <h2 class="mt" style="font-size:8rem">Factory Method</h2>
+      <p class="mt step" style="font-size:3.8rem;color:var(--ink)">Une méthode décide quelle classe instancier ; chaque sous-classe choisit la sienne.</p>
+      <p class="cap mt step" style="font-size:2.3rem">Le code appelant ne connaît pas les classes concrètes.</p>
+    </div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>quete.dart</span></div><pre><span class="c">abstract</span> <span class="c">class</span> Quete {
+  Ennemi creerEnnemi();         <span class="d">// méthode de fabrication</span>
+  <span class="c">void</span> lancer() =&gt; creerEnnemi().attaquer();
+}
+
+<span class="c">class</span> Donjon <span class="c">extends</span> Quete {
+  <span class="c">@override</span>
+  Ennemi creerEnnemi() =&gt; Squelette();
+}
+
+<span class="c">class</span> Foret <span class="c">extends</span> Quete {
+  <span class="c">@override</span>
+  Ennemi creerEnnemi() =&gt; Loup();
+}</pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="pat-builder">
+  <div class="label">Création · Builder</div>
+  <div class="row grow pat" style="gap:6rem">
+    <div style="flex:0 0 66rem">
+      <span class="chip i step" style="align-self:flex-start">Création</span>
+      <h2 class="mt" style="font-size:9rem">Builder</h2>
+      <p class="mt step" style="font-size:3.8rem;color:var(--ink)">Construire un objet complexe pas à pas, avec une lecture claire.</p>
+      <p class="cap mt step" style="font-size:2.3rem">Flutter : les widgets « builder » portent le même nom, pas le même rôle.</p>
+    </div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>perso.dart</span></div><pre><span class="c">final</span> perso = PersonnageBuilder()
+    .nom(<span class="y">'Aria'</span>)
+    .classe(<span class="y">'Mage'</span>)
+    .niveau(<span class="g">3</span>)
+    .sort(<span class="y">'Boule de feu'</span>)
+    .build();                   <span class="d">// objet prêt, validé</span></pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="pat-adapter">
+  <div class="label">Structure · Adapter</div>
+  <div class="row grow pat" style="gap:6rem">
+    <div style="flex:0 0 66rem">
+      <span class="chip c step" style="align-self:flex-start">Structure</span>
+      <h2 class="mt" style="font-size:9rem">Adapter</h2>
+      <p class="mt step" style="font-size:3.8rem;color:var(--ink)">Faire dialoguer deux interfaces incompatibles, sans toucher à aucune des deux.</p>
+      <p class="cap mt step" style="font-size:2.3rem">Le cas typique : brancher un service externe dans son application.</p>
+    </div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>de.dart</span></div><pre><span class="c">abstract</span> <span class="c">class</span> De {
+  <span class="c">int</span> lancer();                 <span class="d">// ce que mon code attend</span>
+}
+
+<span class="c">class</span> DeAdaptateur <span class="c">implements</span> De {
+  DeAdaptateur(<span class="c">this</span>._service);
+  <span class="c">final</span> ServiceExterne _service;
+
+  <span class="c">@override</span>
+  <span class="c">int</span> lancer() =&gt; _service.tirage(faces: <span class="g">20</span>);
+}</pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="pat-decorator">
+  <div class="label">Structure · Decorator</div>
+  <div class="row grow pat" style="gap:6rem">
+    <div style="flex:0 0 66rem">
+      <span class="chip c step" style="align-self:flex-start">Structure</span>
+      <h2 class="mt" style="font-size:9rem">Decorator</h2>
+      <p class="mt step" style="font-size:3.8rem;color:var(--ink)">Ajouter un comportement en enrobant l'objet, sans le modifier.</p>
+      <p class="cap mt step" style="font-size:2.3rem">Flutter : Padding ou Opacity enrobent un widget enfant (analogie).</p>
+    </div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>arme.dart</span></div><pre><span class="c">abstract</span> <span class="c">class</span> Arme {
+  <span class="c">int</span> degats();
+}
+
+<span class="c">class</span> Epee <span class="c">implements</span> Arme {
+  <span class="c">@override</span>
+  <span class="c">int</span> degats() =&gt; <span class="g">6</span>;
+}
+
+<span class="c">class</span> Enflammee <span class="c">implements</span> Arme {
+  Enflammee(<span class="c">this</span>._arme);
+  <span class="c">final</span> Arme _arme;
+  <span class="c">@override</span>
+  <span class="c">int</span> degats() =&gt; _arme.degats() + <span class="g">2</span>;
+}
+
+Enflammee(Epee()).degats();     <span class="d">// 8</span></pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="pat-composite">
+  <div class="label">Structure · Composite</div>
+  <div class="row grow pat" style="gap:6rem">
+    <div style="flex:0 0 66rem">
+      <span class="chip c step" style="align-self:flex-start">Structure</span>
+      <h2 class="mt" style="font-size:9rem">Composite</h2>
+      <p class="mt step" style="font-size:3.8rem;color:var(--ink)">Traiter un élément seul et un groupe d'éléments de la même façon.</p>
+      <p class="cap mt step" style="font-size:2.3rem">Flutter : l'arbre de widgets, où un widget en contient d'autres (analogie).</p>
+    </div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>inventaire.dart</span></div><pre><span class="c">abstract</span> <span class="c">class</span> Item {
+  <span class="c">int</span> poids();
+}
+
+<span class="c">class</span> Objet <span class="c">implements</span> Item {
+  Objet(<span class="c">this</span>._poids);
+  <span class="c">final</span> <span class="c">int</span> _poids;
+  <span class="c">@override</span>
+  <span class="c">int</span> poids() =&gt; _poids;
+}
+
+<span class="c">class</span> Sac <span class="c">implements</span> Item {
+  Sac(<span class="c">this</span>.contenu);
+  <span class="c">final</span> <span class="c">List</span>&lt;Item&gt; contenu;
+  <span class="c">@override</span>
+  <span class="c">int</span> poids() =&gt; contenu.fold(<span class="g">0</span>, (s, i) =&gt; s + i.poids());
+}</pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="pat-observer">
+  <div class="label">Comportement · Observer</div>
+  <div class="row grow pat" style="gap:6rem">
+    <div style="flex:0 0 66rem">
+      <span class="chip r step" style="align-self:flex-start">Comportement</span>
+      <h2 class="mt" style="font-size:9rem">Observer</h2>
+      <p class="mt step" style="font-size:3.8rem;color:var(--ink)">Prévenir automatiquement ceux qui s'intéressent à un changement.</p>
+      <p class="cap mt step" style="font-size:2.3rem">Flutter : ChangeNotifier + ListenableBuilder (doc. officielle).</p>
+    </div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>pv.dart</span></div><pre><span class="c">class</span> Pv <span class="c">extends</span> ChangeNotifier {
+  <span class="c">int</span> _valeur = <span class="g">20</span>;
+  <span class="c">int</span> <span class="c">get</span> valeur =&gt; _valeur;
+
+  <span class="c">void</span> subir(<span class="c">int</span> degats) {
+    _valeur -= degats;
+    notifyListeners();          <span class="d">// abonnés prévenus</span>
+  }
+}
+
+<span class="d">// l'écran écoute et se redessine seul :</span>
+ListenableBuilder(
+  listenable: pv,
+  builder: (context, _) =&gt; Text(<span class="y">'${pv.valeur}'</span>),
+)</pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="pat-strategy">
+  <div class="label">Comportement · Strategy</div>
+  <div class="row grow pat" style="gap:6rem">
+    <div style="flex:0 0 66rem">
+      <span class="chip r step" style="align-self:flex-start">Comportement</span>
+      <h2 class="mt" style="font-size:9rem">Strategy</h2>
+      <p class="mt step" style="font-size:3.8rem;color:var(--ink)">Choisir un algorithme à l'exécution, parmi plusieurs interchangeables.</p>
+      <p class="cap mt step" style="font-size:2.3rem">En Dart, une simple fonction suffit souvent : le langage a absorbé le pattern.</p>
+    </div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>combat.dart</span></div><pre><span class="c">abstract</span> <span class="c">class</span> Attaque {
+  <span class="c">int</span> degats(<span class="c">int</span> jet);
+}
+
+<span class="c">class</span> Prudente <span class="c">implements</span> Attaque {
+  <span class="c">@override</span>
+  <span class="c">int</span> degats(<span class="c">int</span> jet) =&gt; jet ~/ <span class="g">2</span>;
+}
+
+<span class="c">class</span> Brutale <span class="c">implements</span> Attaque {
+  <span class="c">@override</span>
+  <span class="c">int</span> degats(<span class="c">int</span> jet) =&gt; jet * <span class="g">2</span>;
+}
+
+heros.attaque = Brutale();      <span class="d">// on change de stratégie</span></pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="pat-command">
+  <div class="label">Comportement · Command</div>
+  <div class="row grow pat" style="gap:6rem">
+    <div style="flex:0 0 66rem">
+      <span class="chip r step" style="align-self:flex-start">Comportement</span>
+      <h2 class="mt" style="font-size:9rem">Command</h2>
+      <p class="mt step" style="font-size:3.8rem;color:var(--ink)">Transformer une action en objet : on peut la ranger, la rejouer, l'annuler.</p>
+      <p class="cap mt step" style="font-size:2.3rem">Attention : le « Command » de la doc Flutter désigne autre chose (suivre l'état d'une action), sans annulation.</p>
+    </div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>commande.dart</span></div><pre><span class="c">abstract</span> <span class="c">class</span> Commande {
+  <span class="c">void</span> executer();
+  <span class="c">void</span> annuler();
+}
+
+<span class="c">class</span> Avancer <span class="c">implements</span> Commande {
+  Avancer(<span class="c">this</span>._joueur);
+  <span class="c">final</span> Joueur _joueur;
+
+  <span class="c">@override</span>
+  <span class="c">void</span> executer() =&gt; _joueur.x++;
+  <span class="c">@override</span>
+  <span class="c">void</span> annuler() =&gt; _joueur.x--;
+}</pre></div></div>
+  </div>
+</section>
+
+<section class="slide" data-id="pat-flutter">
+  <div class="label">Patterns d'architecture · le projet Flutter</div>
+  <div class="flow step"><div class="fn">Présentation<small>pages · BLoC</small></div><span>→</span><div class="fn i">Domaine<small>entités · cas d'usage · ports</small></div><span>←</span><div class="fn">Données<small>Repository · API</small></div></div>
+  <p class="mt2 step" style="font-size:4rem;color:var(--ink)">Le domaine ne dépend de <span class="ind">rien</span>.</p>
+  <div class="cols c2" style="flex:0 0 auto;gap:3rem 4rem;margin-top:3rem">
+    <div class="card step"><h3>Repository</h3><p class="cap mt">isole l'accès aux données (réseau, disque) de la logique métier</p></div>
+    <div class="card step"><h3>Injection de dépendances</h3><p class="cap mt">on donne à un objet ce dont il a besoin : get_it</p></div>
+    <div class="card step"><h3>BLoC</h3><p class="cap mt">l'écran envoie des événements, le bloc publie des états</p></div>
+    <div class="card step"><h3>Ports et adaptateurs</h3><p class="cap mt">le domaine définit une interface, la couche données l'implémente</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="pat-ia">
+  <div class="label">Patterns et agents de code</div>
+  <h2 style="font-size:9rem;max-width:none">Un nom de pattern,<br>c'est un <span class="grad">vocabulaire partagé</span>.</h2>
+  <div class="cols c3 mt2" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><h3>Nommer</h3><p class="cap mt">« utilise le pattern Repository pour cet accès aux données »</p></div>
+    <div class="card step"><h3>Écrire</h3><p class="cap mt">couches et interdits dans AGENTS.md ou CLAUDE.md</p></div>
+    <div class="card step"><h3>Questionner</h3><p class="cap mt">« quel problème ce pattern résout-il ici ? »</p></div>
+  </div>
+  <div class="chips mt2 step"><span class="chip r">pas de pattern sans problème à résoudre</span></div>
+</section>
+
+<section class="slide divider" data-id="div-modeles">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="big grad">06</div>
   <h2>Les modèles d'IA</h2>
 </section>
 
@@ -596,7 +862,7 @@
 
 <section class="slide divider" data-id="div-agent">
   <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
-  <div class="big grad">06</div>
+  <div class="big grad">07</div>
   <h2>L'agent et son<br>environnement</h2>
 </section>
 
@@ -707,7 +973,7 @@
 
 <section class="slide divider" data-id="div-cicd">
   <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
-  <div class="big grad">07</div>
+  <div class="big grad">08</div>
   <h2>CI/CD dans<br>le cloud</h2>
 </section>
 
@@ -755,7 +1021,7 @@
 
 <section class="slide divider" data-id="div-regle">
   <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
-  <div class="big grad">08</div>
+  <div class="big grad">09</div>
   <h2>RGPD<br>et AI Act</h2>
 </section>
 
