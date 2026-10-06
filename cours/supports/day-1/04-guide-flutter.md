@@ -290,17 +290,17 @@ Dans Flutter, **tout ce que vous voyez est un widget** : un texte, un bouton, un
 
 Analogie : une poupée russe, ou l'organigramme d'une entreprise. La racine, c'est l'application ; en dessous, un écran ; dans l'écran, une colonne ; dans la colonne, trois éléments, etc.
 
-```text
-MaterialApp
- └─ Scaffold
-     ├─ AppBar
-     │   └─ Text('Compteur')
-     ├─ Center
-     │   └─ Column
-     │       ├─ Text('Vous avez appuyé :')
-     │       ├─ Text('0')
-     │       └─ ElevatedButton
-     └─ FloatingActionButton
+```mermaid
+flowchart TD
+    A["MaterialApp"] --> B["Scaffold"]
+    B --> C["AppBar"]
+    B --> D["Center"]
+    B --> E["FloatingActionButton"]
+    C --> C1["Text('Compteur')"]
+    D --> F["Column"]
+    F --> F1["Text('Vous avez appuyé :')"]
+    F --> F2["Text('0')"]
+    F --> F3["ElevatedButton"]
 ```
 
 Cet arbre est celui de l'exemple de la section 5, dans sa version complète avec le bouton « Voir le détail » (section 8). L'outil **Flutter Inspector** (dans les DevTools, ouvert depuis le panneau Flutter de VS Code, [guide de démarrage rapide](https://docs.flutter.dev/install/quick)) affiche cet arbre pour l'application en cours : c'est très utile pour comprendre un écran qu'on n'a pas écrit.

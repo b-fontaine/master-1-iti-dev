@@ -88,10 +88,10 @@ DevOps n'est ni un métier, ni un logiciel que l'on achète. C'est un ensemble d
 
 On représente classiquement DevOps comme une **boucle infinie** (un « 8 couché ») :
 
-```
- Planifier → Coder → Construire → Tester → Publier → Déployer → Exploiter → Surveiller
-     ↑                                                                          │
-     └────────────────  retours, incidents, mesures  ←─────────────────────────┘
+```mermaid
+flowchart LR
+    P["Planifier"] --> C["Coder"] --> B["Construire"] --> T["Tester"] --> PU["Publier"] --> D["Déployer"] --> E["Exploiter"] --> S["Surveiller"]
+    S -. "retours, incidents, mesures" .-> P
 ```
 
 Retenez l'idée plus que les huit mots exacts (les schémas varient selon les auteurs : *présentation conventionnelle, pas une norme*). La moitié gauche est la **CI/CD** (construire, tester, publier). La moitié droite est l'**exploitation** : faire tourner, surveiller (*monitoring* : mesurer en continu l'état du service), alerter. Le fait important : **la boucle est fermée**. Ce qui se passe en production nourrit la planification suivante.

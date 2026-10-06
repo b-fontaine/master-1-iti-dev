@@ -312,17 +312,13 @@ L'intérêt pour un chef de projet : le modèle ne « fait » rien tout seul. Il
 
 Voici une architecture de référence, **proposée par ce cours** (ce n'est pas un schéma officiel du projet). Elle respecte le principe de la séparation en couches vu en séance : l'interface ne parle jamais directement à la bibliothèque d'IA.
 
-```
-Interface (widgets Flutter)
-        |
-Gestion d'état (BLoC, Cubit, Riverpod, au choix)
-        |
-Interface abstraite « Assistant »   <-- le contrat, écrit en Dart pur
-     /              \
-Adaptateur local     Adaptateur de test (faux assistant)
-(flutter_edge_ai)    (réponses prédéfinies)
-        |
-Stockage du modèle (téléchargement, versions, espace disque)
+```mermaid
+flowchart TD
+    UI["Interface (widgets Flutter)"] --> ST["Gestion d'état<br/>(BLoC, Cubit, Riverpod, au choix)"]
+    ST --> IF["Interface abstraite « Assistant »<br/>le contrat, écrit en Dart pur"]
+    IF --> L["Adaptateur local<br/>(flutter_edge_ai)"]
+    IF --> T["Adaptateur de test<br/>(faux assistant, réponses prédéfinies)"]
+    L --> M["Stockage du modèle<br/>(téléchargement, versions, espace disque)"]
 ```
 
 Pourquoi cette découpe ?
