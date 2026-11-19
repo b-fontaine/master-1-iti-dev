@@ -2,7 +2,7 @@
   function $(id){return document.getElementById(id)}
   function pct(x){return (Math.floor(x*1000+.5)/10).toFixed(1).replace('.',',')+' %'}
 
-  /* ---- A : résolution d'une quête (guerrier niveau 1, force, DD 17, danger 6, 100 XP) ---- */
+  /* ---- A : jugement d'une traversée (veneur de rang 1, route à bêtes, péril 17, usure 6, renom promis 100) ---- */
   var SEUILS=[0,100,300,600,1000];
   function resoudre(jet){
     var total=jet+5+1,crit=jet===20?'RC':jet===1?'EC':'',ok=crit==='RC'?true:crit==='EC'?false:total>=17;
@@ -14,12 +14,12 @@
   function renderA(){
     var jet=+$('a-jet').value,r=resoudre(jet);
     $('a-jet-v').textContent=jet;$('a-die').textContent=jet;
-    $('a-tot').textContent=jet+' + 5 + 1 = '+r.total+' (DD 17)';
-    var o=$('a-out');o.textContent=r.crit==='RC'?'réussite critique':r.crit==='EC'?'échec critique':r.ok?'réussite':'échec';
+    $('a-tot').textContent=jet+' + 5 + 1 = '+r.total+' (péril 17)';
+    var o=$('a-out');o.textContent=r.crit==='RC'?'pleine cendrelune : tenu':r.crit==='EC'?'lune noire : rompu':r.ok?'passage tenu':'passage rompu';
     o.className='badge '+(r.crit?'crit':r.ok?'ok':'ko');
     $('a-pvt').textContent=r.pv+' / '+r.pvMax;
     var b=$('a-pv');b.style.width=(r.pv/r.pvMax*100)+'%';b.parentNode.classList.toggle('low',r.pv/r.pvMax<.5);
-    $('a-xpt').textContent='EXPÉRIENCE +'+r.xp;$('a-lvl').textContent='niveau '+r.niv;
+    $('a-xpt').textContent='RENOM +'+r.xp;$('a-lvl').textContent='rang '+r.niv;
     var lo=SEUILS[r.niv-1],hi=SEUILS[r.niv]||SEUILS[4];
     $('a-xp').style.width=(r.niv>=5?100:Math.min(100,(r.xp-lo)/(hi-lo)*100))+'%';
   }
