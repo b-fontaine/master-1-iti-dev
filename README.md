@@ -68,7 +68,7 @@ Chaque équipe classe les trois thèmes par préférence et se voit attribuer l'
 
 | Thème | Situation | Difficulté propre |
 |---|---|---|
-| **A · Les Marches de Cendrelune** (ludique) | Carnet de campagne d'un club de jeu de rôle : fiches de personnage, quêtes, points de vie, expérience, journal consultable | Un état qui évolue et un hasard à maîtriser pour pouvoir tester |
+| **A · Les Marches de Cendrelune** (mise en situation fantastique) | L'équipe tient le greffe d'un comptoir de Passeurs dans un monde de brume qu'elle invente en partie : fiches de passeur, routes, jugement d'une traversée selon l'éclat de la lune, souffle, renom, rangs, registre consultable | Un état qui évolue et un aléa à maîtriser pour pouvoir tester |
 | **B · Ligne 4** (industrie) | Calcul du taux de rendement synthétique d'un atelier de câblage à partir des événements de production | Arithmétique des temps et des unités |
 | **C · Vœux de projet** (département de formation fictif, sans lien avec Nantes Université) | Répartition de sujets de projet entre étudiants fictifs selon leurs vœux classés, avec explication pour chacun | Algorithme d'affectation, et cas le plus sensible au regard du RGPD et du règlement sur l'IA |
 

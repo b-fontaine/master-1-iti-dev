@@ -139,7 +139,7 @@ L'autre méthode, entièrement dans VS Code, est décrite dans le guide officiel
 
 ## 3. Le strict minimum de Dart pour lire du code
 
-Cette section reprend les « six notions » de la diapositive, avec un peu plus de détail. Tous les exemples ont été exécutés avec `dart run` (Dart 3.13.5) ; la sortie est donnée à la fin. L'univers est celui de la démonstration de la séance : un jeu de rôle, où l'on réussit une action si le total (jet de dé plus bonus) atteint ou dépasse un **degré de difficulté** (dd).
+Cette section reprend les « six notions » de la diapositive, avec un peu plus de détail. Tous les exemples ont été exécutés avec `dart run` (Dart 3.13.5) ; la sortie est donnée à la fin. L'univers est celui de la démonstration de la séance : un petit jeu de dés, où l'on réussit une action si le total (jet de dé plus bonus) atteint ou dépasse un **degré de difficulté** (dd).
 
 ### 3.1 Variables et types
 

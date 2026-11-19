@@ -69,7 +69,7 @@ mindmap
       Visitor
 ```
 
-Ce chapitre développe les patrons que vous avez le plus de chances de croiser dans le code du projet, avec des exemples en **Dart**, dans le même petit univers de jeu de rôle que le chapitre 4 (jets de dés, quêtes, personnages).
+Ce chapitre développe les patrons que vous avez le plus de chances de croiser dans le code du projet, avec des exemples en **Dart**, dans le même petit univers de jeu que le chapitre 4 (jets de dés, quêtes, personnages).
 
 > **À retenir.** On n'apprend pas les patrons pour les appliquer partout. On les apprend pour **reconnaître** une structure quand on la lit, et pour **savoir la demander** quand on la cherche.
 
