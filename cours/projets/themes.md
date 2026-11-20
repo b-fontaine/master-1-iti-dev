@@ -12,7 +12,7 @@ Les trois thèmes se construisent avec la même pile, détaillée dans `cours/pr
 - **TDD** (`flutter_test`, `bloc_test`, `mocktail`) **et BDD** avec `bdd_widget_test` : les scénarios sont écrits en Gherkin français (Soit / Quand / Alors) dans des fichiers `.feature`, qui génèrent des tests widget via `build_runner`. (à vérifier : `bdd_widget_test` documente les mots-clés `Feature` / `Scenario` / `Given` / `When` / `Then` ; la prise en charge d'un Gherkin français n'est pas confirmée. À tester dans le squelette avant S2 ; sinon, mots-clés anglais avec des textes d'étapes en français.)
 - **Commandes de référence** : `flutter pub get`, `flutter test`, `flutter test --coverage`, `flutter analyze`, `dart format`, `dart run build_runner build --delete-conflicting-outputs`, `flutter run -d chrome`, `flutter build web`. Verrouillage des dépendances : `pubspec.lock` (versionné) ; la version de Flutter est notée dans le README (et le `pubspec`).
 - **Livraison** : build web publié par GitHub Actions sur **GitHub Pages** (analyse, tests avec couverture, détection de secrets `gitleaks`, audit des dépendances pub, build web, déploiement). **GitHub Pages est public** : données fictives uniquement, et tout ce qui est dans un build web Flutter est public (aucun secret dans l'application).
-- **Conventions de nommage** : les identifiants des énoncés ci-dessous (`pv_actuels`, `jet_d20`, `temps_ouverture_min`...) sont donnés en snake_case ; en Dart on les écrit en lowerCamelCase (`pvActuels`, `jetD20`, `tempsOuvertureMin`, Effective Dart), et drift génère les colonnes SQL en snake_case. Les codes de motif (`personnage_a_terre`, `voeux_insuffisants`...) sont des valeurs sérialisées, portées côté Dart par des `enum`.
+- **Conventions de nommage** : les identifiants des énoncés ci-dessous (`souffle_actuel`, `renom_promis`, `temps_ouverture_min`...) sont donnés en snake_case ; en Dart on les écrit en lowerCamelCase (`souffleActuel`, `renomPromis`, `tempsOuvertureMin`, Effective Dart), et drift génère les colonnes SQL en snake_case. Les codes de motif (`passeur_epuise`, `voeux_insuffisants`...) sont des valeurs sérialisées, portées côté Dart par des `enum`.
 
 ## Idée directrice
 
@@ -25,7 +25,7 @@ Le public est composé d'étudiants de Master orientés **industrie et innovatio
 
 Les trois thèmes :
 
-- **A, un carnet de campagne de jeu de rôle** : une fiche de personnage évolue à chaque quête (dés, points de vie, expérience, niveaux). La difficulté est un **état qui progresse** et un hasard que l'on doit savoir injecter pour tester.
+- **A, une mise en situation fantastique** : l'équipe tient le greffe d'un comptoir de Passeurs, dans un monde de brume qu'elle invente en partie. La fiche d'un passeur évolue à chaque traversée (éclat de la lune, souffle, renom, rangs). La difficulté est un **état qui progresse** et un aléa que l'on doit savoir injecter pour tester.
 - **B, un calcul de TRS/OEE d'atelier** : à partir d'événements de production, on calcule un indicateur de performance. La difficulté est **l'arithmétique des temps et des unités**.
 - **C, une répartition de sujets de projet** : des étudiants classent leurs vœux et le logiciel les affecte selon une priorité et des capacités. La difficulté est **un algorithme d'affectation déterministe**, à expliquer à chaque étudiant.
 
@@ -77,9 +77,9 @@ Il y a environ huit semaines entre S2 et S3 : la remise en route de 30 min en d�
 
 ### Tableau chiffré de comparaison
 
-| Critère | A Carnet de campagne | B TRS d'atelier | C Répartition de sujets |
+| Critère | A Registre des Passeurs | B TRS d'atelier | C Répartition de sujets |
 |---|---|---|---|
-| Entités (tables drift) | 5 (classe, personnage, campagne, quete, resolution) | 5 (poste, quart, ordre_fabrication, declaration_production, arret) | 5 (enseignant, sujet, etudiant, voeu, affectation) |
+| Entités (tables drift) | 5 (voie, passeur, saison, route, traversee) | 5 (poste, quart, ordre_fabrication, declaration_production, arret) | 5 (enseignant, sujet, etudiant, voeu, affectation) |
 | Règles distinctes du niveau 1 | 6 | 6 | 6 |
 | Cas d'acceptation | 7 | 8 | 7 |
 | Motifs de rejet d'import | 5 | 5 | 5 |
@@ -87,118 +87,137 @@ Il y a environ huit semaines entre S2 et S3 : la remise en route de 30 min en d�
 | Charge estimée du clou niveau 1 avec l'agent et le TDD | ≈ 3 h | ≈ 3 h | ≈ 3 h |
 | Charge d'équipe du périmètre complet (sprint compris) | 15 à 20 h | 15 à 20 h | 15 à 20 h |
 | Lignes de démo | ≈ 700 | ≈ 3 000 | ≈ 600 |
-| Type de difficulté | Hasard injecté, état qui évolue | Unités et arrondis | Ordre de priorité, cas de bord |
-| Piège d'agent | Dés en dur dans la règle | Unités mélangées | Données réelles collées |
-| Sensibilité conformité | faible (pseudonymes de joueurs) | moyenne (postes, quarts, salariés possibles) | élevée (étudiants, décision d'affectation) |
+| Type de difficulté | Aléa injecté, état qui évolue | Unités et arrondis | Ordre de priorité, cas de bord |
+| Piège d'agent | Lune en dur dans la règle | Unités mélangées | Données réelles collées |
+| Sensibilité conformité | faible (pseudonymes d'utilisateurs) | moyenne (postes, quarts, salariés possibles) | élevée (étudiants, décision d'affectation) |
 
-Équilibrage : A a peu de calcul mais un état à faire évoluer (niveaux, PV, plafonds). B a peu d'états mais des calculs à faire au bon format (temps, cadences, arrondis, changement d'heure). C a peu de calcul mais beaucoup de cas de bord (bornes de vœux, capacités, statuts). Les estimations de charge n'ont pas été chronométrées avec de vrais étudiants : elles sont à confirmer lors de la première promotion.
+Équilibrage : A a peu de calcul mais un état à faire évoluer (rangs, souffle, plafonds). B a peu d'états mais des calculs à faire au bon format (temps, cadences, arrondis, changement d'heure). C a peu de calcul mais beaucoup de cas de bord (bornes de vœux, capacités, statuts). A demande en plus une page de monde inventé et un fichier de libellés : c'est du contenu, pas du code, du même ordre que le glossaire d'équipe de B ou les explications individuelles de C. Les estimations de charge n'ont pas été chronométrées avec de vrais étudiants : elles sont à confirmer lors de la première promotion.
 
 ---
 
-## Thème A · Les Marches de Cendrelune : le carnet de campagne du maître de jeu
+## Thème A · Les Marches de Cendrelune : le registre du comptoir des Passeurs
 
-- **Pitch** : sur les Marches de Cendrelune, frontière brumeuse où les cartes mentent et où les auberges ferment tôt, un club de jeu de rôle mène depuis trois saisons une campagne à douze joueurs. Les fiches de personnage sont sur des feuilles volantes, les jets de dés dans la mémoire du maître de jeu, et personne ne sait plus pourquoi la voleuse est niveau 4 alors que le guerrier est resté niveau 2. Vous forgez le **carnet de campagne** : fiches de personnage, quêtes, résolution d'une quête par un jet de d20, dégâts en points de vie, expérience et montée de niveau, avec un journal que l'on peut relire et contester.
-- **Commanditaire (fictif) et besoin** : Gaspard Hallier, maître de jeu du club (personnage fictif), ingénieur le jour et conteur le soir. Il veut que chaque quête se résolve de façon équitable et reproductible : mêmes dés, mêmes conséquences. Il veut retrouver l'historique de chaque personnage, voir qui est à terre et qui approche d'un niveau, et que les joueurs ne modifient que leur propre fiche.
+> **Mise en situation fantastique.** Dans ce thème, vous n'écrivez pas un outil *à propos* d'un monde imaginaire : vous y travaillez. Votre équipe tient le greffe d'un comptoir, votre commanditaire est une habitante de ce monde, et le besoin est le sien. La règle et ses chiffres sont fixés par l'énoncé ; **le monde autour est à vous** (voir « Votre part d'invention »).
+
+- **Pitch** : les Marches de Cendrelune sont la dernière frontière avant les terres que personne n'a cartographiées. Chaque automne, la brume s'y lève et ne retombe qu'au printemps. Pendant cette saison, les cartes mentent, et seuls les **Passeurs** savent encore mener un convoi d'un bourg à l'autre. Nul ne peut vérifier ce qui se passe dans la brume : la **Coutume des Marches** tranche donc chaque traversée d'après ce que tout le monde peut constater, c'est-à-dire la route empruntée, le passeur qui la mène et l'éclat de la **lune de cendre**, cet astre sans calendrier qui donne son nom au pays et dont personne ne sait prédire la lumière du soir. **Vous êtes les greffiers d'un comptoir de Passeurs**, le vôtre, que vous fondez et que vous nommez. Jusqu'ici le registre est tenu à la plume, les soldes sont contestées, et plus personne ne sait dire pourquoi telle pisteuse est au rang 4 quand tel veneur est resté au rang 2. Vous forgez le **registre du comptoir** : fiches de passeur, routes de brume, jugement d'une traversée selon l'éclat de la lune, usure du souffle, renom et changement de rang, avec un registre que l'on peut relire et contester.
+- **Commanditaire (personnage de ce monde) et besoin** : Aubrée Vauclair, intendante des Marches (personnage fictif), ancienne passeuse devenue comptable des soldes. Elle commande le même registre à chaque comptoir pour la saison des brumes qui vient. Elle veut que chaque traversée soit jugée de façon équitable et reproductible : même lune, même jugement. Elle veut retrouver l'historique de chaque passeur, voir qui est à bout de souffle et qui approche d'un nouveau rang, et que les passeurs ne modifient que leur propre fiche.
+- **Votre rôle dans ce monde** : vous êtes le greffe du comptoir. Vous parlez à l'intendante comme à un client (c'est elle qui valide les cas d'acceptation), vous écrivez pour des passeurs qui liront leur fiche, et vous présentez votre comptoir en soutenance comme s'il existait.
+- **Votre part d'invention** (obligatoire, légère, et libre) : deux équipes sur ce thème livrent **deux mondes différents avec la même mécanique testable**.
+
+    | Fixé par l'énoncé (ne change pas) | À inventer par l'équipe |
+    |---|---|
+    | Les 6 règles, leurs tableaux de valeurs et les 7 cas d'acceptation | Le **comptoir** : son nom, sa devise, son emblème, sa place sur les Marches |
+    | Les codes des 4 voies (`veneur`, `pisteur`, `lanternier`, `heraut`) et des 4 natures de péril (`bete`, `terrain`, `mirage`, `faction`) | Le **bestiaire** et les **mirages** : ce qui rôde et ce qui trompe dans la brume |
+    | Les 5 rangs (numérotés de 1 à 5) et leurs seuils de renom | Le **nom des cinq rangs** et les syllabes qui composent les noms des passeurs |
+    | Les colonnes du CSV et les codes de motif de rejet | Les **lieux** : bourgs, cols, gués, et les titres des 30 routes |
+    | Les 4 issues (`tenue`, `rompue`, `tenue_pleine_lune`, `rompue_lune_noire`) | Les **factions** qui tiennent les ponts et les péages, et leurs humeurs |
+    | Les 2 rôles applicatifs et la garde d'accès | Le **ton** des textes (solennel, administratif pince-sans-rire, poétique...) et le jeu de données de démonstration |
+
+  - *Livrable* : une page `docs/monde.md` (le comptoir, ses lieux, son bestiaire, ses factions, le nom de ses rangs) et **un seul fichier de libellés** dans la couche presentation (`lib/presentation/lexique.dart`, emplacement à confirmer dans le dépôt-modèle). Le générateur de seed y puise ses noms.
+  - *Règle d'ingénierie* : le domaine ne connaît que les **codes** ; aucun nom inventé n'apparaît dans `domain/` ni dans les cas d'acceptation. Vérification simple : changer un libellé du lexique ne fait échouer aucun test de la règle.
+  - *Deux limites* : un monde **original** (aucun nom, lieu ou créature repris d'une œuvre existante, voir la rubrique conformité) et **aucune personne réelle** (ni nom, ni caricature d'un enseignant ou d'un camarade).
+  - *Charge* : du contenu, pas du code, comparable au glossaire d'équipe du thème B ; il est compris dans les 15 à 20 h.
 - **Besoin ponctuel** :
-  - *Pourquoi un outil de courte durée de vie suffit* : le carnet sert le temps d'une campagne (une saison). Quand la campagne s'arrête, les fiches n'ont plus d'usage : un outil jetable, bien testé, remplace avantageusement les feuilles volantes sans devenir un logiciel à maintenir.
-  - *Ce qui reste obligatoire même pour un outil jetable* : la règle de résolution testée (sinon les joueurs contestent), le contrôle d'accès (un joueur ne modifie pas la fiche d'un autre), le README pour relancer l'outil, et aucune donnée réelle dans le dépôt public.
-  - *Désactivation et archivage* : à la fin de la campagne, export du journal en CSV, archivage du dépôt (lecture seule) et arrêt du service ; les pseudonymes de joueurs sont supprimés ou anonymisés au plus tard à cette date.
+  - *Pourquoi un outil de courte durée de vie suffit* : le registre sert le temps d'une saison des brumes. Quand la brume retombe, les routes redeviennent sûres, les soldes sont payées et le registre est scellé : un outil jetable, bien testé, remplace avantageusement le registre à la plume sans devenir un logiciel à maintenir.
+  - *Ce qui reste obligatoire même pour un outil jetable* : la règle de jugement testée (sinon les passeurs contestent leur solde), le contrôle d'accès (un passeur ne modifie pas la fiche d'un autre), le README pour relancer l'outil, et aucune donnée réelle dans le dépôt public.
+  - *Désactivation et archivage* : à la fin de la saison, export du registre en CSV, archivage du dépôt (lecture seule) et arrêt du service ; les pseudonymes des utilisateurs sont supprimés ou anonymisés au plus tard à cette date.
 - **Données manipulées** :
-  - Entités (5) : `classe` (code, nom, pv_niveau_1, gain_pv_par_niveau, bonus_force, bonus_ruse, bonus_magie, bonus_foi), `personnage` (nom, classe_code, niveau, xp, pv_actuels, proprietaire), `campagne` (titre, saison), `quete` (campagne, titre, competence, dd, danger, xp_recompense, statut), `resolution` (personnage, quete, jet_d20, total, issue, pv_perdus, xp_gagnes, niveau_avant, niveau_apres).
-  - Relations : une campagne a plusieurs quêtes ; une résolution lie un personnage à une quête ; un personnage appartient à une classe et à un joueur (`proprietaire`, identifiant de connexion). Les PV maximum ne sont pas stockés : ils se calculent (classe et niveau), ce qui évite les incohérences.
-  - Volumes : 4 classes, 60 personnages, 3 campagnes, 30 quêtes, environ 600 résolutions.
-  - Seed : script à graine fixe ; noms de personnages fictifs assemblés à partir de syllabes ; jamais de noms de personnes réelles.
-- **Rôles applicatifs** : `maitre_de_jeu` (crée quêtes, résout, corrige) et `joueur` (lit tout, modifie uniquement la fiche dont il est `proprietaire`).
+  - Entités (5) : `voie` (code, nom, souffle_rang_1, gain_souffle_par_rang, aptitude_bete, aptitude_terrain, aptitude_mirage, aptitude_faction), `passeur` (nom, voie_code, rang, renom, souffle_actuel, proprietaire), `saison` (titre, annee), `route` (saison, titre, nature, peril, usure, renom_promis, statut `ouverte` ou `fermee`), `traversee` (passeur, route, eclat, total, issue, souffle_perdu, renom_gagne, rang_avant, rang_apres).
+  - Relations : une saison a plusieurs routes ; une traversée lie un passeur à une route ; un passeur suit une voie et appartient à un utilisateur (`proprietaire`, identifiant de connexion). Le souffle maximum n'est pas stocké : il se calcule (voie et rang), ce qui évite les incohérences.
+  - Vocabulaire : le **souffle** est l'endurance du passeur (à 0, il est épuisé et ne prend plus la route) ; le **renom** se cumule de traversée en traversée et fait changer de **rang** ; le **péril** d'une route est le seuil à atteindre, son **usure** ce qu'elle coûte en souffle quand le passage est rompu ; l'**éclat** est la lecture de la lune de cendre le soir du départ, un entier de 1 (lune noire) à 20 (pleine cendrelune).
+  - Volumes : 4 voies, 60 passeurs, 3 saisons, 30 routes, environ 600 traversées.
+  - Seed : script à graine fixe ; noms de passeurs assemblés à partir des syllabes choisies par l'équipe ; jamais de noms de personnes réelles.
+- **Rôles applicatifs** : `greffier` (ouvre les routes, juge les traversées, corrige, accorde un repos à un passeur épuisé : correction manuelle qui remet le souffle au maximum, hors de la règle) et `passeur` (lit tout, modifie uniquement la fiche dont il est `proprietaire`).
 - **Rôles dans l'équipe** (la charge du projet ne change pas) :
-  - *3 membres* : **gardien produit et conformité** (`PROJET.md`, cas d'acceptation, fiche de conformité) ; **gardien des données** (modèle, migrations, seed, import CSV) ; **gardien du harnais et de la CI** (`CLAUDE.md`, hooks, permissions, GitHub Actions, test d'architecture sur le hasard).
-  - *4 membres* : les trois rôles ci-dessus, avec un **gardien conformité** distinct (fiche, pseudonymisation, contact avec le RSSI).
-  - *5 membres* : les quatre rôles, plus un **gardien de la démonstration** (README testé à froid, jeu de données de soutenance, scénario du « wow »).
+  - *3 membres* : **gardien produit et conformité** (`PROJET.md`, `docs/monde.md`, cas d'acceptation, fiche de conformité) ; **gardien des données** (modèle, migrations, seed, import CSV) ; **gardien du harnais et de la CI** (`CLAUDE.md`, hooks, permissions, GitHub Actions, test d'architecture sur l'aléa).
+  - *4 membres* : les trois rôles ci-dessus, avec un **gardien conformité** distinct (fiche, pseudonymisation, originalité du monde, contact avec le RSSI).
+  - *5 membres* : les quatre rôles, plus un **gardien de la démonstration** (README testé à froid, lexique et jeu de données de soutenance, scénario du « wow »).
   - Dans tous les cas, chacun relit au moins une PR d'un autre.
 - **MVP** (5 user stories à piocher pour `PROJET.md`, 3 à 5 retenues) :
-  1. En tant que maître de jeu, je crée un personnage d'une classe donnée, avec ses PV de niveau 1.
-  2. Je publie une quête (compétence testée, difficulté, danger, récompense).
-  3. Je résous une quête pour un personnage en saisissant le jet de d20 et j'obtiens l'issue, les PV perdus et l'expérience.
-  4. Je consulte la fiche d'un personnage avec son historique de résolutions.
-  5. Je vois quels personnages sont à terre et lesquels vont monter de niveau.
-  - **Pour aller plus loin** : (1) le hasard produit par l'application quand le maître de jeu ne saisit pas de jet : une interface de source de hasard (domain), implémentée dans la couche data, injectée avec `get_it` et remplacée par un fake en test (graine journalisée, jet rejouable) ; (2) événements de campagne (embuscade, pluie de cendres) qui modifient la difficulté d'une quête ; (3) export de la fiche au format texte pour impression.
-- **Règle métier « clou »** : résolution d'une quête par un personnage, fonction pure Dart `resoudre(personnage, quete, jetD20)` sans accès au hasard ni à la base (elle vit dans la couche domain).
+  1. En tant que greffier, j'inscris un passeur d'une voie donnée, avec son souffle de rang 1.
+  2. J'ouvre une route (nature du péril, péril, usure, renom promis).
+  3. Je juge une traversée pour un passeur en saisissant l'éclat de la lune et j'obtiens l'issue, le souffle perdu et le renom.
+  4. Je consulte la fiche d'un passeur avec l'historique de ses traversées.
+  5. Je vois quels passeurs sont épuisés et lesquels vont changer de rang.
+  - **Pour aller plus loin** : (1) l'éclat produit par l'application quand le greffier ne saisit pas de lecture (simuler une saison à l'avance) : une interface de source d'aléa (domain), implémentée dans la couche data, injectée avec `get_it` et remplacée par un fake en test (graine journalisée, nuit rejouable) ; (2) événements de saison inventés par l'équipe (brume rouge, pluie de cendres, trêve entre factions) qui modifient le péril d'une route ; (3) chronique : chaque traversée s'affiche avec une phrase écrite par l'équipe, choisie dans le lexique selon l'issue, sans hasard (par exemple d'après le numéro de la traversée).
+- **Règle métier « clou »** : jugement d'une traversée, fonction pure Dart `jugerTraversee(passeur, route, eclat)` sans accès à l'aléa ni à la base (elle vit dans la couche domain).
   - **Niveau 1 (obligatoire, ≈ 3 h)** : ordre d'application des sous-règles, valeurs figées.
 
-    | classe | bonus force | bonus ruse | bonus magie | bonus foi | PV niveau 1 | gain de PV par niveau |
+    | voie | aptitude `bete` | aptitude `terrain` | aptitude `mirage` | aptitude `faction` | souffle au rang 1 | gain de souffle par rang |
     |---|---|---|---|---|---|---|
-    | guerrier | 5 | 1 | 0 | 0 | 30 | 10 |
-    | voleur | 1 | 5 | 0 | 0 | 22 | 8 |
-    | mage | 0 | 1 | 5 | 1 | 16 | 6 |
-    | pretre | 1 | 0 | 1 | 5 | 24 | 8 |
+    | veneur | 5 | 1 | 0 | 0 | 30 | 10 |
+    | pisteur | 1 | 5 | 0 | 0 | 22 | 8 |
+    | lanternier | 0 | 1 | 5 | 1 | 16 | 6 |
+    | heraut | 1 | 0 | 1 | 5 | 24 | 8 |
 
-    | niveau | 1 | 2 | 3 | 4 | 5 (maximum) |
+    | rang | 1 | 2 | 3 | 4 | 5 (maximum) |
     |---|---|---|---|---|---|
-    | XP minimum (borne incluse) | 0 | 100 | 300 | 600 | 1000 |
+    | renom minimum (borne incluse) | 0 | 100 | 300 | 600 | 1000 |
 
-    1. **Personnage à terre** : si `pv_actuels` vaut 0, la résolution est refusée (erreur `personnage_a_terre`), sans jet consommé ni modification.
-    2. **Jets critiques** : `jet_d20` doit être un entier entre 1 et 20 inclus. 20 est une réussite critique et 1 un échec critique, quel que soit le total. Ce test précède la comparaison à la difficulté.
-    3. **Total et réussite** : `total = jet_d20 + bonus_de_la_classe_pour_la_competence_de_la_quete + niveau`. Réussite si `total >= dd` (borne incluse).
-    4. **Dégâts** : réussite (critique ou non) : 0 PV perdu ; échec : `danger` PV perdus ; échec critique : `2 × danger`. Les PV sont plancher à 0 (jamais négatifs) ; à 0, le personnage est à terre.
-    5. **Expérience** : réussite : `xp_recompense` ; réussite critique : `xp_recompense × 3 ~/ 2` (division entière, opérateur `~/` de Dart) ; échec ou échec critique : `xp_recompense ~/ 4`. Le personnage à terre gagne aussi l'expérience.
-    6. **Niveau** : le niveau est le plus grand `n` tel que XP ≥ seuil (tableau ci-dessus), plafonné à 5 ; l'XP continue de cumuler au-delà du plafond. Chaque niveau gagné ajoute `gain_pv_par_niveau` aux PV maximum et aux `pv_actuels`, sauf si le personnage est à terre après les dégâts (aucun PV gagné). Plusieurs niveaux peuvent être gagnés d'un coup. PV maximum = `pv_niveau_1 + (niveau − 1) × gain_pv_par_niveau`.
-  - **Niveau 2 (bonus, plafonné à 1 point)** : avantage et désavantage. Quand la quête porte un modificateur, deux jets sont fournis : on garde le plus haut (avantage) ou le plus bas (désavantage) avant d'appliquer les règles ci-dessus. Le 20 et le 1 se jugent sur le jet retenu.
+    1. **Passeur épuisé** : si `souffle_actuel` vaut 0, le jugement est refusé (erreur `passeur_epuise`), sans lecture consommée, sans traversée enregistrée ni modification. Ce test précède tous les autres.
+    2. **Lunes franches** : `eclat` doit être un entier entre 1 et 20 inclus (sinon erreur `eclat_invalide`, aucune modification). 20 (pleine cendrelune) donne un passage tenu (issue `tenue_pleine_lune`) et 1 (lune noire) un passage rompu (issue `rompue_lune_noire`), quel que soit le total, qui reste calculé et enregistré. Ce test précède la comparaison au péril.
+    3. **Total et passage** : `total = eclat + aptitude_de_la_voie_pour_la_nature_de_la_route + rang`. Le passage est tenu (issue `tenue`) si `total >= peril` (borne incluse), rompu sinon (issue `rompue`).
+    4. **Usure** : passage tenu (pleine cendrelune ou non) : 0 souffle perdu ; passage rompu : `usure` de souffle perdu ; lune noire : `2 × usure`. Le souffle a un plancher à 0 (jamais négatif) ; à 0, le passeur est épuisé. `souffle_perdu` enregistre la perte réelle, plancher compris.
+    5. **Renom** : passage tenu : `renom_promis` ; pleine cendrelune : `renom_promis × 3 ~/ 2` (division entière, opérateur `~/` de Dart) ; passage rompu ou lune noire : `renom_promis ~/ 4`. Le passeur épuisé par la traversée gagne aussi le renom.
+    6. **Rang** : le rang est le plus grand `n` tel que renom ≥ seuil (tableau ci-dessus), plafonné à 5 ; le renom continue de cumuler au-delà du plafond. Chaque rang gagné ajoute `gain_souffle_par_rang` au souffle maximum et au `souffle_actuel`, sauf si le passeur est épuisé après l'usure (le souffle maximum augmente, mais `souffle_actuel` reste à 0). Plusieurs rangs peuvent être gagnés d'un coup ; le rang ne baisse jamais. Souffle maximum = `souffle_rang_1 + (rang − 1) × gain_souffle_par_rang`.
+  - **Niveau 2 (bonus, plafonné à 1 point)** : bon et mauvais augure. Quand la route porte un augure, deux lectures de la lune sont fournies (au crépuscule et à minuit ; l'augure de la route et la seconde lecture s'ajoutent au modèle par une migration) : on garde la plus haute (bon augure) ou la plus basse (mauvais augure) avant d'appliquer les règles ci-dessus. Le 20 et le 1 se jugent sur la lecture retenue.
   - **Cas de test d'acceptation** (7) :
 
     | # | Entrée | Sortie attendue |
     |---|---|---|
-    | 1 | guerrier niveau 1, XP 0, PV 30/30 ; quête force, dd 17, danger 6, xp 100 ; jet 11 | total 17 ≥ 17 : réussite ; 0 PV perdu ; XP 100 ; niveau 2 ; PV 40/40 |
-    | 2 | même personnage et même quête ; jet 10 | total 16 < 17 : échec ; 6 PV perdus ; PV 24/30 ; XP 25 ; niveau 1 |
-    | 3 | guerrier niveau 5, XP 1000, PV 70/70 ; quête force, dd 5, danger 6, xp 100 ; jet 1 | échec critique malgré total 11 ≥ 5 ; 12 PV perdus ; PV 58/70 ; XP 1025 ; niveau 5 |
-    | 4 | mage niveau 1, XP 0, PV 16/16 ; quête force, dd 40, danger 8, xp 100 ; jet 20 | réussite critique ; 0 PV perdu ; XP 150 ; niveau 2 ; PV 22/22 |
-    | 5 | voleur niveau 1, XP 0, PV 5/22 ; quête ruse, dd 10, danger 6, xp 100 ; jet 3 | total 9 < 10 : échec ; PV plancher à 0 ; `a_terre` vrai ; XP 25 ; niveau 1 |
-    | 6 | personnage à 0 PV ; n'importe quelle quête ; jet 12 | erreur `personnage_a_terre`, aucune modification |
-    | 7 | pretre niveau 1, XP 50, PV 24/24 ; quête foi, dd 10, danger 4, xp 400 ; jet 10 | total 10 + 5 + 1 = 16 ≥ 10 : réussite ; 0 PV perdu ; XP 50 + 400 = 450 ; niveau 3 (deux niveaux gagnés) ; PV maximum 24 + 2 × 8 = 40 ; PV 40/40 |
+    | 1 | veneur de rang 1, renom 0, souffle 30/30 ; route `bete`, péril 17, usure 6, renom promis 100 ; éclat 11 | total 17 ≥ 17 : passage tenu (`tenue`) ; 0 souffle perdu ; renom 100 ; rang 2 ; souffle 40/40 |
+    | 2 | même passeur et même route ; éclat 10 | total 16 < 17 : passage rompu (`rompue`) ; 6 de souffle perdu ; souffle 24/30 ; renom 25 ; rang 1 |
+    | 3 | veneur de rang 5, renom 1000, souffle 70/70 ; route `bete`, péril 5, usure 6, renom promis 100 ; éclat 1 | lune noire : passage rompu (`rompue_lune_noire`) malgré total 11 ≥ 5 ; 12 de souffle perdu ; souffle 58/70 ; renom 1025 ; rang 5 |
+    | 4 | lanternier de rang 1, renom 0, souffle 16/16 ; route `bete`, péril 40, usure 8, renom promis 100 ; éclat 20 | pleine cendrelune : passage tenu (`tenue_pleine_lune`, total 21) ; 0 souffle perdu ; renom 150 ; rang 2 ; souffle 22/22 |
+    | 5 | pisteur de rang 1, renom 0, souffle 5/22 ; route `terrain`, péril 10, usure 6, renom promis 100 ; éclat 3 | total 9 < 10 : passage rompu (`rompue`) ; 5 de souffle perdu (plancher) ; souffle 0/22 ; passeur épuisé ; renom 25 ; rang 1 |
+    | 6 | passeur à 0 de souffle (par exemple le pisteur du cas 5 après son jugement) ; n'importe quelle route ; éclat 12 | erreur `passeur_epuise`, aucune traversée enregistrée, aucune modification |
+    | 7 | heraut de rang 1, renom 50, souffle 24/24 ; route `faction`, péril 10, usure 4, renom promis 400 ; éclat 10 | total 10 + 5 + 1 = 16 ≥ 10 : passage tenu (`tenue`) ; 0 souffle perdu ; renom 50 + 400 = 450 ; rang 3 (deux rangs gagnés) ; souffle maximum 24 + 2 × 8 = 40 ; souffle 40/40 |
 
-    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (français, à vérifier : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes (celle de S3 est déjà couverte par ses propres tests).
-- **Première user story et sous-règle isolée (BDD)** : la sous-règle isolée de S3 (le total, règle 3) s'écrit comme un scénario `.feature` en français, sans changer les valeurs (jet 11, guerrier de niveau 1, quête de force, dd 17, comme au cas 1) :
+    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (français, à vérifier : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes (celle de S3 est déjà couverte par ses propres tests). Dans ce tableau, « renom », « rang » et « souffle » sont les valeurs de la fiche après le jugement. Les cas ne citent que des codes et des nombres : ils sont identiques pour toutes les équipes du thème, quel que soit le monde inventé.
+- **Première user story et sous-règle isolée (BDD)** : la sous-règle isolée de S3 (le total, règle 3) s'écrit comme un scénario `.feature` en français, sans changer les valeurs (éclat 11, veneur de rang 1, route de nature `bete`, péril 17, comme au cas 1) :
 
     ```gherkin
-    Fonctionnalité: Résolution d'une quête
-      Scénario: total d'un jet pour un guerrier de niveau 1
-        Soit un guerrier de niveau 1
-        Et une quête de compétence "force" avec une difficulté de 17
-        Quand le jet de d20 est 11
+    Fonctionnalité: Jugement d'une traversée
+      Scénario: total d'une traversée pour un veneur de rang 1
+        Soit un veneur de rang 1
+        Et une route de nature "bete" avec un péril de 17
+        Quand l'éclat de la lune est 11
         Alors le total est 17
-        Et la quête est réussie
+        Et le passage est tenu
     ```
-- **Import/export** : import CSV des personnages, fichier choisi avec `file_picker`, parseur dans la couche data (colonnes `nom`, `classe_code`, `niveau`, `xp`, `pv_actuels`, `proprietaire`), avec rapport de lignes rejetées. Motifs de rejet précis :
-  1. `classe_inconnue` (hors des 4 classes) ;
-  2. `niveau_hors_bornes` (hors de 1 à 5) ou XP inférieure au seuil du niveau déclaré ;
-  3. `pv_incoherents` (`pv_actuels` supérieur aux PV maximum calculés, ou négatif) ;
+- **Import/export** : import CSV des passeurs, fichier choisi avec `file_picker`, parseur dans la couche data (colonnes `nom`, `voie_code`, `rang`, `renom`, `souffle_actuel`, `proprietaire`), avec rapport de lignes rejetées. Motifs de rejet précis :
+  1. `voie_inconnue` (hors des 4 voies) ;
+  2. `rang_hors_bornes` (hors de 1 à 5) ou renom inférieur au seuil du rang déclaré ;
+  3. `souffle_incoherent` (`souffle_actuel` supérieur au souffle maximum calculé, ou négatif) ;
   4. `nom_en_double` (au sein du fichier ou de la base) ;
   5. `colonnes_manquantes` ou fichier de plus de 200 Ko.
 
-  Export : journal de campagne en CSV (une ligne par résolution).
-- **Tableau de bord (4 vues)** : (1) fiche de personnage (niveau, XP restante avant le niveau suivant, PV actuels et maximum) ; (2) journal de campagne chronologique, filtrable par quête ; (3) état de la compagnie (personnages à terre, PV, niveau) ; (4) taux de réussite par classe et par compétence.
+  Export : registre de la saison en CSV (une ligne par traversée).
+- **Tableau de bord (4 vues)** : (1) fiche de passeur (rang, renom restant avant le rang suivant, souffle actuel et maximum) ; (2) registre de la saison chronologique, filtrable par route ; (3) état du comptoir (passeurs épuisés, souffle, rang) ; (4) taux de passages tenus par voie et par nature de péril.
 - **Contrainte de harnais et piège d'agent** :
-  - Piège : le hasard en dur. Pour faire passer un test rouge, l'agent glisse `Random().nextInt(20) + 1` dans la règle, ou fixe une graine (`Random(42)`), ou remplace le dé par une constante : les tests deviennent verts par hasard, ou ne prouvent plus rien. À documenter comme cas d'erreur d'agent (voir le cours sur le harnais).
-  - Harnais : règle `CLAUDE.md` « le domaine ne tire jamais de hasard ni ne lit l'horloge ; les jets arrivent en paramètre » ; test d'architecture (`flutter test`) qui lit les fichiers des dossiers `domain/` et échoue si `dart:math` y est importé (la source de hasard est une interface du domaine, enregistrée dans `get_it` et remplacée par un fake en test) ; dossier `test/acceptance/**` protégé par des permissions `deny` sur `Edit` et `Write` dans `.claude/settings.json`, par `CODEOWNERS` et par la consigne `CLAUDE.md` « un test qui échoue n'est jamais corrigé en modifiant le test » ; hook `PostToolUse` sur `Edit|Write` qui lance `flutter test`.
-- **Conformité (RGPD et AI Act)** (voir `cours/conformite-ai-act-rgpd.md`) :
-  - *Données traitées* : pseudonymes de joueurs (champ `proprietaire`, identifiant de connexion), noms de personnages fictifs, historique de résolutions. Le `proprietaire` est un lien vers une personne identifiable (même par pseudonyme) : c'est une **donnée personnelle**.
-  - *Personnes concernées* : les joueurs du club (et le maître de jeu, via son compte).
-  - *Finalité* : tenir la fiche et l'historique d'une campagne de jeu, de façon équitable et reproductible. Rien d'autre (pas de profilage des joueurs, pas de classement public des « meilleurs joueurs » sans accord).
-  - *Durée de conservation proposée* : la durée de la campagne ; suppression ou anonymisation des pseudonymes à la clôture (par exemple 30 jours après la dernière séance de jeu) ; le journal anonymisé peut être archivé.
-  - *Ce qui doit rester fictif* : tous les joueurs et tous les noms de personnages du dépôt et des démonstrations ; aucun courriel ni identifiant réel dans le seed.
-  - *Niveau de risque AI Act probable* : **risque minimal ou hors champ** : la résolution est une règle déterministe sans effet sur des droits ou des opportunités réels (à vérifier). L'art. 4 du règlement (UE) 2024/1689, après l'omnibus, prévoit que les fournisseurs et déployeurs prennent des mesures pour favoriser la maîtrise de l'IA de leurs personnels et des personnes qui utilisent des systèmes d'IA en leur nom (à vérifier sur EUR-Lex) ; l'équipe qui construit l'outil avec une IA est concernée par cette culture de l'IA. Si l'équipe ajoutait un texte généré par IA vers les joueurs (extension), la transparence de l'art. 50 serait à examiner (à vérifier).
-  - *Mesures concrètes dans l'application* : pseudonymes uniquement ; journal technique sans nom de joueur (identifiants numériques) ; un joueur ne voit et ne modifie que sa fiche ; **obligatoires** : mention d'information visible (art. 13) et cas d'usage de suppression documenté d'un joueur et de ses données (droit à l'effacement, art. 17) ; **en extension** : export des données du joueur (accès et portabilité, art. 15 et 20). Ces mesures sont incluses dans les 15 à 20 h de charge d'équipe.
-  - *Contenu attendu de la fiche de conformité* : les 13 rubriques du gabarit de `docs/fiche_conformite.md` (voir plus haut), avec en particulier la case « hors champ » ou « minimal » justifiée, le rôle AI Act (fournisseur ou déployeur) et la durée de conservation ; **présentée au RSSI en S4, v1 déposée le 8 décembre, réponse avant le 11 décembre**. Un « go » ne vaut que pour le périmètre pédagogique à données fictives ; toute mise en usage réel avec de vrais joueurs impose une nouvelle fiche et une nouvelle validation.
+  - Piège : la lune en dur. Pour faire passer un test rouge, l'agent glisse `Random().nextInt(20) + 1` dans la règle, ou fixe une graine (`Random(42)`), ou remplace l'éclat par une constante : les tests deviennent verts par hasard, ou ne prouvent plus rien. À documenter comme cas d'erreur d'agent (voir le cours sur le harnais).
+  - Harnais : règle `CLAUDE.md` « le domaine ne tire jamais d'aléa ni ne lit l'horloge ; l'éclat de la lune arrive en paramètre » ; test d'architecture (`flutter test`) qui lit les fichiers des dossiers `domain/` et échoue si `dart:math` y est importé (la source d'aléa est une interface du domaine, enregistrée dans `get_it` et remplacée par un fake en test) ; dossier `test/acceptance/**` protégé par des permissions `deny` sur `Edit` et `Write` dans `.claude/settings.json`, par `CODEOWNERS` et par la consigne `CLAUDE.md` « un test qui échoue n'est jamais corrigé en modifiant le test » ; hook `PostToolUse` sur `Edit|Write` qui lance `flutter test`.
+- **Conformité (RGPD et AI Act)** (voir `cours/conformite-ai-act-rgpd.md`) : **le monde est inventé, ses utilisateurs ne le sont pas.** Un passeur est un personnage de fiction, mais le compte qui possède sa fiche appartient à une personne réelle.
+  - *Données traitées* : pseudonymes des utilisateurs (champ `proprietaire`, identifiant de connexion), noms de passeurs fictifs, historique des traversées. Le `proprietaire` est un lien vers une personne identifiable (même par pseudonyme) : c'est une **donnée personnelle**.
+  - *Personnes concernées* : les utilisateurs de l'outil, c'est-à-dire les personnes qui tiennent un compte `passeur` ou `greffier`.
+  - *Finalité* : tenir la fiche et l'historique des passeurs d'une saison, de façon équitable et reproductible. Rien d'autre (pas de profilage des utilisateurs, pas de classement public des « meilleurs passeurs » associé à des personnes sans leur accord).
+  - *Durée de conservation proposée* : la durée de la saison ; suppression ou anonymisation des pseudonymes à la clôture (par exemple 30 jours après la dernière traversée jugée) ; le registre anonymisé peut être archivé.
+  - *Ce qui doit rester fictif et original* : tous les utilisateurs et tous les noms de passeurs du dépôt et des démonstrations ; aucun courriel ni identifiant réel dans le seed. Le monde inventé ne reprend ni nom, ni lieu, ni créature propre à une œuvre existante (droit d'auteur : le dépôt est public), et ne met en scène aucune personne réelle, même de façon déguisée.
+  - *Niveau de risque AI Act probable* : **risque minimal ou hors champ** : le jugement est une règle déterministe sans effet sur des droits ou des opportunités réels (à vérifier). L'art. 4 du règlement (UE) 2024/1689, après l'omnibus, prévoit que les fournisseurs et déployeurs prennent des mesures pour favoriser la maîtrise de l'IA de leurs personnels et des personnes qui utilisent des systèmes d'IA en leur nom (à vérifier sur EUR-Lex) ; l'équipe qui construit l'outil avec une IA est concernée par cette culture de l'IA. Les textes du monde rédigés avec l'aide de l'agent pendant le développement sont relus et assumés par l'équipe. Si l'équipe ajoutait un texte généré par IA à l'exécution vers les utilisateurs (extension), la transparence de l'art. 50 serait à examiner (à vérifier).
+  - *Mesures concrètes dans l'application* : pseudonymes uniquement ; journal technique sans nom d'utilisateur (identifiants numériques) ; un passeur ne modifie que sa fiche ; **obligatoires** : mention d'information visible (art. 13) et cas d'usage de suppression documenté d'un utilisateur et de ses données (droit à l'effacement, art. 17) ; **en extension** : export des données de l'utilisateur (accès et portabilité, art. 15 et 20). Ces mesures sont incluses dans les 15 à 20 h de charge d'équipe.
+  - *Contenu attendu de la fiche de conformité* : les 13 rubriques du gabarit de `docs/fiche_conformite.md` (voir plus haut), avec en particulier la case « hors champ » ou « minimal » justifiée, le rôle AI Act (fournisseur ou déployeur) et la durée de conservation ; **présentée au RSSI en S4, v1 déposée le 8 décembre, réponse avant le 11 décembre**. La fiche se rédige hors de la fiction : elle décrit l'outil réel et ses utilisateurs réels, pas le comptoir. Un « go » ne vaut que pour le périmètre pédagogique à données fictives ; toute mise en usage réel avec de vrais utilisateurs impose une nouvelle fiche et une nouvelle validation.
 - **Sécurité et données** :
-  1. **OWASP, contrôle d'accès défaillant** : un joueur ne peut modifier que ses fiches. Un test d'autorisation vérifie qu'une modification de la fiche d'un autre joueur est refusée (erreur d'accès refusé), y compris en passant l'identifiant d'un autre personnage au cas d'usage. Le contrôle vit dans la couche domain (garde `RequireRole` et vérification du propriétaire), pas dans l'interface : masquer un bouton ne protège rien.
+  1. **OWASP, contrôle d'accès défaillant** : un utilisateur au rôle `passeur` ne peut modifier que la fiche dont il est `proprietaire`. Un test d'autorisation vérifie qu'une modification de la fiche d'un autre utilisateur est refusée (erreur d'accès refusé), y compris en passant l'identifiant d'un autre passeur au cas d'usage. Le contrôle vit dans la couche domain (garde `RequireRole` et vérification du propriétaire), pas dans l'interface : masquer un bouton ne protège rien.
   2. **Validation des entrées** : l'import borne chaque champ, refuse les fichiers de plus de 200 Ko et les caractères de contrôle ; aucune valeur importée n'est concaténée dans du SQL brut (pas de `customSelect` ni de `customStatement` construit par concaténation avec drift).
 - **Découpage par séance** :
   - S1 : théorie et installations ; pas de travail sur le projet.
-  - S2 : les équipes et le classement des thèmes sont collectés par formulaire à la fin de S1 ou dans le pre-flight (identifiants GitHub inclus) ; l'enseignant prépare les 8 dépôts depuis le modèle (squelette Flutter, `CLAUDE.md` et document d'architecture fournis) et ajoute les membres comme collaborateurs de chaque dépôt (pas d'invitation à l'organisation) avant S2 ; en S2, on valide les équipes, on tire au sort en cas de litige et on libère du temps pour l'initialisation ; `PROJET.md` fourni pré-rempli pour le thème A (vision, 3 à 5 user stories), à relire et compléter ; première PR relue par un coéquipier ; `main` protégée (PR obligatoire, 1 approbation) ; premiers éléments du harnais (`CLAUDE.md` minimal, première permission).
-  - S3 (4 h) : **indispensable en séance** : remise en route de 30 min en début de séance (`git pull`, `flutter pub get`, `flutter test`, lancement de l'agent) ; première user story en TDD et en BDD (scénario Gherkin, voir « Première user story et sous-règle isolée ») sur une seule sous-règle isolée, `bonus_de_classe` et le total (règle 3), avec un repository en mémoire (fake), ni dégâts, ni XP, ni niveau ; tables drift, première migration (`schemaVersion`) et test d'intégrité sur base en mémoire ; bloc RGPD ; début de la fiche de conformité (rubriques 1 à 5 : finalité, données, personnes concernées, base légale ou justification « données fictives », durée) ; PR croisées entre équipes (paires de même thème tolérées en S3). **Peut glisser dans le sprint ou au début de S4** : seed complet, rôles (`maitre_de_jeu`, `joueur`) avec la garde `RequireRole` (couche domain) et test de refus. **Livrable de fin de S3** : « première règle verte, modèle et migrations fusionnés, début de `docs/fiche_conformite.md` commité ». Si l'équipe est en retard, le seed et les rôles passent en premier au sprint.
+  - S2 : les équipes et le classement des thèmes sont collectés par formulaire à la fin de S1 ou dans le pre-flight (identifiants GitHub inclus) ; l'enseignant prépare les 8 dépôts depuis le modèle (squelette Flutter, `CLAUDE.md` et document d'architecture fournis) et ajoute les membres comme collaborateurs de chaque dépôt (pas d'invitation à l'organisation) avant S2 ; en S2, on valide les équipes, on tire au sort en cas de litige et on libère du temps pour l'initialisation ; `PROJET.md` fourni pré-rempli pour le thème A (vision, 3 à 5 user stories), à relire et compléter, avec le nom du comptoir ; première PR relue par un coéquipier ; `main` protégée (PR obligatoire, 1 approbation) ; premiers éléments du harnais (`CLAUDE.md` minimal, première permission).
+  - S3 (4 h) : **indispensable en séance** : remise en route de 30 min en début de séance (`git pull`, `flutter pub get`, `flutter test`, lancement de l'agent) ; première user story en TDD et en BDD (scénario Gherkin, voir « Première user story et sous-règle isolée ») sur une seule sous-règle isolée, l'aptitude de la voie et le total (règle 3), avec un repository en mémoire (fake), ni usure, ni renom, ni changement de rang ; tables drift, première migration (`schemaVersion`) et test d'intégrité sur base en mémoire ; bloc RGPD ; début de la fiche de conformité (rubriques 1 à 5 : finalité, données, personnes concernées, base légale ou justification « données fictives », durée) ; PR croisées entre équipes (paires de même thème tolérées en S3). **Peut glisser dans le sprint ou au début de S4** : seed complet, `docs/monde.md`, rôles (`greffier`, `passeur`) avec la garde `RequireRole` (couche domain) et test de refus. **Livrable de fin de S3** : « première règle verte, modèle et migrations fusionnés, début de `docs/fiche_conformite.md` commité ». Si l'équipe est en retard, le seed et les rôles passent en premier au sprint.
   - S4 (4 h) : **indispensable en séance** : le gardien produit écrit les 7 cas d'acceptation avant le code de l'agent sur les sous-règles restantes ; CI verte ; publication du build web sur GitHub Pages par chaque équipe (analyse, tests avec couverture, `gitleaks`, audit des dépendances pub, build web, déploiement ; données fictives uniquement) ; seed et rôles s'ils ont glissé (contrôle d'accès) ; passage devant le RSSI (3 tables en parallèle, 10 à 12 min par équipe, jeu de rôle intégré) ; audit croisé réduit à 5 points (installation à froid : `git clone`, `flutter pub get`, `flutter test`, `flutter run -d chrome` ; CI verte, obligatoire, avec audit des dépendances ; secrets : `gitleaks`, rien dans le dépôt ni dans le bundle web, `.env` ignoré ; rôles : garde testée ; fiche de conformité) ; les paires de même thème sont évitées en S4. **Plan B** : si la publication sur GitHub Pages bloque (réglages du dépôt, droits), l'équipe montre son build local (`flutter run -d chrome`) et termine la publication au sprint. **Peut glisser dans le sprint** : publication GitHub Pages si elle n'est pas terminée, release v0.1, contrôles d'accès fins au-delà du minimum. S4 ne suppose pas le CRUD terminé, et un exposé continu ne dépasse pas 30 min : on le coupe par une activité (quiz ou cas à classer).
-  - Sprint de 12 jours : finir le périmètre : import CSV des personnages, journal, tableau de bord, export, cas d'acceptation non encore verts à la fin de S4, README testé à froid, bonus éventuel.
+  - Sprint de 12 jours : finir le périmètre : import CSV des passeurs, registre, tableau de bord, export, `docs/monde.md` et lexique, cas d'acceptation non encore verts à la fin de S4, README testé à froid, bonus éventuel.
   - S5 : gel (tag `v1.0-rc` le lundi 14 décembre à 18 h), retouches bloquantes, soutenance.
-- **Livrable minimum viable** : création de personnage, résolution d'une quête avec les règles 1 à 6, fiche avec historique, contrôle d'accès, CI verte, import CSV des personnages, fiche de conformité déposée et soumise au RSSI. Sans le journal filtrable, l'export ni les vues 3 et 4.
-- **Effet « wow » pour la soutenance** : le jury lance de vrais dés et dicte les jets ; l'équipe les saisit, la fiche change en direct (PV, XP, montée de niveau), puis le jury demande de rejouer le même jet et obtient le même résultat, grâce à une règle sans hasard interne.
+- **Livrable minimum viable** : inscription d'un passeur, jugement d'une traversée avec les règles 1 à 6, fiche avec historique, contrôle d'accès, CI verte, import CSV des passeurs, une page `docs/monde.md`, fiche de conformité déposée et soumise au RSSI. Sans le registre filtrable, l'export ni les vues 3 et 4.
+- **Effet « wow » pour la soutenance** : l'équipe présente son comptoir en une minute (son nom, ses routes, ce qui rôde dans sa brume), puis le jury **lit la lune** : il tire un jeton numéroté de 1 à 20 (ou lance un dé à vingt faces) et dicte l'éclat ; l'équipe le saisit, la fiche du passeur change en direct (souffle, renom, changement de rang). Le jury demande ensuite de rejuger la même nuit et obtient le même résultat, grâce à une règle sans aléa interne. Deux équipes, deux mondes, la même Coutume.
 
 ---
 

@@ -13,6 +13,12 @@ tasks:
     cmds:
       - npm run day-1 -- {{.CLI_ARGS}}
 
+  day-2:
+    desc: Lance la séance 2 (diaporama + notes synchronisées)
+    dir: cours/presentations
+    cmds:
+      - npm run day-2 -- {{.CLI_ARGS}}
+
   themes:
     desc: Lance la présentation des trois projets (diaporama + notes synchronisées)
     dir: cours/presentations

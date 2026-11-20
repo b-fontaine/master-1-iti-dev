@@ -78,7 +78,7 @@ Règlement (UE) 2016/679, applicable depuis le 25 mai 2018. Autorité de contrô
 
 Règlement (UE) 2024/1689. Approche **par les risques**.
 
-**Étape 0 : est-ce un système d'IA ?** (art. 3, point 1 : un système qui, à partir des entrées reçues, déduit comment générer des sorties telles que des prédictions, contenus, recommandations ou décisions). Si non (par exemple un calcul de TRS par poste, une règle de résolution fixe ou un algorithme d'affectation déterministe), l'outil est **hors champ de l'AI Act**, mais le **RGPD s'applique toujours** dès qu'il y a des données personnelles (à vérifier, lignes directrices de la Commission sur la définition). Ce n'est qu'ensuite que l'on classe par niveau de risque.
+**Étape 0 : est-ce un système d'IA ?** (art. 3, point 1 : un système qui, à partir des entrées reçues, déduit comment générer des sorties telles que des prédictions, contenus, recommandations ou décisions). Si non (par exemple un calcul de TRS par poste, une règle de jugement fixe ou un algorithme d'affectation déterministe), l'outil est **hors champ de l'AI Act**, mais le **RGPD s'applique toujours** dès qu'il y a des données personnelles (à vérifier, lignes directrices de la Commission sur la définition). Ce n'est qu'ensuite que l'on classe par niveau de risque.
 
 | Niveau | Exemples | Conséquence |
 |---|---|---|
@@ -196,11 +196,12 @@ Rappel : tous les thèmes de la formation sont en données **fictives**. L'analy
 
 **Répartition des thèmes** : 8 équipes : 3-3-2 ; 7 équipes : 3-2-2 ou 3-3-1 ; tirage au sort si un thème dépasse 3 candidats. Le thème C demande plus de travail de conformité. Les mesures décrites ci-dessous sont incluses dans les 15 à 20 h du projet ; elles ne s'ajoutent pas.
 
-### Thème A : carnet de campagne de jeu de rôle
-- **Données** : noms de personnages (fictifs), identifiant de connexion du joueur (`proprietaire`), historique de jets. Dès que l'identifiant renvoie à une personne réelle, c'est une donnée personnelle (RGPD) ; un compte pseudonymisé reste personnel.
-- **Risque AI Act probable** : minimal. Pas de décision sur des personnes ; un assistant conversationnel éventuel relève de la transparence (art. 50).
-- **Mesures** : identifiants minimaux, accès par rôle (garde d'accès de la couche domain, refus testé), pas de données réelles en prompt, durée de vie de la campagne. **Obligatoires** : une mention d'information (finalité, durée, droits) et un script de suppression documenté des données d'un joueur. **En extension** : l'export des données du joueur (portabilité).
-- **Pourquoi le RSSI** : publication sur GitHub Pages (public), stockage local non chiffré, comptes, secrets, export CSV (injection de formule), droit d'effacement d'un joueur.
+### Thème A : registre d'un comptoir de Passeurs (mise en situation fantastique)
+Le monde est inventé, ses utilisateurs ne le sont pas : la fiche de conformité se rédige hors de la fiction.
+- **Données** : noms de passeurs (fictifs), identifiant de connexion de l'utilisateur (`proprietaire`), historique des traversées jugées. Dès que l'identifiant renvoie à une personne réelle, c'est une donnée personnelle (RGPD) ; un compte pseudonymisé reste personnel.
+- **Risque AI Act probable** : minimal ou hors champ. Pas de décision sur des personnes ; un texte généré par IA à l'exécution, s'il était ajouté, relèverait de la transparence (art. 50).
+- **Mesures** : identifiants minimaux, accès par rôle (garde d'accès de la couche domain, refus testé), pas de données réelles en prompt, durée de vie d'une saison ; monde original (aucun nom, lieu ou créature repris d'une œuvre existante, aucune personne réelle mise en scène). **Obligatoires** : une mention d'information (finalité, durée, droits) et un script de suppression documenté des données d'un utilisateur. **En extension** : l'export des données de l'utilisateur (portabilité).
+- **Pourquoi le RSSI** : publication sur GitHub Pages (public), stockage local non chiffré, comptes, secrets, export CSV (injection de formule), droit d'effacement d'un utilisateur, textes du monde publiés dans un dépôt public (droit d'auteur).
 
 ### Thème B : TRS d'un atelier de câblage
 - **Données** : productions, arrêts, postes. **Aucun identifiant d'opérateur n'est stocké dans les données métier** (seul le compte de connexion existe). Les données de poste sont de la donnée industrielle confidentielle ; en usage réel, toute donnée liée à un opérateur nommé serait personnelle et concernerait des salariés.

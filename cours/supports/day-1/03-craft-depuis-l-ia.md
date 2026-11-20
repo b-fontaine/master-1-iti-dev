@@ -268,7 +268,7 @@ Le **TDD** (Test-Driven Development, développement piloté par les tests, Kent 
 
 Pourquoi cela convient aux agents ? Simon Willison l'explique : le principal risque avec un agent est qu'il écrive du code qui ne marche pas ou du code inutile ; le test d'abord protège contre ces deux erreurs et laisse en prime une suite de tests contre les régressions (une **régression** : une fonctionnalité qui marchait et qui casse après une modification).
 
-Voici un exemple minimal, dans l'univers de jeu de rôle du cours : un jet de dé plus un bonus doit atteindre un degré de difficulté. Le test, écrit d'abord, dit ce que l'on attend. J'ai exécuté ce code avec Dart et le paquet `test` : les deux tests passent.
+Voici un exemple minimal, dans le petit jeu de dés qui sert d'exemple au cours : un jet de dé plus un bonus doit atteindre un degré de difficulté. Le test, écrit d'abord, dit ce que l'on attend. J'ai exécuté ce code avec Dart et le paquet `test` : les deux tests passent.
 
 ```dart
 // test/jet_test.dart

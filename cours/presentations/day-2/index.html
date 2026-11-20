@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séance 2 · Git, configurer son agent, lancer le projet · Master ITI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/deck.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body data-deck="day-2" data-notes="notes.html">
+<div id="stage">
+<canvas id="bg"></canvas><div id="grid"></div>
+<div id="prog"></div>
+<div id="top"><span class="l"><span class="dot"></span><b>ITI</b> // S2 · Git, agent, projet</span><span><b id="cur">1</b> / <span id="tot">1</span></span></div>
+
+<section class="slide title-slide" data-id="titre">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true">
+    <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4338F5"/><stop offset=".55" stop-color="#7B3FF2"/><stop offset="1" stop-color="#00A8C6"/></linearGradient></defs>
+    <g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g>
+    <path d="M200 520H330C400 520 400 300 470 300H620" stroke="url(#gg)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M200 520H620" stroke="url(#gg)" stroke-width="6" stroke-linecap="round"/>
+    <g fill="#fff" stroke="url(#gg)" stroke-width="6"><circle cx="200" cy="520" r="22"/><circle cx="330" cy="520" r="22"/><circle cx="470" cy="300" r="22"/><circle cx="620" cy="300" r="22"/><circle cx="620" cy="520" r="22"/></g>
+  </svg>
+  <div class="label">Master ITI · Séance 2</div>
+  <h1 style="font-size:11.5rem">Git, <span class="grad">l'agent</span>,<br>le projet</h1>
+  <p class="sub">Aujourd'hui, c'est vous qui tapez.</p>
+  <div class="meta"><span class="chip">Nantes Université</span><span class="chip">Vendredi 9 oct. 2026</span><span class="chip">Benoît Fontaine</span></div>
+</section>
+
+<section class="slide" data-id="trois-temps">
+  <div class="label">La séance en trois temps</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:4rem">
+    <div class="card step"><span class="num grad" style="font-size:9rem">1</span><h3 class="mt">Git pour de bon</h3><p class="mt" style="font-size:3rem">Au clavier, en binômes, dans un dépôt d'essai.</p><p class="cap mt">3 commits · 1 PR · 1 conflit résolu</p></div>
+    <div class="card step"><span class="num grad" style="font-size:9rem">2</span><h3 class="mt">Configurer Claude Code</h3><p class="mt" style="font-size:3rem">Seul, avec une fiche d'extraits à copier.</p><p class="cap mt">CLAUDE.md · un refus constaté</p></div>
+    <div class="card hl step"><span class="num grad" style="font-size:9rem">3</span><h3 class="mt">Lancer le projet d'équipe</h3><p class="mt" style="font-size:3rem">Équipes, thèmes, dépôt, première PR relue.</p><p class="cap mt">PROJET.md · main protégée · s2-fin</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="retour-s1">
+  <div class="label">Avant de commencer</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Votre poste</span>
+      <div class="term mt"><div class="bar"><i></i><i></i><i></i><span>terminal</span></div><pre><span class="d">$</span> git --version
+<span class="d">$</span> gh auth status
+<span class="d">$</span> claude --version
+<span class="d">$</span> flutter doctor</pre></div>
+      <p class="cap mt">une ligne en rouge ? levez la main maintenant</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Votre accès</span>
+      <h3 class="mt" style="font-size:4.6rem">Invitation au dépôt d'équipe <span class="ind">acceptée</span> ?</h3>
+      <p class="mt">Courriel de GitHub, ou<br><code>github.com/notifications</code></p>
+      <p class="cap mt">sans elle, pas de push tout à l'heure</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="eclair">
+  <div class="label">Exercice éclair · la règle d'or</div>
+  <h2 style="font-size:9rem">Qu'est-ce qu'on ne met <span class="grad">jamais</span><br>dans un prompt ?</h2>
+  <div class="chips mt2 bigchip">
+    <span class="chip r step">un nom réel</span><span class="chip r step">un courriel</span><span class="chip r step">un mot de passe</span><span class="chip r step">une clé d'API</span><span class="chip r step">un fichier de stage</span><span class="chip r step">des données de l'employeur</span>
+  </div>
+  <p class="cap mt2 step">ni dans un prompt, ni dans un dépôt public · données fictives uniquement</p>
+</section>
+
+<section class="slide divider" data-id="div-git">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="big grad">01</div>
+  <h2>Git,<br>pour de bon</h2>
+</section>
+
+<section class="slide" data-id="git-commit">
+  <div class="label">Dépôt et commit</div>
+  <h2 style="font-size:8rem">Un commit : <span class="grad">une photo</span> du projet,<br>avec un message</h2>
+  <div class="flow mt2 step">
+    <div class="fn">Dossier de travail<small>vos fichiers</small></div>
+    <span>→<small>git add</small></span>
+    <div class="fn">Index<small>ce qui sera photographié</small></div>
+    <span>→<small>git commit</small></span>
+    <div class="fn i">Historique<small>le dépôt · .git</small></div>
+  </div>
+  <svg class="mt2 step" viewBox="0 0 1700 150" style="width:100%;height:15rem">
+    <path d="M90 50H1250" stroke="#B8BEDB" stroke-width="6"/>
+    <g fill="#fff" stroke="#4338F5" stroke-width="7"><circle cx="90" cy="50" r="24"/><circle cx="670" cy="50" r="24"/><circle cx="1250" cy="50" r="24"/></g>
+    <g font-family="JetBrains Mono" font-weight="700" font-size="26">
+      <text x="90" y="118" fill="#7780A3"><tspan fill="#4338F5">30fa585</tspan> Ajoute la recette</text>
+      <text x="670" y="118" fill="#7780A3"><tspan fill="#4338F5">b10206a</tspan> Ajoute le sel</text>
+      <text x="1250" y="118" fill="#7780A3"><tspan fill="#4338F5">97a74eb</tspan> Décrit la cuisson</text>
+    </g>
+  </svg>
+</section>
+
+<section class="slide" data-id="git-branche">
+  <div class="label">Branche et fusion</div>
+  <h2 style="font-size:8rem">Une branche : <span class="grad">essayer</span> sans casser <code>main</code></h2>
+  <svg class="grow step mt" viewBox="0 0 1700 560" style="width:100%">
+    <path d="M110 420H1450" stroke="#4338F5" stroke-width="8" stroke-linecap="round"/>
+    <path d="M430 420C560 420 520 170 660 170H960C1100 170 1060 420 1190 420" fill="none" stroke="#00A8C6" stroke-width="8" stroke-linecap="round" stroke-dasharray="18 14"><animate attributeName="stroke-dashoffset" from="64" to="0" dur="1.8s" repeatCount="indefinite"/></path>
+    <g fill="#fff" stroke="#4338F5" stroke-width="8"><circle cx="110" cy="420" r="26"/><circle cx="430" cy="420" r="26"/><circle cx="1450" cy="420" r="26"/></g>
+    <g fill="#fff" stroke="#00A8C6" stroke-width="8"><circle cx="660" cy="170" r="26"/><circle cx="960" cy="170" r="26"/></g>
+    <circle cx="1190" cy="420" r="30" fill="#7B3FF2" stroke="#fff" stroke-width="6"/>
+    <g font-family="JetBrains Mono" font-weight="700">
+      <rect x="1500" y="388" width="150" height="64" rx="32" fill="#4338F5"/><text x="1575" y="431" text-anchor="middle" font-size="30" fill="#fff">main</text>
+      <rect x="1010" y="138" width="270" height="64" rx="32" fill="#00A8C6"/><text x="1145" y="181" text-anchor="middle" font-size="30" fill="#fff">ma-branche</text>
+      <text x="490" y="262" text-anchor="end" font-size="28" fill="#007C93">git switch -c ma-branche</text>
+      <text x="1190" y="505" text-anchor="middle" font-size="28" fill="#7B3FF2">git merge ma-branche</text>
+      <text x="810" y="110" text-anchor="middle" font-size="26" fill="#7780A3">deux commits, à l'écart</text>
+      <text x="110" y="505" text-anchor="middle" font-size="26" fill="#7780A3">commit</text>
+    </g>
+  </svg>
+</section>
+
+<section class="slide" data-id="git-remote-pr">
+  <div class="label">Dépôt distant et pull request</div>
+  <div class="cols c2 step" style="flex:0 0 auto;gap:5rem;align-items:center">
+    <div class="flow">
+      <div class="fn">Votre poste<small>dépôt local</small></div>
+      <span>⇄<small>push · pull</small></span>
+      <div class="fn i">GitHub<small>origin</small></div>
+    </div>
+    <p style="font-size:3.4rem">Le dépôt distant (<code>remote</code>) est la copie commune.<br>On y <strong>pousse</strong> ses commits, on en <strong>tire</strong> ceux des autres.</p>
+  </div>
+  <h3 class="mt2 step" style="font-size:5rem">La PR : une <span class="ind">demande de relecture et de fusion</span></h3>
+  <div class="flow mt step">
+    <div class="fn" style="font-size:3rem">Branche poussée</div>
+    <span>→</span>
+    <div class="fn" style="font-size:3rem">PR ouverte<small>quoi, pourquoi</small></div>
+    <span>→</span>
+    <div class="fn" style="font-size:3rem">Relecture<small>par un autre</small></div>
+    <span>→</span>
+    <div class="fn i" style="font-size:3rem">Fusion dans main</div>
+  </div>
+</section>
+
+<section class="slide" data-id="git-conflit">
+  <div class="label">Le conflit</div>
+  <div class="row grow" style="gap:7rem">
+    <div style="flex:0 0 74rem">
+      <h2 style="font-size:8rem">Deux versions de<br>la <span class="grad">même ligne</span></h2>
+      <p class="mt2 step">Git ne devine pas. Il s'arrête et vous demande de choisir.</p>
+      <div class="chips mt step"><span class="chip">1 · choisir</span><span class="chip">2 · effacer les marqueurs</span><span class="chip i">3 · add + commit</span></div>
+      <p class="cap mt step">un conflit n'est pas une erreur : c'est une question</p>
+    </div>
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>recette.md</span></div><pre># Galettes
+
+<span class="r">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+- <span class="g">200 g</span> de farine de sarrasin
+<span class="r">=======</span>
+- <span class="c">300 g</span> de farine de sarrasin
+<span class="r">&gt;&gt;&gt;&gt;&gt;&gt;&gt; plus-de-farine</span>
+- 1 œuf
+- 50 cl d'eau</pre></div>
+    <p class="cap mt step">au-dessus : votre branche · en dessous : celle qu'on fusionne</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="git-demo">
+  <div class="label">Démonstration · cinq commandes</div>
+  <div class="row grow" style="gap:6rem">
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>terminal · essai-git</span></div><pre><span class="d">$</span> git init -b main
+<span class="d">$</span> git add recette.md
+<span class="d">$</span> git commit -m <span class="y">"Ajoute la recette des galettes"</span>
+<span class="d">$</span> git switch -c cuisson
+<span class="d">$</span> git log --oneline
+<span class="c">97a74eb</span> Décrit la cuisson
+<span class="c">b10206a</span> Ajoute le sel à la recette
+<span class="c">30fa585</span> Ajoute la recette des galettes</pre></div></div>
+    <div style="flex:0 0 50rem" class="step">
+      <h3 style="font-size:4.6rem">Et entre chaque geste :</h3>
+      <div class="term mt"><div class="bar"><i></i><i></i><i></i><span>la boussole</span></div><pre><span class="d">$</span> git status</pre></div>
+      <p class="cap mt">où suis-je, qu'est-ce qui a changé,<br>que me propose git ?</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide atelier" data-id="atelier-git">
+  <div class="label"><em>Atelier</em> Git au clavier · en binômes · dépôt d'essai</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Créer le dépôt, premier commit</h3><p>git init -b main · git add · git commit -m</p></div></div>
+      <div class="it"><b>2</b><div><h3>Modifier, regarder, commiter</h3><p>git diff · git add · un message soigné</p></div></div>
+      <div class="it"><b>3</b><div><h3>Une branche, un commit, une fusion</h3><p>git switch -c · git switch main · git merge</p></div></div>
+      <div class="it"><b>4</b><div><h3>GitHub : pousser, ouvrir une PR, la faire relire</h3><p>gh repo create · git push · gh pr create · le binôme relit</p></div></div>
+      <div class="it"><b>5</b><div><h3>Le conflit volontaire</h3><p>même ligne sur deux branches · fusion · résolution dans VS Code</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Au moins <strong>3 commits</strong>, <strong>1 PR</strong> fusionnée, <strong>1 conflit</strong> résolu. Montrez <code>git log --oneline --graph</code> à un encadrant.</p></div>
+      <div class="rule"><b>Règle du jeu</b><p>Vous tapez chaque commande. L'agent peut <strong>expliquer</strong>, pas faire à votre place.</p></div>
+      <div class="rule info"><b>Bloqué ?</b><p><code>git status</code>, puis le binôme, puis la main levée.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-config">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><rect x="280" y="280" width="240" height="240" rx="48" stroke="url(#gg)" stroke-width="4"/></svg>
+  <div class="big grad">02</div>
+  <h2>Configurer<br>son agent</h2>
+</section>
+
+<section class="slide" data-id="replit">
+  <div class="label">Juillet 2025 · Replit</div>
+  <div class="row grow" style="gap:8rem">
+    <div class="grow">
+      <div class="term step"><div class="bar"><i></i><i></i><i></i><span>dans le prompt</span></div><pre><span class="y">GEL DU CODE.</span>
+Aucune modification
+sans mon accord explicite.</pre></div>
+      <p class="cap mt step">reconstitution · écrit onze fois en majuscules, selon son récit</p>
+    </div>
+    <div class="step" style="flex:0 0 12rem;text-align:center"><span class="mono ind" style="font-size:10rem">→</span></div>
+    <div class="grow step">
+      <h2 style="font-size:8.4rem">La base de <span class="neg">production</span><br>est supprimée</h2>
+      <p class="mt">par l'agent, pendant le gel.</p>
+      <div class="chips mt"><span class="chip r">aucune permission ne l'en empêchait</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="demande-contrainte">
+  <div class="label">L'idée de la séance</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
+    <div class="card warn step" style="min-height:52rem;justify-content:center"><span class="chip v" style="align-self:flex-start">dans le prompt · dans CLAUDE.md</span><h2 class="mt" style="font-size:8rem">Une consigne<br>est une <span style="color:var(--amber)">demande</span></h2><p class="mt">Le modèle la lit. Il peut l'oublier, la mal comprendre, passer outre.</p></div>
+    <div class="card good step" style="min-height:52rem;justify-content:center"><span class="chip n" style="align-self:flex-start">dans .claude/settings.json</span><h2 class="mt" style="font-size:8rem">Une permission<br>est une <span class="pos">contrainte</span></h2><p class="mt">L'outil l'applique, quoi que le modèle décide.</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="briques">
+  <div class="label">Les briques de configuration de Claude Code</div>
+  <div class="bricks">
+    <div class="card hl step"><h3><code>CLAUDE.md</code></h3><p>Ce que l'agent doit savoir du projet. Court.</p><p class="cap">guide</p></div>
+    <div class="card good step"><h3>Permissions</h3><p>Ce qu'il peut faire, ce qui lui est refusé.</p><p class="cap">contrainte</p></div>
+    <div class="card step"><h3>Mode plan</h3><p>Il lit et propose. Vous validez avant toute modification.</p><p class="cap">Maj + Tab</p></div>
+    <div class="card good step"><h3>Hooks</h3><p>Une commande lancée à coup sûr, par exemple le formatage.</p><p class="cap">contrainte</p></div>
+    <div class="card step"><h3>Skills</h3><p>Une procédure réutilisable, appelée par son nom.</p><p class="cap">/commit-propre</p></div>
+    <div class="card step"><h3>Sous-agents</h3><p>Un assistant à part, qui rapporte un résumé.</p><p class="cap">contexte isolé</p></div>
+    <div class="card warn step"><h3>MCP</h3><p>Brancher un outil ou une source externe.</p><p class="cap">un tiers : à valider</p></div>
+    <div class="card warn step"><h3>Plugins</h3><p>Un paquet de skills, hooks, agents et serveurs MCP.</p><p class="cap">du code : à relire</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="permissions">
+  <div class="label">Permissions · le fichier qui compte</div>
+  <div class="row grow" style="gap:7rem">
+    <div class="grow"><div class="term code step"><div class="bar"><i></i><i></i><i></i><span>.claude/settings.json</span></div><pre>{
+  <span class="c">"permissions"</span>: {
+    <span class="c">"deny"</span>: [
+      <span class="y">"Read(./.env)"</span>,
+      <span class="y">"Bash(*.env*)"</span>,
+      <span class="y">"Bash(rm -rf *)"</span>,
+      <span class="y">"Bash(git push --force*)"</span>
+    ]
+  }
+}</pre></div></div>
+    <div style="flex:0 0 62rem">
+      <div class="chips step"><span class="chip r">deny · refuser</span><span class="chip v">ask · demander</span><span class="chip n">allow · autoriser</span></div>
+      <p class="mt step">Le refus l'emporte toujours.</p>
+      <p class="mt step">Le fichier est <strong>dans le dépôt</strong> : toute l'équipe a les mêmes garde-fous.</p>
+      <p class="cap mt step">une règle non testée n'est pas un garde-fou</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="contexte-commandes">
+  <div class="label">Garder la main sur la session</div>
+  <div class="cols c4" style="flex:0 0 auto;gap:3rem">
+    <div class="card step center" style="align-items:center"><h3 class="mono ind" style="font-size:5.4rem">/clear</h3><p class="mt" style="font-size:3rem">Nouvelle tâche,<br>contexte vide</p></div>
+    <div class="card step center" style="align-items:center"><h3 class="mono ind" style="font-size:5.4rem">/compact</h3><p class="mt" style="font-size:3rem">Résumer<br>la conversation</p></div>
+    <div class="card step center" style="align-items:center"><h3 class="mono ind" style="font-size:5.4rem">/context</h3><p class="mt" style="font-size:3rem">Voir ce qui<br>occupe la mémoire</p></div>
+    <div class="card step center" style="align-items:center"><h3 class="mono ind" style="font-size:5.4rem">/model</h3><p class="mt" style="font-size:3rem">Choisir le modèle,<br>au début</p></div>
+  </div>
+  <p class="cap mt2 step center" style="text-align:center">une session, une tâche · ce qui doit survivre s'écrit dans un fichier</p>
+</section>
+
+<section class="slide" data-id="spec-kit">
+  <div class="label">Aperçu · un cadre de type spec-kit</div>
+  <h2 style="font-size:8rem">Écrire <span class="grad">l'intention</span> avant le code</h2>
+  <div class="flow mt2 step">
+    <div class="fn">Spécification<small>quoi, pour qui, critères</small></div>
+    <span>→</span>
+    <div class="fn">Plan<small>comment, avec quoi</small></div>
+    <span>→</span>
+    <div class="fn">Tâches<small>petites, vérifiables</small></div>
+    <span>→</span>
+    <div class="fn i">Code<small>par l'agent, relu</small></div>
+  </div>
+  <p class="cap mt2 step">démonstration seulement · votre PROJET.md joue déjà le rôle de la première boîte</p>
+</section>
+
+<section class="slide atelier" data-id="atelier-config">
+  <div class="label"><em>Atelier</em> Configurer Claude Code · seul · dans le dépôt d'essai</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Générer <code>CLAUDE.md</code>, puis le réduire</h3><p>/init · garder les conventions, les interdits, le contrôle final</p></div></div>
+      <div class="it"><b>2</b><div><h3>Écrire les refus, puis les <strong>tester</strong></h3><p>.claude/settings.json · .env factice · « lis le fichier .env »</p></div></div>
+      <div class="it"><b>3</b><div><h3>Un premier skill : le message de commit</h3><p>.claude/skills/commit-propre/SKILL.md · /commit-propre</p></div></div>
+      <div class="it opt"><b>4</b><div><h3>S'il reste du temps : un plugin, un serveur MCP</h3><p>/plugin · /mcp · qu'est-ce qui part vers un tiers ?</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>L'agent <strong>refuse</strong> de lire <code>.env</code>, et vous savez dire quel fichier l'en empêche.</p></div>
+      <div class="rule"><b>Règle d'or</b><p>Le <code>.env</code> de l'exercice est <strong>factice</strong>. Aucun vrai secret, jamais.</p></div>
+      <div class="rule info"><b>Fiche</b><p>Tous les extraits sont à copier depuis la fiche de configuration.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-projet">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><path d="M400 240l150 260H250z" stroke="url(#gg)" stroke-width="4" stroke-linejoin="round"/></svg>
+  <div class="big grad">03</div>
+  <h2>Lancer<br>le projet</h2>
+</section>
+
+<section class="slide" data-id="pile">
+  <div class="label">La pile du projet · où ranger quoi</div>
+  <div class="row grow" style="gap:6rem">
+    <div class="grow layers">
+      <div class="layer p step"><b>presentation</b><span>Les écrans et leur état : widgets, BLoC et Cubit</span></div>
+      <div class="layer d step"><b>domain</b><span>La règle métier, sans Flutter ni base : entités, cas d'usage</span></div>
+      <div class="layer t step"><b>data</b><span>D'où viennent les données : base, fichiers, import</span></div>
+      <p class="cap step">une fonctionnalité = un dossier · les trois couches à l'intérieur · <code>domain</code> ne dépend de personne</p>
+    </div>
+    <div style="flex:0 0 56rem" class="step">
+      <div class="chips"><span class="chip i">get_it</span><span class="chip i">flutter_bloc</span></div>
+      <p class="cap mt">brancher les pièces · gérer l'état</p>
+      <div class="chips mt"><span class="chip c">flutter_test</span><span class="chip c">bloc_test</span><span class="chip c">mocktail</span></div>
+      <p class="cap mt">TDD · le test d'abord</p>
+      <div class="chips mt"><span class="chip n">bdd_widget_test</span><span class="chip n">.feature</span></div>
+      <p class="cap mt">BDD · scénarios en français</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="contexte-fourni">
+  <div class="label">Le contexte fourni dans votre dépôt</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem">
+    <div class="card hl step"><h3 style="font-size:5rem"><code>CLAUDE.md</code></h3><p class="mt">Lu par l'agent à chaque session : commandes, règles, interdits.</p><p class="cap mt">à maintenir : toute règle apprise y entre</p></div>
+    <div class="card step"><h3 style="font-size:5rem"><code>docs/ARCHITECTURE.md</code></h3><p class="mt">Les couches, l'injection, les conventions BLoC, la discipline TDD et BDD.</p><p class="cap mt">réutilisable d'un projet à l'autre</p></div>
+  </div>
+  <div class="chips mt2 step" style="justify-content:center"><span class="chip">outil ponctuel</span><span class="chip">données fictives</span><span class="chip">règle d'or</span><span class="chip">fiche de conformité</span><span class="chip r">aucun usage réel sans validation du RSSI</span></div>
+</section>
+
+<section class="slide" data-id="equipes">
+  <div class="label">Équipes et thèmes · on valide</div>
+  <div class="row grow" style="gap:5rem;align-items:flex-start">
+    <div class="check grow">
+      <div class="it step"><b>1</b><h3>Chaque équipe confirme sa composition et son thème</h3></div>
+      <div class="it step"><b>2</b><h3>Trois équipes au plus par thème, tirage au sort sinon</h3></div>
+      <div class="it step"><b>3</b><h3>Un numéro par équipe : il sert aux appariements de S3 et S4</h3></div>
+      <div class="it step"><b>4</b><h3>Les rôles sont attribués</h3></div>
+      <div class="it step"><b>5</b><h3>Chacun voit son dépôt sur GitHub</h3></div>
+    </div>
+    <div class="side step" style="flex:0 0 60rem">
+      <div class="card"><span class="chip i" style="align-self:flex-start">Les gardiens</span>
+        <p class="mt" style="font-size:3rem"><strong>Produit et conformité</strong><br><span class="cap">PROJET.md · cas d'acceptation · fiche</span></p>
+        <p class="mt" style="font-size:3rem"><strong>Données</strong><br><span class="cap">modèle · migrations · jeu de données</span></p>
+        <p class="mt" style="font-size:3rem"><strong>Harnais et CI</strong><br><span class="cap">CLAUDE.md · permissions · Actions</span></p>
+        <p class="cap mt">à 4 : + conformité · à 5 : + démonstration</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide atelier" data-id="atelier-init">
+  <div class="label"><em>Atelier</em> Initialiser le projet · en équipe</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Cloner, installer, vérifier (chacun sur son poste)</h3><p>gh repo clone · flutter pub get · build_runner · flutter test · flutter run -d chrome</p></div></div>
+      <div class="it"><b>2</b><div><h3>Lire le contexte, compléter <code>PROJET.md</code></h3><p>CLAUDE.md · docs/ARCHITECTURE.md · retenir 3 à 5 user stories</p></div></div>
+      <div class="it"><b>3</b><div><h3>Branche, commit, PR avec le modèle</h3><p>ce que l'agent a proposé · ce que j'ai refusé · temps estimé, réel, retouches</p></div></div>
+      <div class="it"><b>4</b><div><h3>Relecture par un coéquipier, fusion, <code>main</code> protégée</h3><p>checklist en 5 lignes · merge commit · tenter un push direct : refusé</p></div></div>
+      <div class="it"><b>5</b><div><h3>Journal, puis tag</h3><p>état courant en tête de JOURNAL.md · git tag s2-fin</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p><code>flutter test</code> vert et l'application dans Chrome sur <strong>chaque poste</strong> ; une PR relue par un autre que son auteur est dans <code>main</code>, qui refuse un push direct.</p></div>
+      <div class="rule"><b>À retenir</b><p><code>PROJET.md</code> est un document : l'agent aide à rédiger, <strong>l'équipe décide</strong>.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="checklist-pr">
+  <div class="label">Relire une PR · cinq lignes</div>
+  <div class="check">
+    <div class="it step"><b>1</b><h3>Je comprends ce que fait cette PR, et je saurais l'expliquer</h3></div>
+    <div class="it step"><b>2</b><h3>Elle fait une seule chose, et le diff se lit en entier</h3></div>
+    <div class="it step"><b>3</b><h3>Les vérifications passent : <code>flutter analyze</code>, <code>flutter test</code></h3></div>
+    <div class="it step"><b>4</b><h3>Aucun secret, aucune donnée réelle ou personnelle</h3></div>
+    <div class="it step"><b>5</b><h3>Aucun test supprimé ni affaibli, et les règles de <code>CLAUDE.md</code> sont respectées</h3></div>
+  </div>
+  <p class="cap mt step">celui qui approuve est aussi responsable que celui qui ouvre</p>
+</section>
+
+<section class="slide" data-id="restitution">
+  <div class="label">Restitution flash</div>
+  <h2 style="font-size:10rem">Une équipe,<br><span class="grad">une phrase</span></h2>
+  <div class="chips mt2 bigchip step"><span class="chip">notre thème</span><span class="mono ind" style="font-size:5rem">+</span><span class="chip i">notre première user story</span></div>
+  <p class="cap mt2 step">En tant que … je veux … afin de …</p>
+</section>
+
+<section class="slide" data-id="consignes-fin">
+  <div class="label">Avant de partir · et d'ici le 2 décembre</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:4rem">
+    <div class="card hl step"><span class="chip i" style="align-self:flex-start">Aujourd'hui</span><h3 class="mt">Tag <code>s2-fin</code></h3><h3 class="mt">État courant dans <code>JOURNAL.md</code></h3><p class="cap mt">cinq lignes · par le gardien du harnais</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Vendredi 27 nov. · 18 h</span><h3 class="mt">La reprise en 10 minutes</h3><p class="mt" style="font-size:3rem">Nouveau clone, tests verts, capture d'écran dans l'issue « reprise ».</p><p class="cap mt">obligatoire · non noté</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Mercredi 2 déc.</span><h3 class="mt">Séance 3</h3><p class="mt" style="font-size:3rem">Première user story en TDD et BDD, données, RGPD.</p><p class="cap mt">8 semaines : le dépôt est votre mémoire</p></div>
+  </div>
+</section>
+
+</div>
+<div id="help">← → naviguer · F plein écran · N notes · O vue d'ensemble</div>
+<script src="../shared/deck.js"></script>
+</body>
+</html>
