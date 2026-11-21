@@ -243,7 +243,7 @@ b10206a Ajoute le sel à la recette
 
 ### 4.5 Écrire un bon message de commit
 
-Le message est écrit pour la personne qui lira l'historique dans huit semaines, c'est-à-dire vous, le 2 décembre.
+Le message est écrit pour la personne qui lira l'historique dans quelques semaines, c'est-à-dire vous, en janvier, la veille de la soutenance.
 
 | Plutôt | Que |
 |---|---|
@@ -865,4 +865,4 @@ Documentation de VS Code :
 - Indexation et commits : https://code.visualstudio.com/docs/sourcecontrol/staging-commits
 - Pack de langue français (fichiers de traduction) : dépôt `microsoft/vscode-loc`, dossier `i18n/vscode-language-pack-fr/translations/`
 
-Sources locales : `cours/programme-detaille.md` (séance 2, blocs 2 et 3 ; section 8, règles du jeu), `cours/presentations/day-2/` (slides « Git, pour de bon »), supports de la séance 1 (chapitres 1, 5 et 8). Exécution : les commandes git des sections 4, 5, 7, 9 et 10.3 (hors `git stash`) ont été jouées avec git 2.53.0 dans des dépôts jetables (dont un dépôt distant local pour `push`, `pull`, le rejet « fetch first », la divergence et le tag) ; les sorties reproduites sont celles obtenues.
+Sources locales : `cours/programme-detaille.md` (séance 2, blocs 4 et 5 ; section 8, règles du jeu), `cours/presentations/day-2/` (slides « Git, pour de bon »), supports de la séance 1 (chapitres 1, 5 et 8). Exécution : les commandes git des sections 4, 5, 7, 9 et 10.3 (hors `git stash`) ont été jouées avec git 2.53.0 dans des dépôts jetables (dont un dépôt distant local pour `push`, `pull`, le rejet « fetch first », la divergence et le tag) ; les sorties reproduites sont celles obtenues.

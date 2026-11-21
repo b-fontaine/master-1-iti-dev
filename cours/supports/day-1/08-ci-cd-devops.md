@@ -370,7 +370,7 @@ Un agent de code peut ouvrir dix PR avant le déjeuner. La **revue humaine devie
 
 Une **version** est un état identifié du logiciel. La convention la plus répandue est le **versionnage sémantique** (*Semantic Versioning*, `MAJEUR.MINEUR.CORRECTIF`, par exemple `1.4.2`) : on augmente le chiffre de **correctif** pour une réparation sans changement visible, le **mineur** pour une nouveauté compatible, le **majeur** pour un changement qui peut casser l'existant (spécification publiée sur semver.org ; *règle rappelée de mémoire, à relire sur la source avant toute citation précise*).
 
-Dans ce cours, le calendrier prévoit des **tags** git : une **release** `v0.1` en séance 4 si `main` est verte, un `v1.0-rc` (*release candidate*, candidat à la version finale) le 14 décembre à 18 h, puis `v1.0` en séance 5 (programme détaillé). Un **tag** est une étiquette posée sur un commit précis pour le retrouver à jamais.
+Dans ce cours, le calendrier prévoit des **tags** git : une **release** `v0.1` en séance 4 si `main` est verte, un `v1.0-rc` (*release candidate*, candidat à la version finale) l'avant-veille de la séance 5 à 18 h, puis `v1.0` en séance 5, en janvier 2027 (date à préciser) (programme détaillé). Un **tag** est une étiquette posée sur un commit précis pour le retrouver à jamais.
 
 ### 8.2 Une release GitHub
 
