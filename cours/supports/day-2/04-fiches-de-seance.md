@@ -2,10 +2,11 @@
 
 *Séance 2 « Git, configurer son agent, lancer le projet » · Master ITI, Nantes Université, 2026-2027. Fiches à utiliser pendant la séance. État des outils vérifié le 19 novembre 2026 (git 2.53.0, gh 2.100.0, Claude Code 2.1.325 sur le poste de rédaction).*
 
-Ce chapitre ne contient presque pas d'explications : il rassemble ce que vous gardez sous les yeux pendant les trois ateliers. Chaque fiche tient sur une page et renvoie au chapitre qui explique le pourquoi.
+Ce chapitre ne contient presque pas d'explications : il rassemble ce que vous gardez sous les yeux pendant la remise en route et les trois ateliers. Chaque fiche tient sur une page et renvoie au chapitre qui explique le pourquoi.
 
 | Fiche | Pour quel moment | Explications |
 |---|---|---|
+| [0 · Remise en route du poste](#fiche-0--remise-en-route-du-poste) | Avant le vendredi 27 novembre, puis en ouverture de séance | Supports de la séance 1, chapitres 4 et 6 |
 | [A · Git guidé en cinq étapes](#fiche-a--git-guidé-en-cinq-étapes) | Atelier 1, en binômes | [Chapitre 1](01-git-pas-a-pas.md) |
 | [B · Configurer Claude Code](#fiche-b--configurer-claude-code) | Atelier 2, seul | [Chapitre 2](02-configurer-claude-code.md) |
 | [C · Initialiser le projet](#fiche-c--initialiser-le-projet-déquipe) | Atelier 3, en équipe | [Chapitre 3](03-demarrer-le-projet-d-equipe.md) |
@@ -19,6 +20,36 @@ Ce chapitre ne contient presque pas d'explications : il rassemble ce que vous ga
 - Les lignes qui commencent par `$` se tapent dans le terminal, **sans** le `$`. Les mots entre chevrons (`<votre-login>`) sont à remplacer, chevrons compris.
 - Avant de demander de l'aide : `git status`. Il dit où vous êtes et, souvent, quoi faire.
 - Rien de personnel ni de réel dans ces dépôts : ils sont publics.
+
+---
+
+## Fiche 0 · Remise en route du poste
+
+**Seul, sur son poste. Dix minutes. Fini quand :** les six lignes ci-dessous répondent sans erreur et Claude Code vous répond.
+
+Huit semaines séparent la séance 1 de la séance 2. Il n'y a pas encore de dépôt d'équipe : ce qui doit redémarrer, c'est **votre poste**. Cette fiche sert deux fois : **avant le vendredi 27 novembre à 18 h** (vérification de reprise obligatoire, non notée : vous renvoyez une capture d'écran en réponse au courriel de reprise), puis en ouverture de la séance du mercredi 2 décembre.
+
+```bash
+$ git --version
+$ gh auth status
+$ claude --version
+$ flutter doctor
+```
+
+Puis, dans le dossier du projet d'exemple de la séance 1 :
+
+```bash
+$ flutter test
+$ flutter run -d chrome
+```
+
+- `gh auth status` répond « not logged in » : relancez `gh auth login`.
+- **Mettez Claude Code à jour**, notez sa version, lancez `claude` dans un dossier vide et posez-lui une question : s'il ne répond pas, votre session ou votre compte est à reconnecter.
+- `flutter doctor` : seule la ligne Chrome compte, la chaîne Android peut rester en rouge. **Pas de `flutter upgrade`** au-delà de la version indiquée par l'enseignant.
+- Vérifiez que vous savez encore vous connecter à GitHub dans le navigateur.
+- Votre capture d'écran ne doit montrer ni nom, ni adresse, ni autre fenêtre.
+
+Une ligne en rouge que vous ne savez pas corriger : signalez-la en réponse au courriel de reprise, elle sera traitée en premier le 2 décembre.
 
 ---
 
@@ -263,7 +294,7 @@ $ git status
 
 Avant de commiter, lisez la liste affichée par `git status` : ni `.env` ni `.claude/settings.local.json` ne doivent y figurer. Si le skill n'est pas reconnu, tapez `/reload-skills`.
 
-**Étape 4 · Un plugin, un serveur MCP** (s'il reste du temps ; choix de l'enseignant).
+**Étape 4 · Un plugin, un serveur MCP** (en ressource par défaut : après la séance, ou en séance si le rythme le permet ; choix de l'enseignant).
 
 ```text
 /plugin
@@ -329,7 +360,7 @@ Puis, dans une session, `/reload-plugins` et `/mcp` pour voir le serveur. **Avan
 
 **En équipe. Fini quand :** `flutter test` est vert et l'application s'affiche dans Chrome sur **chaque** poste ; une PR relue par un autre que son auteur est dans `main` ; `main` refuse un push direct ; `JOURNAL.md` et le tag `s2-fin` sont en place.
 
-**Étape 1 · Cloner, installer, vérifier** (chacun sur son poste ; remplacez l'organisation et le numéro par ceux donnés en séance). Fermez d'abord le dossier `essai-git` et ouvrez un terminal **ailleurs**, dans votre dossier de travail habituel : on ne clone pas un dépôt dans un autre.
+**Étape 1 · Cloner, installer, vérifier** (chacun sur son poste ; remplacez l'organisation et le numéro par ceux donnés en séance). Le dépôt de votre équipe a été créé pendant les ateliers : vérifiez d'abord que vous avez **accepté l'invitation** de collaborateur (courriel de GitHub, ou `github.com/notifications`). Fermez d'abord le dossier `essai-git` et ouvrez un terminal **ailleurs**, dans votre dossier de travail habituel : on ne clone pas un dépôt dans un autre.
 
 ```bash
 $ gh repo clone <organisation>/equipe_<numéro>
@@ -500,14 +531,15 @@ Les autres termes (commit, branche, PR, conflit, permission, skill, hook…) son
 
 ## Pour aller plus loin
 
-- Refaire la fiche A seul, de mémoire, une semaine après la séance : c'est le meilleur moyen de ne pas tout avoir oublié le 2 décembre.
+- Refaire la fiche A seul, de mémoire, une semaine après la séance : c'est le meilleur moyen de ne pas tout avoir oublié pendant le sprint final.
 - Refaire la fiche A en demandant à l'agent d'expliquer chaque sortie de commande avant de passer à la suivante.
-- La checklist de reprise du micro-livrable du 27 novembre : chapitre 3, section 12.
+- La suite du calendrier (séance 3 dans deux jours, séance 4, sprint final, soutenance) : chapitre 3, section 12.
 
 ---
 
 ## Points non vérifiés (à signaler honnêtement)
 
+- **Fiche 0** : commandes de contrôle reprises du programme (séance 2, bloc 1) ; le projet d'exemple de la séance 1 n'a pas été relancé pour cette fiche, et la façon de mettre à jour Claude Code dépend du mode d'installation.
 - **Fiche A, étapes 1 à 3 et 5** : jouées en entier dans un dépôt jetable (git 2.53.0). **Étape 4** : `git push -u` joué contre un dépôt distant local ; les commandes `gh repo create`, `gh pr create --web`, `gh pr merge` n'ont **pas** été exécutées (rien n'a été créé sur GitHub) ; leurs options ont été relues dans l'aide de gh 2.100.0. Les libellés des boutons de GitHub viennent de sa documentation.
 - **Fiche A, relecture par le binôme** : sur un dépôt public, la possibilité pour un compte non collaborateur de laisser une relecture « Approve » n'a pas été testée ; si elle échoue, le propriétaire ajoute son binôme comme collaborateur (Settings, Collaborators, Add people).
 - **Fiche A, boutons de VS Code** : libellés anglais relevés dans la documentation de VS Code. Avec l'interface en français, ils se lisent « Accepter la modification actuelle », « Accepter la modification entrante », « Accepter les deux modifications » d'après les fichiers de traduction ; ils n'ont pas été observés à l'écran.
@@ -522,5 +554,5 @@ Les autres termes (commit, branche, PR, conflit, permission, skill, hook…) son
 ## Sources
 
 - Chapitres 1, 2 et 3 de ce support, qui portent le détail des sources (documentation de git, de GitHub, de la ligne de commande `gh`, de VS Code et de Claude Code, consultées le 19 novembre 2026).
-- `cours/programme-detaille.md` : séance 2 (blocs 3, 5 et 8, matériel, definition of done), section 7 (règles d'usage de l'IA), section 8 (dépôt-modèle, règles du jeu).
+- `cours/programme-detaille.md` : séance 2 (blocs 1, 5, 7 et 9, matériel, definition of done), section 7 (règles d'usage de l'IA), section 8 (dépôt-modèle, règles du jeu).
 - Vérifications locales du 19 novembre 2026 : fiche A jouée dans un dépôt jetable ; extraits JSON validés avec `jq` ; règles de refus et skill testés avec `claude -p` ; commande du hook exécutée sur une entrée simulée.

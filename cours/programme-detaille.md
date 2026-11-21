@@ -48,7 +48,7 @@ Les étudiants ne sont pas des développeurs et ne le deviendront pas. La format
 | **Comptes et quotas Claude Code ×32** | Une décision de l'enseignant, **repoussée au lundi 5 octobre** (retour du pre-flight ; voir la checklist, section 13) : comptes ou crédits nominatifs avec plafond de dépense, suivi de consommation. **Plan de repli fixé dès maintenant** : binômes sur postes authentifiés. Le courriel pre-flight du 1er octobre annonce que les comptes seront confirmés avant le 5. **Jamais de clé d'API dans un dépôt** (les dépôts sont publics) |
 | **Réseau** | 32 téléchargements lourds simultanés saturent un Wi-Fi de salle. Mesures : connexion filaire ou points d'accès supplémentaires si possible ; **échelonnement** (chaque quart de la salle démarre par un outil différent, puis échange par clé USB) ; miroir local des installeurs lourds sur clés USB ou partage réseau ; partage de connexion mobile en dernier recours |
 | **Pre-flight** | Courriel envoyé le jeudi 1er octobre, retour attendu le lundi 5 octobre (section 4, S1). Il demande de créer un compte GitHub, d'installer VS Code et git, d'installer Google Chrome s'il ne l'est pas, et de **télécharger chez soi le SDK Flutter** ; WSL2 et Docker Desktop ne sont plus demandés (Docker devient optionnel). Il annonce que les comptes Claude Code seront confirmés au plus tard le lundi 5 octobre. Un étudiant sans retour est relancé individuellement |
-| **Équipes et dépôts ×8** | Équipes, classement des trois thèmes et identifiants GitHub collectés **par formulaire** (identifiants GitHub dans le pre-flight, composition des équipes et classement à la fin de S1, formulaire clos le jeudi 8 octobre à 12h). L'enseignant prépare les **8 dépôts par script** (section 13) depuis le dépôt-modèle, avec protection de branche et `PROJET.md` pré-rempli par thème, et **ajoute les membres comme collaborateurs de chaque dépôt avant S2** (un seul mécanisme : pas d'invitation à l'organisation). En S2, on valide les équipes, on tire au sort en cas de litige et on libère du temps pour l'initialisation |
+| **Équipes et dépôts ×8** | Le formulaire d'équipes n'a pas été lancé à la fin de S1 : **les équipes se constituent au début de S2**, après la présentation des trois thèmes. Le **formulaire est rempli sur place** (composition, identifiants GitHub, classement des trois thèmes) ; les thèmes sont attribués en séance (au plus 3 équipes par thème, tirage au sort si besoin). **Pendant les ateliers git et configuration de S2**, l'enseignant ou une aide lance le **script de création des 8 dépôts** (section 13) depuis le dépôt-modèle, avec protection de branche et `PROJET.md` pré-rempli par thème, et **ajoute les membres comme collaborateurs de chaque dépôt** (un seul mécanisme : pas d'invitation à l'organisation). Les étudiants acceptent l'invitation à la pause |
 | **Salles** | Une salle avec tables d'équipe, vidéoprojecteur, prises en nombre suffisant (32 portables). En S5, **deux salles** (section 4) |
 | **Postes** | Hypothèse : chacun vient avec son ordinateur portable personnel, avec droits d'administration (à confirmer). Sans droits d'administration, certaines installations (SDK Flutter, Docker) peuvent échouer (plan B en S1) |
 
@@ -59,13 +59,13 @@ Les étudiants ne sont pas des développeurs et ne le deviendront pas. La format
 | Séance | Date | Titre | Nature | Incrément du fil rouge |
 |---|---|---|---|---|
 | **S1** | mer. 7 oct. 2026 | Comprendre et s'équiper | Théorie et installations en alternance (installations : à prévoir large) | Aucun dépôt de projet. Bases du génie logiciel et de l'IA agentique, règle d'or comprise, poste opérationnel (Flutter compris) |
-| **S2** | ven. 9 oct. 2026 | Git, configurer son agent, lancer le projet | Mise en pratique | Git pratiqué pour de bon ; Claude Code configuré ; 8 équipes validées, thèmes confirmés, dépôt cloné (squelette Flutter qui démarre : `flutter test`, `flutter run -d chrome`), `PROJET.md`, première PR relue |
-| **S3** | mer. 2 déc. 2026 | Première user story, données et RGPD | Atelier | Première user story livrée en TDD et en BDD (Clean Architecture, BLoC), modèle de données drift et première migration avec test d'intégrité, début de la fiche de conformité, PR croisées (seed complet et garde d'accès par rôle : sprint ou début de S4) |
-| **S4** | ven. 4 déc. 2026 | Qualité, CI/CD, sécurité, AI Act | Atelier | Test d'acceptation du clou (fichiers `.feature`), CI complète, build web publié sur GitHub Pages par chaque équipe, AI Act et passage devant le RSSI, audit croisé en 5 points ; release `v0.1` si `main` est verte |
-| **Sprint** | 4 → 14 déc. | Finir le périmètre | Travail d'équipe hors séance (15 à 20 h) | Clou niveau 1 terminé, corrections de l'audit, fiche de conformité validée, tag `v1.0-rc` le lundi 14 déc. à 18h |
-| **S5** | mer. 16 déc. 2026 | Retouches et soutenance | Soutenances en deux salles | Tag `v1.0`, dossier de rendu, soutenance avec démonstration et questions individuelles |
+| **S2** | mer. 2 déc. 2026 | Git, configurer son agent, lancer le projet | Mise en pratique | Postes remis en route ; trois thèmes présentés, 8 équipes constituées en séance, thèmes attribués ; git pratiqué pour de bon ; Claude Code configuré ; dépôt créé pendant la séance puis cloné (squelette Flutter qui démarre : `flutter test`, `flutter run -d chrome`), `PROJET.md`, première PR relue |
+| **S3** | ven. 4 déc. 2026 | Première user story, données et RGPD | Atelier | Première user story livrée en TDD et en BDD (Clean Architecture, BLoC), modèle de données drift et première migration avec test d'intégrité, début de la fiche de conformité, PR croisées (seed complet et garde d'accès par rôle : entre S3 et S4, au début de S4 ou dans le sprint) |
+| **S4** | mer. 16 déc. 2026 | Qualité, CI/CD, sécurité, AI Act | Atelier | Test d'acceptation du clou (fichiers `.feature`), CI complète, build web publié sur GitHub Pages par chaque équipe, AI Act et passage devant le RSSI, audit croisé en 5 points ; release `v0.1` si `main` est verte |
+| **Sprint** | 16 déc. → avant-veille de S5 | Finir le périmètre | Travail d'équipe hors séance (15 à 20 h), vacances de fin d'année comprises (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus) | Fiche de conformité v1 en PR le vendredi 18 décembre 2026, clou niveau 1 terminé, corrections de l'audit, fiche de conformité validée, tag `v1.0-rc` l'avant-veille de S5 à 18h |
+| **S5** | janvier 2027 (date à préciser) | Retouches et soutenance | Soutenances en deux salles | Tag `v1.0`, dossier de rendu, soutenance avec démonstration et questions individuelles |
 
-Rythme du calendrier : 2 jours entre S1 et S2, environ 8 semaines entre S2 et S3, 2 jours entre S3 et S4, 12 jours entre S4 et S5.
+Rythme du calendrier : 8 semaines entre S1 et S2, 2 jours entre S2 et S3, 12 jours entre S3 et S4, puis de trois à six semaines entre S4 et S5 selon la date retenue en janvier 2027 (date à préciser), dont les deux semaines de vacances de fin d'année (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus).
 
 ---
 
@@ -73,17 +73,18 @@ Rythme du calendrier : 2 jours entre S1 et S2, environ 8 semaines entre S2 et S3
 
 ### Progression logique
 
-1. **Bloc « fondations » (S1 + S2, à 2 jours d'écart).** S1 donne les repères (pourquoi le craft, comment l'IA s'insère dans le cycle de développement, ce qu'est un test, ce qu'est le cloud) et équipe chaque poste (Flutter compris). S2 met les mains dans le clavier : git pour de bon, configuration de l'agent, puis lancement du projet. L'écart de 2 jours permet de terminer les installations sans perdre le fil.
-2. **Le trou de 8 semaines.** Nous ne le combattons pas par du travail lourd : nous le préparons. Le dépôt (`CLAUDE.md`, `JOURNAL.md`, CI minimale, tag `s2-fin`) sert de mémoire du projet, et S3 commence par une vraie remise en route (section 5).
-3. **Bloc « ingénierie d'équipe » (S3 + S4, à 2 jours d'écart).** S3 : première user story en TDD et en BDD, architecture en couches, données (modèle, migrations), RGPD, git en équipe. S4 : confiance et mise en usage (test d'acceptation indépendant, CI, publication du build web sur GitHub Pages, sécurité, AI Act, passage devant le RSSI, audit croisé).
-4. **Sprint et soutenance (S5).** Finir, geler, prouver. On évalue ce que l'équipe et chacun comprennent.
+1. **Fondations (S1).** S1 donne les repères (pourquoi le craft, comment l'IA s'insère dans le cycle de développement, ce qu'est un test, ce qu'est le cloud) et équipe chaque poste (Flutter compris). Aucun dépôt de projet n'existe à la fin de S1, et les équipes ne sont pas encore constituées.
+2. **Le trou de 8 semaines, entre S1 et S2.** Nous ne le combattons pas par du travail lourd : nous le préparons. Il n'y a encore ni équipe ni dépôt : ce qui doit survivre à la coupure, c'est **le poste** (`git`, `claude`, `flutter doctor`, mises à jour, comptes). Une vérification de reprise de 10 minutes est demandée avant S2, et S2 commence par une vraie remise en route des postes (section 5).
+3. **Bloc « lancement et première règle » (S2 + S3, à 2 jours d'écart).** S2 met les mains dans le clavier : remise en route, présentation des thèmes, constitution des équipes, git pour de bon, configuration de l'agent, puis lancement du projet. S3, deux jours plus tard : première user story en TDD et en BDD, architecture en couches, données (modèle, migrations), RGPD, git en équipe. L'écart de 2 jours ne demande qu'un bref contrôle en ouverture de S3 ; le tag `s2-fin` et `JOURNAL.md` servent de repère de fin de séance.
+4. **Confiance et mise en usage (S4, 12 jours après S3).** Test d'acceptation indépendant, CI, publication du build web sur GitHub Pages, sécurité, AI Act, passage devant le RSSI, audit croisé. Les 12 jours qui précèdent laissent le temps de terminer, sans obligation, ce qui a glissé de S3 (seed complet, rôles).
+5. **Sprint et soutenance : S5, en janvier 2027 (date à préciser).** Finir, geler, prouver. Le sprint englobe les vacances de fin d'année (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus) : aucun travail n'y est imposé au-delà de ce que l'équipe choisit. On évalue ce que l'équipe et chacun comprennent.
 
 ### Pourquoi cet ordre
 
-- La théorie précède la pratique de seulement deux jours : le vocabulaire (dépôt, commit, harnais, contexte) est réutilisé tout de suite en S2.
+- Huit semaines séparent la théorie (S1) de la pratique (S2) : S2 s'ouvre donc sur une remise en route, et chaque notion de S1 (dépôt, commit, harnais, contexte) y est reprise par un geste avant d'être utilisée. Les supports de S1 restent la référence.
 - Le git de base est en S2 (pas en S1, où les installations pèsent déjà lourd) ; S3 l'approfondit à plusieurs.
 - Le RGPD vient avec les données (S3), l'AI Act et la validation RSSI avec la sécurité et la mise en usage (S4) : on ne qualifie un risque que sur un outil qui existe.
-- Le sprint de 12 jours laisse du temps d'intégration et de réponse du RSSI avant le gel.
+- Le sprint final, entre S4 et S5, laisse du temps d'intégration et de réponse du RSSI avant le gel, même en retirant les deux semaines de vacances de fin d'année.
 
 ### Concepts clés et où ils sont vus
 
@@ -136,7 +137,7 @@ Chaque bloc indique aussi sa **nature** : exposé, démonstration, atelier, inst
 
 ### Séance 1 : Comprendre et s'équiper (mer. 7 oct.)
 
-**Principe.** La séance **alterne théorie et installations**, sans minutage. Les installations pèsent lourd dans cette séance : **à prévoir large**. Elles sont réparties en cinq blocs, intercalés entre les exposés. Les installations lourdes (SDK Flutter en priorité, puis Docker, Rust, Antigravity) sont **lancées pendant les exposés** : un téléchargement qui tourne pendant qu'on écoute ne coûte pas de temps de séance, si bien que le temps réel d'installation dépasse ce que les blocs laissent voir. Il n'y a **aucun travail sur le dépôt du projet** : l'objectif est un poste prêt et un vocabulaire commun. Le support est un diaporama étoffé (environ 76 diapos) ; les trois thèmes du projet n'y sont pas présentés (support à part).
+**Principe.** La séance **alterne théorie et installations**, sans minutage. Les installations pèsent lourd dans cette séance : **à prévoir large**. Elles sont réparties en cinq blocs, intercalés entre les exposés. Les installations lourdes (SDK Flutter en priorité, puis Docker, Rust, Antigravity) sont **lancées pendant les exposés** : un téléchargement qui tourne pendant qu'on écoute ne coûte pas de temps de séance, si bien que le temps réel d'installation dépasse ce que les blocs laissent voir. Il n'y a **aucun travail sur le dépôt du projet** : l'objectif est un poste prêt et un vocabulaire commun. Le support est un diaporama étoffé (environ 76 diapos) ; les trois thèmes du projet n'y sont pas présentés (ils le sont au début de S2, avec le diaporama `cours/presentations/themes/`).
 
 **Objectifs d'apprentissage.** La séance poursuit deux objectifs. À la fin de la séance, l'étudiant :
 1. a acquis les **connaissances théoriques sur les bases du génie logiciel et de l'IA agentique** :
@@ -198,12 +199,12 @@ Chaque bloc indique aussi sa **nature** : exposé, démonstration, atelier, inst
 - *Intention.* Faire de la règle d'or un réflexe avant tout usage de l'agent.
 
 **Bloc 12. Installation 5 : rattrapage** · **Indispensable** pour git, VS Code, Claude Code et Flutter ; **Pratique** pour le reste · installation
-- *Contenu.* Traitement des postes encore en rouge sur le tableau de suivi, par ordre de priorité : git, VS Code, Claude Code, Flutter (indispensables en S2), puis Docker, Rust, Antigravity (utiles plus tard). Postes sans solution : binôme sur le poste d'un voisin en S2, rendez-vous de dépannage pendant l'écart de deux jours.
+- *Contenu.* Traitement des postes encore en rouge sur le tableau de suivi, par ordre de priorité : git, VS Code, Claude Code, Flutter (indispensables en S2), puis Docker, Rust, Antigravity (utiles plus tard). Postes sans solution : binôme sur le poste d'un voisin en S2, rendez-vous de dépannage avant S2.
 - *Intention.* Arriver en S2 avec un poste opérationnel, ou un plan de rattrapage explicite.
 
 **Bloc 13. Clôture** · **Indispensable** · discussion
-- *Contenu.* Consignes de S2, **lancement du formulaire d'équipes** (composition de l'équipe de 3 à 5, identifiants GitHub, et côté formulaire seulement, classement des trois thèmes ; à remplir avant le jeudi 8 octobre à 12h), rappel de la règle d'or. Les thèmes ne sont pas présentés en séance : leurs énoncés font l'objet d'un support à part (`cours/projets/themes.md`), transmis avec le formulaire (modalité à confirmer).
-- *Intention.* Préparer S2 : le formulaire conditionne la création des dépôts.
+- *Contenu.* Consignes de S2, rappel de la règle d'or. **Le formulaire d'équipes n'a pas été lancé à la fin de S1 : la constitution des équipes est reportée au début de S2** (mercredi 2 décembre 2026), où les trois thèmes sont présentés (énoncés dans `cours/projets/themes.md`, diaporama `cours/presentations/themes/`) avant que les équipes ne se forment et ne classent les thèmes.
+- *Intention.* Préparer S2 : un poste prêt et la règle d'or ; les équipes, les thèmes et les dépôts viennent en S2.
 
 **Si la séance prend du retard (ordre de coupe, du moins utile au plus utile ; à poids égal, on coupe dans l'ordre listé).**
 1. La partie Antigravity du bloc 9 (Moins utile).
@@ -212,7 +213,7 @@ Chaque bloc indique aussi sa **nature** : exposé, démonstration, atelier, inst
 4. Dans les exposés, alléger le bloc 7 (modèles d'IA) et le bloc 10 (CI/CD, repris en S4) en les donnant en partie comme ressource.
 5. Le bloc 3 (histoire du craft, Important) se condense en une diapo plutôt qu'il ne saute, en gardant 1968, 1992, 1996-2002 (TDD) et 2006 (BDD), les cinq autres jalons étant donnés en ressource.
 
-Ne se sacrifient jamais : l'accueil, les installations indispensables (git, VS Code, `gh`, Claude Code, Flutter), les notions de code et le TDD, le bloc « agent et environnement », la règle d'or, le rattrapage et la clôture avec le formulaire d'équipes.
+Ne se sacrifient jamais : l'accueil, les installations indispensables (git, VS Code, `gh`, Claude Code, Flutter), les notions de code et le TDD, le bloc « agent et environnement », la règle d'or, le rattrapage et la clôture.
 
 **Peut glisser.** Docker, Rust et Antigravity glissent en S2 ou en S4 sans bloquer (déjà prévu). L'approfondissement de la CI/CD est de toute façon repris en S4.
 
@@ -232,108 +233,118 @@ Ne se sacrifient jamais : l'accueil, les installations indispensables (git, VS C
 
 ---
 
-### Séance 2 : Git, configurer son agent, lancer le projet (ven. 9 oct.)
+### Séance 2 : Git, configurer son agent, lancer le projet (mer. 2 déc.)
 
-**Principe.** Trois temps : (1) **git pour de bon**, au clavier, dans un dépôt d'essai ; (2) **configuration de Claude Code**, individuelle, avec des fiches prêtes à copier ; (3) **initialisation des projets fil rouge** : validation des équipes et des thèmes, dépôt, `PROJET.md`, première PR relue. Les équipes et le classement des thèmes ont été **collectés par formulaire** (fin de S1, clos le jeudi 8 octobre à 12h) ; les huit dépôts sont **déjà créés par script** par l'enseignant (section 13), avec `PROJET.md` pré-rempli par thème, et les membres y sont **déjà ajoutés comme collaborateurs**. La séance valide, tire au sort en cas de litige et libère du temps pour l'initialisation.
+**Principe.** La séance a lieu **huit semaines après S1**, et **ni équipes ni dépôts n'existent encore** : le formulaire d'équipes n'a pas été lancé à la fin de S1. Quatre temps : (1) **ouverture** : remise en route des postes, présentation des trois thèmes, constitution des équipes et attribution des thèmes en séance ; (2) **git pour de bon**, au clavier, dans un dépôt d'essai ; (3) **configuration de Claude Code**, individuelle, avec des fiches prêtes à copier ; (4) **initialisation des projets fil rouge** : dépôt, `PROJET.md`, première PR relue. **Pendant les ateliers git et configuration**, l'enseignant ou une aide lance le **script de création des dépôts** (section 13) avec la liste des équipes obtenue en début de séance, et ajoute les membres comme collaborateurs ; les étudiants acceptent l'invitation à la pause. La séance est plus chargée que dans sa première version : la démonstration spec-kit et l'étape plugin et MCP sont **données en ressource par défaut**.
 
 **Objectifs d'apprentissage.** À la fin de la séance, l'étudiant :
-1. réalise un cycle git complet au clavier : `init`, `add`, `commit`, `log`, branche, `push`, PR, et résout un conflit de fusion simple ;
-2. configure Claude Code : `CLAUDE.md`, permissions (autoriser, refuser), mode plan, skill, hooks, plugins, MCP, sous-agents, et sait citer un cadre de travail de type spec-kit ;
-3. explique pourquoi une consigne dans le prompt ne suffit pas et pourquoi une permission configurée si ;
-4. fait partie d'une équipe validée, a un thème confirmé selon la procédure, et dispose d'un dépôt cloné et fonctionnel (`flutter test` vert, application lancée dans Chrome) ;
-5. a contribué à `PROJET.md` et à une première PR relue par un coéquipier et fusionnée.
-6. situe où ranger quoi dans le projet (couches de la Clean Architecture, injection de dépendances, BLoC) grâce au `CLAUDE.md` et au document d'architecture fournis.
+1. dispose à nouveau d'un poste opérationnel après huit semaines (`git`, `claude`, `flutter doctor`, mises à jour, comptes) et sait énoncer la règle d'or ;
+2. connaît les trois thèmes, fait partie d'une équipe constituée en séance (3 à 5 membres), avec un thème attribué selon la procédure, un numéro d'équipe et un rôle ;
+3. réalise un cycle git complet au clavier : `init`, `add`, `commit`, `log`, branche, `push`, PR, et résout un conflit de fusion simple ;
+4. configure Claude Code : `CLAUDE.md`, permissions (autoriser, refuser), mode plan, skill, hooks, sous-agents ; sait ce que sont un plugin, un serveur MCP et un cadre de travail de type spec-kit (donnés en ressource) ;
+5. explique pourquoi une consigne dans le prompt ne suffit pas et pourquoi une permission configurée si ;
+6. dispose d'un dépôt d'équipe cloné et fonctionnel (`flutter test` vert, application lancée dans Chrome), a contribué à `PROJET.md` et à une première PR relue par un coéquipier et fusionnée ;
+7. situe où ranger quoi dans le projet (couches de la Clean Architecture, injection de dépendances, BLoC) grâce au `CLAUDE.md` et au document d'architecture fournis.
 
 **Matériel et prérequis.**
-- Dépôts des 8 équipes créés par script avec les membres ajoutés comme collaborateurs, réglages de protection testés, `PROJET.md` pré-rempli par thème (section 13) ; rappel aux étudiants d'accepter l'invitation de collaborateur avant S2.
+- Retours de la vérification de reprise du poste (échéance le vendredi 27 novembre, section 5) et liste des postes à dépanner ; checklist de remise en route du poste (une demi-page).
+- Diaporama des trois thèmes (`cours/presentations/themes/`) et énoncés (`cours/projets/themes.md`).
+- **Formulaire d'équipes** prêt à être rempli sur place (composition, identifiants GitHub, classement des trois thèmes), de quoi tirer au sort, et export de la liste au format attendu par le script (`equipes.csv`).
+- **Script de création des dépôts** testé à l'avance sur un dépôt test (section 13), dépôt-modèle prêt avec les **trois versions pré-remplies de `PROJET.md`**, réglages de protection testés ; un poste (enseignant ou aide) authentifié avec `gh` sur l'organisation pour lancer le script pendant les ateliers.
 - Contexte réutilisable fourni par l'enseignant dans le dépôt-modèle (`CLAUDE.md` et `docs/ARCHITECTURE.md`, à produire, section 13), relu avant S2.
-- Fiche git (une page), fiche de configuration de Claude Code (extraits à copier), checklist de PR en 5 lignes, résultats du formulaire d'équipes.
+- Fiche git (une page), fiche de configuration de Claude Code (extraits à copier), checklist de PR en 5 lignes.
 - Syntaxe des permissions, hooks et skills vérifiée sur la version de Claude Code utilisée.
-- 2 aides au moins (git et configuration sont des moments de blocage fréquents).
+- 2 aides au moins (remise en route, git et configuration sont des moments de blocage fréquents), dont l'une peut lancer le script.
 
 **Légende des poids :** **Indispensable** = ne pas sacrifier ; **Important** = sauf contrainte forte ; **Pratique** = si le rythme le permet, ou en ressource ; **Moins utile** = peut sauter ou rester en lecture.
 
 **Déroulé (ordre logique des blocs).**
 
-**Bloc 1. Retour sur S1** · **Important** · discussion
-- *Contenu.* Dépannage des installations restantes (liste du tableau de suivi) et des invitations de collaborateur non acceptées. Rappel de la règle d'or. Un exercice éclair : « qu'est-ce qu'on ne met jamais dans un prompt ? ».
-- *Intention.* Repartir sur des postes fonctionnels et ancrer la règle d'or avant de toucher au dépôt.
+**Bloc 1. Remise en route des postes et règle d'or** · **Indispensable** · atelier et discussion
+- *Contenu.* Huit semaines ont passé depuis S1. Chaque étudiant rejoue la checklist de remise en route sur son poste : `git --version`, `gh auth status`, `claude --version` (mise à jour faite, compte connecté, quotas), `flutter doctor` sans erreur bloquante pour Chrome, `flutter test` et `flutter run -d chrome` sur le projet d'exemple de S1 ; mises à jour (VS Code, Claude Code ; Flutter à la version retenue par le dépôt-modèle, pas de `flutter upgrade` au-delà) ; comptes GitHub et Claude accessibles. Les postes signalés en échec à la vérification de reprise sont traités en premier par les aides ; un poste sans solution travaille en binôme. Rappel de la règle d'or et exercice éclair : « qu'est-ce qu'on ne met jamais dans un prompt ? ».
+- *Intention.* Sortir de la coupure de huit semaines avant toute autre chose : des postes fonctionnels, un agent qui répond, la règle d'or en tête. Il n'y a pas encore de dépôt de projet : la remise en route porte sur les postes.
 
-**Bloc 2. Git, le modèle mental** · **Indispensable** · exposé et démonstration
+**Bloc 2. Présentation des trois thèmes** · **Indispensable** · exposé
+- *Contenu.* Les trois thèmes A, B et C, présentés avec le diaporama `cours/presentations/themes/` (énoncés complets dans `cours/projets/themes.md`) : mise en situation, règle métier centrale, difficulté propre, sensibilité de conformité (le thème C demande plus de travail de conformité), charge identique. Ce diaporama, prévu à l'origine comme support à part, est maintenant présenté en séance. Questions, puis annonce de la procédure de constitution des équipes.
+- *Intention.* Que les équipes se forment et classent les thèmes en connaissance de cause.
+
+**Bloc 3. Constitution des équipes et attribution des thèmes** · **Indispensable** · discussion
+- *Contenu.* Dans l'ordre : (1) les étudiants forment des **équipes de 3 à 5** (8 équipes de 4 par défaut ; 7 équipes de 4 ou 5 si l'effectif l'impose) ; (2) chaque équipe remplit **sur place le formulaire** : composition, identifiants GitHub, classement des trois thèmes ; (3) **attribution des thèmes** par l'enseignant, avec **au plus 3 équipes par thème** (répartition visée : 8 équipes : 3-3-2 ; 7 équipes : 3-2-2 ou 3-3-1) et **tirage au sort si un thème dépasse 3 candidats**, la perdante passant à son choix suivant ; (4) les équipes sont **numérotées par thème** (8 équipes : 01 à 03 : A ; 04 à 06 : B ; 07 et 08 : C) : cette numérotation sert aux appariements de S3 et S4 ; (5) **attribution des rôles d'équipe**. L'enseignant ou une aide relit les identifiants GitHub et met la liste au format du script (`numero_equipe,login_github`). Les dépôts étant créés après l'attribution, aucun dépôt n'est à renommer.
+- *Intention.* Fixer une fois pour toutes équipes, thèmes, numéros et rôles, dont dépendent la création des dépôts et les appariements de S3 et S4.
+
+**Bloc 4. Git, le modèle mental** · **Indispensable** · exposé et démonstration
 - *Contenu.* Dépôt, commit (une photo du projet avec un message), branche, fusion, dépôt distant (`remote`), PR (demande de relecture et de fusion), conflit. Démonstration en direct : `git init`, `git add`, `git commit`, `git switch -c`, `git log --oneline`.
 - *Intention.* Donner le vocabulaire et l'image mentale avant la pratique au clavier.
 
-**Bloc 3. Git au clavier, en binômes, dans un dépôt d'essai** · **Indispensable** · atelier
-- *Contenu.* Fiche guidée : (1) `git init` et premier commit ; (2) modifier un fichier, `git diff`, `git add`, commit avec un message soigné ; (3) créer une branche, commiter, fusionner ; (4) créer le dépôt d'essai sur GitHub, `git push`, ouvrir une PR, la faire relire par son binôme et la fusionner ; (5) **conflit volontaire** : chacun modifie la même ligne sur une branche, fusion, résolution à la main dans VS Code. Chaque étudiant tape ses commandes (l'agent peut expliquer, pas faire à la place). Vérification par l'aide ou l'enseignant : chacun a produit au moins 3 commits et résolu un conflit.
-- *Intention.* Faire pratiquer le cycle complet, y compris le conflit, pour que git cesse d'être abstrait.
+**Bloc 5. Git au clavier, en binômes, dans un dépôt d'essai** · **Indispensable** · atelier
+- *Contenu.* Fiche guidée : (1) `git init` et premier commit ; (2) modifier un fichier, `git diff`, `git add`, commit avec un message soigné ; (3) créer une branche, commiter, fusionner ; (4) créer le dépôt d'essai sur GitHub, `git push`, ouvrir une PR, la faire relire par son binôme et la fusionner ; (5) **conflit volontaire** : chacun modifie la même ligne sur une branche, fusion, résolution à la main dans VS Code. Chaque étudiant tape ses commandes (l'agent peut expliquer, pas faire à la place). Vérification par l'aide ou l'enseignant : chacun a produit au moins 3 commits et résolu un conflit. **En parallèle (blocs 5 à 7), l'enseignant ou une aide lance le script de création des dépôts** avec la liste du bloc 3 : dépôts créés depuis le dépôt-modèle, protection de `main`, `PROJET.md` du thème attribué, membres ajoutés comme collaborateurs. **Les étudiants acceptent l'invitation de collaborateur à la pause.**
+- *Intention.* Faire pratiquer le cycle complet, y compris le conflit, pour que git cesse d'être abstrait ; et préparer les dépôts d'équipe sans temps mort pour la salle.
 
-**Bloc 4. Configurer Claude Code** · **Indispensable** · exposé et démonstration
-- *Contenu.* Démonstration commentée des briques : `CLAUDE.md` (court, utile : commandes, conventions, interdits) ; **permissions** (autoriser ou refuser des actions ; cas Replit de juillet 2025 : l'agent a supprimé une base de production pendant un gel du code, un gel écrit dans le prompt est une demande, pas une contrainte) ; mode plan ; **hooks** (une commande lancée automatiquement, par exemple le contrôle de style) ; **skills** (une procédure réutilisable) ; **plugins** ; **MCP** (brancher un outil externe, avec la réserve que chaque serveur MCP est du code et des échanges avec un tiers : à valider avant usage) ; **sous-agents** ; commandes de gestion du contexte et du modèle (`/clear`, `/compact`, `/model` : à vérifier selon la version). Élément de poids moindre : un **framework de type spec-kit** à titre d'exemple, de la spécification au plan puis aux tâches (**Pratique** ; installation et syntaxe à vérifier) .
+**Bloc 6. Configurer Claude Code** · **Indispensable** · exposé et démonstration
+- *Contenu.* Démonstration commentée des briques : `CLAUDE.md` (court, utile : commandes, conventions, interdits) ; **permissions** (autoriser ou refuser des actions ; cas Replit de juillet 2025 : l'agent a supprimé une base de production pendant un gel du code, un gel écrit dans le prompt est une demande, pas une contrainte) ; mode plan ; **hooks** (une commande lancée automatiquement, par exemple le contrôle de style) ; **skills** (une procédure réutilisable) ; **plugins** ; **MCP** (brancher un outil externe, avec la réserve que chaque serveur MCP est du code et des échanges avec un tiers : à valider avant usage) ; **sous-agents** ; commandes de gestion du contexte et du modèle (`/clear`, `/compact`, `/model` : à vérifier selon la version). Élément de poids moindre : un **framework de type spec-kit** à titre d'exemple, de la spécification au plan puis aux tâches (**Pratique**, **en ressource par défaut** : montré seulement si le rythme le permet ; installation et syntaxe à vérifier).
 - *Intention.* Montrer que la confiance dans un agent vient de la configuration (permissions, hooks) et non des consignes écrites dans le prompt.
 
-**Bloc 5. Atelier de configuration, individuel, dans le dépôt d'essai** · **Indispensable** · atelier
-- *Contenu.* Fiche de configuration fournie (extraits à copier). Étapes dans l'ordre : (1) générer un `CLAUDE.md` avec `/init`, puis le réduire à l'essentiel (**Indispensable**) ; (2) `.claude/settings.json` avec des refus (lecture de `.env`, `rm -rf`, `git push --force`) ; **test** : demander à l'agent de lire `.env` et constater le refus (**Indispensable**) ; (3) un premier skill simple, par exemple « écrire un message de commit conforme » (modèle fourni) (**Important**) ; (4) installer un plugin et brancher un serveur MCP de documentation (choix de l'enseignant, à vérifier), puis discuter ce qui part vers un tiers (**Pratique**). Le cadre de type spec-kit n'est montré qu'en démonstration (pas d'atelier). La syntaxe des réglages peut varier d'une version à l'autre (à vérifier avant la séance).
+**Bloc 7. Atelier de configuration, individuel, dans le dépôt d'essai** · **Indispensable** · atelier
+- *Contenu.* Fiche de configuration fournie (extraits à copier). Étapes dans l'ordre : (1) générer un `CLAUDE.md` avec `/init`, puis le réduire à l'essentiel (**Indispensable**) ; (2) `.claude/settings.json` avec des refus (lecture de `.env`, `rm -rf`, `git push --force`) ; **test** : demander à l'agent de lire `.env` et constater le refus (**Indispensable**) ; (3) un premier skill simple, par exemple « écrire un message de commit conforme » (modèle fourni) (**Important**) ; (4) installer un plugin et brancher un serveur MCP de documentation (choix de l'enseignant, à vérifier), puis discuter ce qui part vers un tiers (**Pratique**, **en ressource par défaut** : étape faite seulement si le rythme le permet, sinon laissée à la maison avec la fiche). Le cadre de type spec-kit n'est pas travaillé en atelier. La syntaxe des réglages peut varier d'une version à l'autre (à vérifier avant la séance).
 - *Intention.* Que chaque étudiant constate lui-même qu'une permission configurée est effectivement respectée.
 
-**Bloc 6. La pile du projet et le contexte fourni** · **Important** · exposé
-- *Contenu.* La pile du projet fil rouge : application Flutter en Clean Architecture (couches domain, data et presentation ; une feature = un dossier), injection de dépendances avec `get_it`, gestion d'état avec `flutter_bloc` (BLoC et Cubit), TDD avec `flutter_test`, `bloc_test` et `mocktail`, BDD avec `bdd_widget_test` (scénarios Gherkin en français dans des fichiers `.feature`). Visite guidée du `CLAUDE.md` et de `docs/ARCHITECTURE.md` fournis par l'enseignant : ils sont réutilisables d'un projet à l'autre et servent de premier contexte à l'agent. Rappel : outil ponctuel, données fictives, règle d'or, fiche de conformité, calendrier ; le thème C demande plus de travail de conformité (les trois thèmes sont présentés dans un support à part). Pas de questions techniques de détail : elles viennent en atelier.
+**Bloc 8. La pile du projet et le contexte fourni** · **Important** · exposé
+- *Contenu.* La pile du projet fil rouge : application Flutter en Clean Architecture (couches domain, data et presentation ; une feature = un dossier), injection de dépendances avec `get_it`, gestion d'état avec `flutter_bloc` (BLoC et Cubit), TDD avec `flutter_test`, `bloc_test` et `mocktail`, BDD avec `bdd_widget_test` (scénarios Gherkin en français dans des fichiers `.feature`). Visite guidée du `CLAUDE.md` et de `docs/ARCHITECTURE.md` fournis par l'enseignant : ils sont réutilisables d'un projet à l'autre et servent de premier contexte à l'agent. Rappel : outil ponctuel, données fictives, règle d'or, fiche de conformité, calendrier : S3 dans deux jours, S4 le 16 décembre, soutenance en janvier 2027 (date à préciser). Pas de questions techniques de détail : elles viennent en atelier.
 - *Intention.* Que chaque étudiant sache où ranger quoi dans le projet et pourquoi l'agent doit respecter cette structure. Peut se réduire à la lecture commentée du `CLAUDE.md` si le rythme l'impose.
 
-**Bloc 7. Validation des équipes et des thèmes** · **Indispensable** · discussion
-- *Contenu.* Les équipes (de 3 à 5, 8 équipes de 4 par défaut ; 7 équipes de 4 ou 5 si l'effectif l'impose) et les thèmes résultent du formulaire, avec une attribution provisoire faite par l'enseignant : (1) chaque équipe confirme sa composition et son thème ; (2) **répartition visée : 8 équipes : 3-3-2 ; 7 équipes : 3-2-2 ou 3-3-1, avec au plus 3 équipes par thème ; tirage au sort si un thème dépasse 3 candidats**, la perdante passant à son choix suivant (le dépôt est alors renommé avec `gh repo rename` et son `PROJET.md` remplacé, ce qui est rapide) ; (3) les équipes sont **numérotées par thème** (8 équipes : 01 à 03 : A ; 04 à 06 : B ; 07 et 08 : C) : cette numérotation sert aux appariements de S3 et S4 ; (4) attribution des rôles d'équipe ; (5) chaque étudiant vérifie qu'il voit son dépôt (invitation de collaborateur acceptée).
-- *Intention.* Fixer une fois pour toutes équipes, thèmes, numéros et rôles, dont dépendent les appariements de S3 et S4.
-
-**Bloc 8. Initialisation du projet** · **Indispensable** · atelier
-- *Contenu.* Dans l'ordre : (1) cloner le dépôt de l'équipe (déjà créé depuis le modèle), `flutter pub get`, `dart run build_runner build --delete-conflicting-outputs` (les fichiers générés ne sont pas versionnés), `flutter test` vert, `flutter run -d chrome`, lire le `CLAUDE.md` et `docs/ARCHITECTURE.md` fournis ; (2) compléter `PROJET.md`, **fourni pré-rempli pour le thème** (vision en 5 lignes et user stories proposées) : l'équipe en retient 3 à 5, ajuste le texte et décide (`PROJET.md` est un document, pas du code : l'agent aide à rédiger) ; (3) branche, commit, PR rédigée avec le modèle de PR du dépôt (résumé, ce que l'agent a proposé et ce que j'ai refusé, temps estimé, temps réel, retouches) ; (4) relecture par un coéquipier avec la checklist de 5 lignes, fusion (merge commit), puis **vérification que la protection de `main` est active** : l'étudiant tente un push direct et constate le refus ; (5) marge de dépannage pour les postes en difficulté. L'enseignant contrôle chaque dépôt.
+**Bloc 9. Initialisation du projet** · **Indispensable** · atelier
+- *Contenu.* Dans l'ordre : (1) chaque étudiant vérifie qu'il voit le dépôt de son équipe (invitation de collaborateur acceptée), le clone (dépôt créé pendant la séance depuis le modèle), `flutter pub get`, `dart run build_runner build --delete-conflicting-outputs` (les fichiers générés ne sont pas versionnés), `flutter test` vert, `flutter run -d chrome`, lire le `CLAUDE.md` et `docs/ARCHITECTURE.md` fournis ; (2) compléter `PROJET.md`, **fourni pré-rempli pour le thème** (vision en 5 lignes et user stories proposées) : l'équipe en retient 3 à 5, ajuste le texte et décide (`PROJET.md` est un document, pas du code : l'agent aide à rédiger) ; (3) branche, commit, PR rédigée avec le modèle de PR du dépôt (résumé, ce que l'agent a proposé et ce que j'ai refusé, temps estimé, temps réel, retouches) ; (4) relecture par un coéquipier avec la checklist de 5 lignes, fusion (merge commit), puis **vérification que la protection de `main` est active** : l'étudiant tente un push direct et constate le refus ; (5) marge de dépannage pour les postes en difficulté. L'enseignant contrôle chaque dépôt.
 - *Intention.* Que chaque équipe dispose d'un dépôt qui tient debout, d'un `PROJET.md` décidé collectivement et d'une première PR relue.
 
-**Bloc 9. Restitution flash et consignes** · **Important** · discussion
-- *Contenu.* Chaque équipe annonce en une phrase son thème et sa première user story. Consignes : travail entre les séances (section 5), pose du tag `s2-fin` et état courant en tête de `JOURNAL.md` (cinq lignes, par le gardien du harnais).
-- *Intention.* Clore la séance par un engagement d'équipe et préparer la reprise après le long intervalle. La restitution orale peut se faire par écrit si le rythme l'impose, les consignes restent indispensables.
+**Bloc 10. Restitution flash et consignes** · **Important** · discussion
+- *Contenu.* Chaque équipe annonce en une phrase son thème et sa première user story. Consignes : S3 a lieu dans deux jours (vendredi 4 décembre), aucun travail n'est demandé d'ici là (section 5) ; pose du tag `s2-fin` et état courant en tête de `JOURNAL.md` (cinq lignes, par le gardien du harnais), qui servent de repère de fin de séance.
+- *Intention.* Clore la séance par un engagement d'équipe et laisser un état clair pour l'ouverture de S3. La restitution orale peut se faire par écrit si le rythme l'impose, les consignes restent indispensables.
 
-**Si la séance prend du retard (ordre de coupe, du moins utile au plus utile).**
-1. La démonstration du framework de type spec-kit et l'étape 4 de l'atelier de configuration, plugin et MCP (Pratique) : à donner en ressource.
-2. La présentation de la pile (bloc 6), réduite à la lecture commentée du `CLAUDE.md`, et la restitution flash orale (bloc 9), remplacée par un écrit.
-3. L'étape 3 de l'atelier de configuration (skill).
+**Si la séance prend du retard (ordre de coupe, du moins utile au plus utile).** La séance est chargée : la démonstration du framework de type spec-kit (bloc 6) et l'étape 4 de l'atelier de configuration, plugin et MCP (bloc 7), toutes deux **Pratique**, sont **déjà en ressource par défaut**. Ensuite :
+1. La présentation de la pile (bloc 8), réduite à la lecture commentée du `CLAUDE.md`, et la restitution flash orale (bloc 10), remplacée par un écrit.
+2. L'étape 3 de l'atelier de configuration (skill).
+3. Dans le bloc 2, la présentation des thèmes se resserre sur la mise en situation et la règle centrale de chaque thème (le détail est dans `cours/projets/themes.md`) ; dans le bloc 1, l'exercice éclair sur la règle d'or se réduit à son rappel.
 
-Ne se sacrifient jamais : git au clavier, le test du refus de lecture de `.env`, la validation des équipes, la première PR relue avec la protection de `main` vérifiée, la visite de l'exemple `.feature` et du test de BLoC du squelette.
+Ne se sacrifient jamais : la remise en route des postes, la présentation des thèmes et la constitution des équipes (elles conditionnent la création des dépôts), git au clavier, le test du refus de lecture de `.env`, la première PR relue avec la protection de `main` vérifiée, la visite de l'exemple `.feature` et du test de BLoC du squelette.
 
-**Peut glisser.** Aucun report n'est prévu de façon systématique ; ce qui n'est pas terminé est noté dans `JOURNAL.md` et repris à la remise en route de S3.
+**Peut glisser.** Si la création des dépôts ou l'initialisation prend du retard, la fin de l'initialisation (première PR relue, vérification de la protection de `main`) se termine au contrôle d'ouverture de S3, deux jours plus tard ; ce qui n'est pas terminé est noté dans `JOURNAL.md`. La démonstration spec-kit et l'étape plugin et MCP restent en ressource.
 
-**Livrable de fin de séance.** Pour chaque étudiant : un dépôt d'essai avec au moins 3 commits et un conflit résolu, un `CLAUDE.md` et des permissions testées. Pour chaque équipe : un dépôt public cloné et fonctionnel, `PROJET.md` complété, une PR relue et fusionnée, `main` protégée, état courant dans `JOURNAL.md`, tag `s2-fin`.
+**Livrable de fin de séance.** Pour chaque étudiant : un poste remis en route, un dépôt d'essai avec au moins 3 commits et un conflit résolu, un `CLAUDE.md` et des permissions testées. Pour chaque équipe : une composition, un thème, un numéro et des rôles fixés en séance ; un dépôt public créé pendant la séance, cloné et fonctionnel, `PROJET.md` complété, une PR relue et fusionnée, `main` protégée, état courant dans `JOURNAL.md`, tag `s2-fin`.
 
 **Definition of done.**
+- Chaque poste passe la checklist de remise en route (`git`, `claude`, `flutter doctor`, `flutter test` sur le projet d'exemple), ou l'étudiant travaille en binôme avec un plan de dépannage noté.
+- Chaque étudiant appartient à une équipe de 3 à 5 constituée en séance ; le formulaire (composition, identifiants GitHub, classement des thèmes) est rempli ; chaque équipe a un thème attribué (3 équipes au plus par thème), un numéro et des rôles.
 - Chaque étudiant a fait au moins un commit, une PR et résolu un conflit de fusion.
 - La demande de lecture de `.env` est **refusée** par la configuration de l'agent.
-- Chaque équipe a un thème confirmé (3 équipes au plus par thème), un dépôt dans l'organisation, un accès en écriture pour chaque membre (collaborateur du dépôt), et `main` contient la première PR relue par un autre que l'auteur.
+- Chaque équipe a un dépôt dans l'organisation, créé par script pendant la séance, un accès en écriture pour chaque membre (invitation de collaborateur acceptée), et `main` contient la première PR relue par un autre que l'auteur.
 - La protection de `main` (PR obligatoire avec 1 approbation, sans contournement par les administrateurs) est active et vérifiée.
 - `flutter test` passe et `flutter run -d chrome` démarre l'application sur le dépôt cloné de chaque membre.
 
 ---
 
-### Séance 3 : Première user story, données et RGPD (mer. 2 déc.)
+### Séance 3 : Première user story, données et RGPD (ven. 4 déc.)
 
-**Pourquoi ce thème.** Après 8 semaines de coupure, il faut du concret rapidement. La séance livre la première vraie fonctionnalité (en TDD et en BDD), pose les données qui survivent au code, et ouvre le volet RGPD : on ne choisit pas un champ ou une table sans se demander si l'on traite des données personnelles.
+**Pourquoi ce thème.** Deux jours après le lancement du projet, il faut du concret rapidement. La séance livre la première vraie fonctionnalité (en TDD et en BDD), pose les données qui survivent au code, et ouvre le volet RGPD : on ne choisit pas un champ ou une table sans se demander si l'on traite des données personnelles.
 
 **Objectifs d'apprentissage.** À la fin de la séance, l'étudiant :
-1. reprend un projet dormant en suivant une checklist de remise en route ;
+1. reprend le projet de l'avant-veille par un bref contrôle (`git pull`, `flutter pub get`, `flutter test`) ;
 2. livre une première user story en TDD et en BDD avec son agent, et la fait relire ;
 3. relit la PR d'une autre équipe avec une checklist, et résout un conflit réel ;
 4. modélise un domaine en entités et relations, écrit une migration drift, et vérifie l'intégrité des données sur une base en mémoire ;
 5. distingue donnée personnelle, base légale, durée de conservation, sous-traitant ; connaît ses droits (accès, rectification, effacement, etc.) ; remplit les premières rubriques de la fiche de conformité.
 
 **Matériel et prérequis.**
-- Dépôts en état de marche (smoke test et micro-livrable, section 5).
-- Checklist de revue de PR et de remise en route, gabarit de fiche de conformité à 13 rubriques (`cours/conformite-ai-act-rgpd.md`, section 6.1).
+- Dépôts initialisés en S2 (tag `s2-fin`, état courant dans `JOURNAL.md`).
+- Checklist de revue de PR, gabarit de fiche de conformité à 13 rubriques (`cours/conformite-ai-act-rgpd.md`, section 6.1).
 - 1 aide au moins, et l'enseignant qui circule en priorité dans les équipes en difficulté.
 
 **Légende des poids :** **Indispensable** = ne pas sacrifier ; **Important** = sauf contrainte forte ; **Pratique** = si le rythme le permet, ou en ressource ; **Moins utile** = peut sauter ou rester en lecture.
 
 **Déroulé (ordre logique des blocs).**
 
-**Bloc 1. Remise en route** · **Indispensable** · atelier
-- *Contenu.* Dans l'ordre : (1) checklist (`git pull`, `flutter pub get`, `flutter analyze`, `flutter test`, relire `JOURNAL.md` et `CLAUDE.md`, vérifier la version de Claude Code, l'accès et les quotas) (**Indispensable**) ; (2) quiz éclair de 5 questions sur S1 et S2 (**Pratique**) ; (3) point d'équipe bref (où on en est, qui tient quel rôle ; les rôles sont confirmés) (**Important**).
-- *Intention.* Sortir de la coupure de 8 semaines : un dépôt qui démarre, un agent qui répond, des rôles clairs.
+**Bloc 1. Contrôle d'ouverture** · **Indispensable** · atelier
+- *Contenu.* S2 n'est qu'à deux jours : la remise en route se réduit à un bref contrôle. Dans l'ordre : (1) `git pull`, `flutter pub get`, `flutter test`, et lecture de l'état courant en tête de `JOURNAL.md` (**Indispensable**) ; les équipes qui n'ont pas terminé l'initialisation de S2 (première PR, protection de `main`) la terminent ici ; (2) point d'équipe bref (où on en est, qui tient quel rôle ; les rôles sont confirmés) (**Important**) ; (3) quiz éclair de 5 questions sur S1 et S2 (**Pratique**).
+- *Intention.* Vérifier en quelques minutes que le dépôt démarre sur chaque poste et que les rôles sont clairs, sans y consacrer un vrai bloc de remise en route.
 
 **Bloc 2. Git en équipe** · **Important** · exposé et démonstration
 - *Contenu.* Petites PR, branches courtes, relecture (quoi regarder, comment commenter, checklist), pourquoi les conflits arrivent et comment les résoudre. Démonstration courte : deux branches qui modifient le même fichier, conflit, résolution. Willison : « Don't file pull requests with code you haven't reviewed yourself ». Les paires d'équipes pour la revue croisée sont annoncées. **8 équipes** : 01–04, 02–05, 03–06, 07–08. **7 équipes** : 01–04, 02–05, 03–06, et l'équipe 07 rejoint la paire 01–04 en trio circulaire (07 relit 01, 01 relit 04, 04 relit 07). Les paires de même thème (07–08) sont **tolérées en S3** ; elles sont évitées en S4.
@@ -364,7 +375,7 @@ Ne se sacrifient jamais : git au clavier, le test du refus de lecture de `.env`,
 - *Intention.* Comprendre que les données survivent au code et savoir pourquoi les migrations sont explicites.
 
 **Bloc 9. Modéliser et implémenter** · **Indispensable** · atelier
-- *Contenu.* D'abord un modèle sur papier (entités, relations, contraintes), validé en passant par l'enseignant ou une aide. Puis, avec l'agent : tables drift des entités du thème rangées dans la couche data, **première migration** et **test d'intégrité sur base en mémoire** (insertion orpheline rejetée ; les clés étrangères doivent être activées explicitement avec SQLite, à vérifier avec drift), le tout fusionné par PR relue. Les rubriques de la fiche touchant aux données sont notées en commentaire dans `docs/fiche_conformite.md`. **Le seed complet et la garde d'accès par rôle (`RequireRole` dans la couche domain, avec test de refus) ne sont pas demandés en S3** (**Pratique**, ils glissent).
+- *Contenu.* D'abord un modèle sur papier (entités, relations, contraintes), validé en passant par l'enseignant ou une aide. Puis, avec l'agent : tables drift des entités du thème rangées dans la couche data, **première migration** et **test d'intégrité sur base en mémoire** (insertion orpheline rejetée ; les clés étrangères doivent être activées explicitement avec SQLite, à vérifier avec drift), le tout fusionné par PR relue. Les rubriques de la fiche touchant aux données sont notées en commentaire dans `docs/fiche_conformite.md`. **Le seed complet et la garde d'accès par rôle (`RequireRole` dans la couche domain, avec test de refus) ne sont pas demandés en S3** (**Pratique**, ils glissent : les douze jours avant S4 permettent de les terminer).
 - *Intention.* Livrer un modèle de données propre et prouver l'intégrité par un test.
 
 **Bloc 10. Revue croisée entre équipes** · **Indispensable** · atelier
@@ -372,8 +383,8 @@ Ne se sacrifient jamais : git au clavier, le test du refus de lecture de `.env`,
 - *Intention.* Pratiquer la revue entre équipes et l'explication orale de sa propre PR.
 
 **Bloc 11. Bilan** · **Important** · discussion
-- *Contenu.* `JOURNAL.md` et `CLAUDE.md` mis à jour (règles de données), état de la fiche de conformité, vérification du **livrable de fin de S3**, consignes pour S4 (une seule tâche facultative d'1 h au plus, voir section 5).
-- *Intention.* Consolider l'état du projet pour la reprise et préparer S4.
+- *Contenu.* `JOURNAL.md` et `CLAUDE.md` mis à jour (règles de données), état de la fiche de conformité, vérification du **livrable de fin de S3**, consignes pour les douze jours avant S4 (une tâche facultative de 2 h au plus par étudiant : terminer ce qui a glissé, voir section 5).
+- *Intention.* Consolider l'état du projet pour la reprise, douze jours plus tard, et préparer S4.
 
 **Si la séance prend du retard (ordre de coupe, du moins utile au plus utile).**
 1. L'écran Flutter de la première user story (le BLoC et son test restent).
@@ -381,14 +392,14 @@ Ne se sacrifient jamais : git au clavier, le test du refus de lecture de `.env`,
 3. Le seed complet, puis les rôles (garde `RequireRole`) : une équipe en retard les abandonne en premier, mais **garde la migration et le test d'intégrité**.
 4. Ne pas entamer les rubriques 6 et 7 de la fiche de conformité (déjà prévues au sprint) ; au besoin, réduire les rubriques 4 et 5 à une phrase chacune.
 
-Ne se sacrifient jamais : remise en route, première user story en TDD et en BDD sur la sous-règle isolée du thème, modèle de données avec première migration et test d'intégrité, RGPD (dont les droits des personnes) et début de la fiche, PR croisées.
+Ne se sacrifient jamais : contrôle d'ouverture, première user story en TDD et en BDD sur la sous-règle isolée du thème, modèle de données avec première migration et test d'intégrité, RGPD (dont les droits des personnes) et début de la fiche, PR croisées.
 
-**Peut glisser dans le sprint ou au début de S4.** Seed complet, garde d'accès `RequireRole` avec test de refus, rubriques 6 et 7 de la fiche, exercice de courriel de demande d'accès (§5 du module).
+**Peut glisser entre S3 et S4 (douze jours, tâche facultative), au début de S4 ou dans le sprint.** Seed complet, garde d'accès `RequireRole` avec test de refus, rubriques 6 et 7 de la fiche, exercice de courriel de demande d'accès (§5 du module).
 
 **Livrable de fin de séance (identique pour les trois thèmes).** **Première règle verte, modèle et migrations fusionnés, début de `docs/fiche_conformite.md` commité.** Détail : première user story livrée (scénario `.feature`, tests, code, PR relue), modèle de données (schéma, première migration, test d'intégrité), `docs/fiche_conformite.md` commité (rubriques 1 à 5), au moins une PR relue par une autre équipe.
 
 **Definition of done.**
-- Sur une base en mémoire vide, le schéma se crée et les migrations se rejouent sans erreur (test), avec une seule migration à la fois ; `flutter test` est vert (le seed complet est attendu pendant le sprint ou au début de S4).
+- Sur une base en mémoire vide, le schéma se crée et les migrations se rejouent sans erreur (test), avec une seule migration à la fois ; `flutter test` est vert (le seed complet est attendu entre S3 et S4, au début de S4 ou pendant le sprint).
 - Un test prouve qu'une insertion orpheline est rejetée.
 - Chaque étudiant a ouvert une PR (même petite) et relu celle d'un autre.
 - **Aucune donnée personnelle réelle dans le dépôt, la fiche existe et indique « données fictives » avec une justification, sans nom civil ni courriel.**
@@ -396,9 +407,9 @@ Ne se sacrifient jamais : remise en route, première user story en TDD et en BDD
 
 ---
 
-### Séance 4 : Qualité, CI/CD, sécurité, AI Act et validation RSSI (ven. 4 déc.)
+### Séance 4 : Qualité, CI/CD, sécurité, AI Act et validation RSSI (mer. 16 déc.)
 
-**Pourquoi ce thème.** Une fois que le code et les données existent, la question devient : peut-on faire confiance à ce qu'on livre, et peut-on le mettre en usage ? Trois réponses complémentaires : des **garde-fous automatiques** (CI), un **test d'acceptation écrit par un humain avant le code de l'agent** (pour éviter le self-grading, où le même agent écrit le code et ses tests), et un **passage devant le RSSI** qui qualifie les risques (RGPD, AI Act, sécurité, hébergement) avant toute mise en usage. **S4 ne suppose pas le CRUD terminé** : elle repart de l'état de S3 (première règle verte, modèle et migrations fusionnés) et reprend d'abord ce qui a glissé (rôles, seed).
+**Pourquoi ce thème.** Une fois que le code et les données existent, la question devient : peut-on faire confiance à ce qu'on livre, et peut-on le mettre en usage ? Trois réponses complémentaires : des **garde-fous automatiques** (CI), un **test d'acceptation écrit par un humain avant le code de l'agent** (pour éviter le self-grading, où le même agent écrit le code et ses tests), et un **passage devant le RSSI** qui qualifie les risques (RGPD, AI Act, sécurité, hébergement) avant toute mise en usage. **S4 ne suppose pas le CRUD terminé** : elle a lieu douze jours après S3, repart de l'état de S3 (première règle verte, modèle et migrations fusionnés) et reprend d'abord ce qui a glissé (rôles, seed) et que la tâche facultative n'a pas terminé.
 
 **Objectifs d'apprentissage.** À la fin de la séance, l'étudiant :
 1. explique pourquoi « les tests passent » ne prouve pas que « le code est correct » quand le même agent écrit code et tests ;
@@ -412,7 +423,7 @@ Ne se sacrifient jamais : remise en route, première user story en TDD et en BDD
 - Dépôts de S3 avec modèle de données et fiche commencée.
 - Workflow GitHub Actions modèle (`flutter analyze`, `flutter test --coverage`, audit des dépendances pub, gitleaks épinglé, `flutter build web`, déploiement GitHub Pages) testé à l'avance sur un dépôt de l'organisation, avec GitHub Pages activé (à vérifier) ; aucun compte de service cloud ni démonstration de déploiement par l'enseignant.
 - Cartes de cas (10) et grille go/no-go imprimées ; checklist d'audit en 5 points ; plan des 3 tables.
-- **RSSI désigné** (enseignant ou RSSI de l'établissement, choix à faire avant S3, section 10), **trois intervenants pour les trois tables** (second et troisième à confirmer ; à défaut, étudiants volontaires) et réponse écrite avant le 11 décembre.
+- **RSSI désigné** (enseignant ou RSSI de l'établissement, choix à faire avant S3, section 10), **trois intervenants pour les trois tables** (second et troisième à confirmer ; à défaut, étudiants volontaires) et réponse écrite au plus tard une semaine avant S5.
 - 2 aides en S4, dont l'une tient une table RSSI.
 
 **Légende des poids :** **Indispensable** = ne pas sacrifier ; **Important** = sauf contrainte forte ; **Pratique** = si le rythme le permet, ou en ressource ; **Moins utile** = peut sauter ou rester en lecture.
@@ -420,7 +431,7 @@ Ne se sacrifient jamais : remise en route, première user story en TDD et en BDD
 **Déroulé (ordre logique des blocs).**
 
 **Bloc 1. Point d'équipe** · **Important** · discussion
-- *Contenu.* PR ouvertes, blocages, état de la CI et de la fiche. Annonce des appariements d'audit et des tables du passage devant le RSSI (plus bas).
+- *Contenu.* Bref contrôle après douze jours (`git pull`, `flutter pub get`, `flutter test`), PR ouvertes, blocages, état de la CI et de la fiche, ce que la tâche facultative a permis de terminer. Annonce des appariements d'audit et des tables du passage devant le RSSI (plus bas).
 - *Intention.* Repartir de l'état réel de chaque équipe.
 
 **Bloc 2. Reprise de S3 : rôles et seed** · **Indispensable** pour les rôles ; **Important** pour le seed réduit ; **Pratique** pour la suite · atelier
@@ -457,7 +468,7 @@ Ne se sacrifient jamais : remise en route, première user story en TDD et en BDD
 
 **Bloc 10. Passage devant le RSSI, en jeu de rôle (§6.2 et §8.2 du module)** · **Indispensable** · atelier en jeu de rôle
 - *Forme.* **Trois tables en parallèle**, un RSSI par table (l'enseignant, le RSSI de l'établissement s'il est invité, un second intervenant ou une aide, à confirmer ; à défaut, un étudiant volontaire muni de la grille go/no-go). Les équipes passent à tour de rôle devant leur table (rotation), le jeu de rôle est intégré au passage.
-- *Contenu.* Chaque équipe présente le brouillon de sa fiche, répond aux questions du RSSI (« où partent les prompts ? », « qui peut contester ? », « que se passe-t-il à la fin de vie de l'outil ? ») et reçoit une décision provisoire (go, go sous conditions, no-go). Tables à 8 équipes (3-3-2) : table 1 : 01, 04, 07 ; table 2 : 02, 05, 08 ; table 3 : 03, 06. Chaque table fait au plus 3 passages. Les équipes qui ne passent pas observent au moins un autre passage avec la grille go/no-go, ou avancent l'audit croisé. La réponse écrite et datée du RSSI suit sur la v1 de la fiche, avant le 11 décembre. *Sensibilisation, pas avis juridique.*
+- *Contenu.* Chaque équipe présente le brouillon de sa fiche, répond aux questions du RSSI (« où partent les prompts ? », « qui peut contester ? », « que se passe-t-il à la fin de vie de l'outil ? ») et reçoit une décision provisoire (go, go sous conditions, no-go). Tables à 8 équipes (3-3-2) : table 1 : 01, 04, 07 ; table 2 : 02, 05, 08 ; table 3 : 03, 06. Chaque table fait au plus 3 passages. Les équipes qui ne passent pas observent au moins un autre passage avec la grille go/no-go, ou avancent l'audit croisé. La réponse écrite et datée du RSSI suit sur la v1 de la fiche, au plus tard une semaine avant S5. *Sensibilisation, pas avis juridique.*
 - *Intention.* Mettre chaque équipe en situation de défendre son choix devant le RSSI qui validera la mise en usage.
 
 **Bloc 11. Audit croisé entre équipes, en 5 points** · **Indispensable** · atelier
@@ -465,7 +476,7 @@ Ne se sacrifient jamais : remise en route, première user story en TDD et en BDD
 - *Intention.* Regarder un dépôt avec l'œil d'un tiers et alimenter le backlog du sprint.
 
 **Bloc 12. Bilan et consignes du sprint** · **Important** · discussion
-- *Contenu.* Backlog final priorisé en essentiel, souhaitable et abandonné (issues de l'audit incluses), règles du gel (section 5), rappel de la date de dépôt de la fiche en PR (mardi 8 décembre à 18h). Tag `v0.1` et release GitHub avec notes si `main` est verte (**Pratique** ; sinon dans le sprint).
+- *Contenu.* Backlog final priorisé en essentiel, souhaitable et abandonné (issues de l'audit incluses), règles du gel (section 5), rappel de la date de dépôt de la fiche en PR (vendredi 18 décembre 2026 à 18h) et du calendrier du sprint : il englobe les vacances de fin d'année (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus), pendant lesquelles aucun travail n'est imposé ; S5 a lieu en janvier 2027 (date à préciser). Tag `v0.1` et release GitHub avec notes si `main` est verte (**Pratique** ; sinon dans le sprint).
 - *Intention.* Ouvrir le sprint avec un périmètre décidé.
 
 **Bloc 13. Quiz de 8 questions du module (§8.3)** · **Moins utile** · discussion
@@ -501,14 +512,14 @@ Renvoyés au sprint, hors des cinq points : entrées et sorties (pas de SQL brut
 - Un test d'acceptation (fichier `.feature`) a été écrit avant le code qu'il vérifie (valeurs recopiées, relu par un second membre) et `test/acceptance/**` est protégé.
 - Le contrôle de secrets en CI est vert.
 - La version web de l'équipe est publiée sur GitHub Pages (ou le plan B est documenté).
-- Chaque équipe est passée devant le RSSI, a **posé la question « système d'IA ? »**, proposé un classement AI Act et un rôle, et connaît la date de dépôt de la v1 (8 décembre).
+- Chaque équipe est passée devant le RSSI, a **posé la question « système d'IA ? »**, proposé un classement AI Act et un rôle, et connaît la date de dépôt de la v1 (vendredi 18 décembre 2026).
 - Chaque équipe a audité une équipe et reçu un audit.
 
 ---
 
-### Séance 5 : Retouches et soutenance (mer. 16 déc.)
+### Séance 5 : Retouches et soutenance, en janvier 2027 (date à préciser)
 
-**Principe du rendu.** Le **tag `v1.0-rc` et le dossier de rendu sont déposés le lundi 14 décembre à 18h**, pour que les évaluateurs lisent les dépôts avant la séance. Le matin de S5, seuls des correctifs bloquants sont autorisés avant le tag final `v1.0`.
+**Principe du rendu.** Le **tag `v1.0-rc` et le dossier de rendu sont déposés l'avant-veille de S5 à 18h**, pour que les évaluateurs lisent les dépôts avant la séance. Le matin de S5, seuls des correctifs bloquants sont autorisés avant le tag final `v1.0`.
 
 **Objectifs d'apprentissage.** À la fin de la séance, l'étudiant :
 1. gèle un périmètre et livre une version stable (`v1.0`), en assumant ce qui est laissé de côté ;
@@ -519,13 +530,13 @@ Renvoyés au sprint, hors des cinq points : entrées et sorties (pas de SQL brut
 
 **Matériel et prérequis.**
 - Deux salles avec vidéoprojecteur, chronomètre visible, fiches d'observation, **fiches de notation pré-remplies par étudiant**, grille de notation et échelle de compréhension orale imprimées.
-- Deux évaluateurs, chacun avec un second évaluateur ou un observateur par salle (à confirmer avant le 4 décembre ; à défaut, format dégradé à une salle, ci-dessous). Lecture des dépôts le mardi 15 décembre ; les PR tirées au sort sont communiquées aux étudiants ce jour-là avant 9h, soit au moins 24 h avant le premier passage. Ordre de passage tiré au sort à l'avance ; machine de secours par salle.
+- Deux évaluateurs, chacun avec un second évaluateur ou un observateur par salle (à confirmer avant le 16 décembre ; à défaut, format dégradé à une salle, ci-dessous). Lecture des dépôts la veille de S5 ; les PR tirées au sort sont communiquées aux étudiants ce jour-là avant 9h, soit au moins 24 h avant le premier passage. Ordre de passage tiré au sort à l'avance ; machine de secours par salle.
 
 ### Format de la soutenance (contrainte de logistique)
 
 Cette section décrit une **contrainte d'organisation** (32 étudiants, un jury), pas un déroulé de parole ni un minutage de la séance. Les chiffres sont des **ordres de grandeur à ajuster** selon les équipes et les évaluateurs.
 
-**Deux salles en parallèle.** Avec 8 équipes de 4, une seule salle impose une succession de soutenances trop longue pour laisser de la place aux retouches, au gel et à la clôture. Un format raccourci à une salle réduit fortement l'oral individuel, qui pèse 4 points sur 20 : **non recommandé**, gardé comme format dégradé (voir plus bas). On retient **deux salles parallèles de 4 équipes chacune**, avec dans chaque salle **un évaluateur et un second évaluateur ou observateur** (l'enseignant, et en face un collègue, un professionnel invité, le RSSI de l'établissement pour la partie conformité, un assistant ou un doctorant : **à confirmer avant le 4 décembre**). L'observateur chronomètre et note les écarts ; l'évaluateur dispose d'une **fiche de notation pré-remplie par étudiant** (équipe, étudiant, PR tirée au sort, échelle de compréhension de 0 à 4 pour les deux questions). Les étudiants restent dans la salle de leurs quatre équipes : ils forment le public et remplissent les fiches d'évaluation par les pairs. Une **courte séance de calibrage des évaluateurs** précède les passages.
+**Deux salles en parallèle.** Avec 8 équipes de 4, une seule salle impose une succession de soutenances trop longue pour laisser de la place aux retouches, au gel et à la clôture. Un format raccourci à une salle réduit fortement l'oral individuel, qui pèse 4 points sur 20 : **non recommandé**, gardé comme format dégradé (voir plus bas). On retient **deux salles parallèles de 4 équipes chacune**, avec dans chaque salle **un évaluateur et un second évaluateur ou observateur** (l'enseignant, et en face un collègue, un professionnel invité, le RSSI de l'établissement pour la partie conformité, un assistant ou un doctorant : **à confirmer avant le 16 décembre**). L'observateur chronomètre et note les écarts ; l'évaluateur dispose d'une **fiche de notation pré-remplie par étudiant** (équipe, étudiant, PR tirée au sort, échelle de compréhension de 0 à 4 pour les deux questions). Les étudiants restent dans la salle de leurs quatre équipes : ils forment le public et remplissent les fiches d'évaluation par les pairs. Une **courte séance de calibrage des évaluateurs** précède les passages.
 
 **Budget indicatif par équipe** (organisation, à ajuster) : de l'ordre de **30 minutes pour une équipe de 4** et **34 minutes pour une équipe de 5**, selon la formule « une partie commune d'une dizaine de minutes + quatre minutes de questions par étudiant + une transition de quatre minutes ». La partie commune comprend une démonstration en direct, un passage « sous le capot » (harnais, une décision sur les données, un moment de l'historique git, mesures temps estimé et réel) et un point de conformité (fiche, avis du RSSI, limites d'usage). Les questions individuelles sont au nombre de deux par étudiant (voir section 7).
 
@@ -587,43 +598,45 @@ Ne se sacrifient jamais : le gel et le tag `v1.0`, les soutenances avec leurs de
 **Livrable de fin de séance.** Tag `v1.0`, dossier de rendu à jour (section 7) et soutenance passée.
 
 **Definition of done.**
-- `v1.0-rc` est déposé le lundi 14 décembre à 18h ; `v1.0` est taguée avant le premier passage le jour de S5 ; la CI est verte sur les deux tags ; le `README` testé à froid (`git clone`, `flutter pub get`, `flutter run -d chrome`) permet de lancer l'application en moins de 10 minutes, et la version web publiée sur GitHub Pages est accessible.
+- `v1.0-rc` est déposé l'avant-veille de S5 à 18h ; `v1.0` est taguée avant le premier passage le jour de S5 ; la CI est verte sur les deux tags ; le `README` testé à froid (`git clone`, `flutter pub get`, `flutter run -d chrome`) permet de lancer l'application en moins de 10 minutes, et la version web publiée sur GitHub Pages est accessible.
 - La fiche de conformité est complète (13 rubriques) et contient la **réponse du RSSI** datée (go, go sous conditions avec actions, ou no-go assumé avec les raisons).
-- Chaque étudiant a répondu à **deux questions individuelles** : une sur une PR tirée au sort communiquée le 15 décembre, une de compréhension.
+- Chaque étudiant a répondu à **deux questions individuelles** : une sur une PR tirée au sort communiquée la veille de S5, une de compréhension.
 - `JOURNAL.md` est à jour et les PR portent leur section « ce que l'agent a proposé, ce que j'ai refusé » et leurs temps.
 
 ---
 
 ## 5. Travail entre les séances
 
-Principe : **cadré, chiffré et limité.** Les étudiants ont d'autres cours. Le travail de la formation se fait en séance, sauf le sprint de 12 jours avant S5, qui est requis.
+Principe : **cadré, chiffré et limité.** Les étudiants ont d'autres cours. Le travail de la formation se fait en séance, sauf le sprint final entre S4 et S5, qui est requis.
 
 | Intervalle | Ce qu'on demande | Statut |
 |---|---|---|
-| **S1 → S2** (2 jours) | Terminer les installations restantes (rendez-vous de dépannage possible), dont `flutter doctor` et `flutter run -d chrome` sur le projet d'exemple. Relire la règle d'or. Consulter les thèmes (`cours/projets/themes.md`, support à part transmis avec le formulaire, modalité à confirmer), **remplir le formulaire d'équipes avant le jeudi 8 octobre à 12h** (composition, classement des thèmes, identifiant GitHub) et accepter l'invitation de collaborateur reçue par courriel | Recommandé ; formulaire requis |
-| **S2 → S3** (environ 8 semaines) | Voir ci-dessous. **Micro-livrable obligatoire, échéance le vendredi 27 novembre à 18h** | Cadré, avec un point obligatoire |
-| **S3 → S4** (2 jours) | **Une seule tâche, facultative, d'1 h au maximum** : au choix, fusionner les PR ouvertes et corriger les tests rouges, ou relire la fiche de conformité, ou rédiger en cinq lignes un courriel de demande d'accès (art. 15 RGPD) à un service que l'on utilise (à ne pas envoyer, sauf si l'on le souhaite vraiment). **S4 ne suppose pas le CRUD terminé** | Facultatif |
-| **S4 → S5** (12 jours) | Sprint : voir ci-dessous | **Requis** |
+| **S1 → S2** (8 semaines) | Voir ci-dessous. Terminer les installations restantes (rendez-vous de dépannage possible). **Vérification de reprise du poste obligatoire (10 minutes), échéance le vendredi 27 novembre à 18h.** Relire la règle d'or. Aucun formulaire à remplir : les équipes se constituent au début de S2 ; les énoncés des thèmes (`cours/projets/themes.md`) peuvent être consultés à l'avance, sans obligation | Cadré, avec un point obligatoire |
+| **S2 → S3** (2 jours) | Rien n'est demandé. L'état courant en tête de `JOURNAL.md` et le tag `s2-fin` suffisent à reprendre ; ce qui n'a pas été terminé en S2 se termine au contrôle d'ouverture de S3 | Aucun travail |
+| **S3 → S4** (12 jours) | **Une tâche facultative, de 2 h au plus par étudiant** : en priorité, terminer ce qui a glissé de S3 (seed complet, rôles et garde `RequireRole` avec son test de refus) et fusionner les PR ouvertes ; sinon, au choix, relire la fiche de conformité ou rédiger en cinq lignes un courriel de demande d'accès (art. 15 RGPD) à un service que l'on utilise (à ne pas envoyer, sauf si l'on le souhaite vraiment). **S4 ne suppose pas le CRUD terminé**, et reprend en séance ce qui n'a pas été fait | Facultatif |
+| **S4 → S5** (du 16 décembre à S5, en janvier 2027 (date à préciser) ; vacances de fin d'année comprises) | Sprint : voir ci-dessous | **Requis** |
 
 ### Le trou de 8 semaines : ne pas perdre le fil
 
-Le risque principal est l'oubli : les étudiants reviennent le 2 décembre sans plus savoir comment le projet se lance. Six parades.
+L'interruption de huit semaines se trouve entre S1 et S2. Aucun dépôt de projet n'existe encore et les équipes ne sont pas constituées : le risque principal est que les étudiants reviennent le 2 décembre avec **un poste qui ne démarre plus** (mises à jour, session expirée, compte oublié) et un vocabulaire à moitié oublié. Six parades.
 
-1. **Le dépôt sert de mémoire.** À la fin de S2, chaque équipe pose le tag `s2-fin` et écrit l'état courant en tête de `JOURNAL.md` (où on en est, prochaine étape, commandes clés, décisions prises). `CLAUDE.md` et les tests font le reste.
-2. **Ne figer que ce qui peut l'être.** Les dépendances sont figées par `pubspec.lock` (versionné) et la version de Flutter est notée dans le `README` et dans `pubspec.yaml` (contrainte d'environnement, à vérifier) ; pas de `flutter upgrade` pendant la pause sans raison. Claude Code et les modèles changent en 8 semaines : le courriel de reprise demande de **noter la version de Claude Code et de relire les permissions**. La syntaxe des réglages peut varier (à vérifier).
-3. **CI minimale dès le début, signal à distance.** Le dépôt-modèle fournit un workflow minimal (`flutter analyze` et `flutter test`), actif dès S2 ; l'enseignant voit à distance quelles équipes ont un dépôt qui tient debout.
-4. **Smoke test de l'enseignant, vers le vendredi 20 novembre.** L'enseignant clone à froid chaque dépôt (8 dépôts : une heure au plus), lance `flutter pub get` et `flutter test`, et ouvre une issue dans les dépôts qui ne démarrent pas.
-5. **Micro-livrable obligatoire (10 minutes), échéance le vendredi 27 novembre à 18h.** Chaque étudiant exécute la checklist de reprise sur un nouveau clone (cloner, `flutter pub get`, `dart run build_runner build --delete-conflicting-outputs`, `flutter test`, `flutter run -d chrome`, lancer Claude Code, relire `CLAUDE.md`) et dépose une capture d'écran dans l'issue « reprise » de son équipe. Non noté ; relance individuelle le lundi 30 novembre.
-6. **Rappels de l'enseignant.** Courriel du **lundi 16 novembre** (annonce de l'échéance et checklist), du **mardi 24 novembre** (dernier rappel), échéance le vendredi 27 novembre, relance individuelle le lundi 30 novembre. Rappel dans le courriel : **ne rien mettre de personnel dans le dépôt, même pour tester** (règle d'or).
+1. **Les supports servent de mémoire.** Les chapitres de `cours/supports/day-1/`, les fiches d'installation et le tableau de suivi des postes de S1 disent où chacun en était. Le dépôt d'équipe prendra ce rôle à partir de S2 (`CLAUDE.md`, `JOURNAL.md`, tests, tag `s2-fin`).
+2. **Ne figer que ce qui peut l'être.** La version de Flutter attendue est celle du dépôt-modèle (notée dans son `README` et dans `pubspec.yaml`, dépendances figées par `pubspec.lock`) ; pas de `flutter upgrade` au-delà sans raison. Claude Code et les modèles changent en 8 semaines : le courriel de reprise demande de **mettre à jour Claude Code, de noter sa version et de vérifier que le compte répond**. La syntaxe des réglages peut varier (à vérifier avant S2).
+3. **Le dépôt-modèle est prêt avant la reprise.** Il fournit le squelette, le contexte et un workflow de CI minimal (`flutter analyze` et `flutter test`), actif dans chaque dépôt d'équipe dès sa création en S2.
+4. **Smoke test de l'enseignant, vers le vendredi 20 novembre.** Il porte sur le dépôt-modèle et le projet d'exemple, plus sur des dépôts d'équipe : clone à froid, `flutter pub get`, `flutter test`, `flutter run -d chrome` avec les versions courantes de Flutter et de Claude Code ; essai du script de création des dépôts sur un dépôt test.
+5. **Vérification de reprise du poste, obligatoire (10 minutes), échéance le vendredi 27 novembre à 18h.** Chaque étudiant exécute la checklist de reprise sur son poste (`git --version`, `gh auth status`, mise à jour puis `claude --version` et un premier échange avec Claude Code, `flutter doctor`, `flutter test` et `flutter run -d chrome` sur le projet d'exemple de S1) et renvoie une capture d'écran en réponse au courriel de reprise (pas d'issue : il n'y a pas encore de dépôt d'équipe). Non noté ; relance individuelle le lundi 30 novembre. Les postes en échec sont listés pour le bloc 1 de S2.
+6. **Rappels de l'enseignant.** Courriel du **lundi 16 novembre** (annonce de l'échéance et checklist ; il annonce aussi que les équipes se constitueront en séance le 2 décembre, après la présentation des thèmes), du **mardi 24 novembre** (dernier rappel), échéance le vendredi 27 novembre, relance individuelle le lundi 30 novembre. Rappel dans le courriel : la règle d'or (**rien de personnel ni de confidentiel dans un prompt ni dans un dépôt, même pour tester**).
 
-En S3, le premier bloc est une **remise en route** réelle : l'enseignant prévoit du temps de dépannage et un quiz éclair sur S1 et S2.
+En S2, le premier bloc est une **remise en route** réelle des postes : l'enseignant et les aides prévoient du temps de dépannage. S3 n'étant qu'à deux jours de S2, elle ne commence que par un bref contrôle (`git pull`, `flutter pub get`, `flutter test`).
 
-### Le sprint de 12 jours avant S5
+### Le sprint final, entre S4 et S5
+
+Le sprint va de S4 (mercredi 16 décembre 2026) à S5, en janvier 2027 (date à préciser). **Il englobe les vacances de fin d'année, du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus : aucun travail n'est imposé pendant les vacances au-delà de ce que l'équipe choisit.** La charge ne change pas ; elle se répartit entre les jours qui suivent S4 et la rentrée de janvier, selon ce que l'équipe décide en S4.
 
 - **Objectif** : terminer le périmètre décidé en S4 (clou niveau 1 avec son test d'acceptation vert, éléments souhaitables retenus), corriger les constats de l'audit croisé, **finaliser la fiche de conformité et obtenir la réponse du RSSI**, stabiliser.
 - **Charge d'équipe : environ 15 à 20 heures**, soit 4 à 5 heures par étudiant (équipe de 4). Répartition indicative : périmètre restant après S4 environ 9 à 12 h (estimations de conception, non chronométrées, établies avant le passage à Flutter et Clean Architecture, à recalibrer au smoke test du 20 novembre ; **import CSV obligatoire, seed complet et CRUD s'ils ne sont pas terminés**) ; corrections d'audit 3 h ; fiche, documentation et répétition 3 à 5 h. **Les mesures de conformité propres à chaque thème (mention d'information et script de suppression en A ; consigne affichée sur les commentaires en B ; statut `brouillon` / `publie` en C) sont incluses dans ces 15 à 20 h**, elles ne s'y ajoutent pas.
 - **Backlog priorisé** : essentiel, souhaitable, **abandonné**. L'équipe décide explicitement de ce qu'elle abandonne. Chaque thème fournit un « livrable minimum viable ». Si l'équipe est en retard, le CRUD se limite à la création et à la lecture, et le seed complet cède avant l'import CSV.
-- **Calendrier** : **mardi 8 décembre à 18h**, fiche de conformité v1 déposée en PR (« demande de validation RSSI ») ; **mercredi 9 décembre**, point d'étape asynchrone (issue de 5 lignes ; l'enseignant répond) ; **vendredi 11 décembre**, réponse du RSSI et **gel des fonctionnalités au soir** (ensuite : correctifs, documentation, préparation de la démonstration) ; **lundi 14 décembre à 18h**, tag `v1.0-rc` et dossier de rendu.
+- **Calendrier** : **vendredi 18 décembre 2026 à 18h**, fiche de conformité v1 déposée en PR (« demande de validation RSSI ») et point d'étape asynchrone avant les vacances (issue de 5 lignes : ce qui est fait, ce qui reste, qui fait quoi et quand ; l'enseignant répond) ; **du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus**, vacances, sans travail imposé ; **au plus tard une semaine avant S5**, réponse du RSSI et **gel des fonctionnalités au soir** (ensuite : correctifs, documentation, préparation de la démonstration) ; **l'avant-veille de S5 à 18h**, tag `v1.0-rc` et dossier de rendu ; **la veille de S5**, lecture des dépôts par les évaluateurs et communication des PR tirées au sort avant 9h.
 - **Répétition de la démonstration** avant S5 : une fois, en équipe, avec chronomètre.
 - **Règle de prudence** : ne pas commencer un gros chantier au dernier moment.
 
@@ -684,11 +697,11 @@ Repères pour la notation :
 
 ### Format de la soutenance
 
-- **Budget indicatif par équipe** (ordre de grandeur d'organisation, détaillé dans la section « Format de la soutenance » de S5) : une démonstration en direct sur un scénario choisi par l'équipe, un passage « sous le capot », un point de conformité (fiche, avis du RSSI, limites d'usage), puis les questions individuelles. Deux salles en parallèle, 4 équipes par salle (variante à 7 équipes : 4 et 3 équipes, voir S5), **un évaluateur et un second évaluateur ou observateur par salle** (à confirmer avant le 4 décembre), une **fiche de notation pré-remplie par étudiant** et un **calibrage** des évaluateurs avant les passages. **Si le second évaluateur est absent** : format dégradé à une salle, à budget réduit par équipe (voir S5) ; la note de compréhension orale est alors établie sur une durée plus courte par étudiant et par un seul évaluateur, ce qui est signalé aux étudiants comme un format dégradé.
+- **Budget indicatif par équipe** (ordre de grandeur d'organisation, détaillé dans la section « Format de la soutenance » de S5) : une démonstration en direct sur un scénario choisi par l'équipe, un passage « sous le capot », un point de conformité (fiche, avis du RSSI, limites d'usage), puis les questions individuelles. Deux salles en parallèle, 4 équipes par salle (variante à 7 équipes : 4 et 3 équipes, voir S5), **un évaluateur et un second évaluateur ou observateur par salle** (à confirmer avant le 16 décembre), une **fiche de notation pré-remplie par étudiant** et un **calibrage** des évaluateurs avant les passages. **Si le second évaluateur est absent** : format dégradé à une salle, à budget réduit par équipe (voir S5) ; la note de compréhension orale est alors établie sur une durée plus courte par étudiant et par un seul évaluateur, ce qui est signalé aux étudiants comme un format dégradé.
 - **Démonstration en direct**, avec plan de secours (démonstration enregistrée et jeu de données de secours, à utiliser seulement en cas de panne). Une démonstration enregistrée sans plan B live est pénalisée.
-- **Questions individuelles** : **chaque étudiant reçoit deux questions**, avec la même trame pour tous. Question 1 (la plus longue) : une PR tirée au sort parmi celles qu'il a ouvertes ou approuvées, dont la taille atteint le seuil de **20 lignes modifiées hors fichiers générés** (à défaut, sa plus grosse PR), **communiquée 24 h avant** (le 15 décembre avant 9h). Question 2 (brève) : une question de compréhension.
+- **Questions individuelles** : **chaque étudiant reçoit deux questions**, avec la même trame pour tous. Question 1 (la plus longue) : une PR tirée au sort parmi celles qu'il a ouvertes ou approuvées, dont la taille atteint le seuil de **20 lignes modifiées hors fichiers générés** (à défaut, sa plus grosse PR), **communiquée 24 h avant** (la veille de S5 avant 9h). Question 2 (brève) : une question de compréhension.
 - **Absent** : l'équipe passe normalement ; l'étudiant absent le jour de la soutenance est interrogé dans les 15 jours avec la même trame.
-- **Dossier de rendu** (tag `v1.0-rc` le lundi 14 décembre à 18h, puis `v1.0` le matin de S5) : dépôt à jour, `README` d'installation, `CLAUDE.md`, `docs/ARCHITECTURE.md` (une page : composants, modèle de données, décisions), `docs/fiche_conformite.md` (avec réponse du RSSI), `JOURNAL.md`, et les PR avec leurs sections de suivi.
+- **Dossier de rendu** (tag `v1.0-rc` l'avant-veille de S5 à 18h, puis `v1.0` le matin de S5) : dépôt à jour, `README` d'installation, `CLAUDE.md`, `docs/ARCHITECTURE.md` (une page : composants, modèle de données, décisions), `docs/fiche_conformite.md` (avec réponse du RSSI), `JOURNAL.md`, et les PR avec leurs sections de suivi.
 
 ### Règles d'usage de l'IA
 
@@ -707,7 +720,7 @@ Repères pour la notation :
 ### Décisions arrêtées
 
 - **Dépôts GitHub publics** dans une organisation de la formation (Actions gratuites, protection de branche). **Aucun secret jamais dans le dépôt, aucune donnée réelle.**
-- **Un dépôt-modèle** fourni par l'enseignant ; **8 dépôts créés par script** avant S2 (section 13), membres ajoutés **comme collaborateurs de chaque dépôt** (un seul mécanisme d'accès : pas d'invitation à l'organisation).
+- **Un dépôt-modèle** fourni par l'enseignant ; **8 dépôts créés par script pendant S2** (section 13), une fois les équipes constituées et les thèmes attribués, membres ajoutés **comme collaborateurs de chaque dépôt** (un seul mécanisme d'accès : pas d'invitation à l'organisation).
 - **Git** : `gh auth login` ou connexion GitHub de VS Code. PR relue par un coéquipier dès S2 ; `main` protégée (PR obligatoire avec 1 approbation) ; CI obligatoire à partir de S4. **Merge commit seul**.
 - **Horodatages** : stockés en UTC, affichés en Europe/Paris (passage à l'heure d'hiver : nuit du 24 au 25 octobre 2026, testé seulement là où le thème le demande).
 - **Pile du projet : Flutter.** Les outils indispensables sont git + GitHub, VS Code, Claude Code (avec Claude Desktop) et Flutter ; Docker, Rust et Antigravity sont « utiles plus tard » et ne sont pas imposés au projet. Le dépôt-modèle fournit un squelette Flutter et un contexte réutilisable (`CLAUDE.md`, `docs/ARCHITECTURE.md`), ce qui permet à des non-développeurs d'aller vite et à l'enseignant de coacher 8 équipes sur une seule pile. **Cible d'exécution par défaut : Chrome** (`flutter run -d chrome`) ; le bureau est optionnel ; la chaîne Android peut rester en rouge dans `flutter doctor`. Toute autre cible est à discuter avec l'enseignant avant la fin de S2 (le coaching y serait limité).
@@ -717,7 +730,7 @@ Repères pour la notation :
 
 | Domaine | Choix | Justification |
 |---|---|---|
-| Langage et environnement | **Dart et Flutter** (SDK installé en S1) ; dépendances verrouillées dans `pubspec.lock` (versionné) ; version de Flutter notée dans le `README` et dans `pubspec.yaml` | Un seul langage et un seul outil à coacher ; le verrouillage aide pendant la pause de 8 semaines |
+| Langage et environnement | **Dart et Flutter** (SDK installé en S1) ; dépendances verrouillées dans `pubspec.lock` (versionné) ; version de Flutter notée dans le `README` et dans `pubspec.yaml` | Un seul langage et un seul outil à coacher ; le verrouillage garantit les mêmes versions sur tous les postes, d'une séance à l'autre |
 | Cible d'exécution | **Chrome** (`flutter run -d chrome`) ; bureau optionnel | Aucune chaîne native à installer : sous Windows, le bureau demanderait Visual Studio, qu'on n'impose pas |
 | Architecture | **Clean Architecture** : couches domain, data et presentation, une feature = un dossier | Sépare la règle métier de l'interface et des données ; donne à l'agent un cadre à respecter |
 | Injection de dépendances | **get_it** | Simple, adapté au squelette ; permet de remplacer un repository par un fake dans les tests |
@@ -782,10 +795,10 @@ Les énoncés complets sont dans `cours/projets/themes.md` : mise en situation, 
 
 Les trois thèmes ont la même charge estimée (15 à 20 h d'équipe, à calibrer lors de cette première promotion), **mesures de conformité comprises**. Le thème C demande plus de travail de conformité ; un thème sensible n'est pas plus difficile : il est plus formateur pour la conformité.
 
-**Procédure de choix (formulaire, puis validation en S2).**
+**Procédure de choix (en séance, au début de S2).**
 1. **Maximum 3 équipes par thème.** Répartition visée : **8 équipes : 3-3-2 ; 7 équipes : 3-2-2 ou 3-3-1. Tirage au sort si un thème dépasse 3 candidats.**
-2. Chaque équipe classe ses trois thèmes dans le **formulaire** clos le jeudi 8 octobre à 12h. L'enseignant attribue d'abord les premiers choix, de façon provisoire, et prépare les dépôts.
-3. En S2, on **valide** ; s'il y a litige, **tirage au sort** entre les équipes concernées, les équipes non retenues passant à leur choix suivant.
+2. Les trois thèmes sont **présentés au début de S2** (diaporama `cours/presentations/themes/`), puis les équipes de 3 à 5 se constituent et remplissent **sur place** le **formulaire** (composition, identifiants GitHub, classement des trois thèmes).
+3. L'enseignant attribue les premiers choix ; si un thème dépasse 3 candidats, **tirage au sort** entre les équipes concernées, les équipes non retenues passant à leur choix suivant. L'attribution est définitive : les dépôts sont créés ensuite (pendant les ateliers git et configuration), il n'y a donc aucun dépôt à renommer.
 4. Les équipes sont **numérotées par thème** (8 équipes : A : 01 à 03 ; B : 04 à 06 ; C : 07 et 08 ; 7 équipes : A : 01 à 03 ; B : 04 et 05 ; C : 06 et 07) ; la numérotation sert aux appariements de S3 et de S4.
 5. Deux équipes sur un même thème construisent chacune leur propre dépôt, sans partage de code (le code d'un dépôt public est visible : c'est une raison de plus de s'en tenir à la règle d'intégrité).
 
@@ -799,13 +812,13 @@ Le module de référence est `cours/conformite-ai-act-rgpd.md` (sensibilisation,
 |---|---|---|
 | **S1** | Règle d'or : aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public | Règle comprise |
 | **S3** (bloc RGPD) | RGPD (règlement (UE) 2016/679) : principes, bases légales, sous-traitants (dont le fournisseur de modèle), violation de données ; **droits** (art. 12 à 22, réclamation art. 77) ; test en 4 questions ; début de la fiche | `docs/fiche_conformite.md`, rubriques 1 à 5, commité (livrable de fin de S3) |
-| **S4** (exposé AI Act, atelier de classification, passage devant le RSSI) | AI Act (règlement (UE) 2024/1689) : étape 0 « système d'IA ? », niveaux de risque, rôles fournisseur et déployeur, art. 4, 50, 86 ; classification de son projet ; passage devant le RSSI sur 3 tables en parallèle (un RSSI par table, rotation des équipes), jeu de rôle intégré | Brouillon présenté, classement et rôle provisoires (rubriques 8 et 9) ; v1 déposée en PR le 8 décembre |
-| **Sprint** | Rubriques 6, 7 et 10 à 12 avant la v1 du 8 décembre ; réponse du RSSI avant le 11 décembre (rubrique 13) ; mise à jour avant le gel | Fiche complète |
+| **S4** (exposé AI Act, atelier de classification, passage devant le RSSI) | AI Act (règlement (UE) 2024/1689) : étape 0 « système d'IA ? », niveaux de risque, rôles fournisseur et déployeur, art. 4, 50, 86 ; classification de son projet ; passage devant le RSSI sur 3 tables en parallèle (un RSSI par table, rotation des équipes), jeu de rôle intégré | Brouillon présenté, classement et rôle provisoires (rubriques 8 et 9) ; v1 déposée en PR le vendredi 18 décembre 2026 |
+| **Sprint** | Rubriques 6, 7 et 10 à 12 avant la v1 du vendredi 18 décembre 2026 ; réponse du RSSI au plus tard une semaine avant S5 (rubrique 13) ; mise à jour avant le gel | Fiche complète |
 | **S5** | Fiche présentée dans la partie conformité de la soutenance et évaluée dans « Données et conformité » | Dossier de rendu |
 
 **Fiche de conformité.** Une page par projet, tenue dans le dépôt à **un seul chemin**, `docs/fiche_conformite.md`, selon le **gabarit en 13 rubriques** du module (§6.1) : finalité, données traitées, personnes concernées, base légale ou justification « données fictives », durée de conservation et date de suppression, hébergement et sous-traitants dont le fournisseur de modèle d'IA, ce qui part dans les prompts, décision automatisée, **rôle AI Act (fournisseur ou déployeur) et classement** (case unique : hors champ, minimal, obligations de transparence (art. 50), haut risque, interdit), exercice des droits, mesures, risques résiduels et limites d'usage, validation du RSSI datée. `cours/projets/themes.md` renvoie à ce même gabarit et à ce même chemin.
 - **Aucun nom civil, aucune adresse de courriel** dans la fiche (les dépôts sont publics) : « équipe n° X », identifiants GitHub, « RSSI (rôle) ».
-- **Calendrier** : début en S3 (commité en fin de séance), passage devant le RSSI en S4, **v1 en PR le mardi 8 décembre, réponse du RSSI avant le vendredi 11 décembre**.
+- **Calendrier** : début en S3 (commité en fin de séance), passage devant le RSSI en S4, **v1 en PR le vendredi 18 décembre 2026, réponse du RSSI au plus tard une semaine avant S5**, en janvier 2027 (date à préciser).
 - **Portée d'un « go »** : il vaut uniquement pour le périmètre pédagogique à données fictives ; tout passage à des données réelles impose une nouvelle fiche et une nouvelle validation.
 
 **Le RSSI : choix de l'enseignant, avant S3.** Soit le RSSI est **simulé par l'enseignant** (déroulé identique, ton réaliste, no-go possible), soit il est **tenu par le RSSI de l'établissement** (invité en S4 ou répondant par écrit aux PR). Le passage de S4 ayant lieu sur **3 tables en parallèle**, il faut trois intervenants ou, à défaut, des étudiants volontaires munis de la grille. Dans tous les cas : critères go et no-go du module (section 6.2), réponse écrite et datée dans la PR, absence de réponse = no-go par défaut.
@@ -827,24 +840,25 @@ Le module de référence est `cours/conformite-ai-act-rgpd.md` (sensibilisation,
 | **Quotas et coûts de Claude Code ×32** | Quota épuisé en séance, compte partagé interdit, dépassement de budget | Décision au plus tard le lundi 5 octobre (retour du pre-flight) ; plan de repli fixé dès maintenant (binômes sur postes authentifiés) ; plafond de dépense par étudiant et suivi ; sessions courtes (`/clear`), mode plan ; Antigravity en second outil (à vérifier) |
 | **Installations ratées** | Droits d'administration manquants, antivirus, espace disque (SDK Flutter volumineux), `flutter doctor` en rouge sur Chrome | Pre-flight avec capture ; fiches par système ; 2 à 3 aides ; priorisation (git, VS Code, Claude Code et Flutter d'abord) ; plan B (binôme, espace de développement cloud, à vérifier) |
 | **Écarts de niveau d'un public non développeur** | Certains perdus dès `git`, d'autres s'ennuient | Équipes mixtes ; fiches prêtes à copier ; binômes d'entraide ; l'enseignant et les aides circulent surtout dans les équipes fragiles ; exercices à difficulté croissante (conflit, hooks en option) |
-| **Séances S2, S3 et S4 trop denses pour des non-développeurs** | Postes encore en échec en S2, seed et rôles non faits en S3, passage devant le RSSI qui déborde en S4 | Équipes, thèmes et dépôts préparés avant S2 ; S3 allégée (seed complet et rôles reportés) ; S4 avec publication GitHub Pages guidée et plan B local, audit en 5 points et pondération des blocs (indispensable, important, pratique, moins utile) et rubriques « si la séance prend du retard » et « peut glisser » dans chaque séance ; entre S3 et S4, une seule tâche facultative d'1 h |
+| **Séances S2, S3 et S4 trop denses pour des non-développeurs** | Postes encore en échec en S2, constitution des équipes qui déborde, seed et rôles non faits en S3, passage devant le RSSI qui déborde en S4 | Reprise du poste vérifiée avant S2 ; constitution des équipes cadrée (formulaire sur place, tirage au sort immédiat), dépôts créés par script pendant les ateliers ; en S2, démonstration spec-kit et étape plugin et MCP en ressource par défaut ; S3 allégée (seed complet et rôles reportés) ; S4 avec publication GitHub Pages guidée et plan B local, audit en 5 points et pondération des blocs (indispensable, important, pratique, moins utile) et rubriques « si la séance prend du retard » et « peut glisser » dans chaque séance ; entre S3 et S4 (douze jours), une tâche facultative de 2 h au plus par étudiant pour terminer ce qui a glissé |
 | **Vibe coding sans comprendre** | PR énormes, étudiant incapable d'expliquer, tests écrits par l'agent après le code | Règle « chacun explique sa PR » ; PR petites ; revue croisée avec explication orale ; TDD et BDD en S3 ; test d'acceptation indépendant en S4 ; deux questions individuelles par étudiant (4 points) |
 | **Projet hors périmètre RGPD** | Une équipe veut des données réelles de camarades, d'une entreprise, ou déployer pour de vrais utilisateurs | Règle d'or dès S1 ; test en 4 questions en S3 ; fiche et validation RSSI avant tout usage réel ; no-go par défaut ; données réelles = perte de points de conformité, pas de dérogation |
 | **Fuite de secrets ou de données dans un dépôt public** | Clé d'API, courriel réel, capture avec noms dans un commit | Règle « jamais de secrets », `.env` ignoré et refusé à la lecture par l'agent, gitleaks en CI, aucun secret dans l'application (tout build web est public) ; **révoquer** un secret qui a fui, même après suppression du commit ; signaler au RSSI comme un incident (art. 33 RGPD : 72 heures s'il y a des données personnelles) |
-| **RSSI indisponible ou en retard** | Pas de réponse le 11 décembre | Désignation avant S3 ; réponse par écrit dans la PR ; remplaçant prévu (enseignant) ; pas de réponse = no-go par défaut, l'équipe documente l'attente |
+| **RSSI indisponible ou en retard** | Pas de réponse une semaine avant S5 | Désignation avant S3 ; réponse par écrit dans la PR ; remplaçant prévu (enseignant) ; pas de réponse = no-go par défaut, l'équipe documente l'attente |
 | **Publication web exposée (GitHub Pages)** | Données réelles ou secret dans le bundle, URL publique | Données fictives uniquement ; aucun secret dans l'application ; gitleaks et contrôle du build ; garde `RequireRole` présentée comme pédagogique, pas comme sécurité réelle ; publication désactivée après la soutenance |
 | **GitHub Pages ou Actions indisponible ou mal configuré** | Publication impossible, mauvais chemin de base, page blanche | Activation de Pages vérifiée sur un dépôt test avant S4 ; plan B local (`flutter build web`, `flutter run -d chrome`) ; la publication peut finir dans le sprint |
 | **Équipes déséquilibrées, passager clandestin** | Un seul fait tout, ou un absent bloque | Rôles explicites ; lecture de 3 PR tirées au sort ; évaluation par les pairs ; plafonnement à 10/14 annoncé ; point d'équipe à chaque début de séance |
-| **Oubli pendant les 8 semaines** | Séance 3 absorbée par la remise en route | `JOURNAL.md`, tag `s2-fin`, `pubspec.lock`, CI minimale, smoke test du 20 novembre, rappels des 16 et 24 novembre, micro-livrable du 27 novembre, remise en route en ouverture de S3 |
+| **Oubli pendant les 8 semaines (entre S1 et S2)** | Séance 2 absorbée par la remise en route des postes | Supports de S1 et fiches d'installation, smoke test du dépôt-modèle le 20 novembre, rappels des 16 et 24 novembre, vérification de reprise du poste pour le 27 novembre, remise en route en ouverture de S2, aides présentes |
+| **Création des dépôts pendant S2** | Script en échec, identifiant GitHub mal saisi, invitation non acceptée | Script testé à l'avance sur un dépôt test ; identifiants relus sur le formulaire avant lancement ; lancement par l'enseignant ou une aide pendant les ateliers git et configuration ; invitations acceptées à la pause ; à défaut, création à la main pour l'équipe concernée, et fin de l'initialisation au contrôle d'ouverture de S3 |
 | **Dérive de version de Claude Code ou des modèles** | Un réglage ne marche plus | Noter la version de Claude Code et celle de Flutter, relire les permissions ; syntaxe à vérifier avant S2 et S3 |
 | **Actions destructrices de l'agent** | Suppression, push forcé | Permissions refusant ces actions dès S2 ; sauvegarde par git ; cas Replit ; pas de mode sans confirmation |
 | **Test qui valide ses propres défauts (self-grading)** | Suite verte mais règle fausse | Test d'acceptation écrit par le gardien produit avant le code, valeurs recopiées, protégé par `deny`, `CODEOWNERS` et CI |
 | **Pièges drift, SQLite et migrations** | Contrainte non vérifiée, deux branches qui incrémentent `schemaVersion`, fichiers générés en conflit, base web mal configurée | Réglages fournis par le squelette (clés étrangères activées, base en mémoire pour les tests, configuration web, à vérifier) ; test d'insertion orpheline exigé ; une seule migration à la fois ; règle de versionnement des fichiers générés fixée dans le dépôt-modèle |
 | **Pile Flutter et Clean Architecture trop lourde pour des non-développeurs** | Code mal rangé, agent qui contourne les couches, `build_runner` lent ou en échec | Squelette, `CLAUDE.md` et `docs/ARCHITECTURE.md` fournis (à produire) ; une feature = un dossier ; la structure est donnée en contexte à l'agent ; question de revue « dans quelle couche ? » ; commandes de référence sur une fiche |
-| **Soutenance à deux salles** | Retard dans une salle, second évaluateur absent, fatigue et erreurs de notation | Second évaluateur ou observateur confirmé avant le 4 décembre ; fiche de notation pré-remplie par étudiant ; calibrage des évaluateurs ; chronomètre visible ; transitions prévues entre équipes ; lecture préalable des dépôts ; plan B : format à une salle, à budget réduit par équipe (dégradé, signalé aussi pour la note d'oral, section 4) |
+| **Soutenance à deux salles** | Retard dans une salle, second évaluateur absent, fatigue et erreurs de notation | Second évaluateur ou observateur confirmé avant le 16 décembre ; fiche de notation pré-remplie par étudiant ; calibrage des évaluateurs ; chronomètre visible ; transitions prévues entre équipes ; lecture préalable des dépôts ; plan B : format à une salle, à budget réduit par équipe (dégradé, signalé aussi pour la note d'oral, section 4) |
 | **Panne le jour de la soutenance** | Démonstration qui plante | Plan B enregistré ; jeu de données de secours ; répétition technique en S5 ; machine de secours |
 | **Confiance excessive dans les chiffres** | « L'IA nous rend 10 fois plus rapides » | Sources présentées avec leurs conflits d'intérêts ; mesure de leur propre usage (temps estimé, réel, retouches) |
-| **Dérive de périmètre** | Trop de fonctionnalités, rien de fini | Socle limité ; clou en deux niveaux ; backlog priorisé ; gel le 11 décembre |
+| **Dérive de périmètre** | Trop de fonctionnalités, rien de fini | Socle limité ; clou en deux niveaux ; backlog priorisé ; gel des fonctionnalités une semaine avant S5 |
 
 ---
 
@@ -896,18 +910,18 @@ Les sources sont en anglais ; le titre exact est indiqué. Pour des non-dévelop
 
 ## 13. Checklist enseignant (interne, ne pas diffuser aux étudiants)
 
-**Préparation pour 32 étudiants.** À cocher avant le 7 octobre sauf indication.
+**Préparation pour 32 étudiants.** Les points propres à S1 étaient à cocher avant le 7 octobre ; les autres sont à cocher avant le 2 décembre (S2), sauf indication.
 
 - [ ] **Comptes Claude Code ×32 et quotas** : décider **au plus tard le lundi 5 octobre** (retour du pre-flight) du mode d'accès (comptes ou crédits nominatifs avec plafond de dépense, suivi de consommation ; conditions de l'offre et du fournisseur à vérifier, dont conservation des données, usage pour l'entraînement et localisation, qui alimentent la fiche de conformité). **Plan de repli déjà fixé** : binômes sur postes authentifiés. Le courriel pre-flight du 1er octobre annonce que les comptes seront confirmés avant le 5. Interdit : une clé d'API dans un dépôt.
 - [ ] **Antigravity** : vérifier connexion et quotas pour 32 comptes (à vérifier).
-- [ ] **Organisation GitHub de la formation**, dépôts publics : création, Actions activées. **Un seul mécanisme d'accès : les étudiants sont ajoutés comme collaborateurs de chaque dépôt, sans invitation à l'organisation** (identifiants GitHub reçus avec le pre-flight) ; permissions de base de l'organisation sur « aucune ».
-- [ ] **Formulaire d'équipes** (lancé à la fin de S1, clos le jeudi 8 octobre à 12h) : composition, classement des trois thèmes, identifiants GitHub. Attribution provisoire par l'enseignant le jeudi après-midi, dépôts préparés avant S2.
+- [ ] **Organisation GitHub de la formation**, dépôts publics : création, Actions activées. **Un seul mécanisme d'accès : les étudiants sont ajoutés comme collaborateurs de chaque dépôt, sans invitation à l'organisation** (identifiants GitHub collectés par le formulaire d'équipes au début de S2) ; permissions de base de l'organisation sur « aucune ».
+- [ ] **Formulaire d'équipes** (il n'a pas été lancé à la fin de S1 ; **rempli sur place au début de S2**, après la présentation des thèmes) : composition, identifiants GitHub, classement des trois thèmes. Prêt avant le 2 décembre, avec de quoi tirer au sort et un export au format du script (`numero_equipe,login_github`). Attribution des thèmes en séance (au plus 3 équipes par thème), numérotation par thème, puis lancement du script pendant les ateliers.
 - [ ] **Dépôt-modèle** (contenu en section 8, **à produire**), cloné puis lancé à froid sur Windows, macOS et Linux (`flutter pub get`, `flutter test`, `flutter run -d chrome`) ; **trois versions pré-remplies de `PROJET.md`** (une par thème).
 - [ ] **Squelette Flutter du dépôt-modèle (à produire)** : structure en couches (domain, data, presentation ; une feature = un dossier), `get_it` configuré, un BLoC d'exemple avec son test, un test unitaire, un fichier `.feature` d'exemple (`bdd_widget_test`, génération par `build_runner`), une base drift d'exemple (une table, `schemaVersion` 1, clés étrangères activées, test d'intégrité sur base en mémoire, configuration web qui fonctionne avec `flutter run -d chrome` ; à vérifier sur les versions retenues), un utilisateur courant simulé à deux rôles et une garde `RequireRole` d'exemple avec son test de refus, un dossier `test/acceptance/` vide, toutes les dépendances du socle (drift, file_picker, build_runner, bdd_widget_test, bloc_test, mocktail) déjà déclarées et figées dans `pubspec.lock`, `pubspec.lock` versionné, version de Flutter notée, CI minimale (`flutter analyze` et `flutter test`), puis le workflow complet de S4 (couverture, audit des dépendances pub, gitleaks, build web, déploiement GitHub Pages ; syntaxe de l'action de déploiement à vérifier). Fichiers générés par `build_runner` non versionnés (recommandé) : `build_runner` est lancé par la CI et par la commande de démarrage. Testé à froid avant le 7 octobre.
 - [ ] **Contexte réutilisable (à produire)** : `CLAUDE.md` et `docs/ARCHITECTURE.md` décrivant la structure Clean Architecture, l'injection `get_it`, les conventions BLoC, la discipline TDD et BDD ; réutilisable d'un projet à l'autre, fourni dans le dépôt-modèle comme premier élément de contexte pour l'agent.
 - [ ] **Projet Flutter d'exemple pour S1 (à produire)** : copie du squelette, `flutter test` vert et `flutter run -d chrome` fonctionnel, mis à disposition des étudiants (dépôt public ou archive sur le miroir local).
-- [ ] **Support à part pour les thèmes (à produire)** : présentation des trois thèmes A, B et C, transmise avec le formulaire d'équipes (modalité à confirmer).
-- [ ] **Script de création des 8 dépôts** (à tester sur un dépôt test, appels à vérifier sur l'organisation), à lancer avant S2 avec la liste des équipes :
+- [ ] **Diaporama des thèmes** (`cours/presentations/themes/`) : présentation des trois thèmes A, B et C, **projetée au début de S2**, avant la constitution des équipes ; relu et répété avant le 2 décembre.
+- [ ] **Script de création des 8 dépôts** (à tester avant S2 sur un dépôt test, appels à vérifier sur l'organisation), **à lancer pendant S2**, durant les ateliers git et configuration, par l'enseignant ou une aide, avec la liste des équipes obtenue en début de séance :
 
 ```bash
 #!/usr/bin/env bash
@@ -915,7 +929,8 @@ Les sources sont en anglais ; le titre exact est indiqué. Pour des non-dévelop
 # equipes.csv : un membre par ligne, "numero_equipe,login_github" (ex. 01,monlogin)
 set -euo pipefail
 ORG="$1"; MODELE="$2"; EQUIPES="$3"
-for i in 01 02 03 04 05 06 07 08; do
+# les numéros d'équipe viennent de la liste établie en séance (7 ou 8 équipes)
+for i in $(tr -d '\r' < "$EQUIPES" | cut -d, -f1 | sort -u); do
   REPO="$ORG/equipe_$i"
   gh repo create "$REPO" --public --template "$ORG/$MODELE"
   # la création depuis un modèle est asynchrone : attendre l'existence de main
@@ -937,22 +952,22 @@ for i in 01 02 03 04 05 06 07 08; do
 }
 JSON
 done
-# ajout des membres comme collaborateurs de chaque dépôt (avant S2, sur la liste reçue)
+# ajout des membres comme collaborateurs de chaque dépôt (pendant S2, sur la liste établie en séance)
 tr -d '\r' < "$EQUIPES" | while IFS=, read -r num login; do
   gh api -X PUT "repos/$ORG/equipe_$num/collaborators/$login" -f permission="push"
 done
 # puis, pour chaque dépôt : copier la version de PROJET.md du thème (A, B ou C) et la commiter
 ```
 
-  Les invitations de collaborateur doivent être acceptées par les étudiants (rappel par courriel avant S2). En cas de litige résolu en S2, renommer le dépôt (`gh repo rename`) et remplacer `PROJET.md`. En S4, relancer la protection avec le contrôle de CI requis et la relecture des propriétaires du code.
+  Les invitations de collaborateur sont acceptées par les étudiants à la pause de S2 (courriel de GitHub ou `github.com/notifications`), et vérifiées au début de l'initialisation. Les dépôts étant créés après l'attribution des thèmes, il n'y a ni renommage ni remplacement de `PROJET.md`. Prévoir un poste authentifié avec `gh` sur l'organisation et, si le script échoue pour une équipe, la création à la main de son dépôt. En S4, relancer la protection avec le contrôle de CI requis et la relecture des propriétaires du code.
 - [ ] **Pre-flight envoyé le jeudi 1er octobre** (retour le lundi 5 octobre, relances individuelles) : demander un compte GitHub, VS Code, git, Google Chrome (s'il n'est pas installé) et le **téléchargement chez soi du SDK Flutter** (WSL2 et Docker Desktop ne sont plus demandés), les identifiants GitHub, et annoncer que les comptes Claude Code seront confirmés au plus tard le lundi 5 octobre. Miroir local d'installeurs sur clés USB (SDK Flutter en premier), fiches d'installation par système, liste « indispensable » / « utile plus tard » prête pour le premier bloc de S1.
-- [ ] **Assistants** : demander 2 à 3 aides pour S1 et S2, 1 pour S3 et 2 pour S4 (dont l'une tient une table RSSI) ; un second évaluateur ou observateur par salle pour S5 (confirmer avant le 4 décembre ; sinon format dégradé).
-- [ ] **RSSI** : choisir le mode (simulé par l'enseignant ou RSSI de l'établissement) **avant S3** ; prévoir trois intervenants pour les trois tables de S4 (à défaut, étudiants volontaires) ; en cas de RSSI de l'établissement, fixer sa venue en S4 ou son mode de réponse écrite avant le 11 décembre.
-- [ ] **Réseau et salle** : test à charge réelle (32 téléchargements), points d'accès supplémentaires, prises, vidéoprojecteur ; deux salles réservées pour S5.
+- [ ] **Assistants** : demander 2 à 3 aides pour S1 et S2, 1 pour S3 et 2 pour S4 (dont l'une tient une table RSSI) ; un second évaluateur ou observateur par salle pour S5 (confirmer avant le 16 décembre ; sinon format dégradé).
+- [ ] **RSSI** : choisir le mode (simulé par l'enseignant ou RSSI de l'établissement) **avant S3** ; prévoir trois intervenants pour les trois tables de S4 (à défaut, étudiants volontaires) ; en cas de RSSI de l'établissement, fixer sa venue en S4 ou son mode de réponse écrite, au plus tard une semaine avant S5.
+- [ ] **Réseau et salle** : test à charge réelle (32 téléchargements), points d'accès supplémentaires, prises, vidéoprojecteur ; deux salles réservées pour S5, en janvier 2027 (date à préciser).
 - [ ] **GitHub Pages pour S4** : vérifier sur un dépôt test l'activation de Pages (source GitHub Actions), le workflow de déploiement, le chemin de base du build web et les conditions de l'offre pour un dépôt public (à vérifier) ; chercher si l'activation peut se faire par `gh api` dans le script de création (à vérifier), sinon à la main ; plan B local prêt ; rappeler : données fictives, aucun secret dans le bundle.
 - [ ] **Conformité** : revérifier sur EUR-Lex l'omnibus numérique sur l'IA (règlement (UE) 2026/1744), la formulation de l'art. 4 et les dates de l'AI Act, les liens CNIL, et le chiffre Stanford (Denisov-Blanch, 10 à 20 %) ; vérifier la durée de vie du cache de prompt avant le diaporama de S1.
 - [ ] **Syntaxe** des permissions, hooks, skills, plugins et MCP vérifiée sur la version de Claude Code utilisée ; outil spec-kit essayé à froid ; noms de paquets et d'options (Flutter, `bdd_widget_test`, drift, audit des dépendances pub) vérifiés sur les versions retenues.
-- [ ] **Documents** : diaporama S1 (environ 76 diapos), fiche git, fiche de configuration, checklist de PR, de revue, de reprise, d'audit, gabarit et cartes de cas de conformité, grille go/no-go, échelle de compréhension orale, fiche de pairs, fiche d'observation, **fiches de notation pré-remplies par étudiant**, plan des tables du passage devant le RSSI, formulaire d'équipes.
-- [ ] **Calendrier** : smoke test vers le 20 novembre ; courriels des 16 et 24 novembre ; échéance du 27 novembre, relance du 30 ; fiche v1 déposée le 8 décembre ; point d'étape le 9 ; réponse du RSSI et gel le 11 ; `v1.0-rc` le 14 à 18h ; lecture des dépôts et communication des PR le 15 avant 9h.
+- [ ] **Documents** : diaporama S1 (environ 76 diapos), fiche git, fiche de configuration, checklist de PR, de revue, de reprise, d'audit, gabarit et cartes de cas de conformité, grille go/no-go, échelle de compréhension orale, fiche de pairs, fiche d'observation, **fiches de notation pré-remplies par étudiant**, plan des tables du passage devant le RSSI, formulaire d'équipes, checklist de remise en route du poste (S2).
+- [ ] **Calendrier** : smoke test du dépôt-modèle vers le 20 novembre ; courriels des 16 et 24 novembre ; vérification de reprise du poste pour le 27 novembre, relance du 30 ; S2 le mercredi 2 décembre (remise en route, thèmes, équipes, script), S3 le vendredi 4 décembre, S4 le mercredi 16 décembre ; fiche v1 déposée et point d'étape le vendredi 18 décembre 2026 ; vacances du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus ; S5 en janvier 2027 (date à préciser, à fixer et à annoncer au plus tard en S4) ; réponse du RSSI et gel des fonctionnalités au plus tard une semaine avant S5 ; `v1.0-rc` l'avant-veille de S5 à 18h ; lecture des dépôts et communication des PR la veille de S5 avant 9h.
 
 

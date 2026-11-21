@@ -496,7 +496,7 @@ specify init mon-projet --integration claude
 
 Dans Claude Code, il ajoute alors des skills qui s'appellent dans cet ordre : `/speckit-constitution`, `/speckit-specify`, `/speckit-plan`, `/speckit-tasks`, `/speckit-implement` (le projet en fournit d'autres, dont `/speckit-converge`). Chaque étape produit un document que vous relisez avant de passer à la suivante. Attention aux anciens tutoriels : ces noms s'écrivaient avec un point (`/speckit.specify`) et l'installation passait par une autre commande ; l'outil évolue vite.
 
-Vous ne l'installerez pas en séance : c'est une démonstration. Retenez la forme, car vous la pratiquez déjà à petite échelle : `PROJET.md` et ses user stories sont votre spécification, le mode plan est votre plan, une PR par user story est votre découpage en tâches.
+Vous ne l'installerez pas en séance : le programme le donne en ressource par défaut, avec au mieux une courte démonstration si le rythme le permet. Retenez la forme, car vous la pratiquez déjà à petite échelle : `PROJET.md` et ses user stories sont votre spécification, le mode plan est votre plan, une PR par user story est votre découpage en tâches.
 
 ---
 
@@ -523,7 +523,7 @@ L'atelier se fait seul, dans le dépôt d'essai du premier atelier, avec la fich
 1. **`CLAUDE.md`** (indispensable). `/init`, puis réduction aux trois rubriques de la section 4.2. Moins de 30 lignes.
 2. **Permissions testées** (indispensable). Expérience « avant », fichier de la section 5.2, expérience « après ». Vous devez avoir **vu** le refus.
 3. **Un skill** (important). `commit-propre`, essayé sur une vraie modification, puis un commit qui ajoute `CLAUDE.md`, `.claude/settings.json` et le skill au dépôt.
-4. **Un plugin, un serveur MCP** (pratique, s'il reste du temps). Installation, puis discussion : qu'est-ce qui part vers un tiers ?
+4. **Un plugin, un serveur MCP** (pratique, en ressource par défaut : à faire après la séance avec la fiche, ou en séance si le rythme le permet). Installation, puis discussion : qu'est-ce qui part vers un tiers ?
 
 Fini quand : l'agent refuse de lire `.env`, et vous savez dire quel fichier l'en empêche et pourquoi une phrase dans le prompt n'aurait pas suffi.
 
@@ -611,4 +611,4 @@ Autres :
 - Serveur MCP Dart et Flutter : https://docs.flutter.dev/ai/mcp-server
 - Böckeler, « Harness Engineering for Coding Agent Users » : https://martinfowler.com/articles/harness-engineering.html
 
-Sources locales : `cours/programme-detaille.md` (séance 2, blocs 4 et 5 ; sections 7 et 8), `cours/supports/day-1/06-outils-developpement-agentique.md`. Vérifications locales (dossier jetable, 19 novembre 2026) : `jq` pour la validité des extraits JSON ; `claude -p` (version 2.1.325, modèle `haiku`) pour les sept règles de refus, l'expérience avant et après, et le skill ; `dart format` (Dart 3.14.0) pour la commande du hook.
+Sources locales : `cours/programme-detaille.md` (séance 2, blocs 6 et 7 ; sections 7 et 8), `cours/supports/day-1/06-outils-developpement-agentique.md`. Vérifications locales (dossier jetable, 19 novembre 2026) : `jq` pour la validité des extraits JSON ; `claude -p` (version 2.1.325, modèle `haiku`) pour les sept règles de refus, l'expérience avant et après, et le skill ; `dart format` (Dart 3.14.0) pour la commande du hook.

@@ -2,17 +2,17 @@
 
 *Séance 2 « Git, configurer son agent, lancer le projet » · Master ITI, Nantes Université, 2026-2027. Chapitre à lire avant ou après la séance. État des outils vérifié le 19 novembre 2026 (git 2.53.0, gh 2.100.0, Flutter 3.50.0 sur le poste de rédaction).*
 
-Ce chapitre accompagne le troisième temps de la séance : vous quittez le dépôt d'essai et vous entrez dans le **vrai dépôt de votre équipe**. Il suit l'ordre de l'atelier : valider l'équipe, comprendre où ranger quoi, faire démarrer le projet sur chaque poste, décider du périmètre dans `PROJET.md`, faire passer une première modification par une pull request relue, vérifier que `main` est protégée, puis laisser au dépôt de quoi vous retrouver dans huit semaines.
+Ce chapitre accompagne le troisième temps de la séance : vous quittez le dépôt d'essai et vous entrez dans le **vrai dépôt de votre équipe**. Il commence par ce qui se décide en ouverture de séance (constituer l'équipe, choisir un thème), puis suit l'ordre de l'atelier : comprendre où ranger quoi, faire démarrer le projet sur chaque poste, décider du périmètre dans `PROJET.md`, faire passer une première modification par une pull request relue, vérifier que `main` est protégée, puis laisser au dépôt de quoi vous retrouver à la séance suivante, deux jours plus tard, et tout au long du projet.
 
 ## Ce que vous allez retenir
 
-- Votre équipe a un **thème**, un **numéro** et des **gardiens** : un gardien n'est pas celui qui fait tout, c'est celui qui vérifie que c'est fait.
+- Votre équipe se constitue **en début de séance**, après la présentation des trois thèmes ; elle a un **thème**, un **numéro** et des **gardiens** : un gardien n'est pas celui qui fait tout, c'est celui qui vérifie que c'est fait.
 - Le projet est rangé en **trois couches** (`presentation`, `domain`, `data`) et en **fonctionnalités** (une fonctionnalité, un dossier). Vous n'avez pas à savoir écrire ce code ; vous devez savoir **où il va**, parce que c'est ce que vous contrôlerez quand l'agent vous proposera quelque chose.
 - Deux fichiers fournis servent de premier contexte à l'agent et à vous : `CLAUDE.md` (commandes, règles, interdits) et `docs/ARCHITECTURE.md` (les couches et les conventions).
 - Un dépôt « tient debout » quand cinq commandes passent sur **chaque** poste : cloner, `flutter pub get`, `build_runner`, `flutter test`, `flutter run -d chrome`.
 - `PROJET.md` est un **document de décision** : l'agent aide à rédiger, l'équipe décide. Vous y retenez trois à cinq user stories.
 - Toute modification passe par une **branche**, une **PR** rédigée avec le modèle du dépôt, une **relecture** par un coéquipier, puis une fusion. `main` refuse le reste, et vous le constaterez vous-mêmes.
-- Avant de partir : cinq lignes d'**état courant** en tête de `JOURNAL.md` et le tag `s2-fin`. Dans huit semaines, le dépôt sera votre mémoire.
+- Avant de partir : cinq lignes d'**état courant** en tête de `JOURNAL.md` et le tag `s2-fin`. C'est le repère de fin de séance : le dépôt devient la mémoire du projet.
 
 ---
 
@@ -36,19 +36,23 @@ flowchart LR
 
 ## 2. Équipes, thèmes, numéros et rôles
 
-### 2.1 Ce qui a été préparé avant la séance
+### 2.1 Ce qui se décide au début de la séance
 
-Vous avez rempli un formulaire après la séance 1 : composition de l'équipe, classement des trois thèmes, identifiants GitHub. L'enseignant en a tiré une **attribution provisoire** et a créé un dépôt par équipe, par script, à partir d'un **dépôt-modèle** (section 4). Chaque membre y a été ajouté comme **collaborateur** : vous avez reçu une invitation par courriel, à accepter pour pouvoir pousser des commits (un dépôt public se lit sans invitation, il ne s'écrit pas sans elle).
+Aucun formulaire n'a été lancé après la séance 1 : il n'y a, en arrivant, ni équipes, ni thèmes attribués, ni dépôts. Tout se décide en ouverture de séance, juste après la remise en route des postes (chapitre 4, fiche 0) et la présentation des trois thèmes.
 
-### 2.2 Ce qui se valide en séance
+1. **Vous formez une équipe** de 3 à 5 personnes.
+2. **L'équipe remplit le formulaire, sur place** : sa composition, les identifiants GitHub de ses membres, son classement des trois thèmes. Vérifiez l'orthographe de chaque identifiant : c'est avec lui que vous serez invité dans le dépôt.
+3. **Trois équipes au plus par thème.** L'enseignant attribue les premiers choix ; si un thème a plus de trois candidates, on tire au sort tout de suite, et l'équipe qui perd passe à son choix suivant.
+4. **Chaque équipe reçoit un numéro**, attribué par thème. Notez-le : il détermine quelle équipe relira vos PR en séance 3 et laquelle auditera votre dépôt en séance 4.
+5. **Les rôles sont attribués** (2.3).
 
-1. **Chaque équipe confirme** sa composition (3 à 5 personnes) et son thème.
-2. **Trois équipes au plus par thème.** Si un thème a plus de trois candidates, on tire au sort ; l'équipe qui perd passe à son choix suivant. Son dépôt est alors renommé et son `PROJET.md` remplacé par celui du nouveau thème : c'est rapide. Le renommage est fait par l'enseignant ; le remplacement de `PROJET.md` passe, comme toute modification de `main`, par une PR qu'un membre de l'équipe approuve.
-3. **Chaque équipe reçoit un numéro**, attribué par thème. Notez-le : il détermine quelle équipe relira vos PR en séance 3 et laquelle auditera votre dépôt en séance 4.
-4. **Les rôles sont attribués** (2.3).
-5. **Chacun vérifie qu'il voit son dépôt** sur GitHub et qu'il y a un accès en écriture.
+### 2.2 Ce qui se passe pendant les ateliers git et configuration
 
-Avant de confirmer un thème, sachez que le thème C demande plus de travail de conformité que les deux autres (il prend une décision qui concerne des personnes). Les trois énoncés sont dans `cours/projets/themes.md` et ont leur propre présentation ; ce chapitre n'y revient pas, et ses exemples s'appuient sur le thème B (le calcul du TRS d'un atelier).
+Pendant que vous travaillez dans votre dépôt d'essai (chapitres 1 et 2), l'enseignant ou une aide lance un script avec la liste obtenue : il crée **un dépôt par équipe** à partir d'un **dépôt-modèle** (section 4), y place le `PROJET.md` du thème attribué et ajoute chaque membre comme **collaborateur**. Comme les dépôts sont créés après l'attribution des thèmes, rien n'est à renommer ni à remplacer.
+
+Vous recevez alors une invitation par courriel : **acceptez-la à la pause** (courriel de GitHub, ou `github.com/notifications`). Un dépôt public se lit sans invitation, il ne s'écrit pas sans elle. Au début de l'atelier d'initialisation, chacun vérifie qu'il voit le dépôt de son équipe sur GitHub et qu'il y a un accès en écriture.
+
+Avant de classer les thèmes, sachez que le thème C demande plus de travail de conformité que les deux autres (il prend une décision qui concerne des personnes). Les trois énoncés sont dans `cours/projets/themes.md` et sont présentés en début de séance avec leur propre diaporama ; ce chapitre n'y revient pas, et ses exemples s'appuient sur le thème B (le calcul du TRS d'un atelier).
 
 ### 2.3 Les gardiens
 
@@ -120,7 +124,7 @@ Conséquence pratique pour le travail d'équipe : deux personnes qui travaillent
 | `bdd_widget_test` | **BDD** : des scénarios rédigés en français dans des fichiers `.feature`, transformés en tests | Chapitre 5, section 10 |
 | drift | **Base de données** SQLite, avec migrations versionnées | Utilisé à partir de la séance 3 |
 
-Vous n'avez rien à installer : ces bibliothèques sont déjà déclarées dans le dépôt, et leurs versions sont **verrouillées** par le fichier `pubspec.lock`, qui est versionné. C'est ce verrou qui permettra au projet de redémarrer à l'identique en décembre.
+Vous n'avez rien à installer : ces bibliothèques sont déjà déclarées dans le dépôt, et leurs versions sont **verrouillées** par le fichier `pubspec.lock`, qui est versionné. C'est ce verrou qui permet au projet de démarrer à l'identique sur tous les postes, aujourd'hui comme en janvier.
 
 > **À retenir.** Retenez la question à poser devant toute proposition de l'agent : « dans quelle couche et dans quel dossier ce fichier va-t-il, et pourquoi ? ». Si la réponse est floue, la proposition n'est pas prête.
 
@@ -484,20 +488,21 @@ Cette commande remet votre branche `main` locale **exactement** dans l'état de 
 
 ### 11.1 L'état courant en cinq lignes
 
-`JOURNAL.md` commence par une rubrique « État courant ». Avant de partir, le gardien du harnais y écrit cinq lignes, pour quelqu'un qui aurait tout oublié : c'est-à-dire vous, dans huit semaines. Exemple **rédigé pour ce chapitre** :
+`JOURNAL.md` commence par une rubrique « État courant ». Avant de partir, le gardien du harnais y écrit cinq lignes, pour quelqu'un qui aurait tout oublié : c'est-à-dire vous, à la rentrée de janvier, ou un coéquipier absent aujourd'hui. Exemple **rédigé pour ce chapitre** :
 
 ```markdown
-## État courant (9 octobre 2026, fin de la séance 2)
+## État courant (2 décembre 2026, fin de la séance 2)
 - Où on en est : équipe 05, thème B ; dépôt cloné et vert sur les 4 postes ;
   PROJET.md fusionné (PR n° 1), 4 user stories retenues.
-- Prochaine étape : story 3 (disponibilité d'un quart) en TDD et BDD, séance 3.
+- Prochaine étape : story 3 (disponibilité d'un quart) en TDD et BDD, séance 3
+  (vendredi 4 décembre).
 - Commandes clés : flutter pub get · dart run build_runner build
   --delete-conflicting-outputs · flutter test · flutter run -d chrome.
 - Décisions : l'outil ne calcule rien par personne ; cible Chrome uniquement.
 - Reste à faire : un poste n'ouvre pas encore Chrome (flutter doctor à revoir).
 ```
 
-Aucun nom complet, aucune adresse : le dépôt est public. Ce qui n'a pas été terminé aujourd'hui s'écrit ici ; ce sera repris à la remise en route de la séance 3.
+Aucun nom complet, aucune adresse : le dépôt est public. Ce qui n'a pas été terminé aujourd'hui s'écrit ici ; ce sera repris au contrôle d'ouverture de la séance 3, deux jours plus tard.
 
 Le journal passe par une PR, comme tout le reste : `main` est protégée, vous venez de le vérifier. C'est l'occasion d'une deuxième PR, relue par un autre relecteur que celui de la première.
 
@@ -518,44 +523,45 @@ git push origin s2-fin
 
 ---
 
-## 12. D'ici la séance 3 : huit semaines
+## 12. Et ensuite : la séance 3 dans deux jours, puis la fin du calendrier
 
-Le risque de ce long intervalle n'est pas le retard, c'est l'oubli. Le programme ne vous demande pas de travail lourd ; il vous demande de ne pas perdre le fil.
+L'interruption de huit semaines est derrière vous : elle séparait la séance 1 de celle-ci, et c'est pour elle que la fiche 0 du chapitre 4 vous a fait revérifier votre poste. La suite est plus serrée.
 
 ```mermaid
 timeline
-    title De la séance 2 à la séance 3
-    Vendredi 9 octobre : Séance 2 : tag s2-fin, JOURNAL.md à jour
-    Lundi 16 novembre : Courriel de rappel et checklist de reprise
-    Vers le vendredi 20 novembre : L'enseignant clone et teste chaque dépôt
-    Mardi 24 novembre : Dernier rappel
-    Vendredi 27 novembre, 18 h : Micro-livrable de reprise, obligatoire, non noté
-    Lundi 30 novembre : Relance individuelle
-    Mercredi 2 décembre : Séance 3 : remise en route, première user story
+    title De la séance 2 à la soutenance
+    Mercredi 2 décembre : Séance 2 : équipes, dépôt, tag s2-fin, JOURNAL.md à jour
+    Vendredi 4 décembre : Séance 3 : bref contrôle, première user story, données, RGPD
+    Mercredi 16 décembre : Séance 4 : qualité, CI/CD, sécurité, AI Act, passage devant le RSSI
+    Vendredi 18 décembre : Fiche de conformité v1 déposée en PR
+    Du samedi 19 décembre au dimanche 3 janvier : Vacances de fin d'année, sans travail imposé
+    Janvier 2027 (date à préciser) : Séance 5 : retouches et soutenance
 ```
 
-### 12.1 Le micro-livrable du vendredi 27 novembre, 18 h
+### 12.1 D'ici vendredi
 
-Dix minutes, obligatoires, non notées. **Chaque** étudiant exécute la checklist de reprise sur un **nouveau clone** (dans un autre dossier que celui d'octobre, pour vérifier que le dépôt se suffit à lui-même) :
+Rien n'est demandé entre la séance 2 et la séance 3. La séance 3 s'ouvre sur un **bref contrôle**, pas sur une remise en route :
 
-1. cloner le dépôt de l'équipe ;
+1. `git pull` ;
 2. `flutter pub get` ;
-3. `dart run build_runner build --delete-conflicting-outputs` ;
-4. `flutter test` ;
-5. `flutter run -d chrome` ;
-6. lancer Claude Code dans le dossier ;
-7. relire `CLAUDE.md`.
+3. `flutter test`.
 
-Puis il dépose une capture d'écran dans l'issue « reprise » de son équipe (une *issue* est un ticket de discussion du dépôt, onglet « Issues » sur GitHub). Vérifiez votre capture avant de la déposer : elle sera publique, elle ne doit montrer ni nom, ni adresse, ni autre fenêtre.
+Si votre équipe n'a pas terminé l'initialisation aujourd'hui (première PR relue, protection de `main` vérifiée), elle la termine à ce moment-là : notez-le dans `JOURNAL.md`.
 
-### 12.2 Ce qu'il ne faut pas faire pendant la pause
+### 12.2 Plus tard dans le calendrier
 
-- **Pas de `flutter upgrade` sans raison.** Les versions sont verrouillées pour que le projet redémarre à l'identique.
+- **Entre la séance 3 et la séance 4, douze jours** : une tâche facultative, de 2 h au plus par étudiant, pour terminer ce qui aura glissé de la séance 3 (jeu de données complet, rôles). Elle sera précisée en séance 3.
+- **Le sprint final** se place entre la séance 4 (16 décembre) et la soutenance, en janvier 2027 (date à préciser) : 15 à 20 heures par équipe. Il englobe les vacances de fin d'année (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus) : aucun travail n'est imposé pendant les vacances au-delà de ce que votre équipe choisit.
+- **Jalons** : fiche de conformité v1 en PR le vendredi 18 décembre 2026 ; réponse du RSSI au plus tard une semaine avant la soutenance ; gel et tag `v1.0-rc` l'avant-veille de la soutenance à 18 h ; lecture des dépôts par les évaluateurs la veille.
+
+### 12.3 Ce qu'il ne faut pas faire d'ici là
+
+- **Pas de `flutter upgrade` sans raison.** Les versions sont verrouillées pour que le projet démarre à l'identique sur tous les postes.
 - **Rien de personnel dans le dépôt, même pour tester** : ni liste de noms, ni export d'un stage, ni capture d'écran d'une messagerie. C'est la règle d'or.
 - **Pas de secret** dans le dépôt ni dans un prompt.
-- Claude Code et les modèles auront changé : **notez la version** que vous utilisez (`claude --version`) et relisez vos permissions à la reprise (chapitre 2).
+- Claude Code et les modèles changent vite : **notez la version** que vous utilisez (`claude --version`) et relisez vos permissions après chaque mise à jour (chapitre 2).
 
-> **À retenir.** Si le nouveau clone ne démarre pas le 27 novembre, vous le savez cinq jours avant la séance 3, et non pendant.
+> **À retenir.** Le tag `s2-fin` et l'état courant de `JOURNAL.md` sont votre repère de fin de séance : vendredi, vous repartez de là.
 
 ---
 
@@ -578,7 +584,7 @@ Elles valent pour toute la durée du projet. Vous avez déjà pratiqué les quat
 
 ## 14. Avez-vous fini ? La definition of done côté équipe
 
-- [ ] L'équipe a un thème confirmé, un numéro et des rôles attribués.
+- [ ] L'équipe s'est constituée en séance, a rempli le formulaire, et a un thème attribué, un numéro et des rôles.
 - [ ] Chaque membre a un accès en écriture au dépôt (invitation acceptée).
 - [ ] `flutter test` passe et `flutter run -d chrome` démarre l'application **sur le poste de chaque membre**.
 - [ ] `PROJET.md` est complété : trois à cinq user stories retenues, la première désignée.
@@ -633,7 +639,8 @@ Elles valent pour toute la durée du projet. Vous avez déjà pratiqué les quat
 - **Séquence git locale** (branche, commit, `git push -u`, `git commit --allow-empty`, `git reset --hard origin/main`, `git tag`, `git push origin s2-fin`) : jouée avec git 2.53.0 dans un dépôt jetable relié à un dépôt distant local, sans GitHub.
 - **Pannes de la section 7.2** : causes probables tirées de l'expérience courante, non reproduites ; le code d'erreur 403 pour une invitation non acceptée est donné à titre indicatif.
 - **Checklist de PR** : texte proposé par les supports, à valider par l'enseignant.
-- **Dates et calendrier** (27 novembre, rappels, smoke test) : repris du programme, susceptibles d'ajustement par l'enseignant.
+- **Dates et calendrier** : les dates des 4, 16 et 18 décembre, des vacances et de la soutenance, en janvier 2027 (date à préciser), sont reprises du programme et susceptibles d'ajustement par l'enseignant.
+- **Création des dépôts pendant la séance** : le script du programme (section 13) n'a pas été exécuté pour ce chapitre ; le délai entre le formulaire et la réception de l'invitation n'est pas mesuré.
 
 ---
 
@@ -641,7 +648,7 @@ Elles valent pour toute la durée du projet. Vous avez déjà pratiqué les quat
 
 Documents du cours :
 
-- `cours/programme-detaille.md` : séance 2 (blocs 6 à 9, definition of done), section 4 (rôles d'équipe), section 5 (travail entre les séances), section 7 (règles d'usage de l'IA), section 8 (pile, dépôt-modèle, règles du jeu), section 13 (script de création des dépôts).
+- `cours/programme-detaille.md` : séance 2 (blocs 3 et 8 à 10, definition of done), section 4 (rôles d'équipe), section 5 (travail entre les séances), section 7 (règles d'usage de l'IA), section 8 (pile, dépôt-modèle, règles du jeu), section 13 (script de création des dépôts).
 - `cours/projets/themes.md` : pile technique du projet, organisation des équipes, thème B (user stories, scénario de la disponibilité, cas d'acceptation n° 2).
 - Supports de la séance 1 : chapitres 3, 4, 5, 8 et 9 (`cours/supports/day-1/`).
 

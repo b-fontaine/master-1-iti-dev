@@ -10,8 +10,8 @@ Enseignement de Master, Nantes Université, année 2026-2027. *IA agentique : as
 | **Prérequis** | Aucune compétence en programmation. Usage courant d'un ordinateur portable personnel |
 | **Effectif** | 32 étudiants, répartis en équipes de 3 à 5 personnes |
 | **Volume horaire encadré** | 20 heures : 5 séances de 4 heures, de 8h15 à 12h15 |
-| **Travail hors présentiel** | Environ 15 à 20 heures par équipe, soit 4 à 5 heures par étudiant, entre le 4 et le 14 décembre, auxquelles s'ajoutent de brèves tâches de liaison (formulaire d'équipes avant la séance 2, vérification de reprise de 10 minutes avant la séance 3, tâche facultative d'une heure avant la séance 4) |
-| **Dates** | Mercredi 7 octobre, vendredi 9 octobre, mercredi 2 décembre, vendredi 4 décembre et mercredi 16 décembre 2026 |
+| **Travail hors présentiel** | Environ 15 à 20 heures par équipe, soit 4 à 5 heures par étudiant, entre la séance 4 (16 décembre 2026) et la séance 5, en janvier 2027 (date à préciser), vacances de fin d'année comprises (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus, sans travail imposé pendant cette période), auxquelles s'ajoutent de brèves tâches de liaison (vérification de reprise du poste de 10 minutes avant la séance 2, tâche facultative de 2 heures au plus par étudiant avant la séance 4) |
+| **Dates** | Mercredi 7 octobre, mercredi 2 décembre, vendredi 4 décembre et mercredi 16 décembre 2026, puis soutenance en janvier 2027 (date à préciser) |
 | **Langue** | Français |
 | **Responsable de l'enseignement** | [à compléter] |
 | **Rattachement (Master, semestre, unité d'enseignement) et crédits ECTS** | [à compléter] |
@@ -46,17 +46,17 @@ Les assistants de programmation fondés sur l'intelligence artificielle changent
 | Séance | Date | Intitulé |
 |---|---|---|
 | **S1** | mer. 7 octobre 2026 | Comprendre et s'équiper |
-| **S2** | ven. 9 octobre 2026 | Git, configurer son assistant, lancer le projet |
-| **S3** | mer. 2 décembre 2026 | Première règle métier, données et RGPD |
-| **S4** | ven. 4 décembre 2026 | Qualité, sécurité et règlement européen sur l'IA |
-| Travail d'équipe | du 4 au 14 décembre | Finalisation du projet |
-| **S5** | mer. 16 décembre 2026 | Retouches finales et soutenance |
+| **S2** | mer. 2 décembre 2026 | Git, configurer son assistant, lancer le projet |
+| **S3** | ven. 4 décembre 2026 | Première règle métier, données et RGPD |
+| **S4** | mer. 16 décembre 2026 | Qualité, sécurité et règlement européen sur l'IA |
+| Travail d'équipe | du 16 décembre 2026 à l'avant-veille de la séance 5 (vacances du 19 décembre au 3 janvier comprises) | Finalisation du projet |
+| **S5** | janvier 2027 (date à préciser) | Retouches finales et soutenance |
 
 **S1 · Comprendre et s'équiper.** Moitié théorie, moitié installations (à prévoir largement, compte tenu de l'effectif). Histoire du savoir-faire logiciel (*software craftsmanship*) en neuf jalons, de la crise du logiciel de 1968 à la livraison continue, en passant par le développement guidé par les tests, la conception pilotée par le domaine et le développement guidé par le comportement ; pourquoi la qualité compte ; notions de code (en Dart) et de développement guidé par les tests ; fonctionnement et limites des modèles d'IA et de leur cadre de contrôle ; intégration et déploiement continus en ligne ; première sensibilisation à la protection des données. Installations indispensables : environnement de développement (VS Code), gestion de versions (git et GitHub), assistant de code (Claude Code et Claude Desktop) et Flutter (SDK, exécution dans Chrome). Installations facultatives, utiles plus tard : Docker, Rust et Antigravity.
 
-**S2 · Git, configurer son assistant, lancer le projet.** Séance de mise en pratique. Gestion de versions au clavier (enregistrements, branches, demandes de fusion, résolution de conflits). Configuration de l'assistant de code : consignes, droits d'accès, automatisations, extensions, connecteurs, agents spécialisés. Validation des équipes et des thèmes (constitués par formulaire entre S1 et S2), prise en main du dépôt de projet préparé par l'enseignant, cadrage du besoin, première demande de fusion relue par un pair.
+**S2 · Git, configurer son assistant, lancer le projet.** Séance de mise en pratique, huit semaines après la première : remise en route des postes, présentation des trois thèmes, puis constitution des équipes et attribution des thèmes en séance. Gestion de versions au clavier (enregistrements, branches, demandes de fusion, résolution de conflits). Configuration de l'assistant de code : consignes, droits d'accès, automatisations, extensions, connecteurs, agents spécialisés. Prise en main du dépôt de projet, créé par l'enseignant pendant la séance à partir de la liste des équipes, cadrage du besoin, première demande de fusion relue par un pair.
 
-**S3 · Première règle métier, données et RGPD.** Reprise après l'interruption de deux mois. Première règle métier développée par les tests. Modélisation des données, contraintes d'intégrité, migrations de base de données (drift). RGPD : principes, bases légales, droits des personnes, décision automatisée, fournisseurs de modèles d'IA. Début de la fiche de conformité ; relecture croisée entre équipes.
+**S3 · Première règle métier, données et RGPD.** Deux jours après la séance 2. Première règle métier développée par les tests. Modélisation des données, contraintes d'intégrité, migrations de base de données (drift). RGPD : principes, bases légales, droits des personnes, décision automatisée, fournisseurs de modèles d'IA. Début de la fiche de conformité ; relecture croisée entre équipes.
 
 **S4 · Qualité, sécurité et règlement européen sur l'IA.** Test d'acceptation (scénarios Gherkin) écrit avant le code produit par l'assistant. Intégration continue, publication automatique de la version web sur GitHub Pages par chaque équipe, sécurité des applications. Règlement européen sur l'IA : niveaux de risque, rôles, obligations de transparence, domaines sensibles. Passage de la fiche de conformité devant le RSSI. Audit croisé entre équipes ; première version publiée si le projet passe les contrôles automatiques.
 
@@ -64,7 +64,7 @@ Les assistants de programmation fondés sur l'intelligence artificielle changent
 
 ## Projet commun
 
-Chaque équipe classe les trois thèmes par préférence et se voit attribuer l'un d'eux (au plus trois équipes par thème, tirage au sort en cas de litige). Chacun correspond à un **besoin ponctuel** : un outil de courte durée de vie. Les trois thèmes sont des cas d'école **fictifs** : aucun n'est déployé dans l'établissement, aucune donnée réelle n'y est utilisée, et tous les personnages et organisations sont inventés. La pile technique est commune : une application Flutter (Dart) en Clean Architecture, avec injection de dépendances (get_it), gestion d'état par BLoC (flutter_bloc), développement guidé par les tests et par le comportement (bdd_widget_test), et persistance dans une base SQLite gérée avec drift. Le dépôt-modèle fourni par l'enseignant contient un squelette et un premier contexte pour l'assistant.
+Au début de la séance 2, les trois thèmes sont présentés, les équipes se constituent, puis chaque équipe classe les trois thèmes par préférence et se voit attribuer l'un d'eux (au plus trois équipes par thème, tirage au sort si besoin). Chacun correspond à un **besoin ponctuel** : un outil de courte durée de vie. Les trois thèmes sont des cas d'école **fictifs** : aucun n'est déployé dans l'établissement, aucune donnée réelle n'y est utilisée, et tous les personnages et organisations sont inventés. La pile technique est commune : une application Flutter (Dart) en Clean Architecture, avec injection de dépendances (get_it), gestion d'état par BLoC (flutter_bloc), développement guidé par les tests et par le comportement (bdd_widget_test), et persistance dans une base SQLite gérée avec drift. Le dépôt-modèle fourni par l'enseignant contient un squelette et un premier contexte pour l'assistant.
 
 | Thème | Situation | Difficulté propre |
 |---|---|---|
@@ -104,9 +104,9 @@ Un bonus d'un point au plus (règle métier avancée facultative) peut s'ajouter
 ## Moyens nécessaires
 
 - **Étudiants** : un ordinateur portable personnel permettant d'installer des logiciels, une connexion internet et un compte GitHub gratuit. Le SDK Flutter est téléchargé chez soi avant la première séance ; Docker n'est pas requis. Les accès à un assistant de code par IA pour les 32 étudiants sont mis à disposition pour la durée de l'enseignement (comptes ou crédits nominatifs, modalités et financement précisés avant la première séance).
-- **Salle** : une salle avec tables d'équipe, vidéoprojecteur, prises électriques pour 32 ordinateurs portables et réseau sans fil dimensionné pour 32 postes (téléchargements simultanés lors de la séance 1). Pour la soutenance du 16 décembre, deux salles simultanées.
+- **Salle** : une salle avec tables d'équipe, vidéoprojecteur, prises électriques pour 32 ordinateurs portables et réseau sans fil dimensionné pour 32 postes (téléchargements simultanés lors de la séance 1). Pour la soutenance de la séance 5, en janvier 2027 (date à préciser), deux salles simultanées.
 - **Encadrement** : 2 à 3 assistants en renfort de l'enseignant lors des séances 1 et 2 (installations), 1 en séance 3 et 2 en séance 4. Lors de la séance 4, trois intervenants tiennent le rôle du RSSI pour les passages en parallèle ; un second évaluateur par salle est souhaité pour la soutenance.
-- **RSSI** : le rôle est tenu soit par l'enseignant (simulation), soit par le RSSI de l'établissement, invité lors de la séance 4 ou répondant par écrit avant le 11 décembre. L'établissement est invité à indiquer s'il peut mettre à disposition cette ressource.
+- **RSSI** : le rôle est tenu soit par l'enseignant (simulation), soit par le RSSI de l'établissement, invité lors de la séance 4 ou répondant par écrit au plus tard une semaine avant la séance 5. L'établissement est invité à indiquer s'il peut mettre à disposition cette ressource.
 - **Hébergement** : les dépôts de projet sont hébergés dans une organisation GitHub dédiée à l'enseignement. Chaque équipe publie sa version web sur GitHub Pages, publique : données fictives uniquement, et rien de secret dans l'application.
 
 ## Termes utilisés
