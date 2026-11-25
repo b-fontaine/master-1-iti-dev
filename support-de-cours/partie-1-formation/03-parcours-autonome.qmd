@@ -50,7 +50,7 @@ Dans la formation, chaque équipe choisit un seul des trois thèmes et le constr
 | **B** · Ligne 4 | Calcul du taux de rendement synthétique d'un atelier de câblage | Arithmétique des temps et des unités |
 | **C** · Vœux de projet | Répartition de sujets de projet selon des vœux classés | Algorithme d'affectation et conformité la plus sensible |
 
-Les trois thèmes ont la même charge estimée. Le thème C demande plus de travail de conformité : c'est aussi le plus formateur sur ce point.
+Les trois thèmes ont la même charge estimée. Le thème C demande plus de travail de conformité.
 
 ### Tenir les rôles
 
