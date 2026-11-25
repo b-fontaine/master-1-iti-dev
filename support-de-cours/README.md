@@ -23,6 +23,30 @@ Portabilité :
 
 Un rendu limité à un seul format vide `_book/` : lancer `task book` pour obtenir les deux fichiers.
 
+## Versions et publication
+
+Le workflow `.github/workflows/livre.yml` compile le livre sur GitHub Actions :
+
+| Événement | Version imprimée | Résultat |
+|---|---|---|
+| Pull request touchant `support-de-cours/` | `X.Y.Z-pr.N` (version qu'aurait la fusion) | Vérification complète ; PDF et EPUB téléchargeables dans les artefacts du run (30 jours) |
+| Fusion dans `main` touchant `support-de-cours/` | `X.Y.Z` | Tag `livre-vX.Y.Z` et release GitHub « Livre vX.Y.Z » avec le PDF et l'EPUB |
+
+La version suit le versionnage sémantique et se calcule à partir des messages des commits qui touchent `support-de-cours/` depuis le dernier tag `livre-v*` (`scripts/version-suivante.sh`) :
+
+- aucun tag : `1.0.0` ;
+- un commit `type(portée)!: …` ou un corps contenant `BREAKING CHANGE` : version majeure (refonte de la structure, identifiants `#sec-` renommés) ;
+- un commit `feat(…): …` : version mineure (nouveau chapitre, nouvelle séance) ;
+- tout autre commit (`fix`, `docs`, fusion…) : correctif.
+
+Le numéro et la date sont imprimés au verso du titre (PDF), sur la page de titre et dans l'avant-propos. Ils viennent de `_version.yml` et `styles/version.tex`, générés par `scripts/ecrire-version.sh <version> [AAAA-MM-JJ]` : les fichiers versionnés portent la version « de travail », la CI les réécrit avant de compiler. Ne pas les modifier à la main ni commiter une version réécrite.
+
+```bash
+task book:test                                   # tests du calcul de version
+bash support-de-cours/scripts/version-suivante.sh          # version de la prochaine publication
+bash support-de-cours/scripts/version-suivante.sh --notes  # commits qui la composent
+```
+
 ## Ajouter un chapitre
 
 1. Créer le fichier `.qmd` dans le dossier de la partie, avec en première ligne `<!-- source: <chemin(s)> · synchro: AAAA-MM-JJ -->` (`source: nouveau` pour un texte original).

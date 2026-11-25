@@ -1,3 +1,6 @@
+metadata-files:
+  - _version.yml
+
 project:
   type: book
   output-dir: _book
@@ -13,7 +16,6 @@ book:
   title: "Ingénierie logicielle à l'ère de l'IA agentique"
   subtitle: "Créer avec l'IA, dialoguer avec les développeurs"
   author: "Benoît Fontaine"
-  date: "2026-11-25"
   date-format: "D MMMM YYYY"
   cover-image: images/couverture.png
   chapters:
@@ -72,7 +74,9 @@ format:
     monofont: "DejaVu Sans Mono"
     monofontoptions: ["Scale=0.82"]
     mainfontfallback: ["DejaVu Sans:mode=harf"]
-    include-in-header: styles/preambule.tex
+    include-in-header:
+      - styles/version.tex
+      - styles/preambule.tex
     copyright: "© 2025-2026 Benoît Fontaine. Tous droits réservés."
   epub:
     publisher: "Master ITI · Nantes Université · édition 2026-2027"

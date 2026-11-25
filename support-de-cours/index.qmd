@@ -25,6 +25,6 @@ Ce livre accompagne la formation « Créer avec l'IA, dialoguer avec les dévelo
 
 ## Édition et licence
 
-Édition 2026-2027, version du 25 novembre 2026.
+Édition 2026-2027, version {{< meta version >}} du {{< meta version-date >}}.
 
 © 2025-2026 Benoît Fontaine. Tous droits réservés. Aucune autorisation d'utilisation, de copie, de modification ou de diffusion n'est accordée sans l'accord écrit de l'auteur ; le texte complet figure dans le fichier `LICENSE` du dépôt.

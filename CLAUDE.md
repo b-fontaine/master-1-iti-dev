@@ -23,6 +23,10 @@ Les règles d'adaptation (ton, renvois, encadrés, nettoyage, fidélité) sont d
 - Aucun contenu interne (checklist enseignant, notes de préparation), chemin local ni donnée personnelle : le livre est diffusé tel quel.
 - Ne jamais modifier à la main `support-de-cours/_book/` : il est régénéré par le rendu et n'est pas versionné.
 
+## Versions du livre
+
+Chaque fusion dans `main` qui touche `support-de-cours/` publie une release dont la version dépend des messages de commit : `feat(livre): …` → mineure, `fix(livre): …` ou autre → correctif, `feat(livre)!: …` → majeure. Choisir le type avec soin, car il fixe le numéro imprimé. Ne pas commiter `_version.yml` ni `styles/version.tex` réécrits : la CI les génère (voir « Versions et publication » dans `support-de-cours/README.md`).
+
 ## Avant de conclure
 
 `task book:check` doit être vert (interdits, sources, rendu PDF et EPUB). Un rendu non vérifié n'est pas une preuve : coller le résultat, pas l'intention.

@@ -1,0 +1,5 @@
+# Généré par scripts/ecrire-version.sh : ne pas modifier à la main.
+version: "de travail"
+version-date: "25 novembre 2026"
+book:
+  date: "2026-11-25"

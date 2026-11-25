@@ -40,6 +40,11 @@ tasks:
     cmds:
       - quarto render support-de-cours --to epub
 
+  book:test:
+    desc: Teste le calcul de version du livre
+    cmds:
+      - bash support-de-cours/scripts/test-version-suivante.sh
+
   book:check:
     desc: Vérifie le support de cours (interdits, sources, rendu PDF et EPUB)
     cmds:
