@@ -5,3 +5,6 @@ _book/
 
 /.quarto/
 **/*.quarto_ipynb
+
+/index.*
+!/index.qmd
