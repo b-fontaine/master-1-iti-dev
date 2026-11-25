@@ -86,6 +86,9 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y -q fonts-dejavu poppler-utils
           tlmgr="$(command -v tlmgr || ls "$HOME"/.TinyTeX/bin/*/tlmgr | head -n 1)"
+          "$tlmgr" --version
+          # tlmgr refuse d'installer tant qu'il n'est pas à jour
+          "$tlmgr" update --self
           "$tlmgr" install fvextra xurl tex-gyre koma-script
 
       - name: Inscrire la version dans le livre
