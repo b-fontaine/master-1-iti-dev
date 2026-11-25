@@ -2,4 +2,105 @@
 
 # Suivre le parcours en autonome {#sec-parcours-autonome}
 
-Chapitre en cours d'adaptation.
+::: {.callout-tip title="Ce que vous allez retenir"}
+- Le projet fil rouge se mène seul ou à deux, sur l'un des trois thèmes.
+- Sans encadrant, trois rôles sont à tenir soi-même : le relecteur, le responsable de la sécurité des systèmes d'information (RSSI) et le coach qui dépanne. Ce chapitre propose un remplaçant pour chacun.
+- Les règles de fond ne changent pas : données fictives, aucun secret dans le dépôt, chacun explique ce qu'il livre.
+:::
+
+Ce chapitre s'adresse à qui veut refaire le parcours sans suivre la formation à l'université : un lecteur curieux, un professionnel, un étudiant d'une autre filière. Il s'appuie uniquement sur le contenu de ce livre : le programme (@sec-programme), le programme détaillé (@sec-programme-detaille), les supports des séances, les énoncés des thèmes (@sec-themes) et le module de conformité (@sec-conformite).
+
+::: {.callout-note title="Parcours non éprouvé"}
+Ce parcours est une adaptation du programme prévu pour 32 étudiants encadrés. Il n'a pas été essayé en conditions réelles, et les choix qui suivent (relecture par un pair, fiche de conformité auto-évaluée) sont des propositions, pas des règles du programme.
+:::
+
+## Ce qu'il faut avoir
+
+- Un ordinateur portable personnel permettant d'installer des logiciels, une connexion internet et un compte GitHub gratuit.
+- Les outils de la séance 1 : git et GitHub, VS Code, un assistant de code (le programme utilise Claude Code, avec Claude Desktop) et Flutter (le SDK, avec une exécution dans Chrome). Docker, Rust et Antigravity sont facultatifs. Le chapitre @sec-s1-en-bref donne la liste et l'ordre des installations.
+- Un accès à un assistant de code par IA. Dans la formation, il est fourni ; en autonomie, il est à prévoir par vos soins.
+- Aucune compétence en programmation n'est requise.
+
+Pour situer l'effort, la formation compte 20 heures encadrées (cinq séances de 4 heures) et, entre la séance 4 et la séance 5, environ 15 à 20 heures de travail d'équipe pour le projet (@sec-programme).
+
+## L'ordre de lecture
+
+Les supports de chaque séance se lisent dans l'ordre du livre. Les repères ci-dessous reprennent les lectures conseillées de la formation.
+
+| Étape | Ce que vous faites | Chapitres |
+|---|---|---|
+| 1. Cadrer | Lire le programme, puis parcourir le programme détaillé pour repérer les cinq séances, les rôles et le socle commun du projet | @sec-programme, @sec-programme-detaille |
+| 2. Comprendre et s'équiper (séance 1) | Vocabulaire et contexte d'abord : l'histoire du craft et celle de l'IA. Installations en parallèle, avec le guide Flutter et le chapitre sur les outils agentiques. Avant de pratiquer : le dojo guidé et la CI/CD. Les design patterns servent à relire le code du projet ; le craft depuis l'IA et l'IA embarquée nourrissent le projet | @sec-s1-en-bref, @sec-histoire-craft, @sec-histoire-ia, @sec-guide-flutter, @sec-outils-agentiques, @sec-pratique-craft-flutter, @sec-ci-cd, @sec-design-patterns, @sec-craft-ia, @sec-edge-ai |
+| 3. Remettre le poste en route et lancer le projet (séance 2) | Reprise du poste en dix minutes, puis git pas à pas, configuration de l'assistant et démarrage du dépôt de projet | @sec-s2-en-bref, @sec-git, @sec-configurer-claude-code, @sec-demarrer-projet |
+| 4. Choisir un thème et se cadrer | Lire les trois énoncés, choisir un thème, rédiger `PROJET.md` | @sec-themes |
+| 5. Données, conformité, qualité (séances 3 et 4) | Première règle métier en TDD et en BDD, modèle de données et migrations, fiche de conformité, intégration continue, sécurité, règlement européen sur l'IA. Le programme détaillé décrit ces séances ; leurs chapitres de support sont annoncés | @sec-s3, @sec-s4, @sec-programme-detaille, @sec-conformite |
+| 6. Finir et présenter (séance 5) | Retouches, gel du code, démonstration | @sec-s5, @sec-programme-detaille |
+
+Gardez sous la main les fiches pratiques (@sec-fiches) et le glossaire (@sec-glossaire). Les supports de la séance 1 recommandent de lire d'abord le vocabulaire et le contexte, puis de consulter le guide Flutter et le chapitre sur les outils agentiques au moment d'installer ; le support de la séance 2 recommande de commencer par la fiche de reprise du poste.
+
+## Le projet, seul ou à deux
+
+### Choisir un thème
+
+Dans la formation, chaque équipe choisit un seul des trois thèmes et le construit tout au long du parcours. Faites de même (@sec-themes).
+
+| Thème | Situation | Difficulté propre |
+|---|---|---|
+| **A** · Les Marches de Cendrelune | Registre d'un comptoir de Passeurs dans un monde fantastique | Un état qui évolue et un aléa à maîtriser pour pouvoir tester |
+| **B** · Ligne 4 | Calcul du taux de rendement synthétique d'un atelier de câblage | Arithmétique des temps et des unités |
+| **C** · Vœux de projet | Répartition de sujets de projet selon des vœux classés | Algorithme d'affectation et conformité la plus sensible |
+
+Les trois thèmes ont la même charge estimée. Le thème C demande plus de travail de conformité : c'est aussi le plus formateur sur ce point.
+
+### Tenir les rôles
+
+La formation prévoit des équipes de 3 à 5 personnes, avec des rôles par thème, et précise que la charge du projet ne change pas avec la taille de l'équipe : les rôles sont cumulés dans une équipe de trois, complétés dans une équipe de cinq. Le programme détaillé en donne la liste (@sec-programme-detaille). Trois rôles forment le minimum :
+
+- le gardien du produit et de la conformité (`PROJET.md`, cas d'acceptation, fiche de conformité) ;
+- le gardien des données (modèle, migrations, jeu de données fictif) ;
+- le gardien du harnais et de l'intégration continue (`CLAUDE.md`, permissions, workflow GitHub Actions).
+
+Seul, vous les cumulez tous les trois ; à deux, répartissez-les et échangez-les d'un chapitre à l'autre. Comme la charge ne diminue pas avec la taille de l'équipe, prévoyez un temps de travail par personne plus long que les 4 à 5 heures par étudiant d'une équipe de quatre.
+
+### Le socle à atteindre
+
+Le socle commun du projet reste la cible (@sec-programme-detaille) : un modèle de données relationnel d'au moins quatre entités liées, avec migrations versionnées ; une règle métier centrale testée automatiquement ; un jeu de données fictif reproductible ; un import de fichier CSV ; des tests et une intégration continue avec publication web ; des mesures de sécurité ; une fiche de conformité. Le tableau de bord et l'export de données sont souhaitables. Si le temps manque, le programme détaillé donne l'ordre des abandons : le seed complet cède avant l'import CSV, et le CRUD se limite à la création et à la lecture.
+
+## Remplacer le relecteur et le RSSI
+
+Dans la formation, deux rôles viennent d'ailleurs : un coéquipier ou une autre équipe relit chaque modification, et le RSSI examine la fiche de conformité. En autonomie, voici des remplaçants.
+
+### La relecture par un pair
+
+Les règles du jeu du projet exigent que toute demande de fusion soit relue par quelqu'un d'autre que son auteur, et que chacun puisse expliquer n'importe quelle modification qu'il a ouverte ou approuvée.
+
+- **Trouvez un pair** : un collègue, un ami, un autre lecteur du livre. Invitez-le comme collaborateur de votre dépôt (la protection de `main` demande une approbation) et donnez-lui la checklist de relecture en cinq lignes (@sec-fiches).
+- **À deux**, relisez-vous mutuellement.
+- **Sans personne**, relisez votre propre demande de fusion à froid, après une pause, avec la même checklist, et expliquez-la à voix haute comme à un chef de projet. Si vous n'y parvenez pas, la modification est trop grosse ou pas comprise : découpez-la.
+- Dans tous les cas, documentez dans chaque demande de fusion ce que l'assistant a proposé et ce que vous avez refusé, ainsi que le temps estimé, le temps réel et les retouches.
+
+### La fiche de conformité auto-évaluée
+
+Le module de conformité (@sec-conformite) fournit le gabarit de la fiche d'une page, en 13 rubriques, à copier dans `docs/fiche_conformite.md`. Dans la formation, elle est soumise au RSSI. En autonomie :
+
+1. **Remplissez-la** au fil du projet : finalité, données, base légale ou justification « données fictives », durée de conservation, fournisseur de modèle d'IA, ce qui part dans les prompts, décision automatisée, classement au regard du règlement européen sur l'IA, mesures, limites d'usage.
+2. **Passez le test en quatre questions** : y a-t-il des données sur des personnes réelles ? L'outil décide-t-il ou aide-t-il à décider quelque chose pour quelqu'un ? Les données ou les prompts sortent-ils vers un fournisseur tiers ? L'outil sera-t-il utilisé en dehors de l'équipe ? Un seul « oui » impose de traiter la fiche sérieusement.
+3. **Jouez le RSSI vous-même** avec la grille go et no-go du module : un « go » demande des données fictives ou justifiées, une finalité unique, une durée et une suppression définies, aucune donnée personnelle dans les prompts, un rôle et un classement qualifiés et argumentés, un accès par rôle testé et des limites d'usage écrites. Données réelles sans cadre, secret dans le dépôt, décision automatisée sans humain sur des personnes, finalité floue : c'est un « no-go ». Sans réponse, le programme retient le no-go par défaut.
+4. **Datez et signez en rôle** : inscrivez votre décision à la rubrique de validation, en écrivant « auto-évaluation » et « RSSI (rôle) ». Aucun nom civil ni adresse de courriel dans la fiche : les dépôts sont publics.
+5. **Si possible, faites relire la fiche** par une personne extérieure au projet, qui joue le RSSI avec la même grille.
+
+Un « go » vaut uniquement pour le périmètre pédagogique à données fictives. Une auto-évaluation ne constitue ni une homologation ni un avis juridique. Tout passage à des données réelles impose une nouvelle fiche et la validation d'un vrai RSSI, et le DPO le cas échéant.
+
+### L'audit croisé
+
+Dans la formation, une autre équipe audite votre dépôt sur cinq points : installation à froid, intégration continue, secrets, rôles, fiche. Faites-le sur votre propre dépôt, de préférence après quelques jours, en suivant l'installation à froid exactement comme le ferait un inconnu (clone, `flutter pub get`, génération de code, tests, lancement dans Chrome).
+
+## Suivre la formation à l'université
+
+Ce parcours ne remplace pas la formation encadrée. Celle-ci se déroule à Nantes Université, en Master ITI, sur cinq séances, avec des équipes constituées en séance, un dépôt créé par l'enseignant, un passage devant un RSSI et une soutenance. Le calendrier de l'édition 2026-2027, les prérequis, les moyens et l'évaluation figurent au chapitre @sec-programme. Le livre ne détaille pas les modalités d'inscription : elles relèvent de l'établissement.
+
+## Pour aller plus loin
+
+- Reprenez le programme détaillé pour comparer votre parcours aux cinq séances, notamment les rubriques « Si la séance prend du retard » et « Peut glisser », qui indiquent quoi sacrifier en premier (@sec-programme-detaille).
+- Les règles d'usage de l'IA du programme s'appliquent aussi seul : transparence, responsabilité, intégrité, esprit critique, confidentialité et conformité (@sec-programme-detaille).
+- Aucune donnée personnelle ou confidentielle dans un assistant d'IA ni dans un dépôt public, aucun secret dans le dépôt : c'est la règle d'or de la formation.
