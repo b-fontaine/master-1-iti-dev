@@ -91,12 +91,26 @@ jobs:
           "$tlmgr" update --self
           "$tlmgr" install fvextra xurl tex-gyre koma-script
 
-      # Les schémas Mermaid sont rendus par le Chrome du runner, sans interface.
-      # Sur Ubuntu 24.04, AppArmor bloque son bac à sable et le rendu reste figé.
-      - name: Préparer le rendu des schémas (Chrome sans interface)
+      # Les schémas Mermaid sont rendus par Chrome via le protocole DevTools.
+      # Avec le Chrome complet du runner, le rendu reste figé au premier schéma :
+      # on fournit à Quarto chrome-headless-shell, le binaire prévu pour
+      # l'automatisation (QUARTO_CHROMIUM).
+      - name: Installer chrome-headless-shell pour les schémas
         run: |
-          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
-          google-chrome --version
+          npx --yes @puppeteer/browsers@2 install chrome-headless-shell@stable \
+            --path "$RUNNER_TEMP/chrome"
+          chs="$(find "$RUNNER_TEMP/chrome" -type f -name chrome-headless-shell | head -n 1)"
+          "$chs" --version
+          echo "QUARTO_CHROMIUM=$chs" >> "$GITHUB_ENV"
+
+      - name: Tester le rendu d'un schéma (échec rapide en cas de blocage)
+        timeout-minutes: 4
+        run: |
+          mkdir -p "$RUNNER_TEMP/essai"
+          cd "$RUNNER_TEMP/essai"
+          printf -- '---\ntitle: Essai\n---\n\n```{mermaid}\nflowchart LR\n  A --> B\n```\n' > essai.qmd
+          timeout 180 quarto render essai.qmd --to epub --log-level debug
+          ls -l
 
       - name: Inscrire la version dans le livre
         run: |
