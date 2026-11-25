@@ -2,4 +2,6 @@
 
 # Séance 1 · Comprendre et s'équiper {.unnumbered}
 
-Page de partie.
+Cette partie réunit les supports de la séance 1. Elle commence par un résumé de la séance (@sec-s1-en-bref), suivi de neuf chapitres qui approfondissent les diapositives sans les contredire : histoire du craft et de l'IA, qualité du code à l'ère des agents, Flutter et Dart, pratique du TDD et du BDD, outils de développement agentique, IA embarquée, CI/CD et design patterns.
+
+Chaque chapitre contient un résumé, un glossaire, des sources et la liste de ses points non vérifiés. Les noms d'outils, les versions et les fonctionnalités évoluent vite : revérifiez-les sur la documentation officielle avant de vous y fier.
