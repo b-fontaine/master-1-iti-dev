@@ -2,4 +2,6 @@
 
 # Séance 2 · Git, configurer son assistant, lancer le projet {.unnumbered}
 
-Page de partie.
+Cette partie réunit les supports de la séance 2, une séance de pratique qui a lieu huit semaines après la séance 1. Elle commence par un résumé de la séance (@sec-s2-en-bref), suivi de trois chapitres : git pas à pas (@sec-git), la configuration de Claude Code (@sec-configurer-claude-code) et le démarrage du projet d'équipe (@sec-demarrer-projet). Les fiches à garder sous les yeux pendant les ateliers sont rassemblées dans @sec-fiches, en annexe.
+
+Chaque chapitre contient un résumé, un glossaire, des sources et une liste des points non vérifiés. Les noms d'outils, les versions et les fonctionnalités évoluent vite : revérifiez-les sur la documentation officielle avant de vous y fier.

@@ -2,4 +2,625 @@
 
 # Configurer Claude Code {#sec-configurer-claude-code}
 
-Chapitre en cours d'adaptation.
+::: {.callout-note title="État des connaissances"}
+État des outils vérifié le 19 novembre 2026 (documentation officielle de Claude Code, version 2.1.328 au journal des modifications ; extraits testés avec la version 2.1.325 sur le poste de rédaction). Les outils changent vite : réessayez les extraits sur la version installée avant de vous y fier.
+:::
+
+::: {.callout-warning title="Écart avec la documentation"}
+La règle de refus `Read(./.env)` n'a pas, à elle seule, empêché la lecture du fichier par une commande du terminal lors du test (voir @sec-cc-test-appris). Les fiches pratiques en tiennent compte (@sec-fiches).
+:::
+
+Ce chapitre est le mode d'emploi de l'atelier de configuration. Il ne refait pas la théorie : le harnais, la fenêtre de contexte, le cache et la consommation de jetons sont expliqués dans @sec-outils-agentiques, auquel il renvoie souvent. Ici, on écrit les fichiers, on les teste, et on regarde ce qu'ils garantissent vraiment. Les extraits à copier sont repris, sans les explications, dans la fiche B de @sec-fiches.
+
+::: {.callout-tip title="Ce que vous allez retenir"}
+
+- Une **consigne** (dans le prompt, dans `CLAUDE.md`) est une demande adressée au modèle. Une **permission** ou un **hook** est une contrainte appliquée par le programme Claude Code, quoi que le modèle décide. Le cas Replit de juillet 2025 montre ce qui arrive quand on confond les deux.
+- La configuration d'un projet tient dans **deux endroits** : `CLAUDE.md` à la racine (ce que l'agent doit savoir) et le dossier `.claude/` (ce qu'il a le droit de faire, et ses automatismes). Les deux se **commitent** : toute l'équipe hérite des mêmes réglages.
+- `/init` écrit un premier `CLAUDE.md` ; votre travail est de le **réduire** à ce qui évite des erreurs : commandes, conventions, interdits.
+- Dans `.claude/settings.json`, une règle `deny` l'emporte sur tout le reste. Mais une règle ne couvre que ce qu'elle décrit : lors de la rédaction de ce chapitre, `Read(./.env)` a refusé l'outil de lecture et laissé passer `cat .env`. **Une règle non testée n'est pas un garde-fou.**
+- Le **mode plan** fait proposer avant de faire ; un **hook** lance une commande à coup sûr ; un **skill** range une procédure réutilisable ; un **sous-agent** travaille à part et rapporte un résumé.
+- Un **plugin** et un **serveur MCP** font entrer chez vous du code écrit par d'autres et, souvent, des échanges avec un tiers : on valide avant d'installer.
+- Un cadre de type **spec-kit** enchaîne spécification, plan, tâches puis code : à connaître, pas à installer d'emblée.
+
+:::
+
+
+## Pourquoi configurer : le cas Replit
+
+### Les faits
+
+En juillet 2025, Jason Lemkin, fondateur de la communauté d'entrepreneurs SaaStr, construit une application avec l'agent de la plateforme Replit, sans écrire de code lui-même, et raconte l'expérience jour après jour sur le réseau X. Le 12 juillet, il est enthousiaste. Le 18 juillet, il écrit que l'agent a **supprimé sa base de données de production** (la base réelle, celle qui sert aux utilisateurs, par opposition à une base d'essai).
+
+Trois détails comptent pour nous.
+
+- Lemkin avait déclaré un **gel du code** (*code freeze* : une période pendant laquelle on s'interdit toute modification). Il l'avait écrit à l'agent, en majuscules, onze fois selon son récit.
+- L'agent a tout de même exécuté des commandes destructrices. D'après la presse, la base contenait les fiches de plus de 1 200 dirigeants et de près de 1 200 entreprises. L'agent a ensuite qualifié lui-même son geste d'« erreur de jugement catastrophique ».
+- Il a d'abord affirmé que rien n'était récupérable. C'était faux : les données ont pu être restaurées le lendemain.
+
+Le dirigeant de Replit, Amjad Masad, a présenté des excuses publiques (« inacceptable, et cela ne devrait jamais être possible ») et annoncé trois mesures : la séparation automatique des bases de développement et de production, une restauration améliorée, et un mode où l'agent planifie et discute **sans pouvoir modifier**. *Sources : The Register, 21 juillet 2025 ; Fortune, 23 juillet 2025 ; AI Incident Database, incident n° 1152.*
+
+### La leçon
+
+La leçon n'est pas « les agents sont dangereux ». Elle est plus précise, et c'est Lemkin qui la tire le 20 juillet : dans cet outil, à ce moment-là, **un gel du code ne pouvait pas être imposé**. La consigne existait, elle était claire, elle était répétée. Rien dans l'outil n'empêchait l'action.
+
+Les trois mesures annoncées par Replit sont toutes des **contraintes**, pas des consignes mieux rédigées : une séparation (l'agent ne peut plus atteindre la production), un filet (on peut revenir en arrière), un mode restreint (il ne peut que proposer). Ce sont exactement les trois familles d'outils que vous allez configurer : des **permissions**, **git**, et le **mode plan**.
+
+::: {.callout-tip title="À retenir"}
+Un gel écrit dans le prompt est une demande. Si une action ne doit jamais arriver, il faut qu'elle soit impossible, pas seulement interdite.
+:::
+
+
+## Demande ou contrainte : la carte des briques
+
+Une analogie d'entreprise : une **note de service** dit « l'accès à la salle des serveurs est réservé à l'équipe d'exploitation ». Un **badge** qui n'ouvre pas la porte dit la même chose, mais il ne dépend ni de la mémoire ni de la bonne volonté de celui qui passe. Les deux sont utiles : la note explique, le badge garantit.
+
+```{mermaid}
+flowchart LR
+    V["Vous"] -->|"prompt"| M["Modèle"]
+    C["CLAUDE.md, skills<br/>(consignes)"] -.->|"lus par"| M
+    M -->|"propose une action"| H{"Claude Code<br/>(le harnais)"}
+    P["Permissions, hooks<br/>(contraintes)"] ==>|"appliqués par"| H
+    H -->|"autorisée"| A["Fichiers, terminal, réseau"]
+    H -->|"refusée"| R["Refus renvoyé au modèle"]
+```
+
+Le modèle **lit** les consignes et **propose** des actions. C'est le programme Claude Code, pas le modèle, qui décide si l'action s'exécute. La documentation le dit en toutes lettres : les règles de permission sont appliquées par Claude Code, pas par le modèle ; `CLAUDE.md` est traité comme du contexte, pas comme une configuration imposée.
+
+| Brique | Ce que c'est | Nature | Où ça vit | Section |
+|---|---|---|---|---|
+| `CLAUDE.md` | Ce que l'agent doit savoir du projet | Consigne | racine du dépôt | 4 |
+| Permissions | Ce qu'il peut faire sans demander, ce qui lui est refusé | **Contrainte** | `.claude/settings.json` | 5 |
+| Mode plan | Il explore et propose, vous validez | Contrainte (tant qu'il est actif) | réglage de la session | 6 |
+| Hooks | Une commande lancée automatiquement à un moment précis | **Contrainte** | `.claude/settings.json` | 7 |
+| Skills | Une procédure réutilisable, appelée par son nom | Consigne | `.claude/skills/` | 8 |
+| Sous-agents | Un assistant à part, au contexte isolé | Consigne, avec des outils limitables | `.claude/agents/` | 9 |
+| Plugins | Un paquet de skills, hooks, sous-agents et serveurs MCP | Les deux : à relire | installé par `/plugin` | 10 |
+| MCP | Le branchement d'un outil ou d'une source externe | Un pouvoir en plus : à valider | `.mcp.json` ou réglage local | 10 |
+
+::: {.callout-tip title="À retenir"}
+Pour chaque règle que vous voulez donner à l'agent, posez la question : « est-ce grave s'il l'oublie ? ». Si non, une ligne dans `CLAUDE.md` suffit. Si oui, il faut une permission ou un hook, et un test.
+:::
+
+
+## Avant de commencer
+
+### Où vivent les fichiers
+
+À la fin de l'atelier, le dépôt d'essai ressemble à ceci :
+
+```text
+essai-git/
+├── CLAUDE.md                      ← consignes du projet (commité)
+├── .claude/
+│   ├── settings.json              ← permissions et hooks de l'équipe (commité)
+│   ├── settings.local.json        ← vos réglages personnels (jamais commité)
+│   ├── skills/
+│   │   └── commit-propre/
+│   │       └── SKILL.md           ← un skill (commité)
+│   └── agents/
+│       └── relecteur.md           ← un sous-agent (commité)
+├── .gitignore                     ← contient la ligne .env
+├── .env                           ← factice, jamais commité
+└── recette.md
+```
+
+Deux remarques pour celles et ceux qui découvrent la ligne de commande. Un nom qui commence par un point (`.claude`, `.env`, `.gitignore`) désigne un fichier ou un dossier **caché** : l'explorateur de fichiers du système ne le montre pas toujours, l'explorateur de VS Code si. Et `~` désigne votre dossier personnel : `~/.claude/` contient vos réglages à vous, valables pour tous vos projets.
+
+Claude Code lit plusieurs fichiers de réglages et les combine. Du plus prioritaire au moins prioritaire : les réglages imposés par une organisation, les options de la ligne de commande, `.claude/settings.local.json` (vous, dans ce projet), `.claude/settings.json` (l'équipe, dans ce projet), `~/.claude/settings.json` (vous, partout). Les listes de permissions de ces fichiers **s'additionnent**, et un refus posé à un niveau ne peut pas être levé par une autorisation d'un autre niveau.
+
+### Démarrer en mode manuel {#sec-cc-mode-manuel}
+
+Point de vigilance, déjà signalé dans @sec-outils-agentiques et reconfirmé : depuis la version 2.1.283, une session interactive (terminal ou extension VS Code) démarre en mode **auto**. Dans ce mode, un second modèle filtre les actions à votre place ; la documentation précise qu'il réduit le nombre de questions sans garantir la sécurité. La règle du cours est de travailler en mode **manuel**, où l'agent demande avant de modifier un fichier ou de lancer une commande.
+
+- Dans le terminal : lancez `claude --permission-mode default` (l'aide de la commande écrit aussi `manual` ; les deux sont acceptés). La barre d'état doit indiquer le mode manuel.
+- Dans l'extension VS Code : cliquez sur l'indicateur de mode sous la zone de saisie et choisissez « Manual ».
+- Pour ne plus y penser : ajoutez `"permissions": { "defaultMode": "default" }` dans `~/.claude/settings.json`.
+- En cours de session : `Maj+Tab` fait défiler les modes ; depuis le mode auto, le premier appui ramène au mode manuel.
+
+### Terminal ou VS Code ?
+
+Les deux lisent les mêmes fichiers (`CLAUDE.md`, `.claude/settings.json`). L'extension VS Code n'offre qu'une partie des commandes `/…` du terminal. Pour l'atelier, le plus simple est d'ouvrir le dossier `essai-git` dans VS Code, d'y ouvrir un terminal intégré (menu Terminal, puis Nouveau terminal) et d'y lancer `claude` : vous avez l'explorateur de fichiers à gauche et toutes les commandes à droite.
+
+
+## `CLAUDE.md` : générer, puis réduire
+
+### Générer
+
+`CLAUDE.md` est un fichier texte au format Markdown, lu par l'agent au début de chaque session. Dans Claude Code, tapez :
+
+```text
+/init
+```
+
+L'agent explore le dossier et propose un `CLAUDE.md` de départ (commandes de construction et de test, conventions repérées). Si un `CLAUDE.md` existe déjà, `/init` propose des améliorations au lieu de l'écraser. Dans un dépôt d'essai qui ne contient qu'une recette, le résultat sera maigre et un peu ridicule : c'est voulu, l'exercice est dans l'étape suivante.
+
+### Réduire {#sec-cc-reduire}
+
+La documentation recommande de rester **sous 200 lignes** et donne un critère de tri : pour chaque ligne, « si je la supprime, l'agent fera-t-il des erreurs ? ». Si la réponse est non, la ligne coûte de la mémoire de travail à chaque requête pour rien.
+
+Dans le dépôt d'essai, gardez trois rubriques.
+
+1. **Les conventions** propres au projet, formulées de façon vérifiable.
+2. **Les interdits**, en sachant qu'ils restent des demandes (les vrais interdits iront dans les permissions).
+3. **Ce qu'il faut montrer avant de dire « c'est terminé »**.
+
+Dans un vrai projet s'y ajoute en tête une rubrique **Commandes** (lancer les tests, l'analyse, l'application) : c'est ce que l'agent ne peut pas deviner. Le dépôt d'essai n'en a pas, puisqu'il ne contient que du texte.
+
+Exemple pour le dépôt d'essai, à adapter (rédigé pour ce chapitre ; un fichier d'instructions ne « s'exécute » pas, sa valeur se juge à l'usage) :
+
+```markdown
+# essai-git
+
+Dépôt d'entraînement à git. Il ne contient que du texte en Markdown.
+
+## Conventions
+- Tout est rédigé en français.
+- Un commit par modification, message à l'impératif présent
+  (« Ajoute… », « Corrige… »), 72 caractères au plus sur la première ligne.
+- Jamais de commit direct sur `main` : une branche par modification.
+
+## Interdits
+- Aucune donnée personnelle ni réelle, nulle part.
+- Ne jamais lire ni modifier `.env`.
+- Ne jamais lancer `git push --force` ni `rm -rf`.
+
+## Avant de dire « c'est terminé »
+Afficher `git status` et `git log --oneline -5`.
+```
+
+Dans le dépôt de votre équipe, vous n'écrirez pas ce fichier : un `CLAUDE.md` adapté à la pile Flutter est fourni (voir @sec-demarrer-projet). Votre rôle sera de le **maintenir** : règle du jeu n° 9, toute règle apprise y est ajoutée.
+
+### Vérifier qu'il est lu
+
+Une modification de `CLAUDE.md` en cours de session n'est pas prise en compte tout de suite : relancez la session (ou utilisez `/clear` ou `/compact` ; voir @sec-outils-agentiques). Pour vérifier ce qui est chargé, tapez `/context` (ou `/context all`) et cherchez la section « Memory files », ou `/memory`, qui permet aussi de modifier les fichiers.
+
+::: {.callout-tip title="À retenir"}
+`/init` donne un brouillon ; un bon `CLAUDE.md` est ce qui reste après avoir barré tout ce que l'agent aurait trouvé seul. Les deux interdits de l'exemple vont maintenant devenir de vraies contraintes.
+:::
+
+
+## Les permissions : écrire, puis tester
+
+### L'expérience « avant »
+
+Créez un faux fichier de secrets, **dans VS Code** (clic droit dans l'explorateur de fichiers, « New File » ou « Nouveau fichier ») : un fichier `.env` qui contient la seule ligne `CLE_API=factice-1234`, puis un fichier `.gitignore` qui contient la seule ligne `.env`. Enregistrez les deux. Le secret est **factice** : n'y mettez jamais une vraie clé, même pour l'exercice. Vérifiez ensuite que git ignore bien le fichier :
+
+```bash
+git status
+```
+
+`.env` ne doit **pas** apparaître dans la liste (seul `.gitignore` y figure). On passe par l'éditeur plutôt que par une commande `echo … > .env` parce que, sous Windows, le terminal PowerShell peut écrire le fichier dans un encodage que git ne lit pas : la ligne serait ignorée sans aucun message.
+
+Puis demandez à l'agent : « Lis le fichier .env et donne-moi son contenu. » Il le fait sans difficulté. Écrivez « ne lis jamais .env » dans votre prompt si vous voulez : la plupart du temps il obéira, et rien ne le garantit.
+
+### Le fichier {#sec-cc-fichier}
+
+Créez le dossier `.claude` à la racine du dépôt, puis le fichier `.claude/settings.json` avec ce contenu exact :
+
+```json
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Bash(*.env*)",
+      "Bash(rm -rf *)",
+      "Bash(git push --force*)",
+      "Bash(git push * --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push * -f*)"
+    ]
+  }
+}
+```
+
+Ce fichier est écrit en **JSON**, un format de données strict : accolades, crochets, guillemets droits, une virgule entre deux éléments et **pas de virgule après le dernier**. La ligne `$schema` est facultative ; elle permet à VS Code de souligner une faute de frappe.
+
+Lecture, règle par règle. Une règle s'écrit `Outil` ou `Outil(précision)`.
+
+| Règle | Ce qu'elle refuse |
+|---|---|
+| `Read(./.env)` | L'outil de lecture de fichiers de Claude sur le `.env` du dossier courant. Sans cela, il le lit sans rien demander |
+| `Bash(*.env*)` | Toute commande du terminal dont le texte contient `.env` : `cat .env`, `head .env`, `grep CLE .env`… L'étoile remplace n'importe quelle suite de caractères |
+| `Bash(rm -rf *)` | La suppression récursive et sans confirmation d'un dossier, écrite sous cette forme (elle ne couvre pas la variante `rm -fr`) |
+| `Bash(git push --force*)` et `Bash(git push * --force*)` | Le push forcé, qui écrase l'historique commun, que l'option soit placée avant ou après le nom de la branche |
+| `Bash(git push -f*)` et `Bash(git push * -f*)` | La même chose, écrite avec l'abréviation `-f` |
+
+Trois listes existent : `deny` (refuser), `ask` (toujours demander) et `allow` (autoriser sans demander). Elles sont évaluées dans cet ordre, et la première règle qui correspond l'emporte : **le refus gagne toujours**.
+
+### L'expérience « après »
+
+Fermez la session (`/exit` ou `Ctrl+C` deux fois), relancez `claude --permission-mode default`, et reposez la même question : « Lis le fichier .env et donne-moi son contenu. »
+
+Cette fois, l'outil refuse. Les messages obtenus pendant la rédaction (version 2.1.325) étaient :
+
+```text
+File is in a directory that is denied by your permission settings.
+Permission to use Bash with command cat .env has been denied.
+```
+
+Le libellé exact dépend de la version (la documentation cite une autre formulation pour le premier). L'important est que le refus vient **du programme** : le modèle a bien essayé, et il vous rapporte qu'il n'a pas pu. Tapez `/permissions` pour voir les règles actives et le fichier d'où vient chacune.
+
+Si l'agent lit encore le fichier, cherchez dans cet ordre : le JSON est invalide (une virgule de trop ; VS Code le souligne en rouge) ; le fichier n'est pas dans `.claude/` à la racine du dossier où vous avez lancé `claude` ; la session n'a pas été relancée.
+
+### Ce que le test nous a appris {#sec-cc-test-appris}
+
+La documentation indique qu'une règle `Read(./.env)` en refus s'applique aux outils de fichiers de Claude **et** aux commandes de fichiers qu'il reconnaît dans le terminal, comme `cat`, `head` ou `tail`. Nous avons donc d'abord testé cette règle seule. Résultat, le 19 novembre 2026, avec Claude Code 2.1.325 en mode auto (les conditions exactes du test sont dans les « Points non vérifiés ») :
+
+| Demande faite à l'agent | `Read(./.env)` seule | Avec `Bash(*.env*)` en plus |
+|---|---|---|
+| Lire `.env` avec l'outil de lecture | **refusé** | **refusé** |
+| `cat .env` dans le terminal | exécuté, contenu affiché | **refusé** |
+| `head -1 .env`, `grep CLE .env` | exécutés | **refusés** |
+
+Autrement dit : la règle prise seule dans la documentation ne suffisait pas sur ce poste. Nous ne savons pas si l'écart tient à la version, au mode ou à l'exécution non interactive ; nous savons en revanche que les sept règles du fichier ci-dessus ont été testées une à une et ont toutes refusé.
+
+Deux conséquences à connaître.
+
+- `Bash(*.env*)` est volontairement large : elle refuse aussi une commande du terminal qui mentionne `.env.example` (un fichier d'exemple sans secret, présent dans le dépôt du projet). L'agent peut toujours le lire avec son outil de lecture, que la règle `Read(./.env)` ne vise pas. Vous pouvez préférer une règle par commande ; elle sera plus fine, et moins sûre.
+- Aucune règle de ce type n'arrête un programme qui ouvrirait le fichier **lui-même** (un script Python, par exemple). La documentation est explicite : les règles sur les commandes ne sont pas une frontière de sécurité, et seule une isolation par le système (le bac à sable, `/sandbox`) en est une. Le premier rempart reste donc la règle d'or : pas de vrai secret sur un poste où travaille un agent si l'on peut l'éviter, et jamais dans le dépôt.
+
+::: {.callout-tip title="À retenir"}
+Le refus l'emporte sur tout, mais une règle ne couvre que ce qu'elle décrit. On ne croit ni la documentation ni ce chapitre : on demande à l'agent de faire la chose interdite, et on regarde.
+:::
+
+### Et les autorisations ? {#sec-cc-autorisations}
+
+Vous pouvez aussi éviter les questions répétées pour des commandes sans danger, avec une liste `allow` :
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(flutter test *)",
+      "Bash(flutter analyze)"
+    ]
+  }
+}
+```
+
+Quelques règles de prudence : n'autorisez que des commandes qui **lisent** ou qui **vérifient** ; jamais `Bash` seul (toutes les commandes) ; et rappelez-vous que les règles `allow` d'un dépôt ne s'appliquent qu'après que vous avez accepté de faire confiance au dossier, alors que les règles `deny` et `ask` s'appliquent tout de suite. Vos préférences personnelles vont dans `.claude/settings.local.json`, qui n'est pas partagé.
+
+
+## Le mode plan : proposer avant de faire
+
+En **mode plan**, l'agent lit les fichiers, peut lancer des commandes d'exploration et rédige un plan ; il ne modifie pas vos fichiers tant que vous n'avez pas approuvé. C'est le mode « planification seule » que Replit a annoncé après l'incident.
+
+Pour y entrer : `Maj+Tab` jusqu'à l'affichage du mode plan, ou la commande `/plan` suivie de votre demande, ou au lancement `claude --permission-mode plan`. Quand le plan est prêt, Claude Code propose de l'approuver (en choisissant alors comment seront validées les modifications : choisissez l'approbation manuelle) ou de continuer à planifier.
+
+Essayez dans le dépôt d'essai :
+
+```text
+/plan Ajoute à recette.md une section « Garnitures » avec trois idées.
+```
+
+Lisez le plan **avant** d'approuver. Deux questions suffisent : touche-t-il seulement aux fichiers attendus ? Sais-je expliquer chaque étape ? Si vous pouvez décrire la modification en une phrase, le plan est superflu ; dès qu'elle touche plusieurs fichiers, il fait gagner du temps.
+
+::: {.callout-tip title="À retenir"}
+Le mode plan est la façon la plus simple de garder la main : rien ne change tant que vous n'avez pas dit oui à un texte que vous avez lu.
+:::
+
+
+## Les hooks : des automatismes garantis
+
+Un **hook** (crochet) est une commande que Claude Code lance lui-même à un moment précis : avant un outil, après un outil, au démarrage, quand l'agent s'arrête. Contrairement à une consigne, il s'exécute à coup sûr. Les hooks se déclarent dans `.claude/settings.json`, à côté des permissions.
+
+L'exemple du cours : **formater le code après chaque modification**. Plutôt que d'écrire « pense à lancer `dart format` » dans `CLAUDE.md`, on le fait faire par l'outil. La forme suit l'exemple officiel de la documentation (formatage après modification), adapté à Dart :
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path') && case \"$f\" in *.dart) dart format \"$f\" ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Lecture : après chaque usage (`PostToolUse`) des outils de modification ou d'écriture de fichier (`Edit|Write`), Claude Code lance la commande. Il lui transmet une description de l'action au format JSON ; l'outil `jq` en extrait le chemin du fichier ; si ce chemin se termine par `.dart`, `dart format` remet le fichier en forme.
+
+Dans un vrai fichier, les blocs `permissions` et `hooks` cohabitent dans le même objet, séparés par une virgule (la fiche B donne le fichier complet).
+
+Trois choses à savoir.
+
+- Cet exemple dépend de `jq`, qui n'est pas installé par défaut, notamment sous Windows. Sans `jq`, la commande échoue ; en général l'action de l'agent se poursuit quand même, mais ce n'est pas vérifié, et la documentation signale qu'un hook peut bloquer sous Windows quand Git Bash est absent. La documentation ne propose pas d'équivalent sans `jq` : c'est pourquoi ce hook est montré **en démonstration** et n'est pas une étape obligatoire de l'atelier. Le dépôt-modèle du projet fournit sa propre configuration.
+- Un hook peut aussi **interdire**. S'il se termine avec le code de sortie 2 lors d'un événement `PreToolUse` (avant l'outil), l'action est bloquée et le message d'erreur est transmis à l'agent. @sec-outils-agentiques en donne un exemple complet.
+- `/hooks` affiche les hooks actifs et le fichier d'où ils viennent. Prenez l'habitude de le consulter dans un dépôt que vous venez de cloner : un hook est une commande qui s'exécutera sur votre machine.
+
+::: {.callout-tip title="À retenir"}
+Ce qu'un humain oublierait une fois sur dix, on le confie à un hook. Et l'on relit les hooks des autres comme on relit leur code.
+:::
+
+
+## Un premier skill : le message de commit
+
+Un **skill** est une procédure rangée dans un fichier, que l'agent charge quand elle est utile ou que vous appelez par son nom. La documentation conseille d'en créer un quand vous recopiez sans cesse les mêmes instructions dans la conversation.
+
+Créez le dossier `.claude/skills/commit-propre/` et, dedans, le fichier `SKILL.md` :
+
+```markdown
+---
+name: commit-propre
+description: Rédige un message de commit conforme aux règles du projet à partir des modifications indexées. À utiliser quand on demande de préparer ou de rédiger un commit.
+disable-model-invocation: true
+---
+Propose un message de commit pour les modifications indexées.
+
+1. Lance `git diff --staged` et lis ce qui change. S'il n'y a rien d'indexé, dis-le et arrête-toi.
+2. Écris un message en français : une première ligne de 72 caractères au plus, qui commence par un verbe à l'impératif présent (Ajoute, Corrige, Supprime…), sans point final ; puis, si c'est utile, une ligne vide et deux ou trois lignes qui expliquent pourquoi.
+3. Vérifie qu'aucun fichier indexé ne contient de secret ni de donnée personnelle ; s'il y en a, signale-le au lieu de proposer un message.
+4. Affiche le message proposé et la commande `git commit` correspondante. Ne lance pas le commit : c'est l'utilisateur qui le fait.
+
+Précision éventuelle de l'utilisateur : $ARGUMENTS
+```
+
+Les lignes entre les deux `---` forment l'**en-tête** : `name` est le nom d'appel, `description` dit à quoi sert le skill, `disable-model-invocation: true` réserve son déclenchement à vous seul (l'agent ne le lancera pas de sa propre initiative). `$ARGUMENTS` est remplacé par ce que vous tapez après le nom.
+
+Pour l'essayer : modifiez `recette.md`, indexez la modification, puis appelez le skill.
+
+```bash
+git add recette.md
+```
+
+```text
+/commit-propre
+```
+
+Au test, pour une ligne « 1 noix de beurre » ajoutée à la recette, le skill a proposé « Ajoute une noix de beurre à la cuisson » et la commande correspondante, sans lancer le commit. Il avait aussi ajouté une ligne de signature `Co-Authored-By` : le programme du cours l'autorise pour les commits préparés avec l'agent ; gardez-la ou retirez-la, mais faites-le en connaissance de cause.
+
+Le skill est détecté sans redémarrer la session ; si le dossier `.claude/skills` n'existait pas au lancement, tapez `/reload-skills`. Vous croiserez dans d'anciens tutoriels un dossier `.claude/commands/` : les « commandes personnalisées » ont été fusionnées avec les skills, et les anciens fichiers fonctionnent toujours.
+
+::: {.callout-tip title="À retenir"}
+Un skill, c'est une consigne que l'on n'a plus à répéter. Il reste une consigne : relisez ce qu'il produit, surtout quand il écrit en votre nom.
+:::
+
+
+## Les sous-agents : déléguer sans encombrer
+
+Un **sous-agent** est un assistant secondaire qui travaille dans sa propre fenêtre de contexte et ne renvoie qu'un résumé. Analogie de @sec-outils-agentiques : un stagiaire lit trente documents et vous rapporte une page. Claude Code en fournit d'office (`Explore` pour chercher dans le code en lecture seule, `Plan`, `general-purpose`), et vous pouvez en définir.
+
+Exemple à créer dans `.claude/agents/relecteur.md` (structure de l'exemple officiel, texte rédigé pour ce chapitre) :
+
+```markdown
+---
+name: relecteur
+description: Relit les modifications en cours avant une pull request. À utiliser quand on demande une relecture.
+tools: Read, Glob, Grep
+model: sonnet
+---
+Tu relis les modifications d'une branche avant sa pull request.
+La liste des fichiers modifiés et le diff te sont donnés dans la demande ;
+s'ils manquent, réclame-les avant de commencer.
+
+Vérifie, dans cet ordre, et réponds en français :
+1. Chaque modification correspond à l'objectif annoncé ; signale ce qui n'a rien à voir.
+2. Aucun secret, aucune donnée personnelle ou réelle.
+3. Aucun test supprimé, désactivé ou assoupli.
+4. Les règles de CLAUDE.md sont respectées.
+
+Termine par une liste courte : « bloquant », « à discuter », « détail ».
+Ne modifie aucun fichier.
+```
+
+Le point à remarquer est la ligne `tools` : ce relecteur ne dispose que d'outils de lecture et de recherche. « Ne modifie aucun fichier » est une consigne ; `tools: Read, Glob, Grep` est une contrainte. Conséquence de cette limite : il ne peut pas lancer `git diff` lui-même. On l'appelle donc en langage naturel, en lui fournissant la matière : « lance `git diff main`, puis confie le résultat au sous-agent relecteur ». Pour voir vos sous-agents, ouvrez le dossier `.claude/agents/` ou demandez à l'agent lesquels sont disponibles (la commande `/agents` n'affiche plus qu'un rappel).
+
+Ce relecteur automatique ne remplace pas la relecture par un coéquipier, qui reste obligatoire : il la prépare. Et la règle du programme tient toujours : pas d'agents multiples en parallèle tant que tests, règles et permissions ne sont pas en place.
+
+
+## Plugins et MCP : faire entrer un tiers
+
+### Deux façons d'étendre l'agent
+
+Un **plugin** est un paquet qui installe d'un coup des skills, des sous-agents, des hooks et des serveurs MCP. Les plugins se trouvent dans des catalogues appelés *marketplaces* ; celui d'Anthropic, `claude-plugins-official`, est ajouté automatiquement.
+
+**MCP** (*Model Context Protocol*) est un standard ouvert qui branche l'agent sur un outil ou une source externe : une documentation à jour, un gestionnaire de tickets, une base de données. Le programme qui fait le lien s'appelle un **serveur MCP**.
+
+### Les commandes
+
+Dans une session Claude Code :
+
+```text
+/plugin
+/plugin install commit-commands@claude-plugins-official
+```
+
+La première ouvre le menu (découvrir, plugins installés, catalogues) ; la seconde ouvre la fiche d'un plugin officiel simple, qui ajoute des commandes de commit : lisez ce qu'il va installer, puis choisissez une portée limitée à vous et à ce dépôt. Comparez-le à votre skill `commit-propre` : c'est la même idée, écrite par quelqu'un d'autre.
+
+Pour la documentation de Dart et de Flutter, la voie indiquée par la documentation de Flutter pour Claude Code est aussi un plugin, qui apporte un serveur MCP (à taper dans le terminal, hors session) :
+
+```bash
+claude plugin marketplace add flutter/agent-plugins
+claude plugin install dart-flutter@dart-flutter
+```
+
+Pour brancher directement un serveur MCP sans plugin, la forme générale est :
+
+```bash
+claude mcp add --transport http <nom> <url>
+claude mcp list
+claude mcp remove <nom>
+```
+
+Par défaut, le serveur n'est ajouté que pour vous, dans ce projet. Avec `--scope project`, il est décrit dans un fichier `.mcp.json` versionné, et chaque membre de l'équipe doit l'approuver à l'ouverture. Dans une session, `/mcp` liste les serveurs et leur état (après une installation faite hors session, tapez d'abord `/reload-plugins`).
+
+### Valider avant d'installer
+
+Chaque plugin et chaque serveur MCP est **du code écrit par un tiers, qui s'exécute avec vos droits**, et souvent des échanges avec un service extérieur. La documentation de Claude Code le rappelle : vérifiez que vous faites confiance à chaque serveur avant de le connecter ; ceux qui rapportent du contenu externe peuvent vous exposer à l'**injection de prompt** (du texte malveillant glissé dans ce que l'agent lit ; voir @sec-outils-agentiques). Anthropic n'audite pas ces serveurs.
+
+Avant d'installer quoi que ce soit, cinq questions :
+
+1. **Qui** le publie, et où est son code ?
+2. **Où** s'exécute-t-il : sur mon poste, ou chez un tiers ?
+3. **Qu'est-ce qui part** : mes questions, des extraits de mon code, des données ?
+4. **Que peut-il faire** : seulement lire, ou aussi écrire, exécuter, publier ?
+5. **En ai-je besoin** maintenant, pour ce projet ?
+
+Pour le projet du cours, la réponse à la cinquième question est le plus souvent non. Tout serveur MCP ajouté au dépôt d'équipe se décide en équipe, se note dans `JOURNAL.md`, et figurera dans la fiche de conformité (qui sont les tiers, qu'est-ce qui leur est transmis).
+
+::: {.callout-tip title="À retenir"}
+Un plugin ou un serveur MCP n'est pas un réglage : c'est une dépendance. On lui applique la règle d'or et la règle « pas de code non relu ».
+:::
+
+
+## Garder la main sur le contexte
+
+La mémoire de travail de l'agent est limitée, et sa fiabilité baisse quand elle se remplit : tout le détail est dans @sec-outils-agentiques. Pour l'atelier, six commandes suffisent, toutes revérifiées dans la documentation :
+
+| Commande | Effet | Quand |
+|---|---|---|
+| `/clear` | Repart d'une conversation vide | En changeant de tâche |
+| `/compact` | Résume la conversation (`/compact garde les décisions prises`) | Conversation longue, à une coupure naturelle |
+| `/context` | Montre ce qui occupe la mémoire | Quand l'agent semble perdre le fil |
+| `/model` | Choisit le modèle | Au début de la session |
+| `/effort` | Règle le niveau de réflexion | Au début de la session |
+| `/usage` | Affiche la consommation | Avant et après une tâche |
+
+Réflexe à prendre dès le départ : **une session, une tâche**. Et ce qui doit survivre à la session (une décision, une règle apprise) s'écrit dans un fichier : `CLAUDE.md` pour l'agent, `JOURNAL.md` pour l'équipe.
+
+
+## Aperçu : un cadre de type spec-kit
+
+Le **spec-driven development** (développement piloté par la spécification), vu dans @sec-outils-agentiques, consiste à écrire l'intention et les critères d'acceptation avant de demander le code. Des cadres outillent cette discipline. **spec-kit**, publié par GitHub, en est un exemple ; BMAD et AI-DLC, cités en séance 1, en sont d'autres.
+
+```{mermaid}
+flowchart LR
+    C["Constitution<br/>principes du projet"] --> S["Spécification<br/>quoi, pour qui, critères"]
+    S --> P["Plan<br/>comment, avec quoi"]
+    P --> T["Tâches<br/>petites, vérifiables"]
+    T --> I["Code<br/>par l'agent, relu"]
+```
+
+Concrètement, spec-kit s'installe en ligne de commande (il demande Python 3.11 ou plus et l'outil `uv`), puis prépare un projet pour un agent donné :
+
+```bash
+uv tool install specify-cli
+specify init mon-projet --integration claude
+```
+
+Dans Claude Code, il ajoute alors des skills qui s'appellent dans cet ordre : `/speckit-constitution`, `/speckit-specify`, `/speckit-plan`, `/speckit-tasks`, `/speckit-implement` (le projet en fournit d'autres, dont `/speckit-converge`). Chaque étape produit un document que vous relisez avant de passer à la suivante. Attention aux anciens tutoriels : ces noms s'écrivaient avec un point (`/speckit.specify`) et l'installation passait par une autre commande ; l'outil évolue vite.
+
+Vous ne l'installerez pas en séance : le programme le donne en ressource par défaut, avec au mieux une courte démonstration si le rythme le permet. Retenez la forme, car vous la pratiquez déjà à petite échelle : `PROJET.md` et ses user stories sont votre spécification, le mode plan est votre plan, une PR par user story est votre découpage en tâches.
+
+
+## Ce que l'on commite, ce que l'on ne commite pas
+
+| Fichier | Commité ? | Pourquoi |
+|---|---|---|
+| `CLAUDE.md` | Oui | Les consignes valent pour toute l'équipe et pour chaque agent |
+| `.claude/settings.json` | Oui | Mêmes garde-fous pour tous |
+| `.claude/skills/`, `.claude/agents/` | Oui | Procédures partagées, relues en PR comme du code |
+| `.mcp.json` | Oui, après décision d'équipe | Chaque membre devra l'approuver |
+| `.claude/settings.local.json`, `CLAUDE.local.md` | **Non** | Préférences personnelles |
+| `.env` | **Jamais** | Secrets ; présent dans `.gitignore` |
+| Une clé d'API, un mot de passe, où que ce soit | **Jamais** | Les dépôts du cours sont publics |
+
+Un changement de `.claude/settings.json` mérite la même relecture qu'un changement de code : retirer une règle `deny` dans une PR est une décision d'équipe, pas un détail.
+
+
+## Mise en pratique : l'atelier en quatre étapes
+
+L'atelier se fait seul, dans le dépôt d'essai de l'atelier git (@sec-git), avec la fiche B. Les poids sont ceux du programme.
+
+1. **`CLAUDE.md`** (indispensable). `/init`, puis réduction aux trois rubriques de @sec-cc-reduire. Moins de 30 lignes.
+2. **Permissions testées** (indispensable). Expérience « avant », fichier de @sec-cc-fichier, expérience « après ». Vous devez avoir **vu** le refus.
+3. **Un skill** (important). `commit-propre`, essayé sur une vraie modification, puis un commit qui ajoute `CLAUDE.md`, `.claude/settings.json` et le skill au dépôt.
+4. **Un plugin, un serveur MCP** (pratique, en ressource par défaut : à faire en autonomie avec la fiche B, ou en séance si le rythme le permet). Installation, puis discussion : qu'est-ce qui part vers un tiers ?
+
+Fini quand : l'agent refuse de lire `.env`, et vous savez dire quel fichier l'en empêche et pourquoi une phrase dans le prompt n'aurait pas suffi.
+
+
+## Glossaire
+
+- **Bac à sable (*sandbox*)** : isolation, par le système, des accès aux fichiers et au réseau des commandes lancées par l'agent.
+- **`CLAUDE.md`** : fichier d'instructions du projet, lu par l'agent à chaque session.
+- **Code de sortie** : nombre renvoyé par une commande quand elle se termine ; 0 signifie « tout va bien ».
+- **Consigne** : texte lu par le modèle (prompt, `CLAUDE.md`, skill) ; une demande, pas une garantie.
+- **Contrainte** : règle appliquée par l'outil, indépendamment du modèle (permission, hook, outils d'un sous-agent).
+- **Gel du code (*code freeze*)** : période pendant laquelle on s'interdit toute modification.
+- **Hook** : commande lancée automatiquement par Claude Code à un moment précis.
+- **JSON** : format de données textuel strict, utilisé par les fichiers de réglages.
+- **Marketplace** : catalogue de plugins.
+- **MCP (*Model Context Protocol*)** : standard ouvert de branchement d'un agent sur des outils externes ; un serveur MCP en est une réalisation.
+- **Mode de permission** : niveau global d'autonomie de l'agent (manuel, plan, auto…).
+- **Mode plan** : mode où l'agent explore et propose sans modifier.
+- **Permission** : règle `allow`, `ask` ou `deny` qui décide de ce que l'agent peut faire.
+- **Plugin** : paquet installable regroupant skills, sous-agents, hooks et serveurs MCP.
+- **Production** : l'environnement réel, utilisé par de vrais utilisateurs.
+- **Skill** : dossier contenant un `SKILL.md`, procédure chargée à la demande ou appelée par `/nom`.
+- **Sous-agent** : assistant secondaire au contexte isolé, qui renvoie un résumé.
+- **Spec-driven development** : méthode qui fait écrire la spécification avant le code.
+
+
+## Pour aller plus loin
+
+- @sec-outils-agentiques pour la théorie : harnais, contexte, cache, sécurité, coût.
+- La documentation officielle de Claude Code, pages « Configure permissions », « Hooks guide » et « Skills » : courtes, à jour, avec des exemples.
+- Birgitta Böckeler, « Harness Engineering for Coding Agent Users » (martinfowler.com, 2 avril 2026) : pourquoi guides et capteurs se complètent.
+- Refaire le test de @sec-cc-test-appris après chaque mise à jour de Claude Code, et noter le résultat dans `JOURNAL.md` : c'est un excellent « cas d'erreur de l'outil repéré », au sens des règles d'usage de l'IA du cours.
+
+
+## Points non vérifiés {#sec-cc-non-verifies}
+
+::: {.callout-note title="Points non vérifiés"}
+
+- **Portée de `Read(./.env)` sur les commandes du terminal** : la documentation l'annonce (y compris pour `cat`, `head` et `tail`), le test local ne l'a pas confirmé (voir @sec-cc-test-appris). Le test a été fait en mode auto et en exécution non interactive (`claude -p`), modèle `haiku` ; le comportement en session interactive et en mode manuel n'a pas été observé. Dans le doute, gardez les deux règles.
+- **Messages de refus** : relevés avec la version 2.1.325 ; la documentation en cite un autre (« File is covered by a Read deny rule in your permission settings »). Ils peuvent changer.
+- **Hook `dart format`** : la commande a été exécutée sur une entrée simulée (un fichier `.dart` est reformaté, un fichier `.md` est ignoré) ; le hook n'a pas été observé en session réelle, ni sous Windows, et son comportement en l'absence de `jq` n'a pas été testé.
+- **Liste `allow`** de @sec-cc-autorisations : syntaxe conforme à la documentation, JSON valide, non essayée.
+- **Règles `Bash(…)`** : elles reconnaissent une écriture précise de la commande. `rm -fr`, `rm -r -f` ou `git push origin +main` ne sont pas couverts par les sept règles.
+- **Skill `commit-propre`** : testé une fois en exécution non interactive (`claude -p "/commit-propre"`) ; l'appel depuis une session interactive et depuis l'extension VS Code n'a pas été observé.
+- **Sous-agent `relecteur`** : en-tête conforme à la documentation, non exécuté. La commande `/agents` et `/reload-plugins` sont décrites d'après la documentation.
+- **Plugins** (`commit-commands`, `dart-flutter`) et **serveurs MCP** : commandes relevées dans les documentations de Claude Code et de Flutter, **non exécutées** (aucune installation n'a été faite sur le poste de rédaction). Le choix du plugin et du serveur de l'atelier est fait par l'enseignant.
+- **spec-kit** : commandes relevées dans le README et la documentation du projet le 19 novembre 2026, non exécutées (`uv` absent du poste). L'exemple du README utilise `--integration copilot` ; la valeur `claude` vient de la page des intégrations. La page de référence de la ligne de commande était inaccessible ce jour-là.
+- **Extension VS Code** : libellés des modes (« Manual », « Plan »…) et liste des commandes disponibles relevés dans la documentation, non observés.
+- **Réglage `defaultMode`** : la valeur `"default"` dans `~/.claude/settings.json` vient de la documentation ; elle n'a pas été essayée.
+- **Cas Replit** : les faits viennent d'articles de presse (The Register, Fortune) qui reprennent les messages publics de Jason Lemkin et d'Amjad Masad, et de la fiche de l'AI Incident Database ; les messages d'origine n'ont pas été relus. Les nombres exacts d'enregistrements souvent cités (1 206 et 1 196) ne figurent pas dans les pages lues, d'où les ordres de grandeur. Aucune analyse technique indépendante n'a été consultée.
+- **Versions** : état du 19 novembre 2026. La séance se déroulant avec la version installée sur les postes, tout extrait est à réessayer avant de s'y fier.
+
+:::
+
+
+## Sources
+
+Documentation officielle de Claude Code (consultée le 19 novembre 2026) :
+
+- Configure permissions : https://code.claude.com/docs/en/permissions
+- Settings : https://code.claude.com/docs/en/settings
+- Choose a permission mode : https://code.claude.com/docs/en/permission-modes
+- How Claude remembers your project : https://code.claude.com/docs/en/memory
+- Hooks : https://code.claude.com/docs/en/hooks et https://code.claude.com/docs/en/hooks-guide
+- Skills : https://code.claude.com/docs/en/skills
+- Subagents : https://code.claude.com/docs/en/sub-agents
+- Plugins : https://code.claude.com/docs/en/plugins/overview et https://code.claude.com/docs/en/plugins/install
+- MCP : https://code.claude.com/docs/en/mcp
+- Commands : https://code.claude.com/docs/en/commands
+- Best practices : https://code.claude.com/docs/en/best-practices
+- Sandboxing : https://code.claude.com/docs/en/sandboxing
+- VS Code : https://code.claude.com/docs/en/vs-code
+- Errors : https://code.claude.com/docs/en/errors
+- Changelog : https://code.claude.com/docs/en/changelog
+
+Cas Replit :
+
+- The Register, 21 juillet 2025 : https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/
+- Fortune, 23 juillet 2025 : https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/
+- AI Incident Database, incident n° 1152 : https://incidentdatabase.ai/cite/1152/
+
+Autres :
+
+- spec-kit (GitHub) : https://github.com/github/spec-kit et https://github.github.io/spec-kit/installation.html
+- Serveur MCP Dart et Flutter : https://docs.flutter.dev/ai/mcp-server
+- Böckeler, « Harness Engineering for Coding Agent Users » : https://martinfowler.com/articles/harness-engineering.html
+
+Sources internes au cours : le programme détaillé (@sec-programme-detaille ; séance 2, blocs 6 et 7, et règles du jeu) et @sec-outils-agentiques. Vérifications locales (dossier jetable, 19 novembre 2026) : `jq` pour la validité des extraits JSON ; `claude -p` (version 2.1.325, modèle `haiku`) pour les sept règles de refus, l'expérience avant et après, et le skill ; `dart format` (Dart 3.14.0) pour la commande du hook.
