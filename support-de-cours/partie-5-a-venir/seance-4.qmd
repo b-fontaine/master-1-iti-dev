@@ -1,0 +1,42 @@
+<!-- source: cours/programme-detaille.md · synchro: 2026-11-25 -->
+
+# Séance 4 · Qualité, sécurité et règlement européen sur l'IA {#sec-s4}
+
+**Pourquoi ce thème.** Une fois que le code et les données existent, la question devient : peut-on faire confiance à ce qu'on livre, et peut-on le mettre en usage ? Trois réponses complémentaires : des **garde-fous automatiques** (CI), un **test d'acceptation écrit par un humain avant le code de l'agent** (pour éviter le self-grading, où le même agent écrit le code et ses tests), et un **passage devant le RSSI** qui qualifie les risques (RGPD, AI Act, sécurité, hébergement) avant toute mise en usage. **S4 ne suppose pas le CRUD terminé** : elle a lieu douze jours après S3, repart de l'état de S3 (première règle verte, modèle et migrations fusionnés) et reprend d'abord ce qui a glissé (rôles, seed) et que la tâche facultative n'a pas terminé.
+
+**Objectifs d'apprentissage.** À la fin de la séance, l'étudiant :
+
+1. explique pourquoi « les tests passent » ne prouve pas que « le code est correct » quand le même agent écrit code et tests ;
+2. traduit les cas d'acceptation de son thème en scénarios `.feature` (test automatisé) écrits avant le code ;
+3. explique une chaîne CI/CD (contrôles, build web, déploiement sur GitHub Pages) et ce qu'implique une publication publique (tout ce qui est dans un build web est public, donc aucun secret) ;
+4. repère cinq risques courants de sécurité (secrets, injection, validation des entrées, dépendances, contrôle d'accès) et le risque de prompt injection ;
+5. se demande d'abord si son projet est un système d'IA (art. 3, point 1 de l'AI Act), le classe (hors champ, minimal, obligations de transparence (art. 50), haut risque, interdit), nomme son rôle (fournisseur ou déployeur) et présente sa fiche de conformité à un RSSI (go, go sous conditions, no-go) ;
+6. audite le dépôt d'une autre équipe sur cinq points.
+
+## Déroulé en bref {#sec-s4-deroule}
+
+Poids des blocs : **Indispensable** = ne pas sacrifier ; **Important** = sauf contrainte forte ; **Pratique** = si le rythme le permet ; **Moins utile** = peut sauter ou rester en lecture.
+
+| Bloc | Poids | Format |
+|---|---|---|
+| 1. Point d'équipe | Important | discussion |
+| 2. Reprise de S3 : rôles et seed | Indispensable pour les rôles ; Important pour le seed réduit ; Pratique pour la suite | atelier |
+| 3. Qualité avec les agents | Important | exposé |
+| 4. Test d'acceptation du clou | Indispensable | atelier |
+| 5. CI/CD en pratique | Important | exposé et démonstration |
+| 6. CI complète, protection de `main` et publication sur GitHub Pages | Indispensable pour la CI et la protection de `main` ; Important pour la publication | atelier |
+| 7. Sécurité | Important | exposé et démonstration |
+| 8. L'AI Act en une page | Indispensable | exposé |
+| 9. Atelier de classification | Indispensable | atelier et discussion |
+| 10. Passage devant le RSSI, en jeu de rôle | Indispensable | atelier en jeu de rôle |
+| 11. Audit croisé entre équipes, en 5 points | Indispensable | atelier |
+| 12. Bilan et consignes du sprint | Important | discussion |
+| 13. Quiz de 8 questions du module | Moins utile | discussion |
+
+**Livrable de fin de séance.** Test d'acceptation du clou (fichiers `.feature`) en rouge dans une PR brouillon ; règle `deny`, consigne `CLAUDE.md` et `CODEOWNERS` fusionnés ; CI complète obligatoire sur `main` protégée ; build web publié sur GitHub Pages par l'équipe ; rôles en place ; brouillon de fiche de conformité (rubriques 1 à 5, classement et rôle AI Act provisoires à la rubrique 9 ; la rubrique 8 (art. 22) est discutée devant le RSSI) présenté au RSSI ; audit reçu (issues) ; release `v0.1` si `main` est verte.
+
+Le déroulé complet, bloc par bloc, est décrit dans le chapitre [-@sec-programme-detaille].
+
+::: {.callout-note title="Chapitres à paraître dans une prochaine édition"}
+Les chapitres de cette séance ne sont pas encore rédigés. Cette page en donne les objectifs et le déroulé ; les séances 1 et 2 sont déjà développées dans les parties précédentes.
+:::

@@ -1,0 +1,124 @@
+<!-- source: cours/presentations/day-1/index.html, cours/presentations/day-1/notes.html · synchro: 2026-11-25 -->
+
+# La séance 1 en bref {#sec-s1-en-bref}
+
+La séance 1, « Comprendre et s'équiper », poursuit un fil rouge simple : à chaque époque, la vitesse de production du logiciel augmente, et à chaque époque on redécouvre que la qualité décide de ce que l'on peut encore changer demain. Ce chapitre résume la séance et indique, pour chaque idée, où la retrouver en détail dans les neuf chapitres qui suivent.
+
+## Objectifs
+
+À la fin de la séance, vous avez :
+
+1. des **connaissances théoriques** sur les bases du génie logiciel et de l'IA agentique ;
+2. un **poste opérationnel** pour démarrer le projet : git et GitHub, un éditeur, Claude Code (avec Claude Desktop) et Flutter sont indispensables pour la séance 2 ; Docker, Rust et Antigravity peuvent attendre sans bloquer la suite.
+
+Ces deux objectifs servent les deux compétences visées par toute la formation : **échanger avec une équipe de développement** (dépôt, branche, PR, test, CI/CD, migration, release), et **créer, avec l'IA, un outil pour un besoin ponctuel en en connaissant les limites**.
+
+## Déroulé
+
+La séance alterne exposés et installations : environ 120 minutes d'installations, réparties en cinq blocs, et 100 minutes de théorie, plus 20 minutes de pauses. Les installations lourdes sont lancées pendant les exposés, car un téléchargement qui tourne en arrière-plan ne coûte pas de temps. Les blocs d'installation ne sont pas détaillés ici ; ce tableau suit les parties théoriques.
+
+| Partie | Thème | Chapitres |
+|---|---|---|
+| Vote d'ouverture | « L'agent écrit le code : que reste-t-il à maîtriser ? » | — |
+| 1 | D'où vient le craft : neuf jalons de 1968 à 2018 | @sec-histoire-craft, @sec-histoire-ia |
+| 2 | Le craft face aux agents, de 2021 à 2026 | @sec-craft-ia |
+| 3 | Où va la qualité du code : ce que disent les mesures | @sec-craft-ia |
+| 4 | Notions de code, TDD et BDD | @sec-guide-flutter, @sec-pratique-craft-flutter |
+| 5 | Les design patterns | @sec-design-patterns |
+| 6 | Les modèles d'IA : petit ou grand, types, niveau d'effort, edge AI | @sec-edge-ai, @sec-outils-agentiques |
+| 7 | L'agent et son environnement : harnais, contexte, cache, spécification | @sec-outils-agentiques |
+| 8 | CI/CD dans le cloud | @sec-ci-cd |
+| 9 | RGPD et AI Act : les règles à suivre dans vos projets | @sec-conformite |
+| Clôture | La séance 2 : git, configuration de Claude Code, lancement du projet | @sec-git, @sec-configurer-claude-code, @sec-demarrer-projet |
+
+## Les idées clés
+
+### Le vote d'ouverture
+
+La séance s'ouvre sur une question : *l'agent écrit le code, que reste-t-il à maîtriser ?* Trois réponses : plus rien (A), autre chose (B), plus encore (C). On y revient en fin de théorie (voir « Jugement, garde-fous, responsabilité »).
+
+### Neuf jalons du craft
+
+::: {.callout-tip title="À retenir"}
+Chaque jalon répond à un problème que l'on retrouve avec les agents : le logiciel est difficile à faire évoluer, pas à écrire.
+:::
+
+Les neuf jalons sont : la crise du logiciel et le terme « software engineering » (1968) ; Brooks et l'absence de « balle d'argent » (1975, 1986) ; la dette technique de Ward Cunningham (1992) ; XP et le TDD de Kent Beck (1996 à 2002) ; le Manifeste Agile (2001) ; le Domain-Driven Design d'Eric Evans (2003) ; le BDD de Dan North (2006) ; le Manifeste du craft (2001 à 2009) ; Git, la livraison continue et les indicateurs DORA (2005 à 2018). Le fait qui structure la suite : les développeurs passent moins d'un quart de leur temps à écrire du code, le reste est de la lecture, de la recherche, de la discussion et du test. Détails : @sec-histoire-craft.
+
+::: {.callout-note title="Pour aller plus loin"}
+Le chapitre [-@sec-histoire-ia] retrace l'autre histoire dont la séance a besoin : celle de l'IA, des origines aux modèles de langage et aux agents.
+:::
+
+### Le craft face aux agents
+
+L'agent génère et exécute du code, lance les tests, constate l'échec et recommence seul : c'est ce qui le distingue de la simple complétion. Deux usages s'opposent. Le **vibe coding** (Karpathy, 2025) consiste à ne pas lire le code et à ne s'occuper que du comportement : acceptable pour un prototype jetable, dangereux pour ce qui doit durer. L'**augmented coding** (Beck, 2025) garde le même système de valeurs qu'à la main : du code propre qui marche, avec des tests d'abord.
+
+::: {.callout-warning title="Trois signaux à surveiller (Kent Beck)"}
+L'agent tourne en rond, il ajoute des fonctions que l'on n'a pas demandées, il triche en désactivant ou en supprimant des tests.
+:::
+
+Le point d'accord entre les praticiens : **l'IA amplifie**. Qui travaille bien gagne beaucoup ; qui travaille mal creuse un trou plus profond, plus vite. Détails : @sec-craft-ia.
+
+### La qualité du code : ce que disent les mesures
+
+::: {.callout-tip title="À retenir"}
+La qualité est le facteur limitant de la performance de l'agent, car il lit votre code avant d'écrire le sien : un code sain lui fournit de bons modèles, un code embrouillé lui fait copier le désordre.
+:::
+
+Les mesures sont à lire avec méthode. Dans un essai randomisé de METR (2025), des développeurs expérimentés ont mis 19 % de temps en plus avec l'IA tout en pensant gagner 20 % : l'impression de vitesse n'est pas la vitesse. L'étude de Stanford donne un gain médian de 10 à 15 %, très variable selon le contexte (code neuf ou existant, simple ou complexe). Plusieurs mesures d'éditeurs ou de corrélation signalent des dégradations sans garde-fous. Trois questions devant chaque chiffre : qui mesure et que vend-il ? corrélation ou cause ? sur quel contexte ? Aucune étude ne suit encore sur deux ou trois ans des bases de code largement écrites avec l'IA.
+
+Le débat de 2026 oppose la revue humaine (Mancuso) à un « gauntlet » automatisé de tests, de mutation testing et de métriques (Martin), tandis que Booch rappelle que les métriques ont des angles morts. Une position défendable : des garde-fous automatisés partout, et la revue humaine concentrée là où ils sont aveugles (sécurité, intention métier, conception). La thèse adverse, un code jetable régénéré à partir de la spécification, reste non démontrée en production. Détails : @sec-craft-ia.
+
+### Jugement, garde-fous, responsabilité
+
+Le craft se déplace de la frappe vers le fait de cadrer, tester, relire et décider. La qualité s'automatise (tests, spécifications, CI, portes qualité). Et vous devez pouvoir expliquer toute PR que vous ouvrez ou approuvez. Ce qui donne la règle du projet : **des petits pas, les tests d'abord, et « je sais l'expliquer »**. Pour revenir au vote : A est vrai pour un prototype jetable, faux pour ce qui doit durer ; B est juste (jugement, conception, tests, revue) ; C aussi, surtout sur du code existant, car l'amplification joue dans les deux sens.
+
+### Lire du code, TDD et BDD
+
+Vous connaissez déjà Python : la séance présente le même petit programme en Dart et ne commente que ce qui change. Dart est typé (`int`, `String`, `bool`), ses blocs sont délimités par des accolades et ses instructions finissent par un point-virgule, `final` déclare une valeur qui ne changera plus, et un programme démarre dans `main()`. Détails : @sec-guide-flutter.
+
+::: {.callout-tip title="Le cycle TDD"}
+**Rouge** : j'écris le test d'abord et je constate qu'il échoue. **Vert** : j'écris le code le plus simple qui le fait passer. **Refactor** : je nettoie, les tests me protègent. Un test est une spécification exécutable : quand on ne sait pas lire le code, on peut lire les tests.
+:::
+
+Le TDD teste une fonction ; le **BDD** décrit un comportement vu de l'utilisateur, en Gherkin, que l'outil transforme en test. Les deux sont deux boucles imbriquées : la grande (BDD) répond à « quoi ? » avec un scénario d'abord rouge puis vert, la petite (TDD) répond à « comment ? » avec autant de cycles que nécessaire. Un scénario Gherkin est la meilleure spécification à donner à une IA : lisible par l'humain, exécutable par la machine, il dit ce qui est demandé et à quel moment l'agent a fini. Détails : @sec-pratique-craft-flutter.
+
+### Les design patterns
+
+Un patron de conception est une solution connue à un problème qui revient, avec un nom : on n'apprend pas à les appliquer partout, on apprend à les **reconnaître** et à les **demander**. Le livre du Gang of Four (1994) en décrit 23, en trois familles : création (5), structure (7), comportement (11). Au-dessus d'eux, les patrons d'architecture du projet Flutter : Repository, injection de dépendances, BLoC, ports et adaptateurs, avec une règle du projet : le domaine ne dépend de rien. Avec un agent, nommer un patron dans un prompt ou dans le fichier d'instructions cadre le travail, et demander quel problème il résout évite les patrons sans objet. Détails : @sec-design-patterns.
+
+### Les modèles d'IA
+
+Un **LLM** est puissant mais plus lent, plus cher et hébergé chez un tiers ; un **SLM** est plus léger, plus rapide et plus économique, et peut rester chez vous, mais il est moins capable. Quatre grandes familles de modèles : généralistes, spécialisés code, de raisonnement, multimodaux. Le **niveau d'effort** règle un arbitrage : plus de réflexion donne souvent de meilleures réponses, mais coûte plus de temps et de jetons. L'**edge AI** exécute un modèle sur son poste ou un équipement : les données ne partent pas, mais la puissance est limitée. Détails : @sec-edge-ai et @sec-outils-agentiques.
+
+### L'agent et son environnement
+
+::: {.callout-tip title="Agent = modèle + harnais"}
+Le **harnais** réunit les guides (fichier d'instructions, spécifications), les capteurs (tests, linters, CI, revue) et le cadre (permissions, bac à sable). Le **contexte** est limité : plus il grossit, plus l'agent perd le fil (*context rot*), d'où des sessions courtes et un fichier d'instructions court. Le **cache de prompt** relit à tarif réduit la partie stable du début de la conversation : ne la réécrivez pas sans cesse. Le **spec-driven development** écrit d'abord l'intention et les critères d'acceptation ; il n'existe pas de méthode prouvée ni de standard.
+:::
+
+Détails : @sec-outils-agentiques. Le projet fil rouge s'appuie sur Flutter, la Clean Architecture, l'injection de dépendances, `flutter_bloc`, le TDD, le BDD et une base SQLite versionnée.
+
+### CI/CD
+
+À chaque modification, une machine distante lance automatiquement les contrôles (analyse, tests) : c'est l'**intégration continue**. Si tout est vert, le logiciel est prêt à être publié, voire publié automatiquement : c'est la **livraison** puis le **déploiement continus**. Vocabulaire : pipeline, runner, workflow, artefact, build web, environnement. Détails : @sec-ci-cd.
+
+### La règle d'or
+
+::: {.callout-warning title="Aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public"}
+Un prompt part chez un tiers, souvent hors de l'Union européenne, et les dépôts de la formation sont publics : tout ce qui y entre est publié et conservé, même supprimé ensuite.
+:::
+
+Le RGPD protège les données personnelles ; l'AI Act encadre l'IA selon le risque. Six règles pour vos projets : (1) aucune donnée personnelle ou confidentielle dans un prompt ni un dépôt public ; (2) des données fictives ou générées ; (3) aucune clé ni mot de passe dans le dépôt (un fichier `.env` hors du dépôt) ; (4) ne collecter que le nécessaire, avec une date de suppression ; (5) dire quand on parle à une IA ou quand un contenu est généré ; (6) un humain relit et décide, avec validation du RSSI avant tout usage réel. Cette sensibilisation n'est pas un avis juridique. Voir @sec-conformite.
+
+## Lectures conseillées
+
+- **Avant la séance** : les chapitres [-@sec-histoire-craft] et [-@sec-histoire-ia] (vocabulaire et contexte).
+- **Pour installer son poste** : les chapitres [-@sec-guide-flutter] et [-@sec-outils-agentiques].
+- **Avant de pratiquer** : les chapitres [-@sec-pratique-craft-flutter] et [-@sec-ci-cd].
+- **Pour comprendre le code du projet et le relire** : le chapitre [-@sec-design-patterns].
+- **Pour le projet** : les chapitres [-@sec-craft-ia] et [-@sec-edge-ai].
+
+::: {.callout-note title="Points non vérifiés"}
+Les noms d'outils, de versions et de fonctionnalités évoluent vite : revérifiez sur la documentation officielle avant de vous y fier. Chaque chapitre signale ses propres points non vérifiés.
+:::

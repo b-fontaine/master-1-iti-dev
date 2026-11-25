@@ -1,0 +1,462 @@
+<!-- source: cours/projets/themes.md, cours/presentations/themes/ · synchro: 2026-11-25 -->
+
+# Les trois thèmes du projet {#sec-themes}
+
+Ce chapitre présente les trois thèmes du projet fil rouge. Chaque équipe en choisit **un seul** et le construit tout au long de la formation. Il donne d'abord ce que les trois ont en commun (pile technique, règle d'or, conformité, trame des séances), puis détaille chaque thème : besoin, données, règle métier, cas d'acceptation, import CSV, tableau de bord, pièges d'agent et conformité.
+
+## Idée directrice
+
+Trois logiciels qui ne se ressemblent pas sont proposés. Chaque équipe en choisit **un seul** et le construit tout au long de la formation.
+
+Le public est composé d'étudiants de Master orientés **industrie et innovation**. Ce ne sont pas des développeurs. Le projet vise deux objectifs :
+
+1. **Échanger avec une équipe de développement** : parler de règles métier, de tests, de cycle de vie, de qualité, de risques et de contraintes avec un vocabulaire commun.
+2. **Créer eux-mêmes, avec l'IA, un applicatif répondant à un besoin ponctuel** : un outil de courte durée de vie, qui sert pendant une campagne, une saison, un projet ou un trimestre, puis qui est archivé. Ce n'est pas un produit industriel pérenne, et les étudiants doivent en connaître les limites.
+
+Le principe tient en quatre points : un besoin ponctuel (une saison, un trimestre, une campagne), une équipe de 3 à 5 personnes, un agent IA que l'équipe pilote et qui exécute, des limites connues (données fictives, fiche de conformité). Un outil jetable ne dispense pas d'un outil bien fait.
+
+Les trois thèmes :
+
+- **A, une mise en situation fantastique** : l'équipe tient le greffe d'un comptoir de Passeurs, dans un monde de brume qu'elle invente en partie. La fiche d'un passeur évolue à chaque traversée (éclat de la lune, souffle, renom, rangs). La difficulté est un **état qui progresse** et un aléa que l'on doit savoir injecter pour tester. Un monde à inventer, un état qui progresse, un aléa à maîtriser.
+- **B, un calcul de TRS/OEE d'atelier** : à partir d'événements de production, on calcule un indicateur de performance. La difficulté est **l'arithmétique des temps et des unités** : des temps, des unités, des arrondis.
+- **C, une répartition de sujets de projet** : des étudiants classent leurs vœux et le logiciel les affecte selon une priorité et des capacités. La difficulté est **un algorithme d'affectation déterministe**, à expliquer à chaque étudiant.
+
+## Ce que les trois thèmes ont en commun {#sec-themes-commun}
+
+Quel que soit le thème, le projet comporte :
+
+- **5 entités liées** : un vrai modèle de données ;
+- **1 règle métier centrale** (le « clou »), testée automatiquement ;
+- **4 vues de tableau de bord** pour lire le résultat ;
+- **un import CSV** avec rejet motivé des lignes ;
+- **une CI et une publication web** : chaque modification est contrôlée ;
+- **une fiche de conformité d'une page**, soumise au RSSI.
+
+Le tout avec Flutter, la Clean Architecture, le TDD et le BDD. La charge d'équipe est comparable pour les trois : 15 à 20 heures de sprint.
+
+## Pile technique du projet {#sec-themes-pile}
+
+Les trois thèmes se construisent avec la même pile, détaillée dans le chapitre [-@sec-programme-detaille] (séances, outils, CI) :
+
+- **Application Flutter (Dart)**, exécutée par défaut dans **Chrome** (`flutter run -d chrome`). Le bureau (Windows, macOS, Linux) est optionnel ; la chaîne Android peut rester en rouge dans `flutter doctor` (non requise).
+- **Clean Architecture** : couches `domain` (entités, règles métier pures, cas d'usage, interfaces de repositories), `data` (implémentations, drift, parseur CSV) et `presentation` (écrans, BLoC/Cubit). Une feature = un dossier.
+- **Injection de dépendances avec `get_it`** : les repositories, les cas d'usage et les sources non déterministes (hasard, horloge) s'enregistrent dans `get_it` et se remplacent par des fakes en test.
+- **Gestion d'état avec `flutter_bloc`** (BLoC et Cubit).
+- **Persistance avec `drift` (SQLite)** et migrations versionnées (`schemaVersion` et stratégie de migration, test d'intégrité sur base en mémoire).
+- **TDD** (`flutter_test`, `bloc_test`, `mocktail`) **et BDD** avec `bdd_widget_test` : les scénarios sont écrits en Gherkin français (Soit / Quand / Alors) dans des fichiers `.feature`, qui génèrent des tests widget via `build_runner`. (à vérifier : `bdd_widget_test` documente les mots-clés `Feature` / `Scenario` / `Given` / `When` / `Then` ; la prise en charge d'un Gherkin français n'est pas confirmée. À défaut, on garde les mots-clés anglais avec des textes d'étapes en français.)
+- **Commandes de référence** : `flutter pub get`, `flutter test`, `flutter test --coverage`, `flutter analyze`, `dart format`, `dart run build_runner build --delete-conflicting-outputs`, `flutter run -d chrome`, `flutter build web`. Verrouillage des dépendances : `pubspec.lock` (versionné) ; la version de Flutter est notée dans le README (et le `pubspec`).
+- **Livraison** : build web publié par GitHub Actions sur **GitHub Pages** (analyse, tests avec couverture, détection de secrets `gitleaks`, audit des dépendances pub, build web, déploiement). **GitHub Pages est public** : données fictives uniquement, et tout ce qui est dans un build web Flutter est public (aucun secret dans l'application).
+- **Conventions de nommage** : les identifiants des énoncés ci-dessous (`souffle_actuel`, `renom_promis`, `temps_ouverture_min`...) sont donnés en snake_case ; en Dart on les écrit en lowerCamelCase (`souffleActuel`, `renomPromis`, `tempsOuvertureMin`, Effective Dart), et drift génère les colonnes SQL en snake_case. Les codes de motif (`passeur_epuise`, `voeux_insuffisants`...) sont des valeurs sérialisées, portées côté Dart par des `enum`.
+
+## Organisation des équipes {#sec-themes-equipes}
+
+- Les équipes comptent **3 à 5 personnes**. Chaque équipe classe les thèmes par préférence, avec un **maximum de 3 équipes par thème** ; un tirage au sort départage si un thème dépasse ce nombre. Le thème C demande plus de travail de conformité (décision d'affectation, art. 22 RGPD) : c'est un élément à connaître pour choisir en connaissance de cause.
+- Deux équipes sur un même thème construisent chacune leur propre dépôt, sans partage de code.
+- La charge du projet ne change pas avec la taille de l'équipe : une équipe de 3 cumule des rôles, une équipe de 5 ajoute un rôle de soutien (voir la rubrique « Rôles dans l'équipe » de chaque thème).
+
+
+## Stack commune et dépôt-modèle {#sec-themes-stack}
+
+Le dépôt-modèle fourni en formation impose la pile décrite plus haut (« Pile technique du projet ») et contient : un squelette Flutter (structure en couches, `get_it` configuré, un BLoC d'exemple, un test unitaire, un fichier `.feature` d'exemple, une CI minimale `flutter analyze` + `flutter test`), ainsi qu'un `CLAUDE.md` et un document d'architecture réutilisables d'un projet à l'autre (structure Clean Architecture, injection `get_it`, conventions BLoC, discipline TDD et BDD). Les rôles de chaque thème sont protégés par une **garde d'accès dans la couche domain** (use case ou service `RequireRole`) avec un test de refus ; il n'y a pas d'authentification réelle, seulement un utilisateur courant fictif associé à l'un des deux rôles du thème (à confirmer dans le dépôt-modèle). Aucun secret ne va dans le dépôt ni dans l'application (un fichier `.env` éventuel est ignoré par git). Les dépôts sont **publics**, dans l'organisation GitHub de la formation, et les builds web sont publics sur GitHub Pages : c'est une raison de plus de n'y mettre aucune donnée réelle.
+
+Docker, Rust et Antigravity sont des outils « utiles plus tard » : ils ne font pas partie de la pile des projets ni de leur livraison.
+
+L'**import CSV est obligatoire dans le socle commun** : le cœur de chaque thème importe un seul fichier CSV (choisi avec `file_picker`, taille maximale, rejet motivé, parseur dans la couche data), et cet import se fait pendant le sprint, pas en S3. L'export CSV est souhaitable ; les autres formats sont des extensions. Les faits sur les dérives des agents de code (pièges) sont traités dans le chapitre [-@sec-outils-agentiques] : les thèmes n'y reviennent pas.
+
+## Règle d'or et conformité (RGPD et AI Act) {#sec-themes-regle-or}
+
+**Règle d'or, valable dès la S1 : aucune donnée personnelle ni confidentielle dans un prompt, ni dans un dépôt public.** Toutes les données des projets sont fictives (seed à graine fixe).
+
+La conformité a une double fonction dans la formation :
+
+- **Connaître les limites de leurs propres projets** : un outil temporaire reste soumis au RGPD (règlement (UE) 2016/679) dès qu'il traite des données personnelles, et peut relever du règlement (UE) 2024/1689 (AI Act) selon son usage. **Toute mise en usage réel doit être validée par le RSSI (et le DPO le cas échéant).**
+- **Connaître leurs droits de citoyens européens** : accès (art. 15 RGPD), rectification (art. 16), effacement (art. 17), limitation (art. 18), portabilité (art. 20), opposition (art. 21), protection contre la décision entièrement automatisée (art. 22, garanties de l'art. 22(3), considérant 71), information et transparence (art. 12 à 14, dont la « logique sous-jacente » aux art. 13(2)(f), 14(2)(g) et 15(1)(h)), droit d'introduire une réclamation auprès de la CNIL (art. 77) ; pour l'AI Act, droit à l'explication d'une décision individuelle fondée sur un système à haut risque (art. 86, à vérifier dans son champ exact).
+
+Chaque thème contient une rubrique « Conformité (RGPD et AI Act) ». Le détail pédagogique est dans le chapitre [-@sec-conformite].
+
+**Fiche de conformité par projet**, tenue dans le dépôt à **un seul chemin**, `docs/fiche_conformite.md`, selon le **gabarit à 13 rubriques** de la section [-@sec-conf-gabarit], que ce chapitre ne remplace pas. Les 13 rubriques : 1 finalité ; 2 données traitées ; 3 personnes concernées ; 4 base légale ou justification « données fictives » (art. 6 RGPD) ; 5 durée de conservation ; 6 hébergement et sous-traitants, dont le **fournisseur de modèle d'IA** ; 7 ce qui part dans les prompts ; 8 décision automatisée (art. 22) et humain dans la boucle ; 9 niveau de risque AI Act ; 10 droits des personnes ; 11 mesures ; 12 risques résiduels et limites d'usage ; 13 validation du RSSI. Deux ajouts propres à la formation : un champ **« rôle AI Act : fournisseur ou déployeur ? »** et, à la rubrique 9, une case de classement **« hors champ / minimal / obligations de transparence (art. 50) / haut risque / interdit »**.
+
+- **Aucun nom civil, aucune adresse de courriel dans la fiche** (les dépôts sont publics) : on écrit « équipe n° X », les identifiants GitHub de l'équipe et « RSSI (rôle) ».
+- **Calendrier** : début de la fiche en S3 (livrable de fin de séance), v1 déposée en PR **dans les deux jours qui suivent la S4**, réponse du RSSI **au plus tard une semaine avant S5**, mise à jour avant la soutenance.
+- **Portée d'un « go »** : un « go » du RSSI vaut uniquement pour le périmètre pédagogique à données fictives ; tout passage à des données réelles impose une nouvelle fiche et une nouvelle validation.
+
+Le RSSI est soit **simulé par l'enseignant**, soit **tenu par le RSSI de l'établissement** (invité en S4). Le **passage devant le RSSI** se fait en S4 sur **3 tables en parallèle**, **10 à 12 min par équipe** (environ 4 min de présentation, 5 de questions, 2 de décision provisoire), avec un jeu de rôle intégré à ce dispositif. Par exemple, avec 8 équipes réparties en 3, 3 et 2 par table, cela représente 3 passages successifs de 12 min au plus par table, soit 36 min, plus 4 min de rotation et de consignes : bloc de 40 min en S4. En S4, le brouillon de fiche est présenté et discuté ; la v1 déposée dans les deux jours qui suivent est ensuite validée ou refusée avec des demandes de correction, la réponse écrite arrivant pendant le sprint. Il s'agit de **sensibilisation, pas d'avis juridique** : la validation revient au RSSI et au DPO.
+
+## Trame des séances {#sec-themes-trame}
+
+La trame ci-dessous est commune aux trois thèmes. Plus bas, chaque thème ne reprend que ses étapes propres dans sa rubrique « Découpage par séance ».
+
+- **S1 : théorie et installations.** Aucun travail sur le projet.
+- **S2 : remise en route, thèmes et équipes, git, configuration de Claude Code, initialisation.** Il y a huit semaines entre S1 et S2 : la remise en route se fait donc au début de S2, sur les postes (`git`, `claude`, `flutter doctor`, mises à jour, comptes), puisqu'aucun dépôt de projet n'existe encore. Les trois thèmes sont présentés, puis les équipes se constituent en séance (composition, identifiants GitHub, classement des thèmes, tirage au sort si besoin ; numérotation par thème, rôles). Pendant les ateliers git et configuration, les dépôts sont créés par script depuis le modèle (squelette Flutter, `CLAUDE.md` et document d'architecture fournis), les membres sont ajoutés comme collaborateurs de chaque dépôt (pas d'invitation à l'organisation) et l'invitation est acceptée à la pause. Un `PROJET.md` pré-rempli (vision, 3 à 5 user stories) est fourni : à relire et compléter. Première PR relue par un coéquipier ; `main` protégée (PR obligatoire, 1 approbation) ; premiers éléments du harnais (`CLAUDE.md` minimal, première permission).
+- **S3 (4 h) : travail à plusieurs, premier TDD.** S3 n'est qu'à deux jours de S2 : elle s'ouvre sur un bref contrôle (`git pull`, `flutter pub get`, `flutter test`). *Indispensable en séance* : première user story en TDD et en BDD (scénario Gherkin, voir « Première user story et sous-règle isolée » dans chaque thème) sur une seule sous-règle isolée, avec un repository en mémoire (fake) ; tables drift, première migration (`schemaVersion`) et test d'intégrité sur base en mémoire ; bloc RGPD ; début de la fiche de conformité (rubriques 1 à 5 : finalité, données, personnes concernées, base légale ou justification « données fictives », durée) ; PR croisées entre équipes (paires de même thème tolérées en S3). *Peut glisser entre S3 et S4* (douze jours, tâche facultative de 2 h au plus par étudiant), au début de S4 ou dans le sprint : seed complet, rôles avec la garde `RequireRole` (couche domain) et test de refus. Si l'équipe est en retard, le seed et les rôles sont les premiers à glisser. **Livrable de fin de S3**, identique pour les trois thèmes : « première règle verte, modèle et migrations fusionnés, début de `docs/fiche_conformite.md` commité ».
+- **S4 (4 h) : tests d'acceptation, CI/CD, sécurité, conformité.** *Indispensable en séance* : le gardien produit écrit les cas d'acceptation du clou avant le code de l'agent sur les sous-règles restantes (celle de S3 est déjà couverte par ses propres tests) ; CI verte ; publication du build web de chaque équipe sur GitHub Pages par GitHub Actions (analyse, tests avec couverture, `gitleaks`, audit des dépendances pub, build web, déploiement ; données fictives uniquement) ; seed et rôles s'ils ont glissé ; AI Act ; passage devant le RSSI (3 tables en parallèle, 10 à 12 min par équipe, jeu de rôle intégré) ; audit croisé réduit à 5 points (installation à froid : `git clone`, `flutter pub get`, `flutter test`, `flutter run -d chrome` ; CI verte, obligatoire, avec audit des dépendances ; secrets : `gitleaks`, rien dans le dépôt ni dans le bundle web, `.env` ignoré ; rôles : garde testée ; fiche de conformité) ; les paires de même thème sont évitées en S4. **Plan B** : si la publication sur GitHub Pages bloque (réglages du dépôt, droits), l'équipe montre son build local (`flutter run -d chrome`) et termine la publication au sprint. S4 ne suppose pas le CRUD terminé, et un exposé continu ne dépasse pas 30 min : on le coupe par une activité (quiz ou cas à classer). La v1 de la fiche est déposée en PR dans les deux jours qui suivent.
+- **Sprint final : finir le périmètre.** Il va de S4 à l'avant-veille de S5, fêtes de fin d'année comprises (sans travail imposé au-delà de ce que l'équipe choisit) : import CSV, tableau de bord, clou, cas d'acceptation non encore verts, README testé à froid.
+- **S5 : gel, retouches, soutenance.** Gel (tag `v1.0-rc` l'avant-veille de S5 à 18 h), retouches bloquantes, soutenance.
+
+Dans chaque thème, les découpages de S3 et de S4 distinguent « indispensable en séance » et « peut glisser ».
+
+
+## Tableau chiffré de comparaison {#sec-themes-comparaison}
+
+| Critère | A Registre des Passeurs | B TRS d'atelier | C Répartition de sujets |
+|---|---|---|---|
+| Entités (tables drift) | 5 (voie, passeur, saison, route, traversee) | 5 (poste, quart, ordre_fabrication, declaration_production, arret) | 5 (enseignant, sujet, etudiant, voeu, affectation) |
+| Règles distinctes du niveau 1 | 6 | 6 | 6 |
+| Cas d'acceptation | 7 | 8 | 7 |
+| Motifs de rejet d'import | 5 | 5 | 5 |
+| Vues du tableau de bord | 4 | 4 | 4 |
+| Charge estimée du clou niveau 1 avec l'agent et le TDD | ≈ 3 h | ≈ 3 h | ≈ 3 h |
+| Charge d'équipe du périmètre complet (sprint compris) | 15 à 20 h | 15 à 20 h | 15 à 20 h |
+| Lignes de démo | ≈ 700 | ≈ 3 000 | ≈ 600 |
+| Type de difficulté | Aléa injecté, état qui évolue | Unités et arrondis | Ordre de priorité, cas de bord |
+| Piège d'agent | Lune en dur dans la règle | Unités mélangées | Données réelles collées |
+| Sensibilité conformité | faible (pseudonymes d'utilisateurs) | moyenne (postes, quarts, salariés possibles) | élevée (étudiants, décision d'affectation) |
+
+Équilibrage : A a peu de calcul mais un état à faire évoluer (rangs, souffle, plafonds). B a peu d'états mais des calculs à faire au bon format (temps, cadences, arrondis, changement d'heure). C a peu de calcul mais beaucoup de cas de bord (bornes de vœux, capacités, statuts). A demande en plus une page de monde inventé et un fichier de libellés : c'est du contenu, pas du code, du même ordre que le glossaire d'équipe de B ou les explications individuelles de C. Les estimations de charge n'ont pas été chronométrées avec de vrais étudiants : elles sont à confirmer à l'usage.
+
+Pour choisir : A est le thème de l'état et de l'aléa, B celui des unités et des arrondis, C celui des priorités et des cas limites. Côté conformité, A est de sensibilité faible, B moyenne, C élevée.
+
+## Thème A · Les Marches de Cendrelune : le registre du comptoir des Passeurs {#sec-theme-a}
+
+**En une phrase** : même lune, même jugement. Vous tenez le greffe d'un comptoir de Passeurs ; le registre porte sur les fiches de passeur, les routes de brume et l'éclat de la lune.
+
+::: {.callout-note title="Mise en situation fantastique"}
+Dans ce thème, vous n'écrivez pas un outil *à propos* d'un monde imaginaire : vous y travaillez. Votre équipe tient le greffe d'un comptoir, votre commanditaire est une habitante de ce monde, et le besoin est le sien. La règle et ses chiffres sont fixés par l'énoncé ; **le monde autour est à vous** (voir « Votre part d'invention »).
+:::
+
+- **Pitch** : les Marches de Cendrelune sont la dernière frontière avant les terres que personne n'a cartographiées. Chaque automne, la brume s'y lève et ne retombe qu'au printemps. Pendant cette saison, les cartes mentent, et seuls les **Passeurs** savent encore mener un convoi d'un bourg à l'autre. Nul ne peut vérifier ce qui se passe dans la brume : la **Coutume des Marches** tranche donc chaque traversée d'après ce que tout le monde peut constater, c'est-à-dire la route empruntée, le passeur qui la mène et l'éclat de la **lune de cendre**, cet astre sans calendrier qui donne son nom au pays et dont personne ne sait prédire la lumière du soir. **Vous êtes les greffiers d'un comptoir de Passeurs**, le vôtre, que vous fondez et que vous nommez. Jusqu'ici le registre est tenu à la plume, les soldes sont contestées, et plus personne ne sait dire pourquoi telle pisteuse est au rang 4 quand tel veneur est resté au rang 2. Vous forgez le **registre du comptoir** : fiches de passeur, routes de brume, jugement d'une traversée selon l'éclat de la lune, usure du souffle, renom et changement de rang, avec un registre que l'on peut relire et contester.
+- **Commanditaire (personnage de ce monde) et besoin** : Aubrée Vauclair, intendante des Marches (personnage fictif), ancienne passeuse devenue comptable des soldes. Elle commande le même registre à chaque comptoir pour la saison des brumes qui vient. Elle veut que chaque traversée soit jugée de façon équitable et reproductible : même lune, même jugement. Elle veut retrouver l'historique de chaque passeur, voir qui est à bout de souffle et qui approche d'un nouveau rang, et que les passeurs ne modifient que leur propre fiche.
+- **Votre rôle dans ce monde** : vous êtes le greffe du comptoir. Vous parlez à l'intendante comme à un client (c'est elle qui valide les cas d'acceptation), vous écrivez pour des passeurs qui liront leur fiche, et vous présentez votre comptoir en soutenance comme s'il existait.
+- **Votre part d'invention** (obligatoire, légère, et libre) : deux équipes sur ce thème livrent **deux mondes différents avec la même mécanique testable**.
+
+    | Fixé par l'énoncé (ne change pas) | À inventer par l'équipe |
+    |---|---|
+    | Les 6 règles, leurs tableaux de valeurs et les 7 cas d'acceptation | Le **comptoir** : son nom, sa devise, son emblème, sa place sur les Marches |
+    | Les codes des 4 voies (`veneur`, `pisteur`, `lanternier`, `heraut`) et des 4 natures de péril (`bete`, `terrain`, `mirage`, `faction`) | Le **bestiaire** et les **mirages** : ce qui rôde et ce qui trompe dans la brume |
+    | Les 5 rangs (numérotés de 1 à 5) et leurs seuils de renom | Le **nom des cinq rangs** et les syllabes qui composent les noms des passeurs |
+    | Les colonnes du CSV et les codes de motif de rejet | Les **lieux** : bourgs, cols, gués, et les titres des 30 routes |
+    | Les 4 issues (`tenue`, `rompue`, `tenue_pleine_lune`, `rompue_lune_noire`) | Les **factions** qui tiennent les ponts et les péages, et leurs humeurs |
+    | Les 2 rôles applicatifs et la garde d'accès | Le **ton** des textes (solennel, administratif pince-sans-rire, poétique...) et le jeu de données de démonstration |
+
+  - *Livrable* : une page `docs/monde.md` (le comptoir, ses lieux, son bestiaire, ses factions, le nom de ses rangs) et **un seul fichier de libellés** dans la couche presentation (`lib/presentation/lexique.dart`, emplacement à confirmer dans le dépôt-modèle). Le générateur de seed y puise ses noms.
+  - *Règle d'ingénierie* : le domaine ne connaît que les **codes** ; aucun nom inventé n'apparaît dans `domain/` ni dans les cas d'acceptation. Vérification simple : changer un libellé du lexique ne fait échouer aucun test de la règle.
+  - *Deux limites* : un monde **original** (aucun nom, lieu ou créature repris d'une œuvre existante, voir la rubrique conformité) et **aucune personne réelle** (ni nom, ni caricature d'un enseignant ou d'un camarade).
+  - *Charge* : du contenu, pas du code, comparable au glossaire d'équipe du thème B ; il est compris dans les 15 à 20 h.
+- **Besoin ponctuel** :
+  - *Pourquoi un outil de courte durée de vie suffit* : le registre sert le temps d'une saison des brumes. Quand la brume retombe, les routes redeviennent sûres, les soldes sont payées et le registre est scellé : un outil jetable, bien testé, remplace avantageusement le registre à la plume sans devenir un logiciel à maintenir.
+  - *Ce qui reste obligatoire même pour un outil jetable* : la règle de jugement testée (sinon les passeurs contestent leur solde), le contrôle d'accès (un passeur ne modifie pas la fiche d'un autre), le README pour relancer l'outil, et aucune donnée réelle dans le dépôt public.
+  - *Désactivation et archivage* : à la fin de la saison, export du registre en CSV, archivage du dépôt (lecture seule) et arrêt du service ; les pseudonymes des utilisateurs sont supprimés ou anonymisés au plus tard à cette date.
+- **Données manipulées** :
+  - Entités (5) : `voie` (code, nom, souffle_rang_1, gain_souffle_par_rang, aptitude_bete, aptitude_terrain, aptitude_mirage, aptitude_faction), `passeur` (nom, voie_code, rang, renom, souffle_actuel, proprietaire), `saison` (titre, annee), `route` (saison, titre, nature, peril, usure, renom_promis, statut `ouverte` ou `fermee`), `traversee` (passeur, route, eclat, total, issue, souffle_perdu, renom_gagne, rang_avant, rang_apres).
+  - Relations : une saison a plusieurs routes ; une traversée lie un passeur à une route ; un passeur suit une voie et appartient à un utilisateur (`proprietaire`, identifiant de connexion). Le souffle maximum n'est pas stocké : il se calcule (voie et rang), ce qui évite les incohérences.
+  - Vocabulaire : le **souffle** est l'endurance du passeur (à 0, il est épuisé et ne prend plus la route) ; le **renom** se cumule de traversée en traversée et fait changer de **rang** ; le **péril** d'une route est le seuil à atteindre, son **usure** ce qu'elle coûte en souffle quand le passage est rompu ; l'**éclat** est la lecture de la lune de cendre le soir du départ, un entier de 1 (lune noire) à 20 (pleine cendrelune).
+  - Volumes : 4 voies, 60 passeurs, 3 saisons, 30 routes, environ 600 traversées.
+  - Seed : script à graine fixe ; noms de passeurs assemblés à partir des syllabes choisies par l'équipe ; jamais de noms de personnes réelles.
+- **Rôles applicatifs** : `greffier` (ouvre les routes, juge les traversées, corrige, accorde un repos à un passeur épuisé : correction manuelle qui remet le souffle au maximum, hors de la règle) et `passeur` (lit tout, modifie uniquement la fiche dont il est `proprietaire`).
+- **Rôles dans l'équipe** (la charge du projet ne change pas) :
+  - *3 membres* : **gardien produit et conformité** (`PROJET.md`, `docs/monde.md`, cas d'acceptation, fiche de conformité) ; **gardien des données** (modèle, migrations, seed, import CSV) ; **gardien du harnais et de la CI** (`CLAUDE.md`, hooks, permissions, GitHub Actions, test d'architecture sur l'aléa).
+  - *4 membres* : les trois rôles ci-dessus, avec un **gardien conformité** distinct (fiche, pseudonymisation, originalité du monde, contact avec le RSSI).
+  - *5 membres* : les quatre rôles, plus un **gardien de la démonstration** (README testé à froid, lexique et jeu de données de soutenance, scénario du « wow »).
+  - Dans tous les cas, chacun relit au moins une PR d'un autre.
+- **MVP** (5 user stories à piocher pour `PROJET.md`, 3 à 5 retenues) :
+  1. En tant que greffier, j'inscris un passeur d'une voie donnée, avec son souffle de rang 1.
+  2. J'ouvre une route (nature du péril, péril, usure, renom promis).
+  3. Je juge une traversée pour un passeur en saisissant l'éclat de la lune et j'obtiens l'issue, le souffle perdu et le renom.
+  4. Je consulte la fiche d'un passeur avec l'historique de ses traversées.
+  5. Je vois quels passeurs sont épuisés et lesquels vont changer de rang.
+  - **Pour aller plus loin** : (1) l'éclat produit par l'application quand le greffier ne saisit pas de lecture (simuler une saison à l'avance) : une interface de source d'aléa (domain), implémentée dans la couche data, injectée avec `get_it` et remplacée par un fake en test (graine journalisée, nuit rejouable) ; (2) événements de saison inventés par l'équipe (brume rouge, pluie de cendres, trêve entre factions) qui modifient le péril d'une route ; (3) chronique : chaque traversée s'affiche avec une phrase écrite par l'équipe, choisie dans le lexique selon l'issue, sans hasard (par exemple d'après le numéro de la traversée).
+- **Règle métier « clou »** : jugement d'une traversée, fonction pure Dart `jugerTraversee(passeur, route, eclat)` sans accès à l'aléa ni à la base (elle vit dans la couche domain).
+  - **Niveau 1 (obligatoire, ≈ 3 h)** : ordre d'application des sous-règles, valeurs figées.
+
+    | voie | aptitude `bete` | aptitude `terrain` | aptitude `mirage` | aptitude `faction` | souffle au rang 1 | gain de souffle par rang |
+    |---|---|---|---|---|---|---|
+    | veneur | 5 | 1 | 0 | 0 | 30 | 10 |
+    | pisteur | 1 | 5 | 0 | 0 | 22 | 8 |
+    | lanternier | 0 | 1 | 5 | 1 | 16 | 6 |
+    | heraut | 1 | 0 | 1 | 5 | 24 | 8 |
+
+    | rang | 1 | 2 | 3 | 4 | 5 (maximum) |
+    |---|---|---|---|---|---|
+    | renom minimum (borne incluse) | 0 | 100 | 300 | 600 | 1000 |
+
+    1. **Passeur épuisé** : si `souffle_actuel` vaut 0, le jugement est refusé (erreur `passeur_epuise`), sans lecture consommée, sans traversée enregistrée ni modification. Ce test précède tous les autres.
+    2. **Lunes franches** : `eclat` doit être un entier entre 1 et 20 inclus (sinon erreur `eclat_invalide`, aucune modification). 20 (pleine cendrelune) donne un passage tenu (issue `tenue_pleine_lune`) et 1 (lune noire) un passage rompu (issue `rompue_lune_noire`), quel que soit le total, qui reste calculé et enregistré. Ce test précède la comparaison au péril.
+    3. **Total et passage** : `total = eclat + aptitude_de_la_voie_pour_la_nature_de_la_route + rang`. Le passage est tenu (issue `tenue`) si `total >= peril` (borne incluse), rompu sinon (issue `rompue`).
+    4. **Usure** : passage tenu (pleine cendrelune ou non) : 0 souffle perdu ; passage rompu : `usure` de souffle perdu ; lune noire : `2 × usure`. Le souffle a un plancher à 0 (jamais négatif) ; à 0, le passeur est épuisé. `souffle_perdu` enregistre la perte réelle, plancher compris.
+    5. **Renom** : passage tenu : `renom_promis` ; pleine cendrelune : `renom_promis × 3 ~/ 2` (division entière, opérateur `~/` de Dart) ; passage rompu ou lune noire : `renom_promis ~/ 4`. Le passeur épuisé par la traversée gagne aussi le renom.
+    6. **Rang** : le rang est le plus grand `n` tel que renom ≥ seuil (tableau ci-dessus), plafonné à 5 ; le renom continue de cumuler au-delà du plafond. Chaque rang gagné ajoute `gain_souffle_par_rang` au souffle maximum et au `souffle_actuel`, sauf si le passeur est épuisé après l'usure (le souffle maximum augmente, mais `souffle_actuel` reste à 0). Plusieurs rangs peuvent être gagnés d'un coup ; le rang ne baisse jamais. Souffle maximum = `souffle_rang_1 + (rang − 1) × gain_souffle_par_rang`.
+  - **Niveau 2 (bonus, plafonné à 1 point)** : bon et mauvais augure. Quand la route porte un augure, deux lectures de la lune sont fournies (au crépuscule et à minuit ; l'augure de la route et la seconde lecture s'ajoutent au modèle par une migration) : on garde la plus haute (bon augure) ou la plus basse (mauvais augure) avant d'appliquer les règles ci-dessus. Le 20 et le 1 se jugent sur la lecture retenue.
+  - **Cas de test d'acceptation** (7) :
+
+    | # | Entrée | Sortie attendue |
+    |---|---|---|
+    | 1 | veneur de rang 1, renom 0, souffle 30/30 ; route `bete`, péril 17, usure 6, renom promis 100 ; éclat 11 | total 17 ≥ 17 : passage tenu (`tenue`) ; 0 souffle perdu ; renom 100 ; rang 2 ; souffle 40/40 |
+    | 2 | même passeur et même route ; éclat 10 | total 16 < 17 : passage rompu (`rompue`) ; 6 de souffle perdu ; souffle 24/30 ; renom 25 ; rang 1 |
+    | 3 | veneur de rang 5, renom 1000, souffle 70/70 ; route `bete`, péril 5, usure 6, renom promis 100 ; éclat 1 | lune noire : passage rompu (`rompue_lune_noire`) malgré total 11 ≥ 5 ; 12 de souffle perdu ; souffle 58/70 ; renom 1025 ; rang 5 |
+    | 4 | lanternier de rang 1, renom 0, souffle 16/16 ; route `bete`, péril 40, usure 8, renom promis 100 ; éclat 20 | pleine cendrelune : passage tenu (`tenue_pleine_lune`, total 21) ; 0 souffle perdu ; renom 150 ; rang 2 ; souffle 22/22 |
+    | 5 | pisteur de rang 1, renom 0, souffle 5/22 ; route `terrain`, péril 10, usure 6, renom promis 100 ; éclat 3 | total 9 < 10 : passage rompu (`rompue`) ; 5 de souffle perdu (plancher) ; souffle 0/22 ; passeur épuisé ; renom 25 ; rang 1 |
+    | 6 | passeur à 0 de souffle (par exemple le pisteur du cas 5 après son jugement) ; n'importe quelle route ; éclat 12 | erreur `passeur_epuise`, aucune traversée enregistrée, aucune modification |
+    | 7 | heraut de rang 1, renom 50, souffle 24/24 ; route `faction`, péril 10, usure 4, renom promis 400 ; éclat 10 | total 10 + 5 + 1 = 16 ≥ 10 : passage tenu (`tenue`) ; 0 souffle perdu ; renom 50 + 400 = 450 ; rang 3 (deux rangs gagnés) ; souffle maximum 24 + 2 × 8 = 40 ; souffle 40/40 |
+
+    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (français, à vérifier : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes (celle de S3 est déjà couverte par ses propres tests). Dans ce tableau, « renom », « rang » et « souffle » sont les valeurs de la fiche après le jugement. Les cas ne citent que des codes et des nombres : ils sont identiques pour toutes les équipes du thème, quel que soit le monde inventé.
+- **Première user story et sous-règle isolée (BDD)** : la sous-règle isolée de S3 (le total, règle 3) s'écrit comme un scénario `.feature` en français, sans changer les valeurs (éclat 11, veneur de rang 1, route de nature `bete`, péril 17, comme au cas 1) :
+
+    ```gherkin
+    Fonctionnalité: Jugement d'une traversée
+      Scénario: total d'une traversée pour un veneur de rang 1
+        Soit un veneur de rang 1
+        Et une route de nature "bete" avec un péril de 17
+        Quand l'éclat de la lune est 11
+        Alors le total est 17
+        Et le passage est tenu
+    ```
+- **Import/export** : import CSV des passeurs, fichier choisi avec `file_picker`, parseur dans la couche data (colonnes `nom`, `voie_code`, `rang`, `renom`, `souffle_actuel`, `proprietaire`), avec rapport de lignes rejetées. Motifs de rejet précis :
+  1. `voie_inconnue` (hors des 4 voies) ;
+  2. `rang_hors_bornes` (hors de 1 à 5) ou renom inférieur au seuil du rang déclaré ;
+  3. `souffle_incoherent` (`souffle_actuel` supérieur au souffle maximum calculé, ou négatif) ;
+  4. `nom_en_double` (au sein du fichier ou de la base) ;
+  5. `colonnes_manquantes` ou fichier de plus de 200 Ko.
+
+  Export : registre de la saison en CSV (une ligne par traversée).
+- **Tableau de bord (4 vues)** : (1) fiche de passeur (rang, renom restant avant le rang suivant, souffle actuel et maximum) ; (2) registre de la saison chronologique, filtrable par route ; (3) état du comptoir (passeurs épuisés, souffle, rang) ; (4) taux de passages tenus par voie et par nature de péril.
+- **Contrainte de harnais et piège d'agent** :
+  - Piège : la lune en dur. Pour faire passer un test rouge, l'agent glisse `Random().nextInt(20) + 1` dans la règle, ou fixe une graine (`Random(42)`), ou remplace l'éclat par une constante : les tests deviennent verts par hasard, ou ne prouvent plus rien. À documenter comme cas d'erreur d'agent (voir @sec-outils-agentiques).
+  - Harnais : règle `CLAUDE.md` « le domaine ne tire jamais d'aléa ni ne lit l'horloge ; l'éclat de la lune arrive en paramètre » ; test d'architecture (`flutter test`) qui lit les fichiers des dossiers `domain/` et échoue si `dart:math` y est importé (la source d'aléa est une interface du domaine, enregistrée dans `get_it` et remplacée par un fake en test) ; dossier `test/acceptance/**` protégé par des permissions `deny` sur `Edit` et `Write` dans `.claude/settings.json`, par `CODEOWNERS` et par la consigne `CLAUDE.md` « un test qui échoue n'est jamais corrigé en modifiant le test » ; hook `PostToolUse` sur `Edit|Write` qui lance `flutter test`.
+- **Conformité (RGPD et AI Act)** (voir @sec-conformite) : **le monde est inventé, ses utilisateurs ne le sont pas.** Un passeur est un personnage de fiction, mais le compte qui possède sa fiche appartient à une personne réelle.
+  - *Données traitées* : pseudonymes des utilisateurs (champ `proprietaire`, identifiant de connexion), noms de passeurs fictifs, historique des traversées. Le `proprietaire` est un lien vers une personne identifiable (même par pseudonyme) : c'est une **donnée personnelle**.
+  - *Personnes concernées* : les utilisateurs de l'outil, c'est-à-dire les personnes qui tiennent un compte `passeur` ou `greffier`.
+  - *Finalité* : tenir la fiche et l'historique des passeurs d'une saison, de façon équitable et reproductible. Rien d'autre (pas de profilage des utilisateurs, pas de classement public des « meilleurs passeurs » associé à des personnes sans leur accord).
+  - *Durée de conservation proposée* : la durée de la saison ; suppression ou anonymisation des pseudonymes à la clôture (par exemple 30 jours après la dernière traversée jugée) ; le registre anonymisé peut être archivé.
+  - *Ce qui doit rester fictif et original* : tous les utilisateurs et tous les noms de passeurs du dépôt et des démonstrations ; aucun courriel ni identifiant réel dans le seed. Le monde inventé ne reprend ni nom, ni lieu, ni créature propre à une œuvre existante (droit d'auteur : le dépôt est public), et ne met en scène aucune personne réelle, même de façon déguisée.
+  - *Niveau de risque AI Act probable* : **risque minimal ou hors champ** : le jugement est une règle déterministe sans effet sur des droits ou des opportunités réels (à vérifier). L'art. 4 du règlement (UE) 2024/1689, après l'omnibus, prévoit que les fournisseurs et déployeurs prennent des mesures pour favoriser la maîtrise de l'IA de leurs personnels et des personnes qui utilisent des systèmes d'IA en leur nom (à vérifier sur EUR-Lex) ; l'équipe qui construit l'outil avec une IA est concernée par cette culture de l'IA. Les textes du monde rédigés avec l'aide de l'agent pendant le développement sont relus et assumés par l'équipe. Si l'équipe ajoutait un texte généré par IA à l'exécution vers les utilisateurs (extension), la transparence de l'art. 50 serait à examiner (à vérifier).
+  - *Mesures concrètes dans l'application* : pseudonymes uniquement ; journal technique sans nom d'utilisateur (identifiants numériques) ; un passeur ne modifie que sa fiche ; **obligatoires** : mention d'information visible (art. 13) et cas d'usage de suppression documenté d'un utilisateur et de ses données (droit à l'effacement, art. 17) ; **en extension** : export des données de l'utilisateur (accès et portabilité, art. 15 et 20). Ces mesures sont incluses dans les 15 à 20 h de charge d'équipe.
+  - *Contenu attendu de la fiche de conformité* : les 13 rubriques du gabarit de `docs/fiche_conformite.md` (voir plus haut), avec en particulier la case « hors champ » ou « minimal » justifiée, le rôle AI Act (fournisseur ou déployeur) et la durée de conservation ; **présentée au RSSI en S4, v1 déposée en PR dans les deux jours qui suivent, réponse au plus tard une semaine avant S5**. La fiche se rédige hors de la fiction : elle décrit l'outil réel et ses utilisateurs réels, pas le comptoir. Un « go » ne vaut que pour le périmètre pédagogique à données fictives ; toute mise en usage réel avec de vrais utilisateurs impose une nouvelle fiche et une nouvelle validation.
+- **Sécurité et données** :
+  1. **OWASP, contrôle d'accès défaillant** : un utilisateur au rôle `passeur` ne peut modifier que la fiche dont il est `proprietaire`. Un test d'autorisation vérifie qu'une modification de la fiche d'un autre utilisateur est refusée (erreur d'accès refusé), y compris en passant l'identifiant d'un autre passeur au cas d'usage. Le contrôle vit dans la couche domain (garde `RequireRole` et vérification du propriétaire), pas dans l'interface : masquer un bouton ne protège rien.
+  2. **Validation des entrées** : l'import borne chaque champ, refuse les fichiers de plus de 200 Ko et les caractères de contrôle ; aucune valeur importée n'est concaténée dans du SQL brut (pas de `customSelect` ni de `customStatement` construit par concaténation avec drift).
+- **Découpage par séance** (la trame commune est décrite dans la section [-@sec-themes-trame] ; seules les étapes propres au thème A sont données ici) :
+  - S2 : le `PROJET.md` fourni est pré-rempli pour le thème A (vision, 3 à 5 user stories) ; il est à relire et à enrichir, avec le nom du comptoir.
+  - S3 : la sous-règle isolée est l'aptitude de la voie et le total (règle 3), avec un repository en mémoire (fake), sans usure, ni renom, ni changement de rang. Peut glisser entre S3 et S4 : seed complet, `docs/monde.md`, rôles (`greffier`, `passeur`) avec la garde `RequireRole` (couche domain) et test de refus.
+  - S4 : le gardien produit écrit les 7 cas d'acceptation avant le code de l'agent sur les sous-règles restantes. Peut glisser dans le sprint : publication GitHub Pages si elle n'est pas terminée, release v0.1, contrôles d'accès fins au-delà du minimum.
+  - Sprint final : import CSV des passeurs, registre, tableau de bord, export, `docs/monde.md` et lexique, cas d'acceptation non encore verts à la fin de S4, README testé à froid, bonus éventuel.
+- **Livrable minimum viable** : inscription d'un passeur, jugement d'une traversée avec les règles 1 à 6, fiche avec historique, contrôle d'accès, CI verte, import CSV des passeurs, une page `docs/monde.md`, fiche de conformité déposée et soumise au RSSI. Sans le registre filtrable, l'export ni les vues 3 et 4.
+- **Effet « wow » pour la soutenance** : l'équipe présente son comptoir en une minute (son nom, ses routes, ce qui rôde dans sa brume), puis le jury **lit la lune** : il tire un jeton numéroté de 1 à 20 (ou lance un dé à vingt faces) et dicte l'éclat ; l'équipe le saisit, la fiche du passeur change en direct (souffle, renom, changement de rang). Le jury demande ensuite de rejuger la même nuit et obtient le même résultat, grâce à une règle sans aléa interne. Deux équipes, deux mondes, la même Coutume.
+
+## Thème B · Ligne 4 : le TRS de l'atelier de câblage {#sec-theme-b}
+
+**En une phrase** : la même formule pour tout le monde. Le TRS de l'atelier de câblage se décompose en disponibilité, performance et qualité.
+
+- **Pitch** : sur le site d'un fabricant fictif de sous-ensembles électroniques, la ligne 4 assemble des cartes de commande avec une cellule cobot de vissage, une station de vision et un îlot de brasage sélectif. Chaque quart, un opérateur déclare à la main ses pièces, ses rebuts et ses arrêts, et le responsable recalcule le TRS (taux de rendement synthétique, ou OEE en anglais) dans un tableur. Le résultat change d'un jour à l'autre selon celui qui compte. Vous construisez l'outil qui calcule le TRS de façon **reproductible** à partir des événements de production, le décompose (disponibilité, performance, qualité) et montre où le temps se perd.
+- **Commanditaire (fictif) et besoin** : Hélène Gaudry, responsable amélioration continue (personnage fictif), ingénieure d'exploitation. Elle veut un TRS par poste et par quart, la même formule pour tout le monde, la répartition des pertes par cause pour orienter la maintenance, et la certitude que le nouveau quart de nuit lors du changement d'heure est compté correctement.
+- **Besoin ponctuel** :
+  - *Pourquoi un outil de courte durée de vie suffit* : l'amélioration continue travaille par campagnes de mesure (par exemple un trimestre d'observation de la ligne 4 avant un investissement). L'outil remplace le tableur le temps de cette campagne ; il n'a pas vocation à devenir un MES.
+  - *Ce qui reste obligatoire même pour un outil jetable* : la formule testée et identique pour tous (sinon les chiffres ne sont pas comparables), les unités explicites, un README pour relancer l'outil, aucun secret dans le dépôt, et aucune donnée réelle d'usine dans un dépôt public.
+  - *Désactivation et archivage* : à la fin de la campagne de mesure, export CSV des TRS, archivage du dépôt et arrêt du service ; les données de quarts (même agrégées) ne sont pas conservées plus longtemps que la décision qu'elles ont éclairée.
+- **Données manipulées** :
+  - Entités (5) : `poste` (code, nom, ligne), `quart` (poste, debut_utc, fin_utc), `ordre_fabrication` (numero_of, produit, quantite_lancee, temps_cycle_ideal_s, issu de la gamme), `declaration_production` (quart, ordre_fabrication, pieces_produites, pieces_rebutees), `arret` (quart, debut_utc, fin_utc, categorie, commentaire, ticket_gmao).
+  - Relations : un quart appartient à un poste et porte plusieurs déclarations (une par OF traité) et plusieurs arrêts. Les catégories planifiées sont `pause`, `maintenance_preventive` et `etalonnage`. Les catégories non planifiées sont `panne`, `changement_serie`, `attente_matiere` et `micro_arret` (convention de l'énoncé).
+  - Volumes : 6 postes, 90 quarts par poste, environ 3 000 déclarations et arrêts en tout.
+  - Seed : générateur à graine fixe, produits fictifs (cartes, capteurs, boîtiers), temps de cycle de 20 à 60 s, un quart de nuit du 24 au 25 octobre 2026 inclus. Les horodatages sont stockés en UTC.
+- **Rôles applicatifs** : `responsable` (lecture, import, export, correction) et `operateur` (déclare uniquement sur les quarts de son poste).
+- **Rôles dans l'équipe** (la charge du projet ne change pas) :
+  - *3 membres* : **gardien produit et conformité** (`PROJET.md`, glossaire, cas d'acceptation, fiche de conformité) ; **gardien des données** (modèle, migrations, seed, import CSV, fuseaux et UTC) ; **gardien du harnais et de la CI** (`CLAUDE.md`, hooks, test d'architecture sur les unités, GitHub Actions).
+  - *4 membres* : les trois rôles ci-dessus, avec un **gardien conformité** distinct (fiche, anonymisation des opérateurs, contact avec le RSSI).
+  - *5 membres* : les quatre rôles, plus un **gardien de la démonstration** (README testé à froid, jeu de données du quart de nuit chaotique, scénario du « wow »).
+  - Dans tous les cas, chacun relit au moins une PR d'un autre.
+- **MVP** (5 user stories à piocher) :
+  1. En tant que responsable, je décris les postes et je crée les quarts.
+  2. Je saisis un OF avec son temps de cycle idéal.
+  3. Je déclare les pièces produites et rebutées d'un quart, et ses arrêts.
+  4. Je consulte le TRS d'un poste pour un quart, avec sa décomposition.
+  5. Je vois les causes d'arrêt classées par minutes perdues.
+  - **Pour aller plus loin** : (1) partie commune entre arrêt planifié et non planifié comptée comme planifiée ; (2) cible de TRS par ligne et alerte ; (3) export au format d'un rapport de quart ; (4) import CSV des arrêts (`poste`, `debut_utc`, `fin_utc`, `categorie`, `commentaire`, `ticket_gmao`), avec les motifs `arret_chevauchant` (deux arrêts du même poste qui se recouvrent) et `fin_avant_debut` (ou catégorie inconnue).
+- **Règle métier « clou »** : fonction pure Dart `calculerTrs(quart, declarations, arrets)`. Les durées sont en minutes, les temps de cycle en secondes (suffixes `Min` et `S` obligatoires dans le code, par exemple `tempsOuvertureMin` et `tempsCycleIdealS`, ou le type `Duration`).
+  - **Niveau 1 (obligatoire, ≈ 3 h)** : l'OEE se calcule sur les valeurs exactes (entiers et fractions ; un paquet de rationnels ou de décimaux comme `rational` ou `decimal` est possible, à vérifier ; pas de `double`) ; seul l'affichage arrondit à 0,1 point de pourcentage, demi vers le haut.
+    1. **Durée du quart** : `temps_ouverture_min = (fin_utc − debut_utc)` en minutes réelles, calculée à partir des horodatages UTC (`DateTime` UTC, différence en `Duration`). Aucune constante de 480.
+    2. **Arrêts** : chaque arrêt est tronqué aux bornes du quart avant tout calcul. Un arrêt hors quart compte 0.
+    3. **Disponibilité** : `temps_requis_min = temps_ouverture_min − arrêts planifiés` ; `temps_marche_min = temps_requis_min − arrêts non planifiés` ; `D = temps_marche_min / temps_requis_min`.
+    4. **Performance** : `temps_utile_min = Σ (pieces_produites × temps_cycle_ideal_s) / 60` sur toutes les déclarations ; `P = min(1, temps_utile_min / temps_marche_min)`. Plafond à 100 % et drapeau `performance_plafonnee` vrai si le plafond a joué.
+    5. **Qualité** : `Q = (pieces_produites − pieces_rebutees) / pieces_produites`.
+    6. **OEE** : `OEE = D × P × Q`. Cas dégénérés : `temps_requis_min = 0` donne « non calculable » (aucune valeur, aucune exception) ; `temps_marche_min = 0` donne D = P = 0 ; `pieces_produites = 0` donne Q = 0 ; dans ces cas l'OEE vaut 0.
+  - **Niveau 2 (bonus, plafonné à 1 point)** : la partie de temps où un arrêt planifié et un arrêt non planifié se recouvrent est comptée comme planifiée, et les arrêts de même catégorie qui se chevauchent sont fusionnés avant le calcul. Diagramme de Pareto des causes d'arrêt.
+  - **Cas de test d'acceptation** (8, valeurs affichées arrondies à 0,1 point) :
+
+    | # | Entrée | Sortie attendue |
+    |---|---|---|
+    | 1 | quart de 480 min, aucun arrêt ; cycle 30 s ; 900 produites dont 9 rebutées | D 100,0 % ; P 93,8 % (93,75 arrondi vers le haut) ; Q 99,0 % ; OEE 92,8 % |
+    | 2 | quart de 480 min ; pause 30 min ; panne 45 min + changement de série 15 min ; cycle 60 s ; 330 produites dont 33 rebutées | temps requis 450, marche 390 ; D 86,7 % ; P 84,6 % ; Q 90,0 % ; OEE 66,0 % |
+    | 3 | quart du mardi 6 octobre 2026, 06:00 à 14:00 heure de Paris ; panne de 13:30 à 14:30 ; cycle 20 s ; 1 200 produites, 0 rebut | arrêt tronqué à 30 min ; D 93,8 % ; P 88,9 % ; Q 100,0 % ; OEE 83,3 % |
+    | 4 | quart de 480 min, aucun arrêt ; cycle 30 s ; 1 000 produites dont 50 rebutées | temps utile 500 min > 480 : P plafonnée à 100,0 %, `performance_plafonnee` vrai ; Q 95,0 % ; OEE 95,0 % |
+    | 5 | quart de 480 min ; attente matière 60 min ; OF 1 : cycle 30 s, 400 produites dont 4 rebutées ; OF 2 : cycle 45 s, 200 produites dont 20 rebutées | marche 420 ; D 87,5 % ; temps utile 350 min ; P 83,3 % ; Q 96,0 % ; OEE 70,0 % |
+    | 6 | quart de 480 min, dont 480 min d'arrêt planifié | « non calculable », sans exception |
+    | 7 | quart de 480 min ; panne de 480 min ; 0 pièce | D 0,0 % ; P 0,0 % ; Q 0,0 % ; OEE 0,0 % |
+    | 8 | nuit du 24 au 25 octobre 2026, de 22:00 (heure d'été) à 06:00 (heure d'hiver), soit 20:00Z à 05:00Z ; aucun arrêt ; cycle 30 s ; 1 000 produites dont 10 rebutées | durée 540 min ; D 100,0 % ; P 92,6 % ; Q 99,0 % ; OEE 91,7 % |
+
+    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (français, à vérifier : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes. Le cas 8 est le seul test du changement d'heure du thème : il est pertinent ici parce que le temps d'ouverture est une durée réelle.
+- **Première user story et sous-règle isolée (BDD)** : la disponibilité (règles 2 et 3), sans déclaration ni performance, s'écrit comme un scénario `.feature` en français, sans changer les valeurs (cas 2 : quart de 480 min, pause 30 min, panne 45 min, changement de série 15 min) :
+
+    ```gherkin
+    Fonctionnalité: Calcul de la disponibilité d'un quart
+      Scénario: disponibilité avec un arrêt planifié et deux arrêts non planifiés
+        Soit un quart de 480 minutes
+        Et un arrêt planifié "pause" de 30 minutes
+        Et un arrêt non planifié "panne" de 45 minutes
+        Et un arrêt non planifié "changement_serie" de 15 minutes
+        Quand je calcule la disponibilité
+        Alors le temps requis est de 450 minutes
+        Et le temps de marche est de 390 minutes
+        Et la disponibilité affichée est 86,7 %
+    ```
+- **Import/export** : un seul import CSV dans le cœur, celui des déclarations de production (`poste`, `quart_debut_utc`, `numero_of`, `pieces_produites`, `pieces_rebutees`), fichier choisi avec `file_picker` et parseur dans la couche data ; les arrêts se saisissent par formulaire (l'import des arrêts est une extension). Motifs de rejet précis :
+  1. `quantite_invalide` (pièces produites ou rebutées non entières ou négatives) ;
+  2. `declaration_en_double` (même quart et même OF deux fois dans le fichier ou déjà en base) ;
+  3. `poste_inconnu` ;
+  4. `rebuts_superieurs_produites` ;
+  5. `quart_inconnu` (horodatage invalide ou sans quart correspondant), `colonnes_manquantes` ou fichier de plus de 200 Ko.
+
+  Export : TRS par poste et par quart en CSV, avec neutralisation des cellules dangereuses.
+- **Tableau de bord (4 vues)** : (1) OEE par poste et par quart avec D, P et Q ; (2) répartition des minutes d'arrêt par catégorie et par cause (Pareto) ; (3) avancement des OF (pièces bonnes contre quantité lancée) ; (4) arrêts de type `panne` sans `ticket_gmao`, à régulariser.
+- **Contrainte de harnais et piège d'agent** :
+  - Piège : les unités mélangées. L'agent divise des secondes par des minutes sans convertir : la performance est 60 fois trop élevée, puis le plafond à 100 % **masque** l'erreur en affichant partout 100 %. Il peut aussi ajouter des `* 60` ou des `/ 3600` éparpillés. À documenter comme cas d'erreur d'agent (voir @sec-outils-agentiques).
+  - Harnais : règle `CLAUDE.md` « toute durée est en minutes entières (suffixe `Min`), tout temps de cycle en secondes (suffixe `S`), la conversion vit dans `lib/core/unites.dart` » ; test d'architecture (`flutter test`) qui lit les sources des dossiers `domain/` et échoue si les littéraux `60` ou `3600` apparaissent ailleurs que dans `unites.dart` ; `test/acceptance/**` protégé par permissions `deny`, `CODEOWNERS` et la consigne `CLAUDE.md` « un test qui échoue n'est jamais corrigé en modifiant le test » ; hook `PostToolUse` qui lance `flutter test` ; `flutter analyze` dans la CI.
+- **Conformité (RGPD et AI Act)** (voir @sec-conformite) :
+  - *Données traitées* : postes, quarts, déclarations de production, arrêts avec commentaire libre. Une donnée de poste ou de quart devient **personnelle** dès qu'elle permet d'identifier ou d'évaluer un salarié (poste tenu par une seule personne, commentaire nominatif, compte `operateur`). Un TRS par quart peut en pratique évaluer indirectement une équipe ou un opérateur.
+  - *Personnes concernées* : les opérateurs et les responsables de la ligne (comptes utilisateurs, et salariés dont le travail est mesuré).
+  - *Finalité* : mesurer et améliorer le rendement des équipements pendant une campagne. **Pas** l'évaluation individuelle des salariés : cette finalité est exclue de l'énoncé.
+  - *Durée de conservation proposée* : la durée de la campagne de mesure, puis suppression ou agrégation par poste et par semaine (par exemple 3 mois maximum pour les données par quart).
+  - *Ce qui doit rester fictif* : le site, les postes, les produits, les OF, les opérateurs et les tickets GMAO ; aucun export réel d'un MES ou d'un atelier dans le dépôt public.
+  - *Niveau de risque AI Act probable* : **minimal ou hors champ** pour un calcul déterministe. La vigilance porte sur le domaine de l'emploi et de la gestion des travailleurs (annexe III, point 4 du règlement (UE) 2024/1689 : systèmes d'IA destinés à l'attribution de tâches ou à la surveillance et l'évaluation de salariés) : si l'on ajoutait un jour une analyse par IA des performances individuelles, le système pourrait devenir **à haut risque** (à vérifier). **Dialogue social** : en entreprise réelle, la mise en place d'un outil de mesure de l'activité des salariés suppose d'informer et de consulter le CSE (art. L. 2312-38 du Code du travail (à vérifier), moyens de contrôle de l'activité des salariés) : à mentionner dans la fiche comme un point à examiner avant toute mise en usage.
+  - *Mesures concrètes dans l'application* : agrégation par poste et par quart, jamais par personne ; **aucun identifiant d'opérateur n'est stocké dans les données métier** (seul le compte de connexion existe) ; aucun nom dans le commentaire d'arrêt : le contrôle est une **consigne affichée dans le formulaire**, complétée par une **revue en audit croisé** des commentaires de la base de démonstration ; journal technique sans nom ; neutralisation des cellules CSV à l'export ; validation humaine : le TRS est un indicateur d'aide à la décision, pas une sanction automatique. Ces mesures sont incluses dans les 15 à 20 h de charge d'équipe.
+  - *Contenu attendu de la fiche de conformité* : les 13 rubriques du gabarit de `docs/fiche_conformite.md`, avec en particulier la distinction « équipement ou personne » dans les données, le rôle AI Act (fournisseur ou déployeur), la mention du CSE, la durée de conservation ; **présentée au RSSI en S4, v1 déposée en PR dans les deux jours qui suivent, réponse au plus tard une semaine avant S5**. Un « go » ne vaut que pour le périmètre pédagogique à données fictives ; toute mise en usage réel impose une nouvelle fiche et une nouvelle validation.
+- **Sécurité et données** :
+  1. **OWASP, injection** : le champ `commentaire` est du texte libre exporté en CSV : toute cellule commençant par `=`, `+`, `-` ou `@` est préfixée d'une apostrophe à l'export (injection de formule). Toutes les requêtes passent par drift (requêtes typées ou variables liées), jamais par du SQL brut concaténé (`customSelect`, `customStatement`).
+  2. **Aucun secret dans le dépôt** : aucun secret n'est embarqué dans l'application (tout ce qui est dans un build web Flutter est public) ; un fichier `.env` éventuel est ignoré ; `gitleaks` en CI, et un test échoue si un fichier `.env` ou une clé apparaît dans `git ls-files`.
+- **Découpage par séance** (la trame commune est décrite dans la section [-@sec-themes-trame] ; seules les étapes propres au thème B sont données ici) :
+  - S2 : le `PROJET.md` fourni est pré-rempli pour le thème B (vision, 3 à 5 user stories) ; il est à relire et à enrichir, avec le glossaire d'équipe.
+  - S3 : la sous-règle isolée est la disponibilité (règles 2 et 3) sur des entrées simples, sans déclaration ni performance, avec un repository en mémoire (fake). Peut glisser entre S3 et S4 : seed complet, rôles (`responsable`, `operateur`) avec la garde `RequireRole` (couche domain) et test de refus.
+  - S4 : le gardien produit écrit les 8 cas d'acceptation avant le code de l'agent sur les sous-règles restantes. Peut glisser dans le sprint : publication GitHub Pages si elle n'est pas terminée, release v0.1, export CSV.
+  - Sprint final : CRUD postes, quarts, OF, déclarations et arrêts, import CSV des déclarations, quatre vues, cas d'acceptation non encore verts à la fin de S4, README testé à froid, bonus éventuel.
+- **Livrable minimum viable** : quart, déclaration, arrêts, TRS avec les règles 1 à 6 sur le cas nominal et les cas dégénérés, vue 1, CI verte, fiche de conformité déposée et soumise au RSSI. L'import CSV des déclarations fait partie du socle obligatoire ; sans Pareto et sans test du changement d'heure si l'équipe est en retard (mais le cas 8 reste écrit).
+- **Effet « wow » pour la soutenance** : l'équipe importe le CSV de déclarations d'un quart de nuit chaotique, saisit ses arrêts, affiche le TRS et son Pareto, puis le jury modifie une durée d'arrêt : l'OEE et la répartition des pertes changent aussitôt. Le cas du 24 au 25 octobre montre qu'une nuit peut durer 9 heures.
+- **Mini-glossaire** :
+  - **OF** (ordre de fabrication) : instruction de produire une quantité d'un produit sur un poste.
+  - **Gamme** : liste ordonnée des opérations d'un produit avec leurs temps standards, dont le temps de cycle idéal.
+  - **OEE / TRS** : disponibilité × performance × qualité.
+  - **Étalonnage** : vérification et réglage d'un moyen de mesure ou de contrôle par rapport à un étalon ; arrêt planifié dans ce thème.
+  - **GMAO** : logiciel de gestion de la maintenance ; ici une simple référence de ticket dans `ticket_gmao`.
+  - **MES** : système d'exécution de la fabrication, source des événements de production ; ici les fichiers CSV importés.
+  - **CSE** : comité social et économique, instance de représentation du personnel en France (art. L. 2312-38 du Code du travail (à vérifier) pour l'information et la consultation sur les moyens de contrôle de l'activité des salariés).
+
+## Thème C · Vœux de projet : répartir les sujets de projet équitablement {#sec-theme-c}
+
+**En une phrase** : mêmes vœux, même résultat, et chacun sait pourquoi. Quatre-vingts étudiants fictifs, une trentaine de sujets, un seul algorithme.
+
+::: {.callout-warning title="Projet fictif : aucune donnée ni intégration réelle avec Nantes Université"}
+Tous les étudiants sont des pseudonymes (`etu_001`, `etu_002`...), tous les sujets et enseignants sont inventés. Aucune donnée réelle, même partielle, n'entre dans le dépôt.
+:::
+
+- **Pitch** : chaque année, un département fictif de formation d'ingénieurs propose une trentaine de sujets de projet à quatre-vingts étudiants. Chacun classe ses vœux, et la répartition se fait à la main en une soirée, avec des tableurs, des mécontents et aucune explication. Vous construisez l'outil qui répartit les sujets selon des règles connues à l'avance, montre à chaque étudiant pourquoi il a obtenu tel sujet, et à l'équipe pédagogique quels sujets sont trop peu choisis.
+- **Commanditaire (fictif) et besoin** : Gwenaëlle Hérault, responsable des projets d'un département fictif (personnage fictif). Elle veut une répartition **équitable et reproductible** : mêmes vœux, même résultat. Elle veut voir les étudiants non affectés avec le motif, repérer les sujets sous-peuplés, et pouvoir refaire la répartition après correction d'un vœu.
+- **Besoin ponctuel** :
+  - *Pourquoi un outil de courte durée de vie suffit* : la répartition a lieu une fois par an, en quelques jours. L'outil sert le temps d'une campagne de vœux, puis il est archivé jusqu'à l'année suivante (où l'on repart d'un nouveau dépôt ou d'une base vidée).
+  - *Ce qui reste obligatoire même pour un outil jetable* : l'algorithme testé et déterministe, l'explication individuelle de chaque résultat, la protection des données (la plus sensible des trois thèmes), la validation humaine de la répartition avant publication, et un README pour relancer l'outil.
+  - *Désactivation et archivage* : après la publication des résultats et le délai de réclamation (par exemple 30 jours), suppression des vœux et des rangs ; seules des statistiques agrégées (satisfaction par vœu) peuvent être conservées. Le service est arrêté.
+- **Données manipulées** :
+  - Entités (5) : `enseignant` (pseudonyme), `sujet` (titre, enseignant, capacite_min, capacite_max, parcours_requis facultatif), `etudiant` (pseudonyme, rang, parcours), `voeu` (etudiant, sujet, ordre), `affectation` (etudiant, sujet, ordre_du_voeu_obtenu, motif si non affecté).
+  - Relations : un étudiant a 3 à 5 vœux ordonnés vers des sujets distincts ; un sujet a un enseignant ; une affectation lie un étudiant à un sujet ou porte un motif de non-affectation. `rang` est un classement fictif et unique (1 = prioritaire). `parcours` prend les valeurs `robotique`, `vision` ou `systemes`.
+  - Volumes : 80 étudiants, 30 sujets, 10 enseignants, environ 400 vœux.
+  - Seed : script à graine fixe ; pseudonymes numérotés, titres de sujets fictifs, jamais de vrais noms ni de vraie liste de classement.
+- **Rôles applicatifs** : `gestionnaire` (importe, lance la répartition, corrige) et `etudiant` (lit uniquement son propre vœu et son propre résultat).
+- **Rôles dans l'équipe** (la charge du projet ne change pas) :
+  - *3 membres* : **gardien produit et conformité** (`PROJET.md`, cas d'acceptation, fiche de conformité, explication des décisions) ; **gardien des données** (modèle, migrations, seed fictif, import CSV, scan des données réelles) ; **gardien du harnais et de la CI** (`CLAUDE.md`, hooks, permissions, test de scan, GitHub Actions).
+  - *4 membres* : les trois rôles ci-dessus, avec un **gardien conformité** distinct (fiche, art. 22 RGPD, AI Act, contact avec le RSSI).
+  - *5 membres* : les quatre rôles, plus un **gardien de la démonstration** (README testé à froid, jeu de 80 étudiants fictifs, scénario du « wow »).
+  - Dans tous les cas, chacun relit au moins une PR d'un autre.
+- **MVP** (5 user stories à piocher) :
+  1. En tant que gestionnaire, je crée les sujets avec leurs capacités.
+  2. J'importe les étudiants (pseudonymes, rang, parcours) et leurs vœux.
+  3. Je lance la répartition et j'obtiens les affectations.
+  4. Je vois pour chaque étudiant non affecté le motif précis.
+  5. En tant qu'étudiant, je consulte mon résultat et le rang du vœu obtenu.
+  - **Pour aller plus loin** : (1) un second tour pour les sujets sous-peuplés (voir niveau 2) ; (2) simulation « et si ce vœu changeait ? » ; (3) export du résultat par sujet pour l'enseignant ; (4) import CSV des sujets (`titre`, `enseignant`, `capacite_min`, `capacite_max`, `parcours_requis`), avec le motif `capacite_incoherente` (`capacite_min` supérieur à `capacite_max`, ou nul).
+- **Règle métier « clou »** : fonction pure Dart `repartir(sujets, etudiants, voeux)` (couche domain).
+  - **Niveau 1 (obligatoire, ≈ 3 h)** : ordre d'application des sous-règles.
+    1. **Validation préalable** (bornes) : chaque étudiant a de **3 à 5 vœux inclus**, distincts, vers des sujets existants. Moins de 3 vœux : l'étudiant n'est pas traité et reçoit le motif `voeux_insuffisants`. Plus de 5 : de même, l'étudiant n'est pas traité et reçoit le motif `trop_de_voeux` (les autres étudiants sont traités normalement). Seul `rang_en_double` bloque tout : deux étudiants de même rang provoquent une erreur globale et la répartition ne démarre pas.
+    2. **Priorité** : les étudiants sont traités par rang croissant (1 d'abord). Le rang est le seul critère de départage.
+    3. **Filtre de parcours** : si un sujet a un `parcours_requis`, il est ignoré pour tout étudiant d'un autre parcours (le vœu est écarté, sans être compté comme complet et sans erreur).
+    4. **Capacité** : chaque étudiant reçoit son vœu de plus petit `ordre` dont le sujet a encore une place libre (effectif < `capacite_max`).
+    5. **Non-affectation** : si aucun vœu n'est satisfiable, l'étudiant reçoit le motif `tous_voeux_complets` (vœux compatibles avec son parcours, mais tous complets) ; si tous ses vœux sont écartés par le filtre de parcours, il reçoit le motif `aucun_voeu_compatible`.
+    6. **Statut de sujet** : après répartition, un sujet est `confirme` si son effectif est ≥ `capacite_min` (borne incluse), `sous_effectif` s'il est inférieur (y compris 0).
+  - **Niveau 2 (bonus, plafonné à 1 point)** : un second tour unique : les sujets `sous_effectif` sont fermés ; leurs étudiants et les non-affectés rejouent, dans l'ordre des rangs, avec les places restantes des sujets confirmés.
+  - **Jeu de référence du cas 1** :
+
+    | sujet | capacite_min | capacite_max | parcours_requis |
+    |---|---|---|---|
+    | J1 | 1 | 1 | aucun |
+    | J2 | 1 | 2 | aucun |
+    | J3 | 1 | 1 | robotique |
+    | J4 | 2 | 2 | aucun |
+
+    | étudiant | rang | parcours | vœux dans l'ordre |
+    |---|---|---|---|
+    | etu_001 | 1 | robotique | J1, J2, J3 |
+    | etu_002 | 2 | robotique | J1, J3, J2 |
+    | etu_003 | 3 | vision | J3, J1, J4 |
+    | etu_004 | 4 | vision | J1, J3, J2 |
+    | etu_005 | 5 | vision | J2, J4 |
+
+  - **Cas de test d'acceptation** (7) :
+
+    | # | Entrée | Sortie attendue |
+    |---|---|---|
+    | 1 | jeu de référence ci-dessus | etu_001 : J1 (vœu 1) ; etu_002 : J3 (vœu 2) ; etu_003 : J4 (vœu 3, J3 ignoré pour son parcours) ; etu_004 : J2 (vœu 3) ; etu_005 : non affecté, `voeux_insuffisants`. Statuts : J1, J2, J3 `confirme` ; J4 `sous_effectif` (1 sur 2) |
+    | 2 | J5 (capacité 1) est le vœu 1 de etu_010 (rang 7) et de etu_011 (rang 6) ; J6 (capacité 2) est leur vœu 2 | etu_011 obtient J5 ; etu_010 obtient J6 (vœu 2) |
+    | 3 | étudiant du parcours vision, vœux J3 (parcours_requis robotique, libre), J1 (libre), J2 | affecté à J1 (vœu 2) : J3 est sauté malgré ses places libres |
+    | 4 | trois étudiants ayant respectivement 3, 2 et 6 vœux | 3 vœux : traité ; 2 vœux : non traité, `voeux_insuffisants` ; 6 vœux : non traité, `trop_de_voeux` ; aucune erreur globale, la répartition a lieu pour les autres étudiants |
+    | 5 | étudiant de rang 9, vœux J1, J2, J3, tous déjà à capacité maximale | non affecté, `tous_voeux_complets`. Second jeu : étudiant de parcours vision dont les 3 vœux sont des sujets de parcours robotique : non affecté, `aucun_voeu_compatible` |
+    | 6 | deux sujets de `capacite_min` 2 : l'un avec 2 étudiants, l'autre avec 1 | le premier `confirme` (borne incluse), le second `sous_effectif` |
+    | 7 | deux étudiants de rang 3 | erreur `rang_en_double`, aucune affectation produite |
+
+    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (français, à vérifier : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes.
+- **Première user story et sous-règle isolée (BDD)** : la priorité par rang (règle 2), sur des entrées simples sans capacité ni filtre de parcours, s'écrit comme un scénario `.feature` en français, sans changer les valeurs (rangs du cas 2 : etu_010 de rang 7, etu_011 de rang 6) :
+
+    ```gherkin
+    Fonctionnalité: Répartition des sujets
+      Scénario: les étudiants sont traités par rang croissant
+        Soit un étudiant "etu_010" de rang 7
+        Et un étudiant "etu_011" de rang 6
+        Quand je lance la répartition
+        Alors "etu_011" est traité avant "etu_010"
+    ```
+- **Import/export** : un seul import CSV dans le cœur, celui des étudiants et de leurs vœux (CSV séparé par virgule, une ligne par étudiant : `pseudonyme`, `rang`, `parcours`, `voeux`, champ entre guillemets, titres de sujets séparés par `|` dans l'ordre), avec rapport ligne par ligne (fichier choisi avec `file_picker`, parseur dans la couche data) ; les sujets se créent par formulaire (leur import est une extension). Motifs de rejet précis :
+  1. `pseudonyme_invalide` (format différent de `etu_` suivi de trois chiffres : tout nom, courriel ou identifiant réel est refusé) ;
+  2. `rang_en_double` ;
+  3. `sujet_inconnu` (vœu vers un sujet inexistant) ;
+  4. `voeu_en_double` (même sujet deux fois pour un étudiant) ;
+  5. `parcours_inconnu` (hors de `robotique`, `vision` et `systemes`) ou `colonnes_manquantes` ; tout fichier de plus de 200 Ko ou d'un type autre que CSV est refusé.
+
+  Export : répartition en CSV (pseudonyme, sujet, ordre du vœu obtenu) et sauvegarde JSON.
+- **Tableau de bord (4 vues)** : (1) remplissage des sujets (effectif, capacités, statut) ; (2) « mon résultat » pour l'étudiant (sujet obtenu, rang du vœu, explication) ; (3) non-affectés par motif ; (4) répartition de la satisfaction (combien ont obtenu leur 1er, 2e, 3e vœu ou plus).
+- **Contrainte de harnais et piège d'agent** :
+  - Piège : les données réelles collées. Pour « rendre les tests réalistes », l'agent colle une vraie liste de classement, des noms d'étudiants ou de vrais courriels trouvés dans un document ou en ligne. Une fois commités dans un dépôt public, ils ne se retirent plus. À documenter comme cas d'erreur d'agent (voir @sec-outils-agentiques).
+  - Harnais : règle `CLAUDE.md` « aucune donnée réelle, tous les étudiants sont `etu_NNN` » ; test Dart (`flutter test`) qui scanne les fichiers versionnés (`git ls-files`) et échoue si un fichier `.csv`, `.xlsx` ou `.json` de données se trouve hors de `seed/`, ou si une adresse de courriel apparaît dans `seed/` ou `test/` ; tout asset déclaré dans `pubspec.yaml` part dans le build web public, donc seul le seed fictif peut y figurer ; dossier `data/local/` ignoré par git pour les essais ; permissions `deny` sur `test/acceptance/**` (plus `CODEOWNERS` et la consigne `CLAUDE.md` « un test qui échoue n'est jamais corrigé en modifiant le test ») et hook `PostToolUse` qui lance `flutter test` ; le test de scan et `gitleaks` tournent aussi dans la CI.
+- **Conformité (RGPD et AI Act)** (voir @sec-conformite) :
+  - *Données traitées* : pseudonymes d'étudiants, rang (classement), parcours, vœux, affectations et motifs de non-affectation. Dans un cas réel, le rang et les vœux sont des **données personnelles** (et le rang peut révéler des résultats scolaires) ; la table de correspondance pseudonyme-identité resterait hors application.
+  - *Personnes concernées* : les étudiants (et, à un degré moindre, les enseignants).
+  - *Finalité* : affecter des sujets de projet selon des règles connues à l'avance et expliquer chaque résultat. Aucune réutilisation du rang ou des vœux pour un autre usage (orientation, notation, prédiction).
+  - *Durée de conservation proposée* : jusqu'à la fin du délai de réclamation après publication (par exemple 30 jours) ; ensuite suppression des vœux et des rangs, conservation éventuelle de statistiques agrégées.
+  - *Ce qui doit rester fictif* : tous les étudiants (`etu_NNN`), les rangs, les sujets, les enseignants et le département ; jamais de vraie liste, même partielle ; jamais de courriel.
+  - *Niveau de risque AI Act probable* : **domaine de l'éducation et de la formation professionnelle, à discuter** : l'annexe III, point 3 du règlement (UE) 2024/1689 cite notamment les systèmes d'IA destinés à déterminer l'accès, l'admission ou l'**affectation** de personnes à des établissements ou à des formations. L'affectation à un sujet de projet interne n'est pas forcément l'affectation visée par le texte, et un algorithme purement déterministe n'est peut-être pas un « système d'IA » au sens de l'art. 3, point 1 : c'est précisément le point à discuter avec le RSSI (à vérifier). La prudence consiste à traiter l'outil **comme s'il était à haut risque** dans la démarche (transparence, supervision humaine, journalisation, explication) : c'est une **démarche de précaution pédagogique, pas une qualification juridique**.
+  - *RGPD, décision automatisée* : l'art. 22 donne à la personne le droit de ne pas faire l'objet d'une décision fondée exclusivement sur un traitement automatisé produisant des effets juridiques ou l'affectant de manière significative, et de demander une intervention humaine, d'exprimer son point de vue et de contester la décision (à vérifier selon l'effet réel d'un sujet de projet). L'information sur la « logique sous-jacente » relève des art. 13(2)(f), 14(2)(g) et 15(1)(h), les garanties de l'art. 22(3) (intervention humaine, point de vue, contestation) et l'explication individuelle du considérant 71. La validation humaine effective du gestionnaire avant publication est ce qui peut écarter la qualification de décision exclusivement automatisée (à vérifier, et à faire discuter par le RSSI ou le DPO). D'où le dispositif ci-dessous.
+  - *Mesures concrètes dans l'application* : pseudonymisation de bout en bout ; journal technique **sans pseudonyme ni vœu** ; **explication de la décision** pour chaque étudiant (vue « mon résultat » : quel vœu, pourquoi les précédents n'ont pas été obtenus, règle appliquée) ; **validation humaine** obligatoire par le gestionnaire avant publication : un **champ de statut `brouillon` / `publie`** du résultat est obligatoire, la correction d'un vœu et la nouvelle répartition restant possibles en extension ; motif de non-affectation toujours affiché ; règles publiées avant la collecte des vœux (une page statique suffit). Ces mesures sont incluses dans les 15 à 20 h de charge d'équipe ; le thème C demande davantage de travail de conformité que A et B.
+  - *Contenu attendu de la fiche de conformité* : les 13 rubriques du gabarit de `docs/fiche_conformite.md`, avec en particulier l'analyse art. 22, le niveau de risque AI Act argumenté avec ses réserves, le rôle AI Act (fournisseur ou déployeur), la durée de conservation des vœux et des rangs ; **présentée au RSSI (et au DPO) en S4, v1 déposée en PR dans les deux jours qui suivent, réponse au plus tard une semaine avant S5**. Un « go » ne vaut que pour le périmètre pédagogique à données fictives ; toute mise en usage réel impose une nouvelle fiche et une nouvelle validation.
+- **Sécurité et données** :
+  1. **OWASP, envoi de fichier non maîtrisé** : le CSV envoyé est limité à 200 Ko, vérifié par extension et contenu (UTF-8 texte), lu en mémoire (octets fournis par `file_picker`, à vérifier selon la plateforme) et jamais enregistré sous le nom fourni par l'utilisateur ; le nom de fichier n'est jamais utilisé comme chemin.
+  2. **Minimisation et données fictives** : uniquement des pseudonymes, aucun texte libre ; les journaux n'écrivent ni pseudonyme ni vœu ; la correspondance entre pseudonyme et identité réelle, s'il en fallait une, resterait hors application et hors dépôt.
+- **Découpage par séance** (la trame commune est décrite dans la section [-@sec-themes-trame] ; seules les étapes propres au thème C sont données ici) :
+  - S2 : le `PROJET.md` fourni est pré-rempli pour le thème C (vision, 3 à 5 user stories) ; il est à relire et à enrichir. Le `CLAUDE.md` minimal porte la règle « aucune donnée réelle ».
+  - S3 : la sous-règle isolée est la priorité par rang (règle 2), sur des entrées simples sans capacité ni filtre de parcours, avec un repository en mémoire (fake). Peut glisser entre S3 et S4 : seed complet, rôles (`gestionnaire`, `etudiant`) avec la garde `RequireRole` (couche domain) et test de refus.
+  - S4 : le gardien produit écrit les 7 cas d'acceptation avant le code de l'agent sur les sous-règles restantes ; contrôle du téléversement ; analyse de l'art. 22. Peut glisser dans le sprint : publication GitHub Pages si elle n'est pas terminée, release v0.1.
+  - Sprint final : CRUD sujets et étudiants, import CSV des étudiants et de leurs vœux, quatre vues, cas d'acceptation non encore verts à la fin de S4, explications par étudiant, README testé à froid, bonus éventuel.
+- **Livrable minimum viable** : création des sujets, import des étudiants et de leurs vœux, répartition avec les règles 1 à 5, affichage des affectations et des motifs, explication par étudiant, rôles de base, statut `brouillon` / `publie`, CI verte, fiche de conformité déposée et soumise au RSSI. Sans statut de sujet, sans vue de satisfaction ni export.
+- **Effet « wow » pour la soutenance** : l'équipe répartit 80 étudiants en quelques secondes, puis le jury change le rang de deux étudiants : le résultat change et l'outil explique pourquoi chacun a obtenu son sujet. L'écran des sujets `sous_effectif` montre ce qu'il resterait à arbitrer.

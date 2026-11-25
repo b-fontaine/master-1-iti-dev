@@ -1,0 +1,7 @@
+<!-- source: nouveau · synchro: 2026-11-25 -->
+
+# Le projet fil rouge et la conformité {.unnumbered}
+
+Cette partie présente le projet que chaque équipe construit tout au long de la formation : trois thèmes au choix (@sec-themes), avec leur règle métier, leurs données et leurs cas d'acceptation, puis le chapitre sur la conformité (@sec-conformite) : RGPD, règlement européen sur l'IA et fiche de conformité soumise au RSSI.
+
+Les textes de loi et les calendriers évoluent : les points marqués « à vérifier » sont à confirmer sur les sources officielles citées en fin de chapitre.

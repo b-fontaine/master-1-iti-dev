@@ -1,0 +1,22 @@
+% Préambule LaTeX du livre (LuaLaTeX, KOMA-Script scrbook)
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,breakanywhere,commandchars=\\\{\}}
+\fvset{breaklines=true,breakanywhere=true}
+\usepackage{xurl}
+\Urlmuskip=0mu plus 1mu
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\small}
+\setlength{\emergencystretch}{3em}
+\raggedbottom
+% Un caractère absent des polices fait échouer la compilation
+\tracinglostchars=3
+\publishers{Master ITI · Nantes Université · édition 2026-2027}
+% Version et date : définies par _version.yml (scripts/ecrire-version.sh), valeurs de repli ici
+\providecommand{\versionlivre}{de travail}
+\providecommand{\datelivre}{non publiée}
+\uppertitleback{\small Version \versionlivre{} du \datelivre.\par\medskip © 2025-2026 Benoît Fontaine. Tous droits réservés.\par\medskip Aucune autorisation d'utilisation, de copie, de modification ou de diffusion n'est accordée sans l'accord écrit de l'auteur.}
+% Table des matières : marge droite élargie pour que les titres longs ne touchent pas les numéros de page
+\makeatletter
+\renewcommand*{\@pnumwidth}{2em}
+\renewcommand*{\@tocrmarg}{3.2em}
+\makeatother

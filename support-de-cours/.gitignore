@@ -1,0 +1,10 @@
+_book/
+.quarto/
+*_files/
+/.cover.html
+
+/.quarto/
+**/*.quarto_ipynb
+
+/index.*
+!/index.qmd

@@ -1,0 +1,167 @@
+# Compile le livre support-de-cours/ (PDF et EPUB).
+# - Pull request : vérification complète, fichiers téléchargeables en artefact.
+# - Fusion dans main : calcul de la version (scripts/version-suivante.sh),
+#   tag livre-vX.Y.Z et release GitHub avec le PDF et l'EPUB.
+name: Livre (PDF et EPUB)
+
+on:
+  pull_request:
+    paths:
+      - "support-de-cours/**"
+      - ".github/workflows/livre.yml"
+  push:
+    branches: [main]
+    paths:
+      - "support-de-cours/**"
+      - ".github/workflows/livre.yml"
+  workflow_dispatch:
+
+# Une seule compilation à la fois par branche ; sur main, les publications
+# s'enchaînent sans s'annuler pour que chaque fusion ait sa version.
+concurrency:
+  group: livre-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  QUARTO_VERSION: "1.8.26"
+  NOM_FICHIER: ingenierie-logicielle-ia-agentique
+
+jobs:
+  livre:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: write # création du tag et de la release
+    steps:
+      - name: Récupérer le dépôt (historique et tags complets)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Tester le calcul de version
+        run: bash support-de-cours/scripts/test-version-suivante.sh
+
+      - name: Calculer la version
+        id: version
+        env:
+          EVENEMENT: ${{ github.event_name }}
+          REF: ${{ github.ref }}
+          NUMERO_PR: ${{ github.event.pull_request.number }}
+        run: |
+          set +e
+          suivante="$(bash support-de-cours/scripts/version-suivante.sh)"
+          code=$?
+          set -e
+          dernier="$(bash support-de-cours/scripts/version-suivante.sh --tag)"
+          courte="$(git rev-parse --short HEAD)"
+          publier=false
+          if [ "$code" = 3 ]; then
+            # Aucun commit ne touche le livre depuis le dernier tag : pas de release.
+            version="${dernier#livre-v}"
+            version="${version:-0.0.0}+${courte}"
+          elif [ "$code" != 0 ]; then
+            echo "Échec du calcul de version (code $code)" >&2; exit "$code"
+          elif [ "$EVENEMENT" = pull_request ]; then
+            version="${suivante}-pr.${NUMERO_PR}"
+          elif [ "$REF" = refs/heads/main ]; then
+            version="$suivante"; publier=true
+          else
+            version="${suivante}-dev.${courte}"
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "publier=$publier" >> "$GITHUB_OUTPUT"
+          echo "Version : $version (publication : $publier)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Installer Quarto et TinyTeX
+        uses: quarto-dev/quarto-actions/setup@v2
+        env:
+          # Quarto interroge l'API GitHub pour trouver TinyTeX : sans jeton,
+          # la limite de requêtes anonymes du runner provoque un refus 403.
+          GH_TOKEN: ${{ github.token }}
+        with:
+          version: ${{ env.QUARTO_VERSION }}
+          tinytex: true
+
+      - name: Installer les paquets TeX et les polices
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q fonts-dejavu poppler-utils
+          tlmgr="$(command -v tlmgr || ls "$HOME"/.TinyTeX/bin/*/tlmgr | head -n 1)"
+          "$tlmgr" --version
+          # tlmgr refuse d'installer tant qu'il n'est pas à jour
+          "$tlmgr" update --self
+          "$tlmgr" install fvextra xurl tex-gyre koma-script
+
+      # Les schémas Mermaid sont rendus par Chrome via le protocole DevTools.
+      # Avec le Chrome complet du runner, le rendu reste figé au premier schéma :
+      # on fournit à Quarto chrome-headless-shell, le binaire prévu pour
+      # l'automatisation (QUARTO_CHROMIUM).
+      - name: Installer chrome-headless-shell pour les schémas
+        run: |
+          npx --yes @puppeteer/browsers@2 install chrome-headless-shell@stable \
+            --path "$RUNNER_TEMP/chrome"
+          chs="$(find "$RUNNER_TEMP/chrome" -type f -name chrome-headless-shell | head -n 1)"
+          "$chs" --version
+          echo "QUARTO_CHROMIUM=$chs" >> "$GITHUB_ENV"
+
+      - name: Tester le rendu d'un schéma (échec rapide en cas de blocage)
+        timeout-minutes: 4
+        run: |
+          mkdir -p "$RUNNER_TEMP/essai"
+          cd "$RUNNER_TEMP/essai"
+          printf -- '---\ntitle: Essai\n---\n\n```{mermaid}\nflowchart LR\n  A --> B\n```\n' > essai.qmd
+          timeout 180 quarto render essai.qmd --to epub --log-level debug
+          ls -l
+
+      - name: Inscrire la version dans le livre
+        run: |
+          bash support-de-cours/scripts/ecrire-version.sh \
+            "${{ steps.version.outputs.version }}" "$(git log -1 --format=%cs)"
+
+      - name: Vérifier et compiler (PDF et EPUB)
+        timeout-minutes: 20
+        run: bash support-de-cours/scripts/verifier.sh
+
+      - name: Nommer les fichiers
+        id: fichiers
+        run: |
+          base="${NOM_FICHIER}-v${{ steps.version.outputs.version }}"
+          mkdir -p dist
+          cp support-de-cours/_book/*.pdf "dist/${base}.pdf"
+          cp support-de-cours/_book/*.epub "dist/${base}.epub"
+          pages="$(pdfinfo "dist/${base}.pdf" | awk '/^Pages:/ {print $2}')"
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+          echo "PDF : ${pages} pages" >> "$GITHUB_STEP_SUMMARY"
+          ls -l dist
+
+      - name: Déposer les fichiers en artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.fichiers.outputs.base }}
+          path: dist/
+          retention-days: 30
+
+      - name: Publier la release
+        if: steps.version.outputs.publier == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          date_fr="$(sed -n 's/^version-date: "\(.*\)"$/\1/p' support-de-cours/_version.yml)"
+          {
+            echo "Support de cours « Ingénierie logicielle à l'ère de l'IA agentique », version ${VERSION} du ${date_fr}."
+            echo
+            echo "- **PDF** : à imprimer (A4 recto verso, marge de reliure)."
+            echo "- **EPUB** : pour liseuse."
+            echo
+            echo "## Changements"
+            echo
+            bash support-de-cours/scripts/version-suivante.sh --notes
+          } > notes.md
+          gh release create "livre-v${VERSION}" dist/* \
+            --target "$GITHUB_SHA" \
+            --title "Livre v${VERSION}" \
+            --notes-file notes.md

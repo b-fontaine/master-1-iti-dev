@@ -130,3 +130,5 @@ Les documents suivants complètent ce programme et sont tenus à disposition :
 - [Annexe 1 · Programme détaillé séance par séance](cours/programme-detaille.md)
 - [Annexe 2 · Énoncés des trois thèmes de projet](cours/projets/themes.md)
 - [Annexe 3 · Module RGPD et règlement européen sur l'IA](cours/conformite-ai-act-rgpd.md)
+
+Le **support de cours** (livre PDF et EPUB, qui reprend ces annexes, les supports et les diaporamas) se trouve dans `support-de-cours/` ; `task book` le compile (voir `support-de-cours/README.md`).

@@ -24,3 +24,28 @@ tasks:
     dir: cours/presentations
     cmds:
       - npm run themes -- {{.CLI_ARGS}}
+
+  book:
+    desc: Compile le support de cours (PDF et EPUB) dans support-de-cours/_book/
+    cmds:
+      - quarto render support-de-cours
+
+  book:pdf:
+    desc: Compile le support de cours en PDF seul
+    cmds:
+      - quarto render support-de-cours --to pdf
+
+  book:epub:
+    desc: Compile le support de cours en EPUB seul
+    cmds:
+      - quarto render support-de-cours --to epub
+
+  book:test:
+    desc: Teste le calcul de version du livre
+    cmds:
+      - bash support-de-cours/scripts/test-version-suivante.sh
+
+  book:check:
+    desc: Vérifie le support de cours (interdits, sources, rendu PDF et EPUB)
+    cmds:
+      - bash support-de-cours/scripts/verifier.sh
