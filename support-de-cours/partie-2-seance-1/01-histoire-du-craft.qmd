@@ -1,0 +1,5 @@
+<!-- source: cours/supports/day-1/01-histoire-detaillee-du-craft.md · synchro: 2026-11-25 -->
+
+# Histoire du craft logiciel {#sec-histoire-craft}
+
+Chapitre en cours d'adaptation.

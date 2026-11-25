@@ -1,0 +1,5 @@
+<!-- source: cours/supports/day-1/05-pratique-craft-flutter.md · synchro: 2026-11-25 -->
+
+# Pratiquer le craft avec Flutter {#sec-pratique-craft-flutter}
+
+Chapitre en cours d'adaptation.

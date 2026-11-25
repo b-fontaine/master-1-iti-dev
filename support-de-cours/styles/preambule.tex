@@ -1,0 +1,13 @@
+% Préambule LaTeX du livre (LuaLaTeX, KOMA-Script scrbook)
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,breakanywhere,commandchars=\\\{\}}
+\fvset{breaklines=true,breakanywhere=true}
+\usepackage{xurl}
+\Urlmuskip=0mu plus 1mu
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\small}
+\setlength{\emergencystretch}{3em}
+\raggedbottom
+% Un caractère absent des polices fait échouer la compilation
+\tracinglostchars=3
+\publishers{Master ITI · Nantes Université · édition 2026-2027}

@@ -1,0 +1,30 @@
+<!-- source: nouveau · synchro: 2026-11-25 -->
+
+# Avant-propos {.unnumbered}
+
+Ce livre accompagne la formation « Créer avec l'IA, dialoguer avec les développeurs », proposée en Master ITI à Nantes Université (édition 2026-2027). Il regroupe, dans un ordre de lecture continu, le programme, les supports de chaque séance, les trois thèmes du projet fil rouge et le module de conformité (RGPD et règlement européen sur l'IA).
+
+## À qui s'adresse ce livre
+
+- Les **étudiants** de la formation : le livre prolonge les séances et se relit entre elles.
+- Les **responsables pédagogiques** et les collègues qui veulent juger du contenu, du rythme et de l'évaluation.
+- Les **lecteurs autonomes** qui souhaitent refaire le projet seuls ou à deux, sans encadrant.
+
+## Trois parcours de lecture
+
+1. **Étudiant** : la partie I (programme), puis les parties de séance dans l'ordre, en gardant les fiches pratiques en annexe sous la main.
+2. **Responsable pédagogique** : la partie I, le chapitre sur la conformité et les pages d'annonce des séances à venir.
+3. **Lecteur autonome** : le chapitre « Suivre le parcours en autonome » (@sec-parcours-autonome), puis les séances dans l'ordre.
+
+## Réserves
+
+- Ce livre a été rédigé avec l'assistance d'outils d'IA, puis relu.
+- Certains points n'ont pas pu être vérifiés ; ils sont signalés dans les chapitres concernés.
+- Les outils décrits évoluent vite : l'état des outils est daté dans chaque chapitre qui en parle.
+- Les séances 3 à 5 sont annoncées ; leurs chapitres paraîtront dans une prochaine édition.
+
+## Édition et licence
+
+Édition 2026-2027, version du 25 novembre 2026.
+
+© 2025-2026 Benoît Fontaine. Tous droits réservés. Aucune autorisation d'utilisation, de copie, de modification ou de diffusion n'est accordée sans l'accord écrit de l'auteur ; le texte complet figure dans le fichier `LICENSE` du dépôt.

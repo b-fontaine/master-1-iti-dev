@@ -1,0 +1,5 @@
+<!-- source: README.md, glossaires des chapitres · synchro: 2026-11-25 -->
+
+# Glossaire {#sec-glossaire}
+
+Chapitre en cours d'adaptation.

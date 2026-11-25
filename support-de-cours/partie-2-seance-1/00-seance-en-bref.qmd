@@ -1,0 +1,5 @@
+<!-- source: cours/presentations/day-1/index.html, cours/presentations/day-1/notes.html · synchro: 2026-11-25 -->
+
+# La séance en bref {#sec-s1-en-bref}
+
+Chapitre en cours d'adaptation.

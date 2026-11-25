@@ -1,0 +1,5 @@
+<!-- source: cours/supports/day-1/09-design-patterns.md · synchro: 2026-11-25 -->
+
+# Design patterns {#sec-design-patterns}
+
+Chapitre en cours d'adaptation.

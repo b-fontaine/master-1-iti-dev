@@ -1,0 +1,5 @@
+<!-- source: nouveau · synchro: 2026-11-25 -->
+
+# Séance 2 · Git, configurer son assistant, lancer le projet {.unnumbered}
+
+Page de partie.

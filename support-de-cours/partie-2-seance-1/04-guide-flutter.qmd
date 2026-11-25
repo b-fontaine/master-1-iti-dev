@@ -1,0 +1,5 @@
+<!-- source: cours/supports/day-1/04-guide-flutter.md · synchro: 2026-11-25 -->
+
+# Guide Flutter {#sec-guide-flutter}
+
+Chapitre en cours d'adaptation.

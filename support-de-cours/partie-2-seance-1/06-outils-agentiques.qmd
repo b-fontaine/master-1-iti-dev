@@ -1,0 +1,5 @@
+<!-- source: cours/supports/day-1/06-outils-developpement-agentique.md · synchro: 2026-11-25 -->
+
+# Outils de développement agentique {#sec-outils-agentiques}
+
+Chapitre en cours d'adaptation.

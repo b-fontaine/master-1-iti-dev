@@ -1,0 +1,5 @@
+<!-- source: cours/programme-detaille.md · synchro: 2026-11-25 -->
+
+# Séance 3 · Première règle métier, données et RGPD {#sec-s3}
+
+Chapitre en cours d'adaptation.

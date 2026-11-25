@@ -1,0 +1,5 @@
+<!-- source: cours/programme-detaille.md · synchro: 2026-11-25 -->
+
+# Séance 4 · Qualité, sécurité et règlement européen sur l'IA {#sec-s4}
+
+Chapitre en cours d'adaptation.

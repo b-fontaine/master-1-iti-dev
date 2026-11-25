@@ -1,0 +1,7 @@
+body { font-family: serif; line-height: 1.45; }
+h1, h2, h3 { font-family: sans-serif; line-height: 1.2; }
+pre, code { font-family: monospace; font-size: 0.85em; }
+pre { white-space: pre-wrap; word-wrap: break-word; padding: 0.5em; background: #f4f4f4; }
+table { border-collapse: collapse; font-size: 0.9em; }
+th, td { border: 1px solid #bbb; padding: 0.25em 0.5em; vertical-align: top; }
+blockquote { margin-left: 1em; padding-left: 0.8em; border-left: 3px solid #bbb; }

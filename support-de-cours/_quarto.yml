@@ -1,0 +1,78 @@
+project:
+  type: book
+  output-dir: _book
+
+lang: fr
+
+book:
+  title: "Ingénierie logicielle à l'ère de l'IA agentique"
+  subtitle: "Créer avec l'IA, dialoguer avec les développeurs"
+  author: "Benoît Fontaine"
+  date: "2026-11-25"
+  date-format: "D MMMM YYYY"
+  cover-image: images/couverture.png
+  chapters:
+    - index.qmd
+    - part: partie-1-formation/index.qmd
+      chapters:
+        - partie-1-formation/01-programme.qmd
+        - partie-1-formation/02-programme-detaille.qmd
+        - partie-1-formation/03-parcours-autonome.qmd
+    - part: partie-2-seance-1/index.qmd
+      chapters:
+        - partie-2-seance-1/00-seance-en-bref.qmd
+        - partie-2-seance-1/01-histoire-du-craft.qmd
+        - partie-2-seance-1/02-histoire-de-l-ia.qmd
+        - partie-2-seance-1/03-craft-depuis-l-ia.qmd
+        - partie-2-seance-1/04-guide-flutter.qmd
+        - partie-2-seance-1/05-pratique-craft-flutter.qmd
+        - partie-2-seance-1/06-outils-agentiques.qmd
+        - partie-2-seance-1/07-edge-ai-flutter.qmd
+        - partie-2-seance-1/08-ci-cd-devops.qmd
+        - partie-2-seance-1/09-design-patterns.qmd
+    - part: partie-3-seance-2/index.qmd
+      chapters:
+        - partie-3-seance-2/00-seance-en-bref.qmd
+        - partie-3-seance-2/01-git-pas-a-pas.qmd
+        - partie-3-seance-2/02-configurer-claude-code.qmd
+        - partie-3-seance-2/03-demarrer-le-projet.qmd
+    - part: partie-4-projet/index.qmd
+      chapters:
+        - partie-4-projet/01-themes.qmd
+        - partie-4-projet/02-conformite.qmd
+    - part: "Séance 3 · Première règle métier, données et RGPD"
+      chapters:
+        - partie-5-a-venir/seance-3.qmd
+    - part: "Séance 4 · Qualité, sécurité et règlement européen sur l'IA"
+      chapters:
+        - partie-5-a-venir/seance-4.qmd
+    - part: "Séance 5 · Retouches finales et soutenance"
+      chapters:
+        - partie-5-a-venir/seance-5.qmd
+  appendices:
+    - annexes/a-fiches-pratiques.qmd
+    - annexes/b-glossaire.qmd
+
+format:
+  pdf:
+    documentclass: scrbook
+    classoption: [twoside, BCOR=12mm, DIV=11]
+    papersize: a4
+    pdf-engine: lualatex
+    toc: true
+    number-sections: true
+    colorlinks: true
+    mainfont: "TeX Gyre Pagella"
+    sansfont: "TeX Gyre Heros"
+    monofont: "DejaVu Sans Mono"
+    monofontoptions: ["Scale=0.82"]
+    mainfontfallback: ["DejaVu Sans:mode=harf"]
+    include-in-header: styles/preambule.tex
+    copyright: "© 2025-2026 Benoît Fontaine. Tous droits réservés."
+  epub:
+    publisher: "Master ITI · Nantes Université · édition 2026-2027"
+    cover-image: images/couverture.png
+    css: styles/epub.css
+    toc: true
+    number-sections: true
+    rights: "© 2025-2026 Benoît Fontaine. Tous droits réservés."

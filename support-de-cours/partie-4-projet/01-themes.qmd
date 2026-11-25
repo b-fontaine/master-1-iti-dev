@@ -1,0 +1,5 @@
+<!-- source: cours/projets/themes.md, cours/presentations/themes/ · synchro: 2026-11-25 -->
+
+# Les trois thèmes du projet {#sec-themes}
+
+Chapitre en cours d'adaptation.

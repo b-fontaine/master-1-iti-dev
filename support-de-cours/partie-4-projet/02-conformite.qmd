@@ -1,0 +1,5 @@
+<!-- source: cours/conformite-ai-act-rgpd.md · synchro: 2026-11-25 -->
+
+# Conformité : RGPD et règlement européen sur l'IA {#sec-conformite}
+
+Chapitre en cours d'adaptation.

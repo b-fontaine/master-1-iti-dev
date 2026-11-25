@@ -1,0 +1,5 @@
+<!-- source: cours/supports/day-2/02-configurer-claude-code.md · synchro: 2026-11-25 -->
+
+# Configurer Claude Code {#sec-configurer-claude-code}
+
+Chapitre en cours d'adaptation.

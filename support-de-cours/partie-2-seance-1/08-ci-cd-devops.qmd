@@ -1,0 +1,5 @@
+<!-- source: cours/supports/day-1/08-ci-cd-devops.md · synchro: 2026-11-25 -->
+
+# CI/CD et DevOps {#sec-ci-cd}
+
+Chapitre en cours d'adaptation.
