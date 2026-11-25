@@ -2,4 +2,577 @@
 
 # Glossaire {#sec-glossaire}
 
-Chapitre en cours d'adaptation.
+Ce glossaire réunit les termes utilisés dans le livre : ceux du programme de la formation et ceux des glossaires de chapitre. Quand un terme est défini dans plusieurs chapitres, la définition la plus complète est reprise. Chaque entrée renvoie au chapitre qui développe le terme.
+
+Accélération matérielle
+:   usage du GPU ou du NPU plutôt que du seul CPU pour calculer plus vite. (voir @sec-edge-ai)
+
+Accidentel / essentiel (complexité)
+:   distinction de Brooks entre la difficulté liée aux outils (accidentelle) et celle liée au problème à résoudre (essentielle). (voir @sec-histoire-craft)
+
+Action (GitHub Actions)
+:   brique réutilisable d'un workflow, par exemple « installer Flutter ». (voir @sec-ci-cd)
+
+Agent
+:   boucle logicielle où un modèle choisit des actions, les exécute par des outils et lit le résultat, jusqu'à la fin de la tâche. (voir @sec-histoire-ia)
+
+Agent de code
+:   programme piloté par un modèle d'IA qui lit des fichiers, les modifie, lance des commandes et réagit au résultat. (voir @sec-craft-ia)
+
+AGENTS.md
+:   fichier d'instructions au format ouvert, lisible par plusieurs outils. (voir @sec-outils-agentiques)
+
+Agile
+:   famille de méthodes de travail par cycles courts, avec retours fréquents du client, formalisée par le Manifeste de 2001. (voir @sec-histoire-craft)
+
+Alias de type (`typedef`)
+:   surnom donné à un type existant (ici `Position`). (voir @sec-pratique-craft-flutter)
+
+Alignement
+:   ensemble de techniques pour que le modèle produise des réponses utiles et sûres plutôt que simplement plausibles. (voir @sec-histoire-ia)
+
+Analyse statique (lint)
+:   lecture du code sans l'exécuter pour y détecter erreurs et écarts de style (`flutter analyze`). (voir @sec-guide-flutter)
+
+API REST
+:   moyen pour un programme de répondre à des requêtes envoyées par le réseau (ici le serveur Rust du dépôt). (voir @sec-pratique-craft-flutter)
+
+Appel de fonctions (function calling)
+:   capacité d'un modèle à demander à l'application d'exécuter une action décrite à l'avance. (voir @sec-edge-ai)
+
+Apprentissage automatique (*machine learning*)
+:   méthode où le programme déduit ses réglages à partir d'exemples plutôt que de règles écrites. (voir @sec-histoire-ia)
+
+Apprentissage profond (*deep learning*)
+:   apprentissage avec des réseaux de neurones à nombreuses couches. (voir @sec-histoire-ia)
+
+Approbation (*approve*)
+:   avis favorable donné par un relecteur sur une PR ; engage sa responsabilité. (voir @sec-demarrer-projet)
+
+Arbre de widgets
+:   l'emboîtement des widgets, du parent à ses enfants. (voir @sec-guide-flutter)
+
+Artefact
+:   fichier produit par un pipeline (site, rapport, paquet). (voir @sec-ci-cd)
+
+Async / await / Future
+:   mécanisme pour attendre un résultat qui prend du temps (serveur, fichier) sans figer l'application. (voir @sec-guide-flutter)
+
+Attention
+:   mécanisme qui permet au modèle de se concentrer sur les parties pertinentes du texte à chaque étape. (voir @sec-histoire-ia)
+
+Augmented coding
+:   usage de l'IA en gardant les exigences de qualité du code écrit à la main (Kent Beck, 2025). (voir @sec-craft-ia)
+
+Automate cellulaire
+:   modèle où une grille de cases change selon des règles locales simples. (voir @sec-pratique-craft-flutter)
+
+Bac à sable (*sandbox*)
+:   isolation, par le système, des accès aux fichiers et au réseau des commandes lancées par l'agent. (voir @sec-configurer-claude-code)
+
+Banc d'essai (*benchmark*)
+:   jeu de problèmes standardisé pour comparer des modèles. (voir @sec-histoire-ia)
+
+BDD (*Behavior-Driven Development*), développement guidé par le comportement
+:   décrire le comportement attendu en scénarios lisibles par tous (Gherkin), qui deviennent des tests automatiques. (voir @sec-pratique-craft-flutter)
+
+BF16
+:   format de nombre à 16 bits utilisé pour stocker les paramètres sans quantification forte. (voir @sec-edge-ai)
+
+Biais
+:   écart systématique reproduit par le modèle à partir des déséquilibres de ses données. (voir @sec-histoire-ia)
+
+BLoC
+:   composant qui reçoit des événements et émet des états, séparant l'interface de la logique (ici avec flutter_bloc). (voir @sec-guide-flutter)
+
+BLoC, Cubit
+:   composants qui portent l'état d'un écran, séparés de l'affichage. (voir @sec-demarrer-projet)
+
+Bounded context (contexte délimité)
+:   périmètre à l'intérieur duquel un modèle et son vocabulaire ont un sens précis. (voir @sec-histoire-craft)
+
+Branche
+:   ligne de travail parallèle ; étiquette mobile posée sur un commit. (voir @sec-git)
+
+Brownfield / greenfield
+:   projet existant, avec son code ancien (brownfield, « friche ») ; projet neuf (greenfield, « terrain vierge »). (voir @sec-craft-ia)
+
+Build
+:   opération qui transforme le code source en livrable exécutable. (voir @sec-ci-cd)
+
+`build_runner`
+:   outil Dart qui génère du code à partir d'autres fichiers (scénarios, base). (voir @sec-demarrer-projet)
+
+BuildContext
+:   l'emplacement d'un widget dans l'arbre, utilisé pour accéder au thème, naviguer, retrouver un Cubit. (voir @sec-guide-flutter)
+
+Cache
+:   copie conservée d'éléments téléchargés pour accélérer les exécutions suivantes. (voir @sec-ci-cd)
+
+Cache de prompt
+:   relecture à tarif réduit du début inchangé des requêtes. (voir @sec-outils-agentiques)
+
+Chaîne de pensée (*chain of thought*)
+:   étapes intermédiaires de raisonnement écrites avant la réponse finale. (voir @sec-histoire-ia)
+
+Chevrons
+:   les signes `<` et `>` qui entourent, dans ces fiches, une valeur à remplacer. (voir @sec-fiches)
+
+CI/CD
+:   intégration continue et livraison continue, chaîne automatisée qui construit, teste et prépare le logiciel à chaque modification. (voir @sec-histoire-craft)
+
+Classe
+:   modèle qui regroupe des données et les actions qui les modifient. (voir @sec-pratique-craft-flutter)
+
+Classe / objet
+:   moule regroupant données et actions / exemplaire fabriqué avec ce moule. (voir @sec-guide-flutter)
+
+`CLAUDE.md`
+:   fichier d'instructions du projet, lu par l'agent à chaque session. (voir @sec-configurer-claude-code)
+
+Clean Architecture
+:   organisation du code en couches (domaine, données, présentation) où le métier ne dépend pas des détails techniques. (voir @sec-demarrer-projet)
+
+Cloner
+:   copier sur son poste un dépôt distant, avec tout son historique. (voir @sec-git)
+
+Cloud
+:   serveurs distants hébergés par un fournisseur. (voir @sec-edge-ai)
+
+Code de sortie
+:   nombre renvoyé par une commande quand elle se termine ; 0 signifie « tout va bien ». (voir @sec-configurer-claude-code)
+
+Code source
+:   texte des instructions d'un logiciel. (voir @sec-histoire-craft)
+
+Collaborateur
+:   compte GitHub autorisé à écrire dans un dépôt. (voir @sec-demarrer-projet)
+
+Commit
+:   enregistrement d'un ensemble de modifications dans l'historique d'un dépôt, accompagné d'un message. (voir @sec-histoire-craft)
+
+Commit de fusion (*merge commit*)
+:   commit à deux parents, créé quand on réunit deux lignes qui ont toutes deux avancé. (voir @sec-git)
+
+Compaction
+:   résumé de la conversation pour libérer du contexte. (voir @sec-outils-agentiques)
+
+Compilation
+:   traduction du code en un programme exécutable par la machine ; une erreur de compilation empêche tout test. (voir @sec-pratique-craft-flutter)
+
+Conflit
+:   situation où deux branches ont modifié la même ligne ; git demande de choisir. (voir @sec-git)
+
+Consigne
+:   texte lu par le modèle (prompt, `CLAUDE.md`, skill) ; une demande, pas une garantie. (voir @sec-configurer-claude-code)
+
+Context rot
+:   dégradation de la précision quand le contexte devient très long. (voir @sec-histoire-ia)
+
+Contexte
+:   ensemble des informations (fichiers, consignes, conversation) qu'un modèle a sous les yeux quand il répond. (voir @sec-craft-ia)
+
+Contexte (fenêtre de)
+:   texte total que le modèle peut considérer pour une réponse, mesuré en tokens. (voir @sec-histoire-ia)
+
+Contrainte
+:   règle appliquée par l'outil, indépendamment du modèle (permission, hook, outils d'un sous-agent). (voir @sec-configurer-claude-code)
+
+Corrélation / causalité
+:   deux phénomènes évoluent ensemble / l'un provoque l'autre. (voir @sec-craft-ia)
+
+Couche
+:   famille de fichiers ayant le même rôle (`presentation`, `domain`, `data`). (voir @sec-demarrer-projet)
+
+Couverture
+:   part des lignes exécutées par les tests. (voir @sec-ci-cd)
+
+Craft (software craftsmanship)
+:   mouvement et posture professionnelle qui font de la qualité technique et de la responsabilité une valeur, au-delà du simple « ça marche ». (voir @sec-histoire-craft)
+
+Critère d'acceptation
+:   condition vérifiable qui dit qu'une user story est terminée. (voir @sec-demarrer-projet)
+
+Cubit
+:   la variante simple de BLoC : des fonctions qui publient un nouvel état (`emit`). (voir @sec-guide-flutter)
+
+Dart
+:   le langage de programmation de Flutter. (voir @sec-guide-flutter)
+
+Definition of done
+:   la liste de ce qui doit être vrai pour dire « c'est fini ». (voir @sec-fiches)
+
+Dependabot
+:   service GitHub qui propose des mises à jour de dépendances. (voir @sec-ci-cd)
+
+Dépendance
+:   paquet externe dont le projet a besoin, déclaré dans `pubspec.yaml`. (voir @sec-guide-flutter)
+
+Déploiement continu
+:   chaque modification validée est publiée automatiquement. (voir @sec-ci-cd)
+
+Dépôt
+:   dossier suivi par git, qui contient le code et son historique. (voir @sec-craft-ia)
+
+Dépôt distant (*remote*)
+:   copie du dépôt hébergée ailleurs ; par convention `origin`. (voir @sec-git)
+
+Dépôt-modèle
+:   dépôt de départ fourni par l'enseignant, copié pour chaque équipe. (voir @sec-demarrer-projet)
+
+Dette technique
+:   métaphore de Cunningham. Un raccourci pris maintenant coûte, plus tard, du temps supplémentaire (« intérêts »). (voir @sec-histoire-craft)
+
+Device (appareil)
+:   la cible d'exécution (`chrome`, `linux`, etc.). (voir @sec-guide-flutter)
+
+DevOps
+:   culture et pratiques qui rapprochent développement et exploitation. (voir @sec-ci-cd)
+
+Diff
+:   différence ligne à ligne entre deux états (`+` ajouté, `-` supprimé). (voir @sec-git)
+
+Dojo / kata
+:   séance d'entraînement / exercice court répété pour travailler le geste. (voir @sec-pratique-craft-flutter)
+
+Domain-Driven Design (DDD)
+:   conception pilotée par le domaine métier. (voir @sec-histoire-craft)
+
+DORA
+:   programme de recherche (désormais rattaché à Google Cloud) sur la performance de livraison logicielle, source de cinq indicateurs. (voir @sec-histoire-craft)
+
+Edge AI (IA embarquée)
+:   exécution d'un modèle d'IA sur l'appareil de l'utilisateur. (voir @sec-edge-ai)
+
+Effort (niveau d')
+:   réglage qui fixe combien le modèle réfléchit avant de répondre. (voir @sec-histoire-ia)
+
+Embedding (plongement)
+:   liste de nombres représentant le sens d'un texte, utile pour la recherche par similarité. (voir @sec-edge-ai)
+
+Émergence
+:   comportement d'ensemble complexe produit par des règles locales simples. (voir @sec-pratique-craft-flutter)
+
+Enregistrement (*record*)
+:   valeur composée de plusieurs éléments, avec ou sans noms, comparable directement (fonctionnalité de Dart 3). (voir @sec-pratique-craft-flutter)
+
+Énumération (`enum`)
+:   liste fermée de valeurs possibles. (voir @sec-pratique-craft-flutter)
+
+Environnement
+:   lieu d'exécution du logiciel (test, production). (voir @sec-ci-cd)
+
+Essai contrôlé randomisé (RCT)
+:   expérience où l'on tire au sort qui reçoit le traitement. (voir @sec-craft-ia)
+
+Étape (step) et **Job**
+:   instruction et groupe d'instructions d'un workflow. (voir @sec-ci-cd)
+
+Example Mapping
+:   atelier où l'on s'accorde sur des exemples concrets avant de coder. (voir @sec-pratique-craft-flutter)
+
+Fast-forward (avance rapide)
+:   fusion sans nouveau commit, quand la branche qui reçoit n'a pas bougé. (voir @sec-git)
+
+Fichier `.feature`
+:   scénarios de comportement rédigés en phrases (Soit, Quand, Alors). (voir @sec-demarrer-projet)
+
+Flutter
+:   cadre de développement de Google pour applications multiplateformes. (voir @sec-guide-flutter)
+
+Fonction / méthode
+:   recette réutilisable / fonction attachée à une classe. (voir @sec-guide-flutter)
+
+Fonctionnalité (*feature*)
+:   un service rendu à l'utilisateur ; dans le projet, un dossier. (voir @sec-demarrer-projet)
+
+Fork
+:   copie d'un dépôt par un tiers. (voir @sec-ci-cd)
+
+Fusion (*merge*)
+:   réunion du travail d'une branche dans une autre. (voir @sec-git)
+
+Garde-fou
+:   limite posée à un agent (permissions, liste d'outils autorisés, limite d'étapes, validation humaine, tests). (voir @sec-histoire-ia)
+
+Gardien
+:   membre de l'équipe qui veille sur un domaine (produit, données, harnais, conformité, démonstration). (voir @sec-demarrer-projet)
+
+Gel du code (*code freeze*)
+:   période pendant laquelle on s'interdit toute modification. (voir @sec-configurer-claude-code)
+
+Gherkin
+:   langage des scénarios (`Given/When/Then`, en français `Soit/Quand/Alors`). (voir @sec-pratique-craft-flutter)
+
+Git, dépôt
+:   outil de gestion de l'historique et de partage du travail ; espace de stockage d'un projet. (voir @sec-git)
+
+GitHub Pages
+:   hébergement de sites statiques par GitHub. (voir @sec-ci-cd)
+
+`.gitignore`
+:   fichier qui liste ce que git doit ignorer. (voir @sec-git)
+
+GPU (processeur graphique)
+:   processeur très efficace pour les calculs massivement parallèles de l'apprentissage. (voir @sec-histoire-ia)
+
+Hallucination
+:   contenu généré faux ou sans fondement, présenté comme plausible. (voir @sec-histoire-ia)
+
+Harnais (*harness*)
+:   tout ce qui entoure le modèle dans un agent (outils, règles, contexte, permissions, contrôles). (voir @sec-histoire-ia)
+
+HEAD
+:   votre position actuelle dans l'historique, en général le dernier commit de la branche courante. (voir @sec-git)
+
+Hiver de l'IA
+:   période de recul des financements et de l'intérêt après des promesses non tenues. (voir @sec-histoire-ia)
+
+Hook
+:   script que l'outil déclenche automatiquement à un moment précis (par exemple avant une édition). (voir @sec-pratique-craft-flutter)
+
+Hot reload (rechargement à chaud)
+:   mise à jour instantanée de l'application en cours, sans perdre son état. (voir @sec-guide-flutter)
+
+Index (*staging area*)
+:   zone de préparation ; ce qui entrera dans le prochain commit. (voir @sec-git)
+
+Inférence
+:   utilisation d'un modèle déjà entraîné pour produire une réponse. (voir @sec-histoire-ia)
+
+Injection de dépendances
+:   fournir à une pièce de code ce dont elle a besoin au lieu de la laisser le fabriquer, pour pouvoir le remplacer en test. (voir @sec-demarrer-projet)
+
+Injection de prompt
+:   texte malveillant glissé dans le contenu lu par l'agent. (voir @sec-outils-agentiques)
+
+Intégration continue (CI)
+:   exécution automatique des tests sur une machine distante à chaque modification. (voir @sec-pratique-craft-flutter)
+
+Invite de commande (`$`)
+:   le signe affiché par le terminal avant votre saisie ; il ne se tape pas. (voir @sec-fiches)
+
+JSON
+:   format de données textuel strict, utilisé par les fichiers de réglages. (voir @sec-configurer-claude-code)
+
+Langage omniprésent (ubiquitous language)
+:   vocabulaire commun entre experts du métier et développeurs. (voir @sec-histoire-craft)
+
+Lint
+:   analyse automatique du code sans l'exécuter. (voir @sec-ci-cd)
+
+Livraison continue (CD)
+:   le logiciel est toujours prêt à être publié. (voir @sec-ci-cd)
+
+LLM (grand modèle de langage)
+:   modèle de langage de très grande taille. (voir @sec-histoire-ia)
+
+LLM / SLM
+:   grand modèle de langage / petit modèle de langage. (voir @sec-edge-ai)
+
+Marketplace
+:   catalogue de plugins. (voir @sec-configurer-claude-code)
+
+MCP (*Model Context Protocol*)
+:   standard ouvert de branchement d'un agent sur des outils externes ; un serveur MCP en est une réalisation. (voir @sec-configurer-claude-code)
+
+Méthode
+:   action attachée à une valeur ou à une classe. (voir @sec-pratique-craft-flutter)
+
+Mode de permission
+:   niveau global d'autonomie (manuel, `acceptEdits`, `plan`, `auto`, `dontAsk`, `bypassPermissions`). (voir @sec-outils-agentiques)
+
+Mode plan
+:   mode où l'agent explore et propose sans modifier. (voir @sec-configurer-claude-code)
+
+Modèle à poids ouverts
+:   modèle dont les paramètres sont téléchargeables et exécutables localement, sous licence précisée. (voir @sec-edge-ai)
+
+Modèle de PR
+:   texte pré-rempli proposé par GitHub à l'ouverture d'une pull request. (voir @sec-fiches)
+
+Mutation testing
+:   introduire de petites erreurs dans le code pour vérifier que les tests les détectent. (voir @sec-craft-ia)
+
+NPU
+:   processeur dédié aux calculs d'IA. (voir @sec-edge-ai)
+
+Null / null safety
+:   absence de valeur / garantie du langage qui interdit d'utiliser une valeur nulle sans le prévoir (`String?`). (voir @sec-guide-flutter)
+
+OWASP Top 10
+:   liste de référence des dix grandes catégories de failles de sécurité des applications web. (voir @sec-craft-ia)
+
+Pair / mob programming
+:   travail à deux (pair) ou à tout un groupe (mob) sur le même code. (voir @sec-histoire-craft)
+
+Paramètre
+:   réglage numérique interne à un modèle, ajusté à l'entraînement. (voir @sec-histoire-ia)
+
+Paramètres (poids)
+:   nombres internes d'un modèle, ajustés à l'entraînement. (voir @sec-edge-ai)
+
+PATH
+:   liste des dossiers où le système cherche les commandes. (voir @sec-guide-flutter)
+
+Perceptron
+:   premier réseau de neurones artificiel apprenant (Rosenblatt, 1958). (voir @sec-histoire-ia)
+
+Permission
+:   règle `allow`, `ask` ou `deny` qui décide de ce que l'agent peut faire. (voir @sec-configurer-claude-code)
+
+Pipeline
+:   chaîne d'étapes parcourue par une modification. (voir @sec-ci-cd)
+
+Pipeline de déploiement
+:   chaîne automatisée qui mène un changement du dépôt à la production. (voir @sec-histoire-craft)
+
+Plugin (Claude Code)
+:   paquet installable regroupant skills, sous-agents, hooks et serveurs MCP. (voir @sec-configurer-claude-code)
+
+Plugin (Flutter)
+:   paquet qui relie Flutter au code natif d'un système. (voir @sec-edge-ai)
+
+Porte qualité
+:   contrôle automatique dont l'échec bloque la suite. (voir @sec-ci-cd)
+
+Pousser, tirer (*push*, *pull*)
+:   envoyer ses commits vers le dépôt distant, récupérer ceux des autres. (voir @sec-git)
+
+Pré-entraînement
+:   phase d'apprentissage sur un énorme corpus de texte, par prédiction du token suivant. (voir @sec-histoire-ia)
+
+Production
+:   l'environnement réel, utilisé par de vrais utilisateurs. (voir @sec-configurer-claude-code)
+
+Protection de branche
+:   réglages de GitHub qui imposent des conditions avant toute modification d'une branche. (voir @sec-demarrer-projet)
+
+pubspec.yaml
+:   fichier de description et de dépendances d'un projet Dart ou Flutter. (voir @sec-guide-flutter)
+
+Pull request (PR), demande de fusion
+:   proposition de modification relue par un pair avant intégration au projet. (voir @sec-git)
+
+Push direct
+:   envoi de commits sur une branche sans passer par une pull request. (voir @sec-fiches)
+
+Quantification
+:   réduction de la précision des paramètres pour économiser mémoire et calcul. (voir @sec-edge-ai)
+
+RAG
+:   génération augmentée par recherche dans vos propres documents. (voir @sec-edge-ai)
+
+Refactoring (remaniement)
+:   amélioration de la structure du code sans changer son comportement. (voir @sec-histoire-craft)
+
+Régression
+:   fonctionnalité qui marchait et qui cesse de marcher après une modification. (voir @sec-craft-ia)
+
+Release / tag
+:   version publiée / étiquette posée sur un commit. (voir @sec-ci-cd)
+
+Relecture (*review*)
+:   lecture du diff d'une PR par un autre que son auteur, conclue par un commentaire, une approbation ou une demande de modifications. (voir @sec-git)
+
+Rétropropagation
+:   méthode qui répartit l'erreur de sortie sur les réglages de chaque couche pour les corriger. (voir @sec-histoire-ia)
+
+RGPD
+:   règlement européen sur la protection des données personnelles. (voir @sec-conformite)
+
+RLHF
+:   apprentissage par renforcement avec retour humain (les humains classent les réponses). (voir @sec-histoire-ia)
+
+Rollback
+:   retour à la version précédente. (voir @sec-ci-cd)
+
+RSSI
+:   responsable de la sécurité des systèmes d'information. (voir @sec-conformite)
+
+Runner
+:   machine qui exécute un job. (voir @sec-ci-cd)
+
+Scrum
+:   méthode agile d'organisation (rôles, réunions, cycles courts), sans pratiques techniques prescrites. (voir @sec-histoire-craft)
+
+SDK
+:   paquet contenant le cadre, le langage et les outils. (voir @sec-guide-flutter)
+
+Secret
+:   valeur confidentielle (clé, mot de passe). (voir @sec-ci-cd)
+
+Self-grading
+:   situation où le même agent écrit le code et les tests qui le jugent. (voir @sec-pratique-craft-flutter)
+
+setState
+:   instruction qui signale à Flutter qu'un état a changé et qu'il faut redessiner. (voir @sec-guide-flutter)
+
+Skill
+:   dossier contenant un `SKILL.md`, procédure chargée à la demande ou appelée par `/nom`. (voir @sec-configurer-claude-code)
+
+SOLID
+:   cinq principes de conception orientée objet popularisés par Robert C. Martin. (voir @sec-histoire-craft)
+
+Sous-agent
+:   assistant secondaire au contexte isolé, qui renvoie un résumé. (voir @sec-configurer-claude-code)
+
+Spec-driven development
+:   développement piloté par la spécification, où la description du comportement précède et guide le code. (voir @sec-craft-ia)
+
+StatefulWidget / StatelessWidget
+:   widget avec / sans état. (voir @sec-guide-flutter)
+
+Système expert
+:   programme à base de règles « si... alors... » codant le savoir d'un spécialiste. (voir @sec-histoire-ia)
+
+Tag
+:   étiquette fixe posée sur un commit (`s2-fin`, `v1.0`). (voir @sec-git)
+
+TDD (Test-Driven Development)
+:   cycle rouge (test qui échoue), vert (code minimal), refactor (nettoyage). (voir @sec-histoire-craft)
+
+Température
+:   réglage du degré de hasard dans le choix du token suivant. (voir @sec-histoire-ia)
+
+Test
+:   petit programme qui vérifie qu'un morceau de code fait ce qui est attendu. (voir @sec-histoire-craft)
+
+Test (unitaire)
+:   petit programme qui vérifie un comportement précis et répond « réussi » ou « échoué ». (voir @sec-pratique-craft-flutter)
+
+Test unitaire, de widget, d'intégration
+:   test d'une fonction, d'un widget, d'un parcours complet. (voir @sec-guide-flutter)
+
+Token
+:   morceau de texte (mot, syllabe, ponctuation) qui sert d'unité au modèle, à la facturation et à la mémoire. (voir @sec-histoire-ia)
+
+Transformer
+:   architecture de réseau de neurones fondée sur l'attention (2017), base des modèles de langage actuels. (voir @sec-histoire-ia)
+
+TRS
+:   taux de rendement synthétique d'un équipement (disponibilité × performance × qualité) ; sujet du thème B. (voir @sec-demarrer-projet)
+
+Upstream
+:   branche distante que suit une branche locale. (voir @sec-git)
+
+User story
+:   besoin exprimé du point de vue de l'utilisateur, « En tant que… je veux… afin de… ». (voir @sec-demarrer-projet)
+
+Versionnage sémantique
+:   convention `MAJEUR.MINEUR.CORRECTIF`. (voir @sec-ci-cd)
+
+Versionner
+:   garder l'historique de toutes les modifications d'un fichier ou d'un projet. (voir @sec-histoire-craft)
+
+Vibe coding
+:   produire avec l'IA sans regarder le code, en ne jugeant que le comportement (Karpathy, 2025). (voir @sec-craft-ia)
+
+Widget
+:   brique d'interface Flutter ; **widget test** : test qui manipule une interface dans un faux écran. (voir @sec-pratique-craft-flutter)
+
+Workflow
+:   fichier YAML décrivant ce qu'il faut exécuter et quand. (voir @sec-ci-cd)
+
+YAML
+:   format texte structuré par l'indentation. (voir @sec-ci-cd)

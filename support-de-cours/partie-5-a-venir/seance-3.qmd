@@ -2,4 +2,38 @@
 
 # Séance 3 · Première règle métier, données et RGPD {#sec-s3}
 
-Chapitre en cours d'adaptation.
+**Pourquoi ce thème.** Deux jours après le lancement du projet, il faut du concret rapidement. La séance livre la première vraie fonctionnalité (en TDD et en BDD), pose les données qui survivent au code, et ouvre le volet RGPD : on ne choisit pas un champ ou une table sans se demander si l'on traite des données personnelles.
+
+**Objectifs d'apprentissage.** À la fin de la séance, l'étudiant :
+
+1. reprend le projet de l'avant-veille par un bref contrôle (`git pull`, `flutter pub get`, `flutter test`) ;
+2. livre une première user story en TDD et en BDD avec son agent, et la fait relire ;
+3. relit la PR d'une autre équipe avec une checklist, et résout un conflit réel ;
+4. modélise un domaine en entités et relations, écrit une migration drift, et vérifie l'intégrité des données sur une base en mémoire ;
+5. distingue donnée personnelle, base légale, durée de conservation, sous-traitant ; connaît ses droits (accès, rectification, effacement, etc.) ; remplit les premières rubriques de la fiche de conformité.
+
+## Déroulé en bref {#sec-s3-deroule}
+
+Poids des blocs : **Indispensable** = ne pas sacrifier ; **Important** = sauf contrainte forte ; **Pratique** = si le rythme le permet ; **Moins utile** = peut sauter ou rester en lecture.
+
+| Bloc | Poids | Format |
+|---|---|---|
+| 1. Contrôle d'ouverture | Indispensable | atelier |
+| 2. Git en équipe | Important | exposé et démonstration |
+| 3. Première user story en TDD et en BDD | Indispensable | atelier |
+| 4. RGPD en une page | Indispensable | exposé |
+| 5. Vos droits de citoyen européen | Indispensable (l'exercice de courriel reste Moins utile) | exposé et discussion |
+| 6. Test en 4 questions et qualification des données du thème | Indispensable | atelier |
+| 7. Début de la fiche de conformité | Indispensable | atelier |
+| 8. Les données | Indispensable | exposé et démonstration |
+| 9. Modéliser et implémenter | Indispensable | atelier |
+| 10. Revue croisée entre équipes | Indispensable | atelier |
+| 11. Bilan | Important | discussion |
+
+**Livrable de fin de séance (identique pour les trois thèmes).** **Première règle verte, modèle et migrations fusionnés, début de `docs/fiche_conformite.md` commité.** Détail : première user story livrée (scénario `.feature`, tests, code, PR relue), modèle de données (schéma, première migration, test d'intégrité), `docs/fiche_conformite.md` commité (rubriques 1 à 5), au moins une PR relue par une autre équipe.
+
+Le déroulé complet, bloc par bloc, est décrit dans @sec-programme-detaille.
+
+::: {.callout-note title="Chapitres à paraître dans une prochaine édition"}
+Les chapitres de cette séance ne sont pas encore rédigés. Cette page en donne les objectifs et le déroulé ; les séances 1 et 2 sont déjà développées dans les parties précédentes.
+:::
