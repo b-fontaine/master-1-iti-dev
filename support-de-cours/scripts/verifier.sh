@@ -57,7 +57,12 @@ done
 if [ "$RENDER" = 1 ]; then
   LOG="$(mktemp)"
   # un seul rendu pour les deux formats : un rendu isolé vide _book/
-  if ! quarto render "$DIR" >"$LOG" 2>&1; then
+  # En CI, le journal de rendu est affiché en direct pour diagnostiquer un blocage.
+  if [ -n "${CI:-}" ]; then
+    set -o pipefail
+    quarto render "$DIR" 2>&1 | tee "$LOG" || fail "échec du rendu"
+    set +o pipefail
+  elif ! quarto render "$DIR" >"$LOG" 2>&1; then
     cat "$LOG" >&2; fail "échec du rendu"
   fi
   if grep -n -E 'Unable to resolve crossref|WARNING|Missing character' "$LOG" >&2; then

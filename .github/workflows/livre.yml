@@ -91,12 +91,20 @@ jobs:
           "$tlmgr" update --self
           "$tlmgr" install fvextra xurl tex-gyre koma-script
 
+      # Les schémas Mermaid sont rendus par le Chrome du runner, sans interface.
+      # Sur Ubuntu 24.04, AppArmor bloque son bac à sable et le rendu reste figé.
+      - name: Préparer le rendu des schémas (Chrome sans interface)
+        run: |
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          google-chrome --version
+
       - name: Inscrire la version dans le livre
         run: |
           bash support-de-cours/scripts/ecrire-version.sh \
             "${{ steps.version.outputs.version }}" "$(git log -1 --format=%cs)"
 
       - name: Vérifier et compiler (PDF et EPUB)
+        timeout-minutes: 20
         run: bash support-de-cours/scripts/verifier.sh
 
       - name: Nommer les fichiers
