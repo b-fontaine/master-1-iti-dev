@@ -27,8 +27,8 @@ Le logiciel a exactement ce problème. Plusieurs personnes (et désormais plusie
 
 Le mot « vérifier » est la clé. Vérifier à la main est lent, ennuyeux, et surtout oubliable un vendredi à 18 h. Une machine, elle, ne se lasse pas : elle exécute la même liste de contrôles, de la même façon, à chaque modification. Tout ce chapitre tient dans cette phrase : **on transforme une discipline humaine fragile en un mécanisme automatique fiable**.
 
-::: {.callout-tip}
-**À retenir.** La CI/CD ne rend personne plus intelligent : elle supprime la dépendance à la mémoire et à la bonne volonté. C'est exactement pourquoi elle devient plus importante quand un agent d'IA produit du code à grande vitesse.
+::: {.callout-tip title="À retenir"}
+La CI/CD ne rend personne plus intelligent : elle supprime la dépendance à la mémoire et à la bonne volonté. C'est exactement pourquoi elle devient plus importante quand un agent d'IA produit du code à grande vitesse.
 :::
 
 ## Intégration continue, livraison continue, déploiement continu
@@ -97,8 +97,8 @@ flowchart LR
 
 Retenez l'idée plus que les huit mots exacts (les schémas varient selon les auteurs : *présentation conventionnelle, pas une norme*). La moitié gauche est la **CI/CD** (construire, tester, publier). La moitié droite est l'**exploitation** : faire tourner, surveiller (*monitoring* : mesurer en continu l'état du service), alerter. Le fait important : **la boucle est fermée**. Ce qui se passe en production nourrit la planification suivante.
 
-::: {.callout-tip}
-**À retenir.** DevOps = raccourcir et fiabiliser le trajet entre « une idée est codée » et « un utilisateur s'en sert », puis boucler en apprenant de la production.
+::: {.callout-tip title="À retenir"}
+DevOps = raccourcir et fiabiliser le trajet entre « une idée est codée » et « un utilisateur s'en sert », puis boucler en apprenant de la production.
 :::
 
 ## DORA : mesurer la performance de livraison
@@ -133,8 +133,8 @@ Les équipes qui utilisent l'IA produisent plus de code, plus vite. Mais la CI e
 
 Corrélation n'est pas causalité : une association entre IA et instabilité peut venir d'autres facteurs (par exemple des changements plus gros, ce que suggère l'une de nos sources, sans preuve).
 
-::: {.callout-tip}
-**À retenir.** Si vous devez suivre un seul indicateur quand une équipe adopte l'IA, regardez le **taux d'échec** et le temps de rétablissement, pas seulement la fréquence de déploiement. Aller plus vite ne vaut que si la qualité suit.
+::: {.callout-tip title="À retenir"}
+Si vous devez suivre un seul indicateur quand une équipe adopte l'IA, regardez le **taux d'échec** et le temps de rétablissement, pas seulement la fréquence de déploiement. Aller plus vite ne vaut que si la qualité suit.
 :::
 
 ## GitHub Actions pas à pas
@@ -298,8 +298,8 @@ Notre workflow n'a besoin d'aucun secret : le jeton `GITHUB_TOKEN` est créé au
 
 Un piège propre au web : **tout ce qui est dans un build web est public** (code, ressources, constantes). Aucun secret ne doit donc se trouver *dans l'application*, même si on le « cache » dans une constante (@sec-programme-detaille, @sec-s4).
 
-::: {.callout-tip}
-**À retenir.** Un workflow est une recette versionnée avec le code : lisible, relisible, reproductible. Moindre privilège, version figée, secrets absents du dépôt, vérification avant publication.
+::: {.callout-tip title="À retenir"}
+Un workflow est une recette versionnée avec le code : lisible, relisible, reproductible. Moindre privilège, version figée, secrets absents du dépôt, vérification avant publication.
 :::
 
 ## Les portes qualité {#sec-ci-portes}
@@ -330,8 +330,8 @@ Le paquet `mutation_test` existe pour Dart (publié sur pub.dev ; il s'ajoute av
 - **Détection de secrets** : un outil comme gitleaks cherche les clés oubliées dans le dépôt (prévu en @sec-s4 ; non installé lors des vérifications, donc non testé ici).
 - **Build réussi** : publier ce qui ne se construit pas n'a aucun sens ; l'étape de build est elle-même une porte.
 
-::: {.callout-tip}
-**À retenir.** Ordre économique des portes : lint (secondes), tests (minutes), build, puis contrôles lourds (mutation, audits) en moins fréquent. Chaque porte doit rester rapide et fiable, sinon l'équipe apprend à l'ignorer.
+::: {.callout-tip title="À retenir"}
+Ordre économique des portes : lint (secondes), tests (minutes), build, puis contrôles lourds (mutation, audits) en moins fréquent. Chaque porte doit rester rapide et fiable, sinon l'équipe apprend à l'ignorer.
 :::
 
 ## Branches, pull requests et protections de branche
@@ -405,8 +405,8 @@ updates:
       interval: "weekly"
 ```
 
-::: {.callout-tip}
-**À retenir.** Le maillon faible n'est pas toujours votre code : c'est souvent un secret oublié, une dépendance compromise ou une action trop permissive.
+::: {.callout-tip title="À retenir"}
+Le maillon faible n'est pas toujours votre code : c'est souvent un secret oublié, une dépendance compromise ou une action trop permissive.
 :::
 
 ## Déploiement mobile : fastlane, Codemagic, Bitrise, Appcircle
@@ -452,8 +452,8 @@ Le programme de @sec-s4 pose le risque du **self-grading** (« Don't grade your 
 - **Permissions limitées** : si un agent s'exécute en CI, il reçoit le moins de droits possible ; un agent qui lit du contenu venu de l'extérieur (ticket, commentaire de PR) peut être victime de **prompt injection** (instructions malveillantes cachées dans un texte), risque abordé en @sec-s4.
 - **Mesurer** : suivez les indicateurs DORA avant et après l'adoption de l'agent. Le dossier de sources recommande d'établir une base de référence *avant* d'accélérer (recommandation de praticien).
 
-::: {.callout-tip}
-**À retenir.** L'agent propose, la CI dispose, l'humain décide. Une CI qui ne peut pas dire non est une décoration.
+::: {.callout-tip title="À retenir"}
+L'agent propose, la CI dispose, l'humain décide. Une CI qui ne peut pas dire non est une décoration.
 :::
 
 ## Mise en pratique dans le cours

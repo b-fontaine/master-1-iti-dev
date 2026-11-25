@@ -71,10 +71,10 @@ mindmap
       Visitor
 ```
 
-Ce chapitre développe les patrons que vous avez le plus de chances de croiser dans le code du projet, avec des exemples en **Dart**, dans le même petit univers de jeu que le chapitre @sec-guide-flutter (jets de dés, quêtes, personnages).
+Ce chapitre développe les patrons que vous avez le plus de chances de croiser dans le code du projet, avec des exemples en **Dart**, dans le même petit univers de jeu que le chapitre [-@sec-guide-flutter] (jets de dés, quêtes, personnages).
 
-::: {.callout-tip}
-**À retenir.** On n'apprend pas les patrons pour les appliquer partout. On les apprend pour **reconnaître** une structure quand on la lit, et pour **savoir la demander** quand on la cherche.
+::: {.callout-tip title="À retenir"}
+On n'apprend pas les patrons pour les appliquer partout. On les apprend pour **reconnaître** une structure quand on la lit, et pour **savoir la demander** quand on la cherche.
 :::
 
 ## Patrons de création : fabriquer des objets
@@ -382,7 +382,7 @@ classDiagram
     Heros --> Attaque : délègue le calcul
 ```
 
-En Dart, on peut faire plus simple : les fonctions sont des valeurs. `int Function(int) attaque = (jet) => jet * 2;` remplace les trois classes. C'est exactement l'argument de la section @sec-dp-critiques : **le langage a absorbé le patron**.
+En Dart, on peut faire plus simple : les fonctions sont des valeurs. `int Function(int) attaque = (jet) => jet * 2;` remplace les trois classes. C'est exactement l'argument de la section [-@sec-dp-critiques] : **le langage a absorbé le patron**.
 
 ### Command : une action devient un objet
 
@@ -480,7 +480,7 @@ Plutôt que de laisser un objet **créer** ses collaborateurs ou aller les **che
 
 ### BLoC
 
-**BLoC** (*Business Logic Component*) sépare la logique de l'écran : l'écran **envoie des événements** (« l'utilisateur appuie sur Valider »), un composant de logique les traite et **publie des états** (« chargement », « succès », « erreur »), et l'écran se redessine en fonction du dernier état. On peut le lire comme un Observer organisé autour de flux (une lecture, pas une définition officielle). Dans le projet, il est fourni par le paquet `flutter_bloc` (voir aussi le chapitre @sec-guide-flutter).
+**BLoC** (*Business Logic Component*) sépare la logique de l'écran : l'écran **envoie des événements** (« l'utilisateur appuie sur Valider »), un composant de logique les traite et **publie des états** (« chargement », « succès », « erreur »), et l'écran se redessine en fonction du dernier état. On peut le lire comme un Observer organisé autour de flux (une lecture, pas une définition officielle). Dans le projet, il est fourni par le paquet `flutter_bloc` (voir aussi le chapitre [-@sec-guide-flutter]).
 
 ### Ports et adaptateurs, architecture hexagonale, Clean Architecture {#sec-dp-ports}
 
@@ -509,10 +509,10 @@ Deux familles de styles d'architecture reposent sur la même règle de dépendan
 Les noms de patrons sont partout dans la documentation et le code publics : un agent les reconnaît, et vous aussi pouvez les utiliser pour **cadrer** son travail.
 
 1. **Nommer le patron dans le prompt.** « Ajoute un Repository pour l'accès aux signalements, avec une interface dans le domaine » est plus précis et plus court qu'une description libre.
-2. **Écrire les règles dans le contexte du projet.** Le dépôt de démonstration `devoxx-2026` met dans son `AGENTS.md` des règles du type « le domaine ne dépend de rien », « aucune logique métier dans un widget ou un gestionnaire de requêtes », « la dépendance va de la présentation vers le domaine, et des données vers le domaine ». Ce sont des patrons d'architecture transformés en interdits vérifiables (voir le chapitre @sec-outils-agentiques).
+2. **Écrire les règles dans le contexte du projet.** Le dépôt de démonstration `devoxx-2026` met dans son `AGENTS.md` des règles du type « le domaine ne dépend de rien », « aucune logique métier dans un widget ou un gestionnaire de requêtes », « la dépendance va de la présentation vers le domaine, et des données vers le domaine ». Ce sont des patrons d'architecture transformés en interdits vérifiables (voir le chapitre [-@sec-outils-agentiques]).
 3. **Demander pourquoi.** Face à un code proposé, demandez : « Quel patron as-tu utilisé, et quel problème résout-il ici ? » Si la réponse est vague, le patron est probablement de trop.
 4. **Relire plus vite.** Reconnaître un Adapter, un Observer ou un Repository permet de relire une proposition en regardant la **structure** avant le détail. C'est l'objet de la règle du projet : « je sais l'expliquer ».
-5. **Garder les tests comme juge.** Un patron change la forme du code, pas son comportement : les scénarios BDD et les tests unitaires (chapitre @sec-pratique-craft-flutter) doivent rester verts.
+5. **Garder les tests comme juge.** Un patron change la forme du code, pas son comportement : les scénarios BDD et les tests unitaires (chapitre [-@sec-pratique-craft-flutter]) doivent rester verts.
 
 *Mise en garde.* Un agent peut produire plus de couches ou de classes que nécessaire pour un petit besoin. Demandez la solution **la plus simple qui passe les tests**, puis ajoutez un patron seulement quand un problème concret l'exige.
 
@@ -552,4 +552,4 @@ Les noms de patrons sont partout dans la documentation et le code publics : un a
 - C. Alexander et al., *A Pattern Language*, Oxford University Press, 1977 (non consulté)
 - A. Cockburn, « Hexagonal architecture », 2005 ; R. C. Martin, « The Clean Architecture », 2012 (non consultés)
 - Dépôt de démonstration `b-fontaine/devoxx-2026` : `AGENTS.md`, `frontend/CLAUDE.md`
-- Dans ce livre : chapitres @sec-guide-flutter, @sec-pratique-craft-flutter et @sec-outils-agentiques
+- Dans ce livre : chapitres [-@sec-guide-flutter], [-@sec-pratique-craft-flutter] et [-@sec-outils-agentiques]

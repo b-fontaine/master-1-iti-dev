@@ -24,6 +24,14 @@ for f in "${QMD[@]}"; do
   fi
 done
 
+# 1b. Préfixe doublé : « chapitre @sec-x » s'afficherait « chapitre Chapitre 6 »
+for f in "${QMD[@]}"; do
+  rel="${f#"$DIR"/}"
+  if grep -n -P '\b([Cc]hapitres?|[Ss]ections?|[Pp]arties?|[Aa]nnexes?)( [a-zà-ü]+)? @sec-' "$f" | sed "s|^|$rel:|" | grep . >&2; then
+    fail "préfixe doublé devant un renvoi @sec- dans $rel (utiliser [-@sec-x])"
+  fi
+done
+
 # 2. Commentaire source en tête de chaque .qmd
 for f in "${QMD[@]}"; do
   rel="${f#"$DIR"/}"

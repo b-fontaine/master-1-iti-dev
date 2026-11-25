@@ -863,7 +863,7 @@ Les trois thèmes ont la même charge estimée (15 à 20 h d'équipe, à calibre
 
 ## Conformité : AI Act, RGPD et validation RSSI {#sec-pd-conformite}
 
-Le module de référence est le chapitre @sec-conformite (sensibilisation, pas avis juridique). Il poursuit un **double but** : connaître les **limites de ses projets** (et toujours faire valider par le RSSI) et connaître ses **droits de citoyen européen**.
+Le module de référence est le chapitre [-@sec-conformite] (sensibilisation, pas avis juridique). Il poursuit un **double but** : connaître les **limites de ses projets** (et toujours faire valider par le RSSI) et connaître ses **droits de citoyen européen**.
 
 | Moment | Contenu | Livrable |
 |---|---|---|
@@ -873,7 +873,7 @@ Le module de référence est le chapitre @sec-conformite (sensibilisation, pas a
 | **Sprint** | Rubriques 6, 7 et 10 à 12 avant la v1 du vendredi 18 décembre 2026 ; réponse du RSSI au plus tard une semaine avant S5 (rubrique 13) ; mise à jour avant le gel | Fiche complète |
 | **S5** | Fiche présentée dans la partie conformité de la soutenance et évaluée dans « Données et conformité » | Dossier de rendu |
 
-**Fiche de conformité.** Une page par projet, tenue dans le dépôt à **un seul chemin**, `docs/fiche_conformite.md`, selon le **gabarit en 13 rubriques** du module de conformité (@sec-conformite) : finalité, données traitées, personnes concernées, base légale ou justification « données fictives », durée de conservation et date de suppression, hébergement et sous-traitants dont le fournisseur de modèle d'IA, ce qui part dans les prompts, décision automatisée, **rôle AI Act (fournisseur ou déployeur) et classement** (case unique : hors champ, minimal, obligations de transparence (art. 50), haut risque, interdit), exercice des droits, mesures, risques résiduels et limites d'usage, validation du RSSI datée. Le chapitre @sec-themes renvoie à ce même gabarit et à ce même chemin.
+**Fiche de conformité.** Une page par projet, tenue dans le dépôt à **un seul chemin**, `docs/fiche_conformite.md`, selon le **gabarit en 13 rubriques** du module de conformité (@sec-conformite) : finalité, données traitées, personnes concernées, base légale ou justification « données fictives », durée de conservation et date de suppression, hébergement et sous-traitants dont le fournisseur de modèle d'IA, ce qui part dans les prompts, décision automatisée, **rôle AI Act (fournisseur ou déployeur) et classement** (case unique : hors champ, minimal, obligations de transparence (art. 50), haut risque, interdit), exercice des droits, mesures, risques résiduels et limites d'usage, validation du RSSI datée. Le chapitre [-@sec-themes] renvoie à ce même gabarit et à ce même chemin.
 
 - **Aucun nom civil, aucune adresse de courriel** dans la fiche (les dépôts sont publics) : « équipe n° X », identifiants GitHub, « RSSI (rôle) ».
 - **Calendrier** : début en S3 (commité en fin de séance), passage devant le RSSI en S4, **v1 en PR le vendredi 18 décembre 2026, réponse du RSSI au plus tard une semaine avant S5**, en janvier 2027.

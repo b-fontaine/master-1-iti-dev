@@ -19,7 +19,7 @@ La séance alterne exposés et installations : environ 120 minutes d'installatio
 
 | Partie | Thème | Chapitres |
 |---|---|---|
-| Vote d'ouverture | « L'agent écrit le code : que reste-t-il à maîtriser ? » | |
+| Vote d'ouverture | « L'agent écrit le code : que reste-t-il à maîtriser ? » | — |
 | 1 | D'où vient le craft : neuf jalons de 1968 à 2018 | @sec-histoire-craft, @sec-histoire-ia |
 | 2 | Le craft face aux agents, de 2021 à 2026 | @sec-craft-ia |
 | 3 | Où va la qualité du code : ce que disent les mesures | @sec-craft-ia |
@@ -46,7 +46,7 @@ Chaque jalon répond à un problème que l'on retrouve avec les agents : le logi
 Les neuf jalons sont : la crise du logiciel et le terme « software engineering » (1968) ; Brooks et l'absence de « balle d'argent » (1975, 1986) ; la dette technique de Ward Cunningham (1992) ; XP et le TDD de Kent Beck (1996 à 2002) ; le Manifeste Agile (2001) ; le Domain-Driven Design d'Eric Evans (2003) ; le BDD de Dan North (2006) ; le Manifeste du craft (2001 à 2009) ; Git, la livraison continue et les indicateurs DORA (2005 à 2018). Le fait qui structure la suite : les développeurs passent moins d'un quart de leur temps à écrire du code, le reste est de la lecture, de la recherche, de la discussion et du test. Détails : @sec-histoire-craft.
 
 ::: {.callout-note title="Pour aller plus loin"}
-Le chapitre @sec-histoire-ia retrace l'autre histoire dont la séance a besoin : celle de l'IA, des origines aux modèles de langage et aux agents.
+Le chapitre [-@sec-histoire-ia] retrace l'autre histoire dont la séance a besoin : celle de l'IA, des origines aux modèles de langage et aux agents.
 :::
 
 ### Le craft face aux agents
@@ -113,11 +113,11 @@ Le RGPD protège les données personnelles ; l'AI Act encadre l'IA selon le risq
 
 ## Lectures conseillées
 
-- **Avant la séance** : les chapitres @sec-histoire-craft et @sec-histoire-ia (vocabulaire et contexte).
-- **Pendant les installations** : les chapitres @sec-guide-flutter et @sec-outils-agentiques.
-- **Avant les ateliers** : les chapitres @sec-pratique-craft-flutter et @sec-ci-cd.
-- **Pour comprendre le code du projet et le relire** : le chapitre @sec-design-patterns.
-- **Pour le projet** : les chapitres @sec-craft-ia et @sec-edge-ai.
+- **Avant la séance** : les chapitres [-@sec-histoire-craft] et [-@sec-histoire-ia] (vocabulaire et contexte).
+- **Pour installer son poste** : les chapitres [-@sec-guide-flutter] et [-@sec-outils-agentiques].
+- **Avant de pratiquer** : les chapitres [-@sec-pratique-craft-flutter] et [-@sec-ci-cd].
+- **Pour comprendre le code du projet et le relire** : le chapitre [-@sec-design-patterns].
+- **Pour le projet** : les chapitres [-@sec-craft-ia] et [-@sec-edge-ai].
 
 ::: {.callout-note title="Points non vérifiés"}
 Les noms d'outils, de versions et de fonctionnalités évoluent vite : revérifiez sur la documentation officielle avant de vous y fier. Chaque chapitre signale ses propres points non vérifiés.

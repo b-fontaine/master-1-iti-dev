@@ -23,8 +23,8 @@ Vous allez construire un logiciel avec un agent de code. Sans méthode, il est c
 
 Chaque notion est introduite par une analogie. Les commandes ont été relues dans la documentation officielle (voir « Sources ») et le code d'exemple exécuté quand l'outil était disponible (voir « Points non vérifiés »). Les noms de modèles, modes par défaut et limites changent vite : le chapitre indique les versions concernées. Tapez `claude --version` et relisez la documentation quand l'outil se comporte autrement.
 
-::: {.callout-tip}
-**À retenir.** Un agent, c'est un modèle plus un harnais. Vous ne choisissez pas seulement un modèle « intelligent » : vous concevez l'environnement dans lequel il travaille bien.
+::: {.callout-tip title="À retenir"}
+Un agent, c'est un modèle plus un harnais. Vous ne choisissez pas seulement un modèle « intelligent » : vous concevez l'environnement dans lequel il travaille bien.
 :::
 
 ## Claude Code et Claude Desktop
@@ -52,8 +52,8 @@ Les contrôles **calculatoires** (déterministes, rapides : tests, linters) s'op
 
 Pour ce cours : les **guides** sont `CLAUDE.md`, règles et skills ; les **capteurs** sont les tests, `dart analyze` et l'intégration continue ; le **cadre** est fait de permissions et de bac à sable ; les **automatismes** sont les hooks ; les **extensions** sont les serveurs MCP et plugins.
 
-::: {.callout-tip}
-**À retenir.** Le harnais avant l'autonomie : tant que tests, règles et permissions ne sont pas en place, pas d'agent sans supervision, et surtout pas plusieurs agents en parallèle.
+::: {.callout-tip title="À retenir"}
+Le harnais avant l'autonomie : tant que tests, règles et permissions ne sont pas en place, pas d'agent sans supervision, et surtout pas plusieurs agents en parallèle.
 :::
 
 ## Choisir son modèle : taille, coût, latence, raisonnement
@@ -74,8 +74,8 @@ La réflexion se règle par un **niveau d'effort** : `low`, `medium`, `high`, `x
 
 `sonnet` en effort `medium` par défaut ; `opus` ou effort `high` pour une décision d'architecture, une panne obscure ou une relecture critique ; `haiku` en effort `low` pour les tâches mécaniques. Choisissez **au début** de la session : changer en route a un coût caché (@sec-outils-cache-perte). C'est une recommandation pédagogique tirée des conseils officiels, pas une prescription de l'éditeur.
 
-::: {.callout-tip}
-**À retenir.** Pas de « meilleur modèle » dans l'absolu : le modèle adapté à la tâche, au budget et au délai. Noms et prix changent chaque trimestre.
+::: {.callout-tip title="À retenir"}
+Pas de « meilleur modèle » dans l'absolu : le modèle adapté à la tâche, au budget et au délai. Noms et prix changent chaque trimestre.
 :::
 
 ## La fenêtre de contexte et sa gestion
@@ -112,8 +112,8 @@ Le talk de l'enseignant recommande de compacter vers **60 %** de remplissage et 
 
 Un **sous-agent** travaille dans **sa propre fenêtre de contexte** et ne renvoie qu'un résumé. Analogie : un stagiaire lit trente documents et rapporte une note d'une page ; votre bureau reste dégagé (configuration dans @sec-outils-sous-agents-config).
 
-::: {.callout-tip}
-**À retenir.** Trois leviers quand le contexte est la contrainte : le vider (`/clear`), le résumer (`/compact`), en déporter une partie dans un sous-agent.
+::: {.callout-tip title="À retenir"}
+Trois leviers quand le contexte est la contrainte : le vider (`/clear`), le résumer (`/compact`), en déporter une partie dans un sous-agent.
 :::
 
 ## Les fichiers de contexte
@@ -183,8 +183,8 @@ Claude Code peut aussi **prendre des notes lui-même** (activé par défaut en s
 
 Deux articles de 2026 donnent des résultats opposés. Lulla et coauteurs (arXiv:2601.20404, 10 dépôts, 124 demandes de fusion, agents Codex et Claude Code) associent la présence d'un `AGENTS.md` à une baisse de **28,64 %** du temps d'exécution médian et de **16,58 %** des jetons de sortie, à achèvement comparable. Gloaguen et coauteurs (arXiv:2602.11988, ETH Zurich, tests de type SWE-bench) trouvent que les fichiers de contexte « n'améliorent pas en général » la réussite et augmentent le coût d'inférence « de plus de 20 % en moyenne ». Les supports de l'enseignant y lisent que le contexte aide surtout quand le modèle ne connaît pas le code : **hypothèse plausible, non démontrée** par ces articles. Retenez la recommandation des seconds auteurs : toute amélioration doit être **évaluée** avant d'être généralisée.
 
-::: {.callout-tip}
-**À retenir.** Un fichier de contexte est un investissement, pas un talisman : court, concret, relu. Chaque ligne qui n'empêche aucune erreur coûte du contexte pour rien.
+::: {.callout-tip title="À retenir"}
+Un fichier de contexte est un investissement, pas un talisman : court, concret, relu. Chaque ligne qui n'empêche aucune erreur coûte du contexte pour rien.
 :::
 
 ## Consignes, droits et modes de permission {#sec-outils-consignes}
@@ -250,8 +250,8 @@ La barre d'état affiche `manual mode on`, précédé d'un symbole de pause. À 
 
 `bypassPermissions` (option `--dangerously-skip-permissions`) supprime les invites, y compris pour les écritures dans `.git` et `.claude`. La documentation est nette : isolation obligatoire (conteneur, machine virtuelle). Les règles `deny` s'appliquent dans tous les modes.
 
-::: {.callout-tip}
-**À retenir.** Une consigne dit ce que l'agent doit faire ; une permission dit ce qu'il peut faire. Pour ce qui compte (secrets, suppression, publication), configurez et testez.
+::: {.callout-tip title="À retenir"}
+Une consigne dit ce que l'agent doit faire ; une permission dit ce qu'il peut faire. Pour ce qui compte (secrets, suppression, publication), configurez et testez.
 :::
 
 ## MCP, skills, hooks, sous-agents
@@ -373,8 +373,8 @@ Selon la documentation : chaque sous-agent démarre avec une fenêtre **neuve** 
 
 *Source : « Extend Claude Code ».*
 
-::: {.callout-tip}
-**À retenir.** Les consignes guident (`CLAUDE.md`, skills) ; permissions et hooks imposent ; MCP donne des pouvoirs ; les sous-agents protègent le contexte.
+::: {.callout-tip title="À retenir"}
+Les consignes guident (`CLAUDE.md`, skills) ; permissions et hooks imposent ; MCP donne des pouvoirs ; les sous-agents protègent le contexte.
 :::
 
 ## Bonnes et mauvaises pratiques
@@ -403,8 +403,8 @@ Bons réflexes :
 
 **Périmètre.** Principe du **moindre privilège**. En mode manuel, l'agent demande avant de lire ou d'écrire hors du dossier de lancement (simple invite : une commande approuvée peut écrire partout où votre compte le peut). Le **bac à sable** (`/sandbox`) isole système de fichiers et réseau pour les commandes, sur les plateformes prises en charge. Les écritures dans `.git` et `.claude` ne sont jamais approuvées automatiquement (sauf en `bypassPermissions`). Les outils d'un sous-agent se limitent, et tout fonctionnement sans supervision exige un **conteneur ou une machine virtuelle**.
 
-::: {.callout-tip}
-**À retenir.** Tout texte lu par l'agent est une entrée potentiellement hostile. Les secrets n'entrent ni dans le dépôt ni dans la conversation. Le périmètre se réduit par la configuration, pas par la confiance.
+::: {.callout-tip title="À retenir"}
+Tout texte lu par l'agent est une entrée potentiellement hostile. Les secrets n'entrent ni dans le dépôt ni dans la conversation. Le périmètre se réduit par la configuration, pas par la confiance.
 :::
 
 ::: {.callout-warning title="Encart RGPD : ce que vous pouvez envoyer à un agent"}
@@ -451,8 +451,8 @@ Selon la documentation : **changer de modèle** (chaque modèle a son cache ; `o
 
 Une session ouverte depuis des heures peut consommer bien plus que votre activité ne le laisse penser (contexte long, ratés de cache après une pause, sous-agents). La compaction est elle-même une grosse requête ; `/clear` ne coûte rien. **Mesurez** : `/usage` avant et après une tâche, `/context` pour voir ce qui pèse.
 
-::: {.callout-tip}
-**À retenir.** Économiser des jetons, c'est de l'hygiène de contexte : vider, cadrer, découper, déléguer. Le cache récompense la stabilité : pas de changement de modèle ni d'effort en pleine tâche.
+::: {.callout-tip title="À retenir"}
+Économiser des jetons, c'est de l'hygiène de contexte : vider, cadrer, découper, déléguer. Le cache récompense la stabilité : pas de changement de modèle ni d'effort en pleine tâche.
 :::
 
 ## Mise en pratique (30 minutes) {#sec-outils-pratique}
@@ -492,7 +492,7 @@ Livrable : un court texte sur ce que vous avez observé aux étapes 2, 4 et 6, s
 - Documentation officielle de Claude Code : « Best practices », « How Claude remembers your project », « Extend Claude Code », « Manage costs effectively », et la page interactive « Explore the context window ».
 - Birgitta Böckeler, « Harness Engineering for Coding Agent Users » (martinfowler.com, avril 2026).
 - Les deux études sur `AGENTS.md` (arXiv:2601.20404 et 2602.11988) : comparez leurs conditions d'expérience.
-- Les chapitres @sec-craft-ia (le craft depuis l'IA) et @sec-ci-cd (CI/CD) de ce support.
+- Les chapitres [-@sec-craft-ia] (le craft depuis l'IA) et [-@sec-ci-cd] (CI/CD) de ce support.
 
 ## Points non vérifiés
 

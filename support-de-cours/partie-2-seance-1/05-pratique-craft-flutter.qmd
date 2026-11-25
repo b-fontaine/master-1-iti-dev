@@ -851,11 +851,11 @@ git commit -m "feat(cap): tourner à droite"
 Un agent de code comme Claude Code peut écrire du code **et** des tests, les lancer et corriger jusqu'à ce que tout passe. Cela paraît idéal. Voici le piège, décrit par plusieurs sources :
 
 - Si l'agent écrit à la fois le code et ses propres tests, il se **note lui-même** (*self-grading*) : une suite verte prouve la **cohérence**, pas la **justesse**. Ce point est documenté par des analyses tierces sur la méthode AI-DLC, qui recommandent des tests d'acceptation de **provenance indépendante**, figés avant la construction.
-- Générer les tests **après** le code retourne la logique du test (« flips testing on its head ») : les tests deviennent un cachet de validation automatique (*rubber stamp*) qui fige les défauts existants (Sandro Mancuso, Codurance, ; Codurance a un intérêt commercial dans le sujet).
+- Générer les tests **après** le code retourne la logique du test (« flips testing on its head ») : les tests deviennent un cachet de validation automatique (*rubber stamp*) qui fige les défauts existants (Sandro Mancuso, Codurance ; Codurance a un intérêt commercial dans le sujet).
 - Kent Beck, dans « Augmented Coding: Beyond the Vibes » (25 juin 2025), surveille trois signaux d'alerte : les boucles, les fonctionnalités non demandées et la **triche**, c'est-à-dire l'agent qui **désactive ou supprime des tests** (article relu le 6 octobre 2026 : « Any indication that the genie was cheating, for example by disabling or deleting tests »).
 - Simon Willison présente le « red/green TDD » comme une formule courte que les modèles comprennent : « Use red/green TDD » signifie, selon lui, « write the tests first, confirm that the tests fail before you implement the change that gets them to pass » (https://simonwillison.net/guides/agentic-engineering-patterns/red-green-tdd/).
 
-**Fait, consensus, opinion.** Fait : un agent peut modifier des tests (c'est un outil d'édition de fichiers). Consensus de praticiens (Beck, Willison, Mancuso, et la synthèse de ce cours) : le test d'abord est un garde-fou efficace. Opinion discutable : jusqu'où on peut remplacer la relecture du code par des contrôles automatiques (Robert C. Martin l'affirme en juillet 2026 pour ses propres projets, Grady Booch le conteste ).
+**Fait, consensus, opinion.** Fait : un agent peut modifier des tests (c'est un outil d'édition de fichiers). Consensus de praticiens (Beck, Willison, Mancuso, et la synthèse de ce cours) : le test d'abord est un garde-fou efficace. Opinion discutable : jusqu'où on peut remplacer la relecture du code par des contrôles automatiques (Robert C. Martin l'affirme en juillet 2026 pour ses propres projets, Grady Booch le conteste).
 
 ### La méthode en cinq règles
 
@@ -914,7 +914,7 @@ Pour **imposer** la règle 2, la documentation des permissions de Claude Code pe
 }
 ```
 
-Cette règle empêche les outils d'édition de l'agent de modifier `test/`. Deux précautions tirées de la même documentation : une règle `Edit` couvre les outils de fichiers intégrés et les commandes de fichiers que Claude Code reconnaît, **mais pas** un programme arbitraire (par exemple un script Python qui écrit lui-même dans des fichiers) ; pour une barrière au niveau du système, il faut activer le **bac à sable** (*sandbox*). Et le format précis des règles évolue : relisez la page « Configure permissions » de la documentation avant de vous y fier (état consulté le 6 octobre 2026). Autre garde-fou, indépendant de l'agent : l'**intégration continue** (vue au chapitre @sec-ci-cd), qui relance tous les tests sur une machine distante à chaque modification.
+Cette règle empêche les outils d'édition de l'agent de modifier `test/`. Deux précautions tirées de la même documentation : une règle `Edit` couvre les outils de fichiers intégrés et les commandes de fichiers que Claude Code reconnaît, **mais pas** un programme arbitraire (par exemple un script Python qui écrit lui-même dans des fichiers) ; pour une barrière au niveau du système, il faut activer le **bac à sable** (*sandbox*). Et le format précis des règles évolue : relisez la page « Configure permissions » de la documentation avant de vous y fier (état consulté le 6 octobre 2026). Autre garde-fou, indépendant de l'agent : l'**intégration continue** (vue au chapitre [-@sec-ci-cd]), qui relance tous les tests sur une machine distante à chaque modification.
 
 Ce réglage est **contraignant** : si vous voulez à l'étape suivante ajouter un test, c'est vous qui l'éditez (votre éditeur n'est pas concerné par la règle de l'agent).
 

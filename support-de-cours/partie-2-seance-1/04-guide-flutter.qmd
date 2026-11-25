@@ -75,7 +75,7 @@ Flutter est le cadre, Dart est le langage, le SDK est le paquet qui contient les
 
 D'après le guide de démarrage rapide ([docs.flutter.dev/install/quick](https://docs.flutter.dev/install/quick)), il faut :
 
-1. **Git** : outil de gestion de versions, vu au chapitre @sec-git (macOS : `xcode-select --install` ; Linux : via les paquets système du point 3 de cette liste ; Windows : le programme d'installation de Git for Windows).
+1. **Git** : outil de gestion de versions, vu au chapitre [-@sec-git] (macOS : `xcode-select --install` ; Linux : via les paquets système du point 3 de cette liste ; Windows : le programme d'installation de Git for Windows).
 2. **Visual Studio Code** (VS Code), l'éditeur de texte du cours.
 3. Sous Linux uniquement, quelques paquets système (`curl git unzip xz-utils zip libglu1-mesa`, selon le guide officiel).
 4. **Google Chrome**, qui servira à afficher l'application.
@@ -807,7 +807,7 @@ Ceci est une **illustration** fondée sur les trois couches annoncées dans la p
 | `flutter build web` | Produit la version web destinée à la publication |
 | `flutter upgrade` | Met à jour le SDK ([guide](https://docs.flutter.dev/install/upgrade)) |
 
-L'**analyse statique** (`flutter analyze`) lit le code sans l'exécuter et signale les problèmes, selon les règles de `analysis_options.yaml`. C'est le même mécanisme que celui du « lint » vu au chapitre @sec-ci-cd sur l'intégration continue. Lors de la rédaction de ce chapitre, elle a signalé huit informations `avoid_print` dans le fichier d'exemples (usage de `print` dans du code de production) : ce sont des conseils de style, pas des erreurs, et l'on peut les ignorer pour un exemple pédagogique.
+L'**analyse statique** (`flutter analyze`) lit le code sans l'exécuter et signale les problèmes, selon les règles de `analysis_options.yaml`. C'est le même mécanisme que celui du « lint » vu au chapitre [-@sec-ci-cd] sur l'intégration continue. Lors de la rédaction de ce chapitre, elle a signalé huit informations `avoid_print` dans le fichier d'exemples (usage de `print` dans du code de production) : ce sont des conseils de style, pas des erreurs, et l'on peut les ignorer pour un exemple pédagogique.
 
 Les commandes d'une même séquence se combinent naturellement : `flutter analyze && flutter test` lance l'analyse puis, si elle réussit, les tests. Les agents de code travaillent beaucoup ainsi : ils modifient, lancent ces commandes, lisent la sortie et corrigent.
 
@@ -945,4 +945,4 @@ Histoire (sources de presse et secondaires) :
 
 Documents du cours : @sec-s1-en-bref (notions de code, TDD, projet Flutter, intégration continue) et @sec-programme-detaille.
 
-Vérification par exécution (Ubuntu 24.04, 6 octobre 2026) : Flutter 3.47.6 (stable), Dart 3.13.5, DevTools 2.60.0. Les exemples de code des parties @sec-guide-flutter-3 et @sec-guide-flutter-5 à @sec-guide-flutter-9 ont été compilés, analysés (`flutter analyze`, `dart analyze`) et exécutés (`dart run`, `flutter test`, 7 tests verts). Les messages d'erreur de @sec-guide-flutter-3-6, @sec-guide-flutter-6-3 et @sec-guide-flutter-11-2 sont des sorties réelles, abrégées.
+Vérification par exécution (Ubuntu 24.04, 6 octobre 2026) : Flutter 3.47.6 (stable), Dart 3.13.5, DevTools 2.60.0. Les exemples de code des parties [-@sec-guide-flutter-3] et [-@sec-guide-flutter-5] à [-@sec-guide-flutter-9] ont été compilés, analysés (`flutter analyze`, `dart analyze`) et exécutés (`dart run`, `flutter test`, 7 tests verts). Les messages d'erreur de @sec-guide-flutter-3-6, @sec-guide-flutter-6-3 et @sec-guide-flutter-11-2 sont des sorties réelles, abrégées.

@@ -17,7 +17,7 @@ Ce parcours est une adaptation du programme prévu pour 32 étudiants encadrés.
 ## Ce qu'il faut avoir
 
 - Un ordinateur portable personnel permettant d'installer des logiciels, une connexion internet et un compte GitHub gratuit.
-- Les outils de la séance 1 : git et GitHub, VS Code, un assistant de code (le programme utilise Claude Code, avec Claude Desktop) et Flutter (le SDK, avec une exécution dans Chrome). Docker, Rust et Antigravity sont facultatifs. Le chapitre @sec-s1-en-bref donne la liste et l'ordre des installations.
+- Les outils de la séance 1 : git et GitHub, VS Code, un assistant de code (le programme utilise Claude Code, avec Claude Desktop) et Flutter (le SDK, avec une exécution dans Chrome). Docker, Rust et Antigravity sont facultatifs. Le chapitre [-@sec-s1-en-bref] donne la liste et l'ordre des installations.
 - Un accès à un assistant de code par IA. Dans la formation, il est fourni ; en autonomie, il est à prévoir par vos soins.
 - Aucune compétence en programmation n'est requise.
 
@@ -97,7 +97,7 @@ Dans la formation, une autre équipe audite votre dépôt sur cinq points : inst
 
 ## Suivre la formation à l'université
 
-Ce parcours ne remplace pas la formation encadrée. Celle-ci se déroule à Nantes Université, en Master ITI, sur cinq séances, avec des équipes constituées en séance, un dépôt créé par l'enseignant, un passage devant un RSSI et une soutenance. Le calendrier de l'édition 2026-2027, les prérequis, les moyens et l'évaluation figurent au chapitre @sec-programme. Le livre ne détaille pas les modalités d'inscription : elles relèvent de l'établissement.
+Ce parcours ne remplace pas la formation encadrée. Celle-ci se déroule à Nantes Université, en Master ITI, sur cinq séances, avec des équipes constituées en séance, un dépôt créé par l'enseignant, un passage devant un RSSI et une soutenance. Le calendrier de l'édition 2026-2027, les prérequis, les moyens et l'évaluation figurent au chapitre [-@sec-programme]. Le livre ne détaille pas les modalités d'inscription : elles relèvent de l'établissement.
 
 ## Pour aller plus loin
 

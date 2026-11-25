@@ -367,7 +367,7 @@ Un scénario Soit / Quand / Alors décrit un comportement dans la langue du mét
 
 Ces cinq indicateurs ne contredisent pas les quatre historiques : ces derniers sont toujours là, avec des définitions affinées (le « temps de rétablissement » a été redéfini en 2023, et le « taux de reprise » ajouté en 2024). [S23]
 
-**Ce que cela apporte encore.** Pour la première fois, la qualité devient **mesurable** à l'échelle de l'organisation, et DORA insiste : vitesse et stabilité ne sont pas en compromis, les deux sont corrélées pour la plupart des équipes. [S23] Ce sont aussi les indicateurs avec lesquels on mesure l'effet de l'IA sur les équipes, ce que nous verrons au chapitre @sec-craft-ia.
+**Ce que cela apporte encore.** Pour la première fois, la qualité devient **mesurable** à l'échelle de l'organisation, et DORA insiste : vitesse et stabilité ne sont pas en compromis, les deux sont corrélées pour la plupart des équipes. [S23] Ce sont aussi les indicateurs avec lesquels on mesure l'effet de l'IA sur les équipes, ce que nous verrons au chapitre [-@sec-craft-ia].
 
 **Limites et critiques.**
 

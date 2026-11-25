@@ -35,8 +35,8 @@ Deux architectures s'opposent :
 
 C'est exactement le schéma présenté en séance 1 : « dans le cloud, vos données partent ; sur votre poste, elles restent ». Ce chapitre approfondit ce que cette phrase promet, et ce qu'elle ne garantit pas.
 
-::: {.callout-tip}
-**À retenir.** L'IA embarquée n'est pas un autre type d'IA : c'est un autre **lieu d'exécution**. Le même type de modèle peut tourner dans le cloud ou sur l'appareil. Ce qui change, ce sont les compromis.
+::: {.callout-tip title="À retenir"}
+L'IA embarquée n'est pas un autre type d'IA : c'est un autre **lieu d'exécution**. Le même type de modèle peut tourner dans le cloud ou sur l'appareil. Ce qui change, ce sont les compromis.
 :::
 
 ### Un continuum, pas une opposition
@@ -51,8 +51,8 @@ Les quatre avantages cités ci-dessous sont ceux que les éditeurs mettent en av
 
 La **latence** est le délai entre la question et le début de la réponse. Une requête cloud traverse le réseau, attend son tour sur un serveur, puis revient. Le site Flutter Edge AI affirme que l'inférence locale « élimine les délais d'aller-retour serveur » [S9]. C'est logique pour le trajet réseau, mais le calcul lui-même peut être plus lent sur un téléphone que sur un serveur spécialisé : le bilan dépend du modèle, de l'appareil et de la connexion. **Aucun chiffre général ne peut être donné sans mesure sur l'appareil cible.** Les seuls chiffres de performance trouvés dans la documentation officielle de LiteRT-LM sont un tableau de mesures par appareil : pour Gemma 4 E2B (2 583 Mo) sur un Samsung S26 Ultra, la page annonce 557 jetons par seconde en phase de « prefill » (lecture de la question) sur processeur, contre 3 808 sur GPU ; en phase de génération (« decode »), 47 contre 52 jetons par seconde [S2]. Ces chiffres illustrent l'intérêt de l'accélération matérielle, surtout pour la lecture de la question, pas ce que vous obtiendrez sur votre propre appareil : les conditions précises du test (taille du contexte, version du logiciel) ne sont pas détaillées sur la page lue.
 
-::: {.callout-note}
-**Un jeton (token)** est un morceau de mot, l'unité que les modèles de langage lisent et écrivent. Un mot courant français fait souvent un à deux jetons.
+::: {.callout-note title="Un jeton (token)"}
+Un jeton est un morceau de mot, l'unité que les modèles de langage lisent et écrivent. Un mot courant français fait souvent un à deux jetons.
 :::
 
 ### Confidentialité et RGPD {#sec-edge-rgpd}
@@ -67,8 +67,8 @@ Le **RGPD** (règlement européen sur la protection des données personnelles) p
 
 Le service système Gemini Nano (Android) illustre une approche encadrée : la documentation indique que son composant AICore « n'a pas d'accès direct à Internet » et est conçu pour isoler chaque requête sans conserver de trace des entrées ni des sorties après traitement [S5]. Ce sont des affirmations de l'éditeur, non auditées ici.
 
-::: {.callout-tip}
-**À retenir.** « Les données ne partent pas » est vrai pour l'inférence, à condition de le vérifier (aucun appel réseau caché, aucune télémétrie, aucun journal). Pour le cours, la règle d'or reste inchangée : **aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public**. L'IA locale réduit un risque, elle ne remplace pas la règle.
+::: {.callout-tip title="À retenir"}
+« Les données ne partent pas » est vrai pour l'inférence, à condition de le vérifier (aucun appel réseau caché, aucune télémétrie, aucun journal). Pour le cours, la règle d'or reste inchangée : **aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public**. L'IA locale réduit un risque, elle ne remplace pas la règle.
 :::
 
 ### Coût
@@ -121,8 +121,8 @@ Un nombre stocké sur 16 bits occupe 2 octets ; sur 4 bits, un demi-octet. Pour 
 
 Les modèles livrés pour téléphone sont déjà quantifiés par leurs éditeurs ; vous n'avez normalement pas à le faire vous-même. Il faut en revanche savoir **lire** les mentions de précision dans le nom d'un fichier de modèle et en comprendre l'effet.
 
-::: {.callout-tip}
-**À retenir.** Quantifier, c'est arrondir les nombres du modèle pour qu'il tienne dans la mémoire d'un appareil. Gain principal : l'espace. Prix : un peu de qualité, et des effets sur la vitesse et l'énergie qu'il faut mesurer.
+::: {.callout-tip title="À retenir"}
+Quantifier, c'est arrondir les nombres du modèle pour qu'il tienne dans la mémoire d'un appareil. Gain principal : l'espace. Prix : un peu de qualité, et des effets sur la vitesse et l'énergie qu'il faut mesurer.
 :::
 
 ## Les modèles ouverts
@@ -155,8 +155,8 @@ Le tableau du site Flutter Edge AI indique, modèle par modèle, quelles capacit
 
 L'écosystème se comprend comme un empilement. De bas en haut : le matériel (processeur CPU, carte graphique GPU, processeur neuronal NPU), le **moteur d'exécution** qui sait faire tourner un modèle sur ce matériel, la **couche d'orchestration** pour les modèles de langage (gestion des conversations, de la mémoire de contexte, de l'appel de fonctions), puis l'**application**.
 
-::: {.callout-note}
-**Glossaire express du matériel.** CPU : le processeur généraliste. GPU : le processeur graphique, très bon en calcul parallèle. NPU : processeur dédié aux calculs d'IA, de plus en plus présent dans les téléphones et les PC récents.
+::: {.callout-note title="Glossaire express du matériel"}
+CPU : le processeur généraliste. GPU : le processeur graphique, très bon en calcul parallèle. NPU : processeur dédié aux calculs d'IA, de plus en plus présent dans les téléphones et les PC récents.
 :::
 
 ### LiteRT : le moteur de Google
