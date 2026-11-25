@@ -2,4 +2,6 @@
 
 # La formation {.unnumbered}
 
-Page de partie.
+Cette partie présente la formation elle-même : le programme (@sec-programme), qui donne le public, les objectifs, le calendrier et l'évaluation, puis le programme détaillé (@sec-programme-detaille), qui déroule les cinq séances bloc par bloc, avec les moyens à prévoir et les critères de réussite. Elle s'adresse aux responsables pédagogiques qui veulent situer ou reprendre l'enseignement, et aux lecteurs qui veulent savoir ce que le parcours leur demandera avant de s'y engager.
+
+Le dernier chapitre de la partie, @sec-parcours-autonome, indique comment refaire le parcours sans encadrant : qui remplace le relecteur, le responsable de la sécurité des systèmes d'information et le coach.

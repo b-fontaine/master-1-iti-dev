@@ -110,7 +110,7 @@ Le talk de l'enseignant recommande de compacter vers **60 %** de remplissage et 
 
 ### Sous-agents : isoler les lectures volumineuses
 
-Un **sous-agent** travaille dans **sa propre fenêtre de contexte** et ne renvoie qu'un résumé. Analogie : un stagiaire lit trente documents et rapporte une note d'une page ; votre bureau reste dégagé (configuration dans @sec-outils-sous-agents-config).
+Un **sous-agent** travaille dans **sa propre fenêtre de contexte** et ne renvoie qu'un résumé. Analogie : un stagiaire lit trente documents et rapporte une note d'une page ; votre bureau reste dégagé (configuration dans la section [-@sec-outils-sous-agents-config]).
 
 ::: {.callout-tip title="À retenir"}
 Trois leviers quand le contexte est la contrainte : le vider (`/clear`), le résumer (`/compact`), en déporter une partie dans un sous-agent.
@@ -389,7 +389,7 @@ Cinq schémas d'échec fréquents (« Best practices », section « Avoid common
 
 Bons réflexes :
 
-- **Un agent, une branche, une tâche** (branches vues en @sec-git).
+- **Un agent, une branche, une tâche** (branches vues au chapitre [-@sec-git]).
 - **Relire vraiment.** Vous êtes responsable de relire code et commandes avant approbation. Si vous cliquez « oui » dix fois sans lire, créez des règles d'autorisation précises plutôt que de relire moins.
 - **Interrompre tôt** (`Échap`), puis `/rewind` plutôt que d'accumuler les tentatives ; **commiter souvent**, car les points de contrôle ne remplacent pas git.
 - **Faire relire par un autre contexte** (session neuve ou sous-agent), non biaisé par le raisonnement qui a produit le code. La documentation note qu'un relecteur à qui l'on demande des écarts en trouve presque toujours : demandez ceux qui touchent à la correction ou aux exigences.
@@ -416,7 +416,7 @@ Le **RGPD** (Règlement général sur la protection des données) encadre le tra
 - `/feedback` envoie une copie de la conversation (code compris), conservée 5 ans (désactivable : `DISABLE_FEEDBACK_COMMAND=1`) ;
 - la télémétrie d'usage (désactivable par `DISABLE_TELEMETRY=1`) ne contient, selon la documentation, ni code, ni prompts, ni chemins de fichiers.
 
-**En pratique dans ce cours** : n'utilisez que des **données fictives** dans dépôts, tests, captures et prompts (le projet l'impose). Ne collez ni liste de personnes, ni courriels réels, ni données d'un employeur ou d'un stage. Ceci n'est pas un avis juridique : le cadre réglementaire (bases légales, droits des personnes, transferts hors Union européenne, règlement européen sur l'IA) est traité en @sec-s3.
+**En pratique dans ce cours** : n'utilisez que des **données fictives** dans dépôts, tests, captures et prompts (le projet l'impose). Ne collez ni liste de personnes, ni courriels réels, ni données d'un employeur ou d'un stage. Ceci n'est pas un avis juridique : le cadre réglementaire (bases légales, droits des personnes, transferts hors Union européenne, règlement européen sur l'IA) est traité au chapitre [-@sec-s3].
 :::
 
 ## Optimiser sa consommation de jetons
@@ -463,7 +463,7 @@ Dans un dossier d'essai (par exemple le projet Flutter d'exemple), en mode manue
 2. `/context` : repérez « Memory files » et la part de l'instruction système et des outils.
 3. `/init`, relisez, supprimez ce qu'un agent trouve seul, ajoutez `flutter test`, `dart analyze` et trois règles (moins de 40 lignes).
 4. Créez un `.env` factice (`CLE_API=factice`), ajoutez `Read(./.env)` en `deny` via `/permissions`, demandez « lis le fichier .env » : observez le refus.
-5. (Facultatif) Copiez script et déclaration de @sec-outils-hooks, retirez provisoirement la règle de l'étape 4 pour vérifier que le hook seul refuse, puis remettez-la.
+5. (Facultatif) Copiez script et déclaration de la section [-@sec-outils-hooks], retirez provisoirement la règle de l'étape 4 pour vérifier que le hook seul refuse, puis remettez-la.
 6. Notez `/usage` avant et après une petite tâche cadrée, puis après `/clear` ; comparez avec une demande vague.
 7. `Maj+Tab` jusqu'à `plan mode on` : demandez un plan de fonctionnalité et relisez-le avant d'approuver.
 

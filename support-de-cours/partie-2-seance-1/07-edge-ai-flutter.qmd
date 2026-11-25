@@ -249,7 +249,7 @@ Le site **flutteredge.ai** présente le projet **Flutter Edge AI** : « des LLM 
 - fonctions : `_embeddings`, `_rag`, `_qdrant`, `_sqlite`, `_agent`, `_speech`, `_diagnostics` ;
 - intégrations : `genkit_flutter_edge_ai`, `genkit_hybrid` (pont avec Genkit, le cadre de Google, pour combiner cloud et local).
 
-On retrouve ici l'écosystème de @sec-edge-ecosysteme : LiteRT-LM, MediaPipe, ONNX Runtime, et les IA intégrées au système (Gemini Nano, Apple Foundation Models).
+On retrouve ici l'écosystème de la section [-@sec-edge-ecosysteme] : LiteRT-LM, MediaPipe, ONNX Runtime, et les IA intégrées au système (Gemini Nano, Apple Foundation Models).
 
 **Documentation et formation.** Le site propose huit « codelabs » (ateliers guidés) allant de 35 minutes (« Prise en main des LLM sur appareil dans Flutter », niveau débutant) à plus de 2 heures (IA hybride avec Genkit Dart, niveau avancé) [S9f].
 
@@ -387,7 +387,7 @@ void main() {
 }
 ```
 
-L'adaptateur réel réunirait les appels de @sec-edge-install (`initialize`, `installModel`, `getActiveModel`, `createChat`, puis la génération) derrière cette interface. Nous ne l'écrivons pas ici : la forme exacte du résultat de génération est à vérifier sur la documentation de la version installée, et nous préférons ne pas publier de code non vérifié.
+L'adaptateur réel réunirait les appels de la section [-@sec-edge-install] (`initialize`, `installModel`, `getActiveModel`, `createChat`, puis la génération) derrière cette interface. Nous ne l'écrivons pas ici : la forme exacte du résultat de génération est à vérifier sur la documentation de la version installée, et nous préférons ne pas publier de code non vérifié.
 
 **Les quatre soucis propres à l'embarqué** que l'architecture doit traiter :
 1. **Premier lancement** : écran de téléchargement avec progression (le site documente un suivi de progression `withProgress` [S9a]), reprise en cas de coupure, vérification de l'espace libre.
@@ -432,7 +432,7 @@ Tableau de synthèse, **état au 6 octobre 2026**, fondé sur les pages officiel
 ### Démarche conseillée
 
 1. Écrire la **spécification** de l'usage (entrée, sortie attendue, critères d'acceptation) avant de choisir le modèle : c'est le principe du développement piloté par la spécification vu en séance 1.
-2. Mettre en place l'**architecture en couches** de @sec-edge-architecture avec le faux assistant et les tests.
+2. Mettre en place l'**architecture en couches** de la section [-@sec-edge-architecture] avec le faux assistant et les tests.
 3. Brancher le modèle local derrière l'interface, **en dernier**.
 4. Évaluer sur le jeu de test fictif et consigner les résultats (tableau : modèle, taille, temps, score).
 5. Décider avec des chiffres : local, cloud ou hybride.
@@ -473,7 +473,7 @@ Pour que l'agent de code (Claude Code) vous aide sans halluciner d'API, donnez-l
 - Appareils compatibles avec Gemini Nano et AICore.
 - Existence et maturité d'un plugin Flutter officiel pour ML Kit.
 - Statut exact de MediaPipe LLM Inference API par rapport à LiteRT-LM.
-- Conditions détaillées des mesures de performance de LiteRT-LM citées dans @sec-edge-latence ; aucune performance de `flutter_edge_ai` sur appareil réel n'a été mesurée ni trouvée sourcée.
+- Conditions détaillées des mesures de performance de LiteRT-LM citées dans la section [-@sec-edge-latence] ; aucune performance de `flutter_edge_ai` sur appareil réel n'a été mesurée ni trouvée sourcée.
 - Qualité de Google Developer Expert de S. Denisov : affirmée par son profil sur wearedevelopers.com, non confirmée par une source de Google.
 - Citation de la documentation Core ML (@sec-edge-coreml) : la page Apple n'a pas pu être relue automatiquement ; seule la session WWDC26 a été relue.
 - Détails de coexistence Core ML et Core AI (page résumée d'une session de conférence).

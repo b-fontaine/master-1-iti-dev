@@ -25,7 +25,7 @@ Ce chapitre accompagne le troisième temps de la séance : vous quittez le dép�
 
 Jusqu'ici, vous vous êtes entraînés : git dans un dépôt d'essai (@sec-git), la configuration de Claude Code dans ce même dépôt (@sec-configurer-claude-code). Rien de ce que vous y avez fait ne pouvait gêner quelqu'un d'autre. À partir de maintenant, vous travaillez à plusieurs dans un dépôt **public**, qui sera lu par vos coéquipiers, par une autre équipe en séances 3 et 4, par l'enseignant et par un jury.
 
-Le chapitre ne redit pas ce que les autres expliquent. Les gestes git sont dans @sec-git, la configuration de l'agent dans @sec-configurer-claude-code, les fiches à suivre en pratique dans @sec-fiches. Flutter, le TDD et les patrons d'architecture ont leurs chapitres dans la séance 1 (@sec-guide-flutter, @sec-pratique-craft-flutter et @sec-design-patterns) : vous trouverez ici les renvois précis.
+Le chapitre ne redit pas ce que les autres expliquent. Les gestes git sont dans le chapitre [-@sec-git], la configuration de l'agent dans le chapitre [-@sec-configurer-claude-code], les fiches à suivre en pratique dans l'annexe [-@sec-fiches]. Flutter, le TDD et les patrons d'architecture ont leurs chapitres dans la séance 1 (@sec-guide-flutter, @sec-pratique-craft-flutter et @sec-design-patterns) : vous trouverez ici les renvois précis.
 
 ```{mermaid}
 flowchart LR
@@ -44,7 +44,7 @@ L'objectif de la matinée n'est pas d'écrire du code : c'est d'obtenir un dép�
 
 ### Ce qui se décide au début de la séance
 
-Aucun formulaire n'est lancé après la séance 1 : il n'y a, en arrivant, ni équipes, ni thèmes attribués, ni dépôts. Tout se décide en ouverture de séance, juste après la remise en route des postes (fiche 0 de @sec-fiches) et la présentation des trois thèmes.
+Aucun formulaire n'est lancé après la séance 1 : il n'y a, en arrivant, ni équipes, ni thèmes attribués, ni dépôts. Tout se décide en ouverture de séance, juste après la remise en route des postes (fiche 0 de l'annexe [-@sec-fiches]) et la présentation des trois thèmes.
 
 1. **Vous formez une équipe** de 3 à 5 personnes.
 2. **L'équipe remplit le formulaire, sur place** : sa composition, les identifiants GitHub de ses membres, son classement des trois thèmes. Vérifiez l'orthographe de chaque identifiant : c'est avec lui que vous serez invité dans le dépôt.
@@ -58,7 +58,7 @@ Pendant que vous travaillez dans votre dépôt d'essai (@sec-git et @sec-configu
 
 Vous recevez alors une invitation par courriel : **acceptez-la dès réception** (courriel de GitHub, ou `github.com/notifications`). Un dépôt public se lit sans invitation, il ne s'écrit pas sans elle. Au début de l'atelier d'initialisation, chacun vérifie qu'il voit le dépôt de son équipe sur GitHub et qu'il y a un accès en écriture.
 
-Avant de classer les thèmes, sachez que le thème C demande plus de travail de conformité que les deux autres (il prend une décision qui concerne des personnes). Les trois énoncés sont dans @sec-themes et sont présentés en début de séance avec leur propre diaporama ; ce chapitre n'y revient pas, et ses exemples s'appuient sur le thème B (le calcul du TRS d'un atelier).
+Avant de classer les thèmes, sachez que le thème C demande plus de travail de conformité que les deux autres (il prend une décision qui concerne des personnes). Les trois énoncés sont dans le chapitre [-@sec-themes] et sont présentés en début de séance avec leur propre diaporama ; ce chapitre n'y revient pas, et ses exemples s'appuient sur le thème B (le calcul du TRS d'un atelier).
 
 ### Les gardiens {#sec-projet-gardiens}
 
@@ -304,7 +304,7 @@ Ouvrez ensuite le dossier dans VS Code (`code .`), puis lancez Claude Code **dan
 | `flutter run -d chrome` ne trouve pas Chrome | Chrome absent ou non détecté | `flutter doctor` : seule la ligne Chrome compte, la chaîne Android peut rester en rouge |
 | Les tests passent chez l'un et pas chez l'autre | Postes différents, ou modification locale non commitée | `git status` sur les deux postes ; comparer `flutter --version` |
 
-Deux réflexes : lire le message d'erreur en entier, en commençant par la **première** ligne rouge (voir @sec-guide-flutter) ; et demander à l'agent d'**expliquer** l'erreur avant de lui demander de la corriger. La fiche F de @sec-fiches reprend les pannes git les plus fréquentes.
+Deux réflexes : lire le message d'erreur en entier, en commençant par la **première** ligne rouge (voir @sec-guide-flutter) ; et demander à l'agent d'**expliquer** l'erreur avant de lui demander de la corriger. La fiche F de l'annexe [-@sec-fiches] reprend les pannes git les plus fréquentes.
 
 ::: {.callout-tip title="À retenir"}
 Le dépôt n'est « fonctionnel » que si les tests sont verts et l'application ouverte dans Chrome sur le poste de **chaque** membre. Un seul poste qui marche ne suffit pas.
@@ -365,7 +365,7 @@ L'agent aide à rédiger, l'équipe décide. Ce que vous refusez à l'agent est 
 
 ### Branche, commit, envoi
 
-Vous ne travaillez jamais directement sur `main` : vous créez une branche, vous y commitez, vous la poussez. Les gestes sont expliqués dans @sec-git ; en voici l'enchaînement pour `PROJET.md`.
+Vous ne travaillez jamais directement sur `main` : vous créez une branche, vous y commitez, vous la poussez. Les gestes sont expliqués dans le chapitre [-@sec-git] ; en voici l'enchaînement pour `PROJET.md`.
 
 ```bash
 git switch -c projet-perimetre
@@ -385,7 +385,7 @@ gh pr create --web
 
 Cette commande ouvre dans le navigateur le formulaire de création de PR, **déjà rempli avec le modèle du dépôt**. Sans `--web`, `gh pr create` pose ses questions dans le terminal et part lui aussi du modèle. N'utilisez pas l'option `--fill` : elle remplit la PR avec le message du commit et **saute le modèle**.
 
-Le modèle (`.github/pull_request_template.md`) vous demande cinq choses. Exemple rempli, **rédigé pour ce chapitre** ; la fiche E de @sec-fiches donne le modèle vierge.
+Le modèle (`.github/pull_request_template.md`) vous demande cinq choses. Exemple rempli, **rédigé pour ce chapitre** ; la fiche E de l'annexe [-@sec-fiches] donne le modèle vierge.
 
 ```markdown
 ## Résumé
@@ -439,7 +439,7 @@ Le relecteur est un **coéquipier autre que l'auteur**. Il ouvre la PR sur GitHu
 4. Aucun secret, aucune donnée réelle ou personnelle.
 5. Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées.
 
-Le programme fixe le nombre de lignes de cette checklist, pas leur texte : celui-ci est une **proposition des supports**, reprise sur la fiche D de @sec-fiches. Pour cette première PR, qui ne touche qu'un fichier Markdown, la ligne 3 se réduit à « la pastille de CI est verte » et la ligne 5 à « rien d'autre que `PROJET.md` n'a changé ».
+Le programme fixe le nombre de lignes de cette checklist, pas leur texte : celui-ci est une **proposition des supports**, reprise sur la fiche D de l'annexe [-@sec-fiches]. Pour cette première PR, qui ne touche qu'un fichier Markdown, la ligne 3 se réduit à « la pastille de CI est verte » et la ligne 5 à « rien d'autre que `PROJET.md` n'a changé ».
 
 Pour donner son avis : bouton « Review changes », un commentaire, puis l'un des trois choix **Comment** (une remarque), **Approve** (j'approuve) ou **Request changes** (à corriger), et « Submit review ». Si quelque chose est à corriger, l'auteur ajoute un commit sur la même branche et le pousse : la PR se met à jour toute seule.
 
@@ -469,7 +469,7 @@ git pull
 
 ### Vérifier que la protection est active
 
-Un garde-fou que l'on n'a pas vu refuser n'est pas un garde-fou (c'est la leçon de @sec-configurer-claude-code sur les permissions, appliquée à git). Un membre de l'équipe tente donc un envoi direct sur `main` :
+Un garde-fou que l'on n'a pas vu refuser n'est pas un garde-fou (c'est la leçon du chapitre [-@sec-configurer-claude-code] sur les permissions, appliquée à git). Un membre de l'équipe tente donc un envoi direct sur `main` :
 
 ```bash
 git switch main
@@ -541,7 +541,7 @@ Le tag dit **quel** état retrouver, le journal dit **quoi en faire**. L'un sans
 
 ## Et ensuite : la séance 3, puis la fin du calendrier {#sec-projet-calendrier}
 
-L'interruption de huit semaines est derrière vous : elle séparait la séance 1 de celle-ci, et c'est pour elle que la fiche 0 de @sec-fiches fait revérifier son poste. La suite est plus serrée.
+L'interruption de huit semaines est derrière vous : elle séparait la séance 1 de celle-ci, et c'est pour elle que la fiche 0 de l'annexe [-@sec-fiches] fait revérifier son poste. La suite est plus serrée.
 
 ```{mermaid}
 timeline
@@ -551,7 +551,7 @@ timeline
     Mercredi 16 décembre : Séance 4 : qualité, CI/CD, sécurité, AI Act, passage devant le RSSI
     Vendredi 18 décembre : Fiche de conformité v1 déposée en PR
     Du samedi 19 décembre au dimanche 3 janvier : Vacances de fin d'année, sans travail imposé
-    Janvier 2027 (date à préciser) : Séance 5 : retouches et soutenance
+    Janvier 2027 : Séance 5 : retouches et soutenance
 ```
 
 ### Entre la séance 2 et la séance 3
@@ -567,7 +567,7 @@ Si votre équipe n'a pas terminé l'initialisation en séance 2 (première PR re
 ### Plus tard dans le calendrier
 
 - **Entre la séance 3 et la séance 4, douze jours** : une tâche facultative, de 2 h au plus par étudiant, pour terminer ce qui aura glissé de la séance 3 (jeu de données complet, rôles). Elle sera précisée en séance 3.
-- **Le sprint final** se place entre la séance 4 (16 décembre) et la soutenance, en janvier 2027 (date à préciser) : 15 à 20 heures par équipe. Il englobe les vacances de fin d'année (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus) : aucun travail n'est imposé pendant les vacances au-delà de ce que votre équipe choisit.
+- **Le sprint final** se place entre la séance 4 (16 décembre) et la soutenance, en janvier 2027 : 15 à 20 heures par équipe. Il englobe les vacances de fin d'année (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus) : aucun travail n'est imposé pendant les vacances au-delà de ce que votre équipe choisit.
 - **Jalons** : fiche de conformité v1 en PR le vendredi 18 décembre 2026 ; réponse du RSSI au plus tard une semaine avant la soutenance ; gel et tag `v1.0-rc` l'avant-veille de la soutenance à 18 h ; lecture des dépôts par les évaluateurs la veille.
 
 ### Ce qu'il ne faut pas faire d'ici là
@@ -637,7 +637,7 @@ Elles valent pour toute la durée du projet. Vous avez déjà pratiqué les quat
 
 - Séance 1 : @sec-guide-flutter (Flutter), @sec-pratique-craft-flutter (le dojo : TDD, BDD, petits commits, rôle de l'agent), @sec-ci-cd (CI et protections de branche), @sec-design-patterns (patrons d'architecture de Flutter).
 - Séance 2 : @sec-git pour chaque geste git de ce chapitre, @sec-configurer-claude-code pour la configuration de l'agent, @sec-fiches pour les fiches C (initialisation), D (checklist), E (modèle de PR) et F (dépannage).
-- L'énoncé de votre thème dans @sec-themes : relisez la « première user story » qu'il propose et son scénario.
+- L'énoncé de votre thème dans le chapitre [-@sec-themes] : relisez la « première user story » qu'il propose et son scénario.
 - Simon Willison, « Don't file pull requests with code you haven't reviewed yourself » : une page, à lire avant la séance 3.
 - Documentation de GitHub : « About pull request reviews » et « About protected branches ».
 
@@ -654,7 +654,7 @@ Elles valent pour toute la durée du projet. Vous avez déjà pratiqué les quat
 - **Séquence git locale** (branche, commit, `git push -u`, `git commit --allow-empty`, `git reset --hard origin/main`, `git tag`, `git push origin s2-fin`) : jouée avec git 2.53.0 dans un dépôt jetable relié à un dépôt distant local, sans GitHub.
 - **Pannes de la section « Quand ça échoue »** : causes probables tirées de l'expérience courante, non reproduites ; le code d'erreur 403 pour une invitation non acceptée est donné à titre indicatif.
 - **Checklist de PR** : texte proposé par les supports, à valider par l'enseignant.
-- **Dates et calendrier** : le calendrier a glissé (la séance 2 était d'abord prévue le 9 octobre) ; les dates des 4, 16 et 18 décembre, des vacances et de la soutenance, en janvier 2027 (date à préciser), sont reprises du programme et susceptibles d'ajustement par l'enseignant.
+- **Dates et calendrier** : le calendrier a glissé (la séance 2 était d'abord prévue le 9 octobre) ; les dates des 4, 16 et 18 décembre, des vacances et de la soutenance, en janvier 2027, sont reprises du programme et susceptibles d'ajustement par l'enseignant.
 - **Création des dépôts pendant la séance** : le script du programme détaillé (@sec-programme-detaille) n'a pas été exécuté pour ce chapitre ; le délai entre le formulaire et la réception de l'invitation n'est pas mesuré.
 
 :::

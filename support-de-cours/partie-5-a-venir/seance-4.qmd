@@ -35,7 +35,7 @@ Poids des blocs : **Indispensable** = ne pas sacrifier ; **Important** = sauf co
 
 **Livrable de fin de séance.** Test d'acceptation du clou (fichiers `.feature`) en rouge dans une PR brouillon ; règle `deny`, consigne `CLAUDE.md` et `CODEOWNERS` fusionnés ; CI complète obligatoire sur `main` protégée ; build web publié sur GitHub Pages par l'équipe ; rôles en place ; brouillon de fiche de conformité (rubriques 1 à 5, classement et rôle AI Act provisoires à la rubrique 9 ; la rubrique 8 (art. 22) est discutée devant le RSSI) présenté au RSSI ; audit reçu (issues) ; release `v0.1` si `main` est verte.
 
-Le déroulé complet, bloc par bloc, est décrit dans @sec-programme-detaille.
+Le déroulé complet, bloc par bloc, est décrit dans le chapitre [-@sec-programme-detaille].
 
 ::: {.callout-note title="Chapitres à paraître dans une prochaine édition"}
 Les chapitres de cette séance ne sont pas encore rédigés. Cette page en donne les objectifs et le déroulé ; les séances 1 et 2 sont déjà développées dans les parties précédentes.

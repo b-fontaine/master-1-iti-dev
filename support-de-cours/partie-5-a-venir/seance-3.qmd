@@ -32,7 +32,7 @@ Poids des blocs : **Indispensable** = ne pas sacrifier ; **Important** = sauf co
 
 **Livrable de fin de séance (identique pour les trois thèmes).** **Première règle verte, modèle et migrations fusionnés, début de `docs/fiche_conformite.md` commité.** Détail : première user story livrée (scénario `.feature`, tests, code, PR relue), modèle de données (schéma, première migration, test d'intégrité), `docs/fiche_conformite.md` commité (rubriques 1 à 5), au moins une PR relue par une autre équipe.
 
-Le déroulé complet, bloc par bloc, est décrit dans @sec-programme-detaille.
+Le déroulé complet, bloc par bloc, est décrit dans le chapitre [-@sec-programme-detaille].
 
 ::: {.callout-note title="Chapitres à paraître dans une prochaine édition"}
 Les chapitres de cette séance ne sont pas encore rédigés. Cette page en donne les objectifs et le déroulé ; les séances 1 et 2 sont déjà développées dans les parties précédentes.

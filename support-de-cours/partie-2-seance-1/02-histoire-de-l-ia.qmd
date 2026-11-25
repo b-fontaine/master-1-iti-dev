@@ -16,7 +16,7 @@
 
 ::: {.callout-note title="État des connaissances"}
 
-État des connaissances au 6 octobre 2026. Le domaine va vite : les noms de modèles, les prix et les versions cités dans @sec-histoire-ia-fonctionnement et @sec-histoire-ia-limites sont ceux de la documentation officielle consultée le 6 octobre 2026 et seront en partie périmés l'an prochain. Les faits historiques, eux, ne bougent pas.
+État des connaissances au 6 octobre 2026. Le domaine va vite : les noms de modèles, les prix et les versions cités dans les sections [-@sec-histoire-ia-fonctionnement] et [-@sec-histoire-ia-limites] sont ceux de la documentation officielle consultée le 6 octobre 2026 et seront en partie périmés l'an prochain. Les faits historiques, eux, ne bougent pas.
 
 :::
 
@@ -256,7 +256,7 @@ Vous pouvez le relancer : enregistrez-le sous `predire.dart` et lancez `dart run
 
 ### La fenêtre de contexte : la mémoire de travail {#sec-histoire-ia-contexte}
 
-La **fenêtre de contexte** est tout le texte que le modèle peut « avoir sous les yeux » pour produire sa réponse. La documentation d'Anthropic la décrit comme une « working memory » (mémoire de travail) qui comprend l'invite système, tous les messages, les résultats d'outils, les définitions d'outils et la réponse en cours de rédaction, y compris le raisonnement [38]. Ce n'est **pas** le corpus d'entraînement : c'est ce que vous lui montrez maintenant. Le modèle n'a pas de souvenir entre deux conversations, sauf si l'outil lui remet des notes (c'est le rôle du fichier `CLAUDE.md`, présenté dans @sec-configurer-claude-code) [36].
+La **fenêtre de contexte** est tout le texte que le modèle peut « avoir sous les yeux » pour produire sa réponse. La documentation d'Anthropic la décrit comme une « working memory » (mémoire de travail) qui comprend l'invite système, tous les messages, les résultats d'outils, les définitions d'outils et la réponse en cours de rédaction, y compris le raisonnement [38]. Ce n'est **pas** le corpus d'entraînement : c'est ce que vous lui montrez maintenant. Le modèle n'a pas de souvenir entre deux conversations, sauf si l'outil lui remet des notes (c'est le rôle du fichier `CLAUDE.md`, présenté dans le chapitre [-@sec-configurer-claude-code]) [36].
 
 Deux conséquences pratiques :
 
@@ -335,7 +335,7 @@ La chronologie de l'IA générative tient en quatre étapes cumulatives : **pré
 
 ## Les limites structurelles des modèles de langage {#sec-histoire-ia-limites}
 
-Ces cinq limites découlent du fonctionnement décrit dans @sec-histoire-ia-fonctionnement. Les connaître, c'est savoir pourquoi les pratiques du cours (tests, relecture, contexte court, règle d'or) existent.
+Ces cinq limites découlent du fonctionnement décrit dans la section [-@sec-histoire-ia-fonctionnement]. Les connaître, c'est savoir pourquoi les pratiques du cours (tests, relecture, contexte court, règle d'or) existent.
 
 ### Les hallucinations
 
@@ -534,7 +534,7 @@ Les dossiers de sources du cours rappellent un point de méthode : une grande pa
 - Lisez l'article de Turing de 1950 (en anglais, accessible) [1] et la proposition de Dartmouth [2] : ils sont courts et étonnamment actuels.
 - Lisez « Building effective agents » d'Anthropic [33] pour la distinction workflow / agent et les conseils de prudence.
 - Parcourez la page « How Claude Code works » [36] avant la séance 2 : c'est la boucle d'agent, vue de l'intérieur.
-- Modifiez le mini-modèle de @sec-histoire-ia-prediction : ajoutez des phrases au corpus, changez la température, et observez comment les probabilités bougent. C'est la meilleure façon de sentir pourquoi la même question peut donner des réponses différentes.
+- Modifiez le mini-modèle de la section [-@sec-histoire-ia-prediction] : ajoutez des phrases au corpus, changez la température, et observez comment les probabilités bougent. C'est la meilleure façon de sentir pourquoi la même question peut donner des réponses différentes.
 - Pour l'esprit critique, relisez @sec-histoire-ia-faits avant de lire un article de presse sur l'IA : qui mesure, avec quel intérêt, sur quel contexte ?
 
 ## Points non vérifiés ou à surveiller

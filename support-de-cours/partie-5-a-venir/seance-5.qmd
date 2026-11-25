@@ -29,7 +29,7 @@ Poids des blocs : **Indispensable** = ne pas sacrifier ; **Important** = sauf co
 
 **Livrable de fin de séance.** Tag `v1.0`, dossier de rendu à jour (voir @sec-pd-evaluation) et soutenance passée.
 
-Le déroulé complet, bloc par bloc, est décrit dans @sec-programme-detaille.
+Le déroulé complet, bloc par bloc, est décrit dans le chapitre [-@sec-programme-detaille].
 
 ::: {.callout-note title="Chapitres à paraître dans une prochaine édition"}
 Les chapitres de cette séance ne sont pas encore rédigés. Cette page en donne les objectifs et le déroulé ; les séances 1 et 2 sont déjà développées dans les parties précédentes.

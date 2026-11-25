@@ -314,7 +314,7 @@ flowchart TD
     F --> F3["ElevatedButton"]
 ```
 
-Cet arbre est celui de l'exemple de @sec-guide-flutter-5, dans sa version complète avec le bouton « Voir le détail » (@sec-guide-flutter-8). L'outil **Flutter Inspector** (dans les DevTools, ouvert depuis le panneau Flutter de VS Code, [guide de démarrage rapide](https://docs.flutter.dev/install/quick)) affiche cet arbre pour l'application en cours : c'est très utile pour comprendre un écran qu'on n'a pas écrit.
+Cet arbre est celui de l'exemple de la section [-@sec-guide-flutter-5], dans sa version complète avec le bouton « Voir le détail » (@sec-guide-flutter-8). L'outil **Flutter Inspector** (dans les DevTools, ouvert depuis le panneau Flutter de VS Code, [guide de démarrage rapide](https://docs.flutter.dev/install/quick)) affiche cet arbre pour l'application en cours : c'est très utile pour comprendre un écran qu'on n'a pas écrit.
 
 ### Les widgets de base à connaître
 
@@ -335,7 +335,7 @@ Les composants de style « Material » (`Scaffold`, `AppBar`, `ElevatedButton`) 
 
 ### La composition plutôt que l'héritage
 
-Un widget ne se personnalise pas en le « déformant », mais en l'**enveloppant** dans d'autres widgets : pour mettre une marge autour d'un texte, on place le `Text` dans un `Padding`. Pour réutiliser un morceau d'interface, on crée **son propre widget**, qui assemble d'autres widgets. C'est ce qu'on fait dans @sec-guide-flutter-6 avec `CarteQuete`.
+Un widget ne se personnalise pas en le « déformant », mais en l'**enveloppant** dans d'autres widgets : pour mettre une marge autour d'un texte, on place le `Text` dans un `Padding`. Pour réutiliser un morceau d'interface, on crée **son propre widget**, qui assemble d'autres widgets. C'est ce qu'on fait dans la section [-@sec-guide-flutter-6] avec `CarteQuete`.
 
 Chaque widget possède une méthode `build`, qui dit **comment il se dessine** à partir d'autres widgets. Flutter appelle `build` quand il a besoin de (re)dessiner. C'est la seule méthode que vous aurez presque toujours à lire.
 
@@ -914,7 +914,7 @@ Lire dans l'ordre : type d'erreur, fichier et ligne, conseil. Ignorer la pile d'
 - Le rôle de `ChangeNotifier` et `ListenableBuilder` comme outils de base (@sec-guide-flutter-7-1) : non revérifié sur la documentation.
 - Le lancement de Flutter dans Chrome n'a pas été rejoué dans un navigateur pour ce chapitre ; seuls l'analyse, les tests et `flutter devices` ont été exécutés.
 - Le code `go_router` (@sec-guide-flutter-8-2) n'a pas été exécuté.
-- Les erreurs « classiques » listées à la fin de @sec-guide-flutter-11-2 ne sont pas reproduites une par une.
+- Les erreurs « classiques » listées à la fin de la section [-@sec-guide-flutter-11-2] ne sont pas reproduites une par une.
 - L'alpha de Flutter à Google I/O en mai 2017 repose sur une source secondaire (Wikipédia).
 - Les versions de paquets et d'outils (Flutter 3.47.6, Dart 3.13.5, `flutter_bloc` 9.1.1, `bloc_test` 10.0.0, `go_router` 18.0.2) sont celles du 6 octobre 2026 et évoluent vite.
 :::
@@ -945,4 +945,4 @@ Histoire (sources de presse et secondaires) :
 
 Documents du cours : @sec-s1-en-bref (notions de code, TDD, projet Flutter, intégration continue) et @sec-programme-detaille.
 
-Vérification par exécution (Ubuntu 24.04, 6 octobre 2026) : Flutter 3.47.6 (stable), Dart 3.13.5, DevTools 2.60.0. Les exemples de code des parties [-@sec-guide-flutter-3] et [-@sec-guide-flutter-5] à [-@sec-guide-flutter-9] ont été compilés, analysés (`flutter analyze`, `dart analyze`) et exécutés (`dart run`, `flutter test`, 7 tests verts). Les messages d'erreur de @sec-guide-flutter-3-6, @sec-guide-flutter-6-3 et @sec-guide-flutter-11-2 sont des sorties réelles, abrégées.
+Vérification par exécution (Ubuntu 24.04, 6 octobre 2026) : Flutter 3.47.6 (stable), Dart 3.13.5, DevTools 2.60.0. Les exemples de code des parties [-@sec-guide-flutter-3] et [-@sec-guide-flutter-5] à [-@sec-guide-flutter-9] ont été compilés, analysés (`flutter analyze`, `dart analyze`) et exécutés (`dart run`, `flutter test`, 7 tests verts). Les messages d'erreur des sections [-@sec-guide-flutter-3-6], [-@sec-guide-flutter-6-3] et [-@sec-guide-flutter-11-2] sont des sorties réelles, abrégées.

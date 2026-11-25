@@ -763,7 +763,7 @@ Fonctionnalité: Un pas de la fourmi de Langton
     Et la case (0, 0) est noire
 ```
 
-Il se lit sans connaître la programmation : c'est son intérêt, il peut être écrit et relu par un expert métier. Le dépôt de l'enseignant présente ensuite la bibliothèque `bdd_widget_test`, qui **génère** des tests Flutter à partir de fichiers `.feature` (son README indique la version `^1.7.4` ; à la date de rédaction, `flutter pub add --dev --dry-run` résout une version 2.1.4 : **vérifiez la version actuelle sur pub.dev** avant installation, la mise en œuvre complète est vue en @sec-s3).
+Il se lit sans connaître la programmation : c'est son intérêt, il peut être écrit et relu par un expert métier. Le dépôt de l'enseignant présente ensuite la bibliothèque `bdd_widget_test`, qui **génère** des tests Flutter à partir de fichiers `.feature` (son README indique la version `^1.7.4` ; à la date de rédaction, `flutter pub add --dev --dry-run` résout une version 2.1.4 : **vérifiez la version actuelle sur pub.dev** avant installation, la mise en œuvre complète est vue au chapitre [-@sec-s3]).
 
 **Sans outil, on peut déjà penser en BDD.** Voici le même scénario écrit à la main, dans `test/scenarios_test.dart`, avec les trois temps en commentaires (exécuté : `+1`, vert) :
 
@@ -957,7 +957,7 @@ Demander « fais-le en TDD » ne suffit pas. Il faut (1) écrire les tests soi-m
 4. **Interface.** Ajoutez un bouton « Réinitialiser » qui remet la fourmi au départ. Écrivez le test d'abord.
 5. **Scénario.** Écrivez en Soit/Quand/Alors le cas « fourmi sur une case noire, tournée vers l'est, en (1, 0) ».
 6. **Évolution (réflexion).** La fourmi sort de la fenêtre 11 × 11 au bout d'un certain temps. Proposez, en une phrase, deux solutions possibles, et dites quel test vous écririez d'abord pour chacune.
-7. **L'agent.** (a) Rédigez le prompt à donner à un agent pour l'exercice 4, en reprenant les six règles de @sec-pratique-craft-flutter-12-3. (b) Un agent vous rend un diff où le test `Cap, tourner à gauche` a été modifié et où un cas a disparu. Que faites-vous ?
+7. **L'agent.** (a) Rédigez le prompt à donner à un agent pour l'exercice 4, en reprenant les six règles de la section [-@sec-pratique-craft-flutter-12-3]. (b) Un agent vous rend un diff où le test `Cap, tourner à gauche` a été modifié et où un cas a disparu. Que faites-vous ?
 
 ---
 
@@ -1049,7 +1049,7 @@ Code minimal dans `_EtatEcranLangton` : rendre `_monde` modifiable, ajouter la m
 
 **Exercice 6.** Pas de réponse unique ; deux pistes : (a) **recentrer** la fenêtre sur la fourmi : premier test à écrire, « la fourmi est toujours affichée au centre » ; (b) **agrandir** la fenêtre ou la rendre défilante : premier test, « une case lointaine, par exemple (20, 0), existe et peut être noircie ». Le choix de conception se fait **avant** le code, par le test.
 
-**Exercice 7.** (a) Exemple de prompt : « Contexte : projet Flutter fourmi_langton. J'ai écrit un test rouge dans test/ecran_test.dart qui décrit un bouton Réinitialiser. Fais-le passer en red/green TDD. Lance d'abord `flutter test` et montre-moi la sortie rouge. Modifie uniquement lib/ecran.dart. Ne touche à aucun test. Après le vert, lance `flutter test` et `dart analyze`, montre les sorties, propose un message de commit sans le lancer. » (b) On **n'accepte pas** le diff : on revient au dernier commit vert (`git restore test/` ou `git checkout -- test/`), on redonne la consigne (règle 3 : interdit de toucher aux tests), on active si besoin la règle `deny` de @sec-pratique-craft-flutter-12-4, et si le test semble réellement faux on le corrige **soi-même**, en le rendant d'abord rouge puis vert. Un test supprimé ou affaibli par l'agent est un signal d'alerte au sens de Beck (section 12.1).
+**Exercice 7.** (a) Exemple de prompt : « Contexte : projet Flutter fourmi_langton. J'ai écrit un test rouge dans test/ecran_test.dart qui décrit un bouton Réinitialiser. Fais-le passer en red/green TDD. Lance d'abord `flutter test` et montre-moi la sortie rouge. Modifie uniquement lib/ecran.dart. Ne touche à aucun test. Après le vert, lance `flutter test` et `dart analyze`, montre les sorties, propose un message de commit sans le lancer. » (b) On **n'accepte pas** le diff : on revient au dernier commit vert (`git restore test/` ou `git checkout -- test/`), on redonne la consigne (règle 3 : interdit de toucher aux tests), on active si besoin la règle `deny` de la section [-@sec-pratique-craft-flutter-12-4], et si le test semble réellement faux on le corrige **soi-même**, en le rendant d'abord rouge puis vert. Un test supprimé ou affaibli par l'agent est un signal d'alerte au sens de Beck (section 12.1).
 
 ---
 

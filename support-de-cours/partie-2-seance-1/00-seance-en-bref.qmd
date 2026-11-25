@@ -1,6 +1,6 @@
 <!-- source: cours/presentations/day-1/index.html, cours/presentations/day-1/notes.html · synchro: 2026-11-25 -->
 
-# La séance en bref {#sec-s1-en-bref}
+# La séance 1 en bref {#sec-s1-en-bref}
 
 La séance 1, « Comprendre et s'équiper », poursuit un fil rouge simple : à chaque époque, la vitesse de production du logiciel augmente, et à chaque époque on redécouvre que la qualité décide de ce que l'on peut encore changer demain. Ce chapitre résume la séance et indique, pour chaque idée, où la retrouver en détail dans les neuf chapitres qui suivent.
 

@@ -4,7 +4,7 @@
 
 Nantes Université, édition 2026. Cinq séances de 4 heures, 32 étudiants de Master orientés industrie et innovation, autour d'un projet fil rouge mené en équipe.
 
-Ce chapitre est le programme détaillé de la formation. Il fixe les séances, l'évaluation, la stack, le travail entre les séances, la conformité (RGPD et AI Act), les risques et les moyens à prévoir. Les énoncés des trois thèmes du projet sont dans @sec-themes. Le module de sensibilisation à la conformité est dans @sec-conformite.
+Ce chapitre est le programme détaillé de la formation. Il fixe les séances, l'évaluation, la stack, le travail entre les séances, la conformité (RGPD et AI Act), les risques et les moyens à prévoir. Les énoncés des trois thèmes du projet sont dans le chapitre [-@sec-themes]. Le module de sensibilisation à la conformité est dans le chapitre [-@sec-conformite].
 
 ::: {.callout-note title="État des connaissances"}
 Les identifiants de code Dart sont en `lowerCamelCase` (types en `UpperCamelCase`) et les fichiers en `snake_case` ; les noms de tables et de champs de la base sont en ASCII `snake_case` sans accent ; les textes de présentation sont accentués. Les mentions « (à vérifier) » signalent ce qui n'a pas été confirmé sur une source au moment de la rédaction. Le calendrier de l'AI Act est consigné dans le module de conformité dans son état au 1er octobre 2026.
@@ -124,7 +124,7 @@ Chaque bloc indique aussi sa **nature** : exposé, démonstration, atelier, inst
 
 *À ne pas confondre :* la liste d'outils « indispensable » / « utile plus tard » de S1 classe des logiciels à installer, pas des blocs de séance.
 
-**Rôles d'équipe** (à partir de S2, définis par thème dans @sec-themes) :
+**Rôles d'équipe** (à partir de S2, définis par thème dans le chapitre [-@sec-themes]) :
 
 - 3 membres : **gardien produit et conformité** (`PROJET.md`, cas d'acceptation, fiche de conformité) ; **gardien des données** (modèle, migrations, seed) ; **gardien du harnais et de la CI** (`CLAUDE.md`, permissions, GitHub Actions).
 - 4 membres : les trois rôles ci-dessus, avec un **gardien conformité** distinct (fiche, pseudonymisation, contact avec le RSSI).
@@ -327,7 +327,7 @@ Ne se sacrifient jamais : l'accueil, les installations indispensables (git, VS C
 
 1. La présentation de la pile (bloc 8), réduite à la lecture commentée du `CLAUDE.md`, et la restitution flash orale (bloc 10), remplacée par un écrit.
 2. L'étape 3 de l'atelier de configuration (skill).
-3. Dans le bloc 2, la présentation des thèmes se resserre sur la mise en situation et la règle centrale de chaque thème (le détail est dans @sec-themes) ; dans le bloc 1, l'exercice éclair sur la règle d'or se réduit à son rappel.
+3. Dans le bloc 2, la présentation des thèmes se resserre sur la mise en situation et la règle centrale de chaque thème (le détail est dans le chapitre [-@sec-themes]) ; dans le bloc 1, l'exercice éclair sur la règle d'or se réduit à son rappel.
 
 Ne se sacrifient jamais : la remise en route des postes, la présentation des thèmes et la constitution des équipes (elles conditionnent la création des dépôts), git au clavier, le test du refus de lecture de `.env`, la première PR relue avec la protection de `main` vérifiée, la visite de l'exemple `.feature` et du test de BLoC du squelette.
 
@@ -812,7 +812,7 @@ Repères pour la notation :
 
 ### Socle commun (identique pour tous les thèmes) {#sec-pd-socle}
 
-Le détail des thèmes (cas d'acceptation chiffrés, « clou » à deux niveaux, « livrable minimum viable ») est dans @sec-themes.
+Le détail des thèmes (cas d'acceptation chiffrés, « clou » à deux niveaux, « livrable minimum viable ») est dans le chapitre [-@sec-themes].
 
 **Obligatoire :**
 
@@ -821,7 +821,7 @@ Le détail des thèmes (cas d'acceptation chiffrés, « clou » à deux niveaux,
 - **Deux rôles** d'utilisateurs, branchés sur la garde d'accès `RequireRole` (couche domain), avec test de refus.
 - La règle métier **« clou » niveau 1**, avec ses scénarios d'acceptation (`.feature`) écrits avant le code de l'agent et le résultat mesuré sur les cas publiés.
 - Un **seed** reproductible (données fictives).
-- Un **import CSV** : **un seul fichier CSV par thème**, fait pendant le sprint, (`file_picker`, parseur dans la couche data), avec taille maximale et rejet motivé (les motifs de rejet sont dans @sec-themes). Si l'équipe est en retard, le CRUD se limite à la création et à la lecture, et le seed complet cède avant l'import CSV.
+- Un **import CSV** : **un seul fichier CSV par thème**, fait pendant le sprint, (`file_picker`, parseur dans la couche data), avec taille maximale et rejet motivé (les motifs de rejet sont dans le chapitre [-@sec-themes]). Si l'équipe est en retard, le CRUD se limite à la création et à la lecture, et le seed complet cède avant l'import CSV.
 - Les **mesures de conformité du thème** (A : mention d'information et script de suppression documenté ; B : aucun identifiant d'opérateur dans les données métier, consigne affichée sur les commentaires ; C : statut `brouillon` / `publie` avec validation humaine avant publication), incluses dans les 15 à 20 h.
 - Des **tests** (unitaires, BDD, intégrité, acceptation), une **CI** verte, la version web publiée sur GitHub Pages, un `README` testé à froid.
 - La **fiche de conformité** complète et la réponse du RSSI.
@@ -843,7 +843,7 @@ Le détail des thèmes (cas d'acceptation chiffrés, « clou » à deux niveaux,
 
 ## Le projet fil rouge : les trois thèmes
 
-Les énoncés complets sont dans @sec-themes : mise en situation, besoin ponctuel (pourquoi un outil de courte durée suffit, ce qui reste obligatoire, désactivation et archivage), données, rôles, user stories, règle métier « clou » avec cas d'acceptation, conformité, découpage par séance, livrable minimum viable.
+Les énoncés complets sont dans le chapitre [-@sec-themes] : mise en situation, besoin ponctuel (pourquoi un outil de courte durée suffit, ce qui reste obligatoire, désactivation et archivage), données, rôles, user stories, règle métier « clou » avec cas d'acceptation, conformité, découpage par séance, livrable minimum viable.
 
 | Thème | Mise en situation | Difficulté propre | Sensibilité conformité |
 |---|---|---|---|
@@ -893,7 +893,7 @@ Le module de référence est le chapitre [-@sec-conformite] (sensibilisation, pa
 |---|---|---|
 | **S1 saturée** (trop de théorie et trop d'installations) | Retard cumulé, postes indispensables encore en rouge à l'approche du rattrapage | Théorie priorisée par niveaux de poids ; installations en 5 blocs ; téléchargements lancés pendant les exposés (SDK Flutter en priorité) ; rattrapage au bloc 12 ; ce qui n'est pas indispensable (Docker, Rust, Antigravity) peut glisser en S2 ou S4 |
 | **Réseau saturé à 32 postes** | Téléchargements lents, délais d'expiration | Courriel de préparation avec téléchargement chez soi ; miroir local sur clés USB ; échelonnement par quart de salle ; points d'accès supplémentaires ; partage de connexion mobile |
-| **Quotas et coûts de Claude Code ×32** | Quota épuisé en séance, compte partagé interdit, dépassement de budget | Accès nominatifs avec plafond de dépense fournis à l'avance ; plan de repli (binômes sur postes authentifiés) ; plafond de dépense par étudiant et suivi ; sessions courtes (`/clear`), mode plan ; Antigravity en second outil (à vérifier) |
+| **Quotas et coûts de Claude Code ×32** | Quota épuisé en séance, compte partagé interdit, dépassement de budget | Accès nominatifs fournis à l'avance, avec plafond de dépense par étudiant et suivi ; plan de repli (binômes sur postes authentifiés) ; sessions courtes (`/clear`), mode plan ; Antigravity en second outil (à vérifier) |
 | **Installations ratées** | Droits d'administration manquants, antivirus, espace disque (SDK Flutter volumineux), `flutter doctor` en rouge sur Chrome | Courriel de préparation avec capture ; fiches par système ; 2 à 3 aides ; priorisation (git, VS Code, Claude Code et Flutter d'abord) ; plan B (binôme, espace de développement cloud, à vérifier) |
 | **Écarts de niveau d'un public non développeur** | Certains perdus dès `git`, d'autres s'ennuient | Équipes mixtes ; fiches prêtes à copier ; binômes d'entraide ; l'enseignant et les aides circulent surtout dans les équipes fragiles ; exercices à difficulté croissante (conflit, hooks en option) |
 | **Séances S2, S3 et S4 trop denses pour des non-développeurs** | Postes encore en échec en S2, constitution des équipes qui déborde, seed et rôles non faits en S3, passage devant le RSSI qui déborde en S4 | Reprise du poste vérifiée avant S2 ; constitution des équipes cadrée (formulaire sur place, tirage au sort immédiat), dépôts créés par script pendant les ateliers ; en S2, démonstration spec-kit et étape plugin et MCP en ressource par défaut ; S3 allégée (seed complet et rôles reportés) ; S4 avec publication GitHub Pages guidée et plan B local, audit en 5 points et pondération des blocs (indispensable, important, pratique, moins utile) et rubriques « si la séance prend du retard » et « peut glisser » dans chaque séance ; entre S3 et S4 (douze jours), une tâche facultative de 2 h au plus par étudiant pour terminer ce qui a glissé |

@@ -10,7 +10,7 @@
 La règle de refus `Read(./.env)` n'a pas, à elle seule, empêché la lecture du fichier par une commande du terminal lors du test (voir @sec-cc-test-appris). Les fiches pratiques en tiennent compte (@sec-fiches).
 :::
 
-Ce chapitre est le mode d'emploi de l'atelier de configuration. Il ne refait pas la théorie : le harnais, la fenêtre de contexte, le cache et la consommation de jetons sont expliqués dans @sec-outils-agentiques, auquel il renvoie souvent. Ici, on écrit les fichiers, on les teste, et on regarde ce qu'ils garantissent vraiment. Les extraits à copier sont repris, sans les explications, dans la fiche B de @sec-fiches.
+Ce chapitre est le mode d'emploi de l'atelier de configuration. Il ne refait pas la théorie : le harnais, la fenêtre de contexte, le cache et la consommation de jetons sont expliqués dans le chapitre [-@sec-outils-agentiques], auquel il renvoie souvent. Ici, on écrit les fichiers, on les teste, et on regarde ce qu'ils garantissent vraiment. Les extraits à copier sont repris, sans les explications, dans la fiche B de l'annexe [-@sec-fiches].
 
 ::: {.callout-tip title="Ce que vous allez retenir"}
 
@@ -110,7 +110,7 @@ Claude Code lit plusieurs fichiers de réglages et les combine. Du plus priorita
 
 ### Démarrer en mode manuel {#sec-cc-mode-manuel}
 
-Point de vigilance, déjà signalé dans @sec-outils-agentiques et reconfirmé : depuis la version 2.1.283, une session interactive (terminal ou extension VS Code) démarre en mode **auto**. Dans ce mode, un second modèle filtre les actions à votre place ; la documentation précise qu'il réduit le nombre de questions sans garantir la sécurité. La règle du cours est de travailler en mode **manuel**, où l'agent demande avant de modifier un fichier ou de lancer une commande.
+Point de vigilance, déjà signalé dans le chapitre [-@sec-outils-agentiques] et reconfirmé : depuis la version 2.1.283, une session interactive (terminal ou extension VS Code) démarre en mode **auto**. Dans ce mode, un second modèle filtre les actions à votre place ; la documentation précise qu'il réduit le nombre de questions sans garantir la sécurité. La règle du cours est de travailler en mode **manuel**, où l'agent demande avant de modifier un fichier ou de lancer une commande.
 
 - Dans le terminal : lancez `claude --permission-mode default` (l'aide de la commande écrit aussi `manual` ; les deux sont acceptés). La barre d'état doit indiquer le mode manuel.
 - Dans l'extension VS Code : cliquez sur l'indicateur de mode sous la zone de saisie et choisissez « Manual ».
@@ -388,7 +388,7 @@ Un skill, c'est une consigne que l'on n'a plus à répéter. Il reste une consig
 
 ## Les sous-agents : déléguer sans encombrer
 
-Un **sous-agent** est un assistant secondaire qui travaille dans sa propre fenêtre de contexte et ne renvoie qu'un résumé. Analogie de @sec-outils-agentiques : un stagiaire lit trente documents et vous rapporte une page. Claude Code en fournit d'office (`Explore` pour chercher dans le code en lecture seule, `Plan`, `general-purpose`), et vous pouvez en définir.
+Un **sous-agent** est un assistant secondaire qui travaille dans sa propre fenêtre de contexte et ne renvoie qu'un résumé. Analogie du chapitre [-@sec-outils-agentiques] : un stagiaire lit trente documents et vous rapporte une page. Claude Code en fournit d'office (`Explore` pour chercher dans le code en lecture seule, `Plan`, `general-purpose`), et vous pouvez en définir.
 
 Exemple à créer dans `.claude/agents/relecteur.md` (structure de l'exemple officiel, texte rédigé pour ce chapitre) :
 
@@ -475,7 +475,7 @@ Un plugin ou un serveur MCP n'est pas un réglage : c'est une dépendance. On lu
 
 ## Garder la main sur le contexte
 
-La mémoire de travail de l'agent est limitée, et sa fiabilité baisse quand elle se remplit : tout le détail est dans @sec-outils-agentiques. Pour l'atelier, six commandes suffisent, toutes revérifiées dans la documentation :
+La mémoire de travail de l'agent est limitée, et sa fiabilité baisse quand elle se remplit : tout le détail est dans le chapitre [-@sec-outils-agentiques]. Pour l'atelier, six commandes suffisent, toutes revérifiées dans la documentation :
 
 | Commande | Effet | Quand |
 |---|---|---|
@@ -491,7 +491,7 @@ Réflexe à prendre dès le départ : **une session, une tâche**. Et ce qui doi
 
 ## Aperçu : un cadre de type spec-kit
 
-Le **spec-driven development** (développement piloté par la spécification), vu dans @sec-outils-agentiques, consiste à écrire l'intention et les critères d'acceptation avant de demander le code. Des cadres outillent cette discipline. **spec-kit**, publié par GitHub, en est un exemple ; BMAD et AI-DLC, cités en séance 1, en sont d'autres.
+Le **spec-driven development** (développement piloté par la spécification), vu dans le chapitre [-@sec-outils-agentiques], consiste à écrire l'intention et les critères d'acceptation avant de demander le code. Des cadres outillent cette discipline. **spec-kit**, publié par GitHub, en est un exemple ; BMAD et AI-DLC, cités en séance 1, en sont d'autres.
 
 ```{mermaid}
 flowchart LR
@@ -532,8 +532,8 @@ Un changement de `.claude/settings.json` mérite la même relecture qu'un change
 
 L'atelier se fait seul, dans le dépôt d'essai de l'atelier git (@sec-git), avec la fiche B. Les poids sont ceux du programme.
 
-1. **`CLAUDE.md`** (indispensable). `/init`, puis réduction aux trois rubriques de @sec-cc-reduire. Moins de 30 lignes.
-2. **Permissions testées** (indispensable). Expérience « avant », fichier de @sec-cc-fichier, expérience « après ». Vous devez avoir **vu** le refus.
+1. **`CLAUDE.md`** (indispensable). `/init`, puis réduction aux trois rubriques de la section [-@sec-cc-reduire]. Moins de 30 lignes.
+2. **Permissions testées** (indispensable). Expérience « avant », fichier de la section [-@sec-cc-fichier], expérience « après ». Vous devez avoir **vu** le refus.
 3. **Un skill** (important). `commit-propre`, essayé sur une vraie modification, puis un commit qui ajoute `CLAUDE.md`, `.claude/settings.json` et le skill au dépôt.
 4. **Un plugin, un serveur MCP** (pratique, en ressource par défaut : à faire en autonomie avec la fiche B, ou en séance si le rythme le permet). Installation, puis discussion : qu'est-ce qui part vers un tiers ?
 
@@ -567,7 +567,7 @@ Fini quand : l'agent refuse de lire `.env`, et vous savez dire quel fichier l'en
 - @sec-outils-agentiques pour la théorie : harnais, contexte, cache, sécurité, coût.
 - La documentation officielle de Claude Code, pages « Configure permissions », « Hooks guide » et « Skills » : courtes, à jour, avec des exemples.
 - Birgitta Böckeler, « Harness Engineering for Coding Agent Users » (martinfowler.com, 2 avril 2026) : pourquoi guides et capteurs se complètent.
-- Refaire le test de @sec-cc-test-appris après chaque mise à jour de Claude Code, et noter le résultat dans `JOURNAL.md` : c'est un excellent « cas d'erreur de l'outil repéré », au sens des règles d'usage de l'IA du cours.
+- Refaire le test de la section [-@sec-cc-test-appris] après chaque mise à jour de Claude Code, et noter le résultat dans `JOURNAL.md` : c'est un excellent « cas d'erreur de l'outil repéré », au sens des règles d'usage de l'IA du cours.
 
 
 ## Points non vérifiés {#sec-cc-non-verifies}
@@ -577,7 +577,7 @@ Fini quand : l'agent refuse de lire `.env`, et vous savez dire quel fichier l'en
 - **Portée de `Read(./.env)` sur les commandes du terminal** : la documentation l'annonce (y compris pour `cat`, `head` et `tail`), le test local ne l'a pas confirmé (voir @sec-cc-test-appris). Le test a été fait en mode auto et en exécution non interactive (`claude -p`), modèle `haiku` ; le comportement en session interactive et en mode manuel n'a pas été observé. Dans le doute, gardez les deux règles.
 - **Messages de refus** : relevés avec la version 2.1.325 ; la documentation en cite un autre (« File is covered by a Read deny rule in your permission settings »). Ils peuvent changer.
 - **Hook `dart format`** : la commande a été exécutée sur une entrée simulée (un fichier `.dart` est reformaté, un fichier `.md` est ignoré) ; le hook n'a pas été observé en session réelle, ni sous Windows, et son comportement en l'absence de `jq` n'a pas été testé.
-- **Liste `allow`** de @sec-cc-autorisations : syntaxe conforme à la documentation, JSON valide, non essayée.
+- **Liste `allow`** de la section [-@sec-cc-autorisations] : syntaxe conforme à la documentation, JSON valide, non essayée.
 - **Règles `Bash(…)`** : elles reconnaissent une écriture précise de la commande. `rm -fr`, `rm -r -f` ou `git push origin +main` ne sont pas couverts par les sept règles.
 - **Skill `commit-propre`** : testé une fois en exécution non interactive (`claude -p "/commit-propre"`) ; l'appel depuis une session interactive et depuis l'extension VS Code n'a pas été observé.
 - **Sous-agent `relecteur`** : en-tête conforme à la documentation, non exécuté. La commande `/agents` et `/reload-plugins` sont décrites d'après la documentation.

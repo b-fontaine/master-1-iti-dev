@@ -105,7 +105,7 @@ DevOps = raccourcir et fiabiliser le trajet entre « une idée est codée » et 
 
 ### D'où viennent ces indicateurs
 
-**DORA** (*DevOps Research and Assessment*) est un programme de recherche, rattaché à Google Cloud en octobre 2026, qui étudie par enquête annuelle ce qui distingue les équipes performantes. Les résultats des premières années ont été synthétisés dans le livre *Accelerate* (Nicole Forsgren, Jez Humble, Gene Kim, **2018**) : l'excellence technique est corrélée à la performance des organisations.
+**DORA** (*DevOps Research and Assessment*) est un programme de recherche, désormais rattaché à Google Cloud, qui étudie par enquête annuelle ce qui distingue les équipes performantes. Les résultats des premières années ont été synthétisés dans le livre *Accelerate* (Nicole Forsgren, Jez Humble, Gene Kim, **2018**) : l'excellence technique est corrélée à la performance des organisations.
 
 ### Les quatre indicateurs (et un cinquième)
 
@@ -327,7 +327,7 @@ Le paquet `mutation_test` existe pour Dart (publié sur pub.dev ; il s'ajoute av
 ### Autres portes à connaître
 
 - **Audit des dépendances** : vérifier que les bibliothèques tierces n'ont pas de faille connue. La commande `dart pub outdated` (listée dans l'aide de Dart 3.13.5) signale les versions plus récentes, mais n'est pas un audit de sécurité. Nous avons constaté qu'**aucune sous-commande `dart pub audit`** n'existe dans le SDK utilisé pour ce chapitre ; l'outil exact pour l'audit des paquets pub reste « à vérifier » (programme détaillé de la séance 4).
-- **Détection de secrets** : un outil comme gitleaks cherche les clés oubliées dans le dépôt (prévu en @sec-s4 ; non installé lors des vérifications, donc non testé ici).
+- **Détection de secrets** : un outil comme gitleaks cherche les clés oubliées dans le dépôt (prévu au chapitre [-@sec-s4] ; non installé lors des vérifications, donc non testé ici).
 - **Build réussi** : publier ce qui ne se construit pas n'a aucun sens ; l'étape de build est elle-même une porte.
 
 ::: {.callout-tip title="À retenir"}
@@ -443,13 +443,13 @@ Dans notre projet de formation, **aucun déploiement mobile n'est demandé** : l
 
 ### Le piège de l'auto-notation
 
-Le programme de @sec-s4 pose le risque du **self-grading** (« Don't grade your own exam ») : si le même agent écrit le code **et** les tests, des tests verts ne prouvent pas que le code est correct, parce que l'agent peut écrire des tests qui valident ses propres erreurs. D'où le **test d'acceptation indépendant** : écrit avant, par une autre main, avec des valeurs recopiées de l'énoncé. La CI ne remplace pas cette indépendance : elle l'**exécute** à chaque modification.
+Le programme du chapitre [-@sec-s4] pose le risque du **self-grading** (« Don't grade your own exam ») : si le même agent écrit le code **et** les tests, des tests verts ne prouvent pas que le code est correct, parce que l'agent peut écrire des tests qui valident ses propres erreurs. D'où le **test d'acceptation indépendant** : écrit avant, par une autre main, avec des valeurs recopiées de l'énoncé. La CI ne remplace pas cette indépendance : elle l'**exécute** à chaque modification.
 
 ### Ce qu'on met en place
 
 - **La CI comme contrat** : une PR de l'agent ne se fusionne que verte (protection de branche).
 - **Ne pas laisser l'agent modifier les portes** : un agent pressé de « faire passer » le rouge peut être tenté d'affaiblir un test ou un seuil. Relisez avec une attention particulière toute PR qui touche à `.github/workflows/` ou aux tests.
-- **Permissions limitées** : si un agent s'exécute en CI, il reçoit le moins de droits possible ; un agent qui lit du contenu venu de l'extérieur (ticket, commentaire de PR) peut être victime de **prompt injection** (instructions malveillantes cachées dans un texte), risque abordé en @sec-s4.
+- **Permissions limitées** : si un agent s'exécute en CI, il reçoit le moins de droits possible ; un agent qui lit du contenu venu de l'extérieur (ticket, commentaire de PR) peut être victime de **prompt injection** (instructions malveillantes cachées dans un texte), risque abordé au chapitre [-@sec-s4].
 - **Mesurer** : suivez les indicateurs DORA avant et après l'adoption de l'agent. Le dossier de sources recommande d'établir une base de référence *avant* d'accélérer (recommandation de praticien).
 
 ::: {.callout-tip title="À retenir"}

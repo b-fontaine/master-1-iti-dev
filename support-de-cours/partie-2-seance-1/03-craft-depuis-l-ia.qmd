@@ -329,7 +329,7 @@ Une grosse modification est presque impossible à relire sérieusement : le rele
 
 ### La revue, goulot d'étranglement
 
-Quand le code se produit plus vite, **le relire devient le facteur limitant**. C'est le déplacement du goulot : on gagne en écriture, on perd en revue. Le rapport de Faros le montre sur ses données (corrélation, éditeur), et Mancuso décrit la même crise. D'où le débat de @sec-craft-ia-debat.
+Quand le code se produit plus vite, **le relire devient le facteur limitant**. C'est le déplacement du goulot : on gagne en écriture, on perd en revue. Le rapport de Faros le montre sur ses données (corrélation, éditeur), et Mancuso décrit la même crise. D'où le débat de la section [-@sec-craft-ia-debat].
 
 ### Le pair programming change de partenaire
 
@@ -474,7 +474,7 @@ Revenons à la question d'ouverture de la séance : *l'IA signe-t-elle la fin de
 - Citation « code will become disposable » (Podjarny) non retrouvée.
 - Propos de Robert C. Martin (juillet 2026) et de Grady Booch : rapportés par la presse, messages originaux non consultés.
 - « Moins de 25 % du temps » (Microsoft Research, 2019) et l'anecdote du développeur qui ne sait pas expliquer sa PR : rapportés par Mancuso, non vérifiés indépendamment.
-- Le code Dart de @sec-craft-ia-tdd a été exécuté (Dart et paquet `test`) ; l'exemple du `>` fautif est une illustration non exécutée.
+- Le code Dart de la section [-@sec-craft-ia-tdd] a été exécuté (Dart et paquet `test`) ; l'exemple du `>` fautif est une illustration non exécutée.
 
 :::
 

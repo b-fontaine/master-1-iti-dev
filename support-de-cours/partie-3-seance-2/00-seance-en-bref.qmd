@@ -1,6 +1,6 @@
-<!-- source: cours/presentations/day-2 · synchro: 2026-11-25 -->
+<!-- source: cours/presentations/day-2/index.html, cours/presentations/day-2/notes.html · synchro: 2026-11-25 -->
 
-# La séance en bref {#sec-s2-en-bref}
+# La séance 2 en bref {#sec-s2-en-bref}
 
 La séance 2, « Git, configurer son agent, lancer le projet », est une séance de pratique, huit semaines après la séance 1. Le fil est simple : en séance 1, on a écouté et installé ; ici, c'est l'inverse, on parle peu et l'on tape beaucoup. Ce chapitre résume la séance et indique, pour chaque temps, où retrouver le détail dans les trois chapitres qui suivent et dans l'annexe des fiches (@sec-fiches).
 
@@ -33,7 +33,7 @@ Pendant les ateliers git et configuration, les dépôts d'équipe sont créés p
 
 ### Remettre le poste en route
 
-Huit semaines ont passé : des mises à jour sont sorties, des sessions ont expiré. On vérifie le poste avant tout le reste, avec `git --version`, `gh auth status`, `claude --version`, `flutter doctor` et `flutter test`. Seule la ligne Chrome de `flutter doctor` compte, et l'on ne lance pas `flutter upgrade`. Il n'y a pas encore de dépôt d'équipe : la remise en route porte sur le poste. Détails : fiche 0 de @sec-fiches.
+Huit semaines ont passé : des mises à jour sont sorties, des sessions ont expiré. On vérifie le poste avant tout le reste, avec `git --version`, `gh auth status`, `claude --version`, `flutter doctor` et `flutter test`. Seule la ligne Chrome de `flutter doctor` compte, et l'on ne lance pas `flutter upgrade`. Il n'y a pas encore de dépôt d'équipe : la remise en route porte sur le poste. Détails : fiche 0 de l'annexe [-@sec-fiches].
 
 ::: {.callout-warning title="La règle d'or"}
 Aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public : un prompt part chez un tiers, et les dépôts de la formation sont publics. Données fictives uniquement, y compris « juste pour tester ». Un fichier de stage ou un export d'entreprise ressemble rarement à une donnée personnelle, et en contient presque toujours.
@@ -59,7 +59,7 @@ Un commit est une photo du projet, avec un message qui dit pourquoi. Une branche
 
 Le circuit est : dossier de travail, `git add` (l'index), `git commit` (l'historique), `git switch -c` pour une branche, `git merge` pour fusionner, `git push` et `git pull` avec le dépôt distant, puis la PR sur GitHub. Quand deux branches modifient la même ligne, git écrit les deux versions entre des marqueurs : on choisit, on efface les marqueurs, puis `git add` et `git commit`. Entre chaque geste, `git status` sert de boussole.
 
-La règle du jeu de l'atelier : vous tapez chaque commande. L'agent peut expliquer une commande ou un message d'erreur ; il ne la lance pas à votre place. Détails : @sec-git et fiche A de @sec-fiches.
+La règle du jeu de l'atelier : vous tapez chaque commande. L'agent peut expliquer une commande ou un message d'erreur ; il ne la lance pas à votre place. Détails : @sec-git et fiche A de l'annexe [-@sec-fiches].
 
 ### Configurer son agent
 
@@ -99,8 +99,8 @@ L'atelier d'initialisation enchaîne cinq étapes : cloner, installer et vérifi
 
 ## Lectures conseillées
 
-- **Pour reprendre le travail après une interruption** : la fiche 0 de @sec-fiches (la remise en route du poste, en dix minutes).
-- **Avant la séance** : les sections « Pourquoi git », « Le modèle mental » et « L'identité » de @sec-git, et @sec-outils-agentiques si vous ne l'avez pas lu.
+- **Pour reprendre le travail après une interruption** : la fiche 0 de l'annexe [-@sec-fiches] (la remise en route du poste, en dix minutes).
+- **Avant la séance** : les sections « Pourquoi git », « Le modèle mental » et « L'identité » du chapitre [-@sec-git], et @sec-outils-agentiques si vous ne l'avez pas lu.
 - **En séance** : @sec-fiches, fiche après fiche. C'est la seule annexe à imprimer.
 - **Quand un geste coince** : @sec-git-erreurs et la fiche F.
 - **Après la séance** : @sec-configurer-claude-code (pour comprendre ce que vous avez configuré) et @sec-demarrer-projet (pour le projet).
@@ -111,7 +111,7 @@ Ces chapitres ne redisent pas ceux de la séance 1 : ils y renvoient pour l'hist
 
 | Objectif du programme | Où le travailler |
 |---|---|
-| 1. Retrouver un poste opérationnel après huit semaines et savoir énoncer la règle d'or | Fiche 0 de @sec-fiches |
+| 1. Retrouver un poste opérationnel après huit semaines et savoir énoncer la règle d'or | Fiche 0 de l'annexe [-@sec-fiches] |
 | 2. Connaître les trois thèmes, faire partie d'une équipe constituée en séance, avec un thème, un numéro et un rôle | @sec-themes ; @sec-demarrer-projet |
 | 3. Réaliser un cycle git complet et résoudre un conflit simple | @sec-git ; fiche A |
 | 4. Configurer Claude Code ; savoir ce que sont un plugin, un serveur MCP et un cadre de type spec-kit (en ressource) | @sec-configurer-claude-code ; fiche B |

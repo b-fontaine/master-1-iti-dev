@@ -6,7 +6,7 @@
 État des outils vérifié le 19 novembre 2026 (git 2.53.0 et gh 2.100.0 sur le poste de rédaction ; documentation git 2.56.1). Les outils changent vite : réessayez les extraits sur la version installée avant de vous y fier. Les commandes git locales ont été exécutées ; ce qui passe par GitHub en ligne ne l'a pas été (voir « Points non vérifiés » en fin de chapitre).
 :::
 
-Ce chapitre accompagne le premier temps de la séance 2 : git au clavier, en binômes, dans un dépôt d'essai. Il ne suppose aucune connaissance préalable. Chaque commande est donnée avec ce qu'elle affichait sur le poste de rédaction (les sections « Premier dépôt, premiers commits », « Les branches » et « Le conflit, pas à pas » ont été jouées sans la section consacrée à GitHub : vos sorties comporteront quelques lignes de plus) et avec les erreurs que vous rencontrerez ; la fiche à suivre en pratique (les cinq étapes, sans les explications) est dans @sec-fiches.
+Ce chapitre accompagne le premier temps de la séance 2 : git au clavier, en binômes, dans un dépôt d'essai. Il ne suppose aucune connaissance préalable. Chaque commande est donnée avec ce qu'elle affichait sur le poste de rédaction (les sections « Premier dépôt, premiers commits », « Les branches » et « Le conflit, pas à pas » ont été jouées sans la section consacrée à GitHub : vos sorties comporteront quelques lignes de plus) et avec les erreurs que vous rencontrerez ; la fiche à suivre en pratique (les cinq étapes, sans les explications) est dans l'annexe [-@sec-fiches].
 
 ::: {.callout-tip title="Ce que vous allez retenir"}
 
@@ -28,7 +28,7 @@ Ce chapitre accompagne le premier temps de la séance 2 : git au clavier, en bin
 
 Vous avez tous connu le dossier qui contient `rapport_v2.docx`, `rapport_v2_final.docx` et `rapport_v2_final_corrigé_Paul.docx`. À plusieurs, c'est pire : qui a la bonne version, qu'est-ce qui a changé entre les deux, comment réunir les corrections de Paul et celles de Léa ?
 
-**Git** est un **gestionnaire de versions** : un logiciel qui enregistre l'histoire d'un dossier, étape par étape, et qui sait réunir le travail de plusieurs personnes. Il répond à quatre questions : qu'est-ce qui a changé, quand, par qui, et pourquoi. Son origine (Linus Torvalds, 2005) est racontée dans @sec-histoire-craft (jalon 9) : nous n'y revenons pas.
+**Git** est un **gestionnaire de versions** : un logiciel qui enregistre l'histoire d'un dossier, étape par étape, et qui sait réunir le travail de plusieurs personnes. Il répond à quatre questions : qu'est-ce qui a changé, quand, par qui, et pourquoi. Son origine (Linus Torvalds, 2005) est racontée dans le chapitre [-@sec-histoire-craft] (jalon 9) : nous n'y revenons pas.
 
 **GitHub** est autre chose : un site web qui héberge des dépôts git et ajoute autour d'eux des outils de collaboration (pull requests, relectures, automatisations). Git fonctionne sans GitHub ; GitHub ne fonctionne pas sans git.
 
@@ -257,7 +257,7 @@ Le message est écrit pour la personne qui lira l'historique dans quelques semai
 | `Corrige le temps de cuisson` | `fix` |
 | `Supprime la garniture en double` | `wip`, `test`, `commit final 2` |
 
-Règles simples : une première ligne courte (72 caractères au plus), qui commence par un verbe à l'impératif présent (« Ajoute », « Corrige ») et dit ce que le commit **apporte** ; un seul sujet par commit ; si une explication est utile, une ligne vide puis deux ou trois lignes de « pourquoi ». La discipline des petits commits (un commit par étape qui fonctionne) est présentée dans @sec-pratique-craft-flutter.
+Règles simples : une première ligne courte (72 caractères au plus), qui commence par un verbe à l'impératif présent (« Ajoute », « Corrige ») et dit ce que le commit **apporte** ; un seul sujet par commit ; si une explication est utile, une ligne vide puis deux ou trois lignes de « pourquoi ». La discipline des petits commits (un commit par étape qui fonctionne) est présentée dans le chapitre [-@sec-pratique-craft-flutter].
 
 ::: {.callout-tip title="À retenir"}
 Le cycle de base tient en quatre commandes : `git status`, `git add`, `git commit -m`, `git log --oneline`. Et un réflexe : enregistrer le fichier avant `git add`.
@@ -663,7 +663,7 @@ Quelqu'un a poussé sur la même branche avant vous : le dépôt distant contien
 fatal: Need to specify how to reconcile divergent branches.
 ```
 
-Votre branche et la branche distante ont chacune des commits que l'autre n'a pas, et git ne sait pas quelle méthode employer pour les réunir. Le réglage de @sec-git-identite (`git config --global pull.rebase false`) répond une fois pour toutes : fusionner. Relancez ensuite `git pull` ; un conflit peut alors apparaître, il se traite comme dans @sec-git-conflit.
+Votre branche et la branche distante ont chacune des commits que l'autre n'a pas, et git ne sait pas quelle méthode employer pour les réunir. Le réglage de la section [-@sec-git-identite] (`git config --global pull.rebase false`) répond une fois pour toutes : fusionner. Relancez ensuite `git pull` ; un conflit peut alors apparaître, il se traite comme dans la section [-@sec-git-conflit].
 
 ### Push refusé sur `main` dans le dépôt d'équipe
 
@@ -732,7 +732,7 @@ Claude Code sait lancer toutes les commandes de ce chapitre, et il le fera sur d
 - **Vérifier la branche.** Avant de lui confier une tâche : `git status`. Un agent lancé sur `main` travaille sur `main`.
 - **Relire le diff, pas le résumé.** L'agent décrit ce qu'il a fait ; le diff montre ce qui a réellement changé. C'est le diff qui fait foi, et c'est lui que votre relecteur verra.
 
-Les commandes dangereuses (`git push --force`, `rm -rf`) seront refusées par configuration, et non par simple consigne : c'est l'objet de @sec-configurer-claude-code.
+Les commandes dangereuses (`git push --force`, `rm -rf`) seront refusées par configuration, et non par simple consigne : c'est l'objet du chapitre [-@sec-configurer-claude-code].
 
 ### Les règles de git dans le projet d'équipe
 
@@ -745,7 +745,7 @@ Les commandes dangereuses (`git push --force`, `rm -rf`) seront refusées par co
 | Commits petits et lisibles | un sujet par commit, un message qui dit ce qu'il apporte |
 | Rien de secret, rien de personnel | le dépôt est public, l'historique n'oublie rien |
 
-Les protections de branche et leur rôle face à un agent sont détaillés dans @sec-ci-cd. La mise en place dans votre dépôt d'équipe (clonage, première PR avec le modèle, vérification de la protection, tag `s2-fin`) est décrite dans @sec-demarrer-projet.
+Les protections de branche et leur rôle face à un agent sont détaillés dans le chapitre [-@sec-ci-cd]. La mise en place dans votre dépôt d'équipe (clonage, première PR avec le modèle, vérification de la protection, tag `s2-fin`) est décrite dans le chapitre [-@sec-demarrer-projet].
 
 ### Poser un repère : le tag
 

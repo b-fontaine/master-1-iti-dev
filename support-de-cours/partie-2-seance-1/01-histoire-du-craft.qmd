@@ -425,7 +425,7 @@ Les jalons précédents montrent un enchaînement : à chaque époque, une nouve
 2. **Vérifier** (TDD, tests d'acceptation, revue, DORA) : un agent écrit du code qui a l'air juste. Les tests sont les garde-fous qui l'empêchent de dériver.
 3. **Garder le code changeable** (dette, refactoring, conception) : un agent produit vite un désordre aussi vite qu'un code sain.
 
-C'est pourquoi la règle du projet est : **petits pas + tests d'abord + je sais l'expliquer.** On y reviendra dans @sec-histoire-ia et @sec-craft-ia, puis dans les séances 2 et 4 pour les pratiques.
+C'est pourquoi la règle du projet est : **petits pas + tests d'abord + je sais l'expliquer.** On y reviendra dans les chapitres [-@sec-histoire-ia] et [-@sec-craft-ia], puis dans les séances 2 et 4 pour les pratiques.
 
 ::: {.callout-tip title="À retenir"}
 
