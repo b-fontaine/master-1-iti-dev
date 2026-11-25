@@ -12,12 +12,11 @@ fail() { echo "ERREUR : $*" >&2; ERR=1; }
 
 mapfile -t QMD < <(find "$DIR" -name '*.qmd' -not -path '*/_book/*' -not -path '*/.quarto/*' | sort)
 
-# 1. Interdits absolus
+# 1. Interdits absolus (un seul motif : affichage et test utilisent les mêmes options)
+FORBID='/tmp/|/home/|/Users/|checklist enseignant|interne, ne pas|[AaÀà] compléter|ne pas diffuser'
 for f in "${QMD[@]}"; do
   rel="${f#"$DIR"/}"
-  grep -n -F -e '/tmp/' -e 'Checklist enseignant' "$f" | sed "s|^|$rel:|" | while read -r l; do echo "ERREUR interdit : $l" >&2; done
-  grep -n -i -e 'à compléter' -e 'ne pas diffuser' "$f" | sed "s|^|$rel:|" | while read -r l; do echo "ERREUR interdit : $l" >&2; done
-  if grep -n -i -e '/tmp/' -e 'Checklist enseignant' -e 'à compléter' -e 'ne pas diffuser' "$f" >/dev/null; then ERR=1; fi
+  if grep -n -i -E "$FORBID" "$f" | sed "s|^|ERREUR interdit : $rel:|" | grep . >&2; then ERR=1; fi
   # adresses électroniques, sauf users.noreply.github.com
   if grep -n -o -E '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' "$f" | grep -v -E '@users\.noreply\.github\.com$' | sed "s|^|$rel:|" | grep . >&2; then
     fail "adresse électronique interdite dans $rel"
@@ -29,6 +28,14 @@ for f in "${QMD[@]}"; do
   rel="${f#"$DIR"/}"
   if grep -n -P '\b([Cc]hapitres?|[Ss]ections?|[Pp]arties?|[Aa]nnexes?)( [a-zà-ü]+)? @sec-' "$f" | sed "s|^|$rel:|" | grep . >&2; then
     fail "préfixe doublé devant un renvoi @sec- dans $rel (utiliser [-@sec-x])"
+  fi
+done
+
+# 1c. Préposition ou article collé au renvoi : « dans @sec-x » s'afficherait « dans Chapitre 6 »
+for f in "${QMD[@]}"; do
+  rel="${f#"$DIR"/}"
+  if grep -n -P "(\b([Dd]ans|[Dd]e|[Dd]u|[Ee]n|[Àà]|[Aa]u|[Ss]ur|[Pp]ar)\s+|[dl]['’])@sec-" "$f" | sed "s|^|$rel:|" | grep . >&2; then
+    fail "préposition devant un renvoi @sec- dans $rel (écrire « dans le chapitre [-@sec-x] », « de la section [-@sec-x] », « de l'annexe [-@sec-x] »)"
   fi
 done
 

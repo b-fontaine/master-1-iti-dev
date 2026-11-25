@@ -15,6 +15,12 @@ bash support-de-cours/scripts/verifier.sh --no-render   # contrôles sans rendu
 
 Prérequis : Quarto (1.8 ou plus) et une distribution TeX avec LuaLaTeX (TinyTeX convient). Le PDF utilise TeX Gyre Pagella, TeX Gyre Heros et DejaVu Sans Mono. Un caractère absent des polices fait échouer la compilation.
 
+Portabilité :
+
+- Avec TinyTeX, installer à la main les paquets absents : `tlmgr install fvextra xurl`, plus `tex-gyre` si les polices TeX Gyre manquent. Si TinyTeX est en TeX Live 2025 alors que le dépôt courant est plus récent, pointer d'abord `tlmgr` vers le dépôt historique de TeX Live 2025 (`tlmgr option repository` suivi de l'adresse de l'archive historique).
+- DejaVu Sans Mono est une police du système, pas un paquet TeX : l'installer avec le gestionnaire de paquets du poste (par exemple `fonts-dejavu`).
+- `scripts/verifier.sh` suppose GNU grep (option `-P`) et bash 4 ou plus (`mapfile`) : sur macOS, installer `grep` et `bash` GNU (Homebrew) et les placer en tête du `PATH`.
+
 Un rendu limité à un seul format vide `_book/` : lancer `task book` pour obtenir les deux fichiers.
 
 ## Ajouter un chapitre
@@ -29,11 +35,14 @@ Un rendu limité à un seul format vide `_book/` : lancer `task book` pour obten
 
 Des chapitres existants (par exemple `@sec-s3`, `@sec-s4`, `@sec-s5`) renvoient à ces pages : on garde donc l'identifiant `#sec-sK` sur le chapitre « La séance en bref » de la nouvelle partie, et les renvois continuent de fonctionner (vérifier d'abord avec `grep -rn "sec-sK" support-de-cours/*/*.qmd`).
 
-1. Créer `partie-N-seance-K/` en suivant `partie-3-seance-2/` : `index.qmd` (page de la partie), `00-seance-en-bref.qmd` (tiré du diaporama, titre `# La séance en bref {#sec-sK}`) et les chapitres numérotés.
+1. Créer `partie-N-seance-K/` en suivant `partie-3-seance-2/` : `index.qmd` (page de la partie), `00-seance-en-bref.qmd` (tiré du diaporama, titre `# La séance K en bref {#sec-sK}` : le numéro dans le titre distingue les entrées de la table des matières de l'EPUB, qui n'a pas de pages de partie) et les chapitres numérotés.
 2. Dans `_quarto.yml`, remplacer l'entrée `part: "Séance K · …"` (qui liste l'unique chapitre `partie-5-a-venir/seance-K.qmd`) par `part: partie-N-seance-K/index.qmd` listant les nouveaux chapitres, dans l'ordre des séances, avant les parties d'annonce restantes.
 3. Supprimer `partie-5-a-venir/seance-K.qmd`.
 4. Ajouter les lignes à la table de correspondance et retirer l'ancienne mention de la page d'annonce.
-5. Lancer `task book:check`.
+5. Dans `index.qmd`, mettre à jour la ligne « Réserves » (« Les séances 3 à 5 sont annoncées… ») et la version (« version du … »), puis `book.date` dans `_quarto.yml`.
+6. Dans `partie-1-formation/03-parcours-autonome.qmd`, mettre à jour la ligne de la séance dans le tableau du parcours.
+7. Fusionner les nouvelles entrées dans `annexes/b-glossaire.qmd` et ajouter les nouvelles fiches dans `annexes/a-fiches-pratiques.qmd`.
+8. Lancer `task book:check`.
 
 ## Table de correspondance source → chapitre
 
@@ -68,14 +77,14 @@ Les `README.md` de `cours/supports/` et de `cours/presentations/` sont des notes
 
 1. **Ton intemporel.** « Pendant l'atelier » devient « en formation » ou « en pratique » ; « avant le 27 novembre » disparaît ou devient « avant la séance 2 » ; les consignes adressées à la promotion 2026-2027 deviennent des conseils au lecteur ; une consigne purement logistique disparaît.
 2. **Dates conservées quand elles datent un fait.** « État des outils au 19 novembre 2026 » reste, regroupé dans un encadré en tête de chapitre.
-3. **Renvois croisés Quarto.** « Chapitre 4 de la séance 1 » devient `@sec-guide-flutter` ; chaque chapitre a un identifiant `#sec-…` stable (minuscules ASCII, tirets, jamais en double). Quarto ajoute lui-même « Chapitre » ou « Section » devant la référence : ne jamais écrire le nom juste avant `@sec-…` (le préfixe serait doublé à l'impression). Écrire « voir @sec-x », ou, après le nom, `[-@sec-x]` pour le seul numéro. Le vérificateur refuse ce motif. Pour viser une section, lui ajouter `{#sec-<chapitre>-<mot>}`.
+3. **Renvois croisés Quarto.** « Chapitre 4 de la séance 1 » devient `@sec-guide-flutter` ; chaque chapitre a un identifiant `#sec-…` stable (minuscules ASCII, tirets, jamais en double). Quarto ajoute lui-même « Chapitre » ou « Section » devant la référence : ne jamais écrire le nom juste avant `@sec-…` (le préfixe serait doublé à l'impression). Écrire « voir @sec-x », ou, après le nom, `[-@sec-x]` pour le seul numéro. Le vérificateur refuse ce motif, ainsi que toute préposition ou article collé à `@sec-` : après « dans », « de », « du », « en », « à », « au », « sur » ou « par », écrire le nom avec son article et le numéro seul, selon le type de la cible (titre `#` : chapitre ; `##` ou plus : section ; dans `annexes/` : annexe), par exemple « dans le chapitre [-@sec-x] », « de la section [-@sec-x] », « de l'annexe [-@sec-x] », « au chapitre [-@sec-x] ». Pour viser une section, lui ajouter `{#sec-<chapitre>-<mot>}`.
 4. **Encadrés Quarto, toujours titrés.** Un encadré sans `title=` s'affiche sous son type (« Astuce »). Titres standard : `callout-tip` « Ce que vous allez retenir » (en tête de chapitre) et « À retenir » ; `callout-note` « État des connaissances » (date de l'état des outils) et « Points non vérifiés » ; `callout-warning` pour les avertissements, avec un titre explicite. Pas de « À retenir » en gras dans le texte de l'encadré.
 5. **Liens imprimables.** Les URL des sources restent écrites en clair (le PDF imprimé n'a pas de lien cliquable).
 6. **Nettoyage.** Pas de chemin local, pas de section interne, pas de donnée personnelle ; les liens relatifs vers `cours/` sont remplacés par des renvois internes.
 7. **Fidélité.** Pas d'ajout de contenu factuel non sourcé ; on adapte la forme, pas le fond. Un fait du support qui paraît faux est signalé à l'enseignant, pas corrigé en silence.
 8. **Schémas.** Un schéma devient prose ou tableau ; seul un diagramme qui porte une structure absente de la prose s'écrit en bloc ` ```{mermaid} ` (et non ` ```mermaid `, qui n'est pas rendu).
 9. **Méthode : copier puis retoucher.** Partir de la copie du fichier source et faire des retouches ciblées (ton, renvois, encadrés, nettoyage) ; ne pas réécrire de mémoire. Les numéros manuels des titres sont retirés (Quarto numérote) et les renvois qui les citaient sont mis à jour.
-10. **Diaporama vers prose.** Le contenu d'un diaporama et de ses notes devient un chapitre « La séance en bref » : objectifs, déroulé (tableau), idées clés en encadrés. Aucune indication de régie (chronomètre, transitions, « cliquez »).
+10. **Diaporama vers prose.** Le contenu d'un diaporama et de ses notes devient un chapitre « La séance K en bref » (K = numéro de la séance) : objectifs, déroulé (tableau), idées clés en encadrés. Aucune indication de régie (chronomètre, transitions, « cliquez »).
 
 ### Pièges Quarto et LaTeX
 

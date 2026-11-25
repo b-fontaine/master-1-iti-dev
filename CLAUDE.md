@@ -9,7 +9,7 @@ Dépôt d'un cours (Master ITI) : les sources vivent dans `cours/`, le livre Qua
 
 ## Règle de synchronisation (même PR)
 
-Tout support ou diaporama créé ou modifié est aussi adapté dans `support-de-cours/`, dans la même PR, sinon le livre diffuse un contenu périmé :
+Tout fichier source créé ou modifié qui figure dans la table de correspondance de `support-de-cours/README.md` (support, diaporama, `README.md` racine, `cours/programme-detaille.md`, `cours/projets/themes.md`, `cours/conformite-ai-act-rgpd.md`) est aussi adapté dans `support-de-cours/`, dans la même PR, sinon le livre diffuse un contenu périmé. `cours/programme-detaille.md` alimente aussi `partie-5-a-venir/seance-*.qmd` :
 
 1. Chapitre nouveau, ou mise à jour du chapitre existant (retrouvé par la table de `support-de-cours/README.md`).
 2. Date `synchro:` du commentaire de tête du chapitre mise à jour.
