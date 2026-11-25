@@ -77,6 +77,10 @@ jobs:
 
       - name: Installer Quarto et TinyTeX
         uses: quarto-dev/quarto-actions/setup@v2
+        env:
+          # Quarto interroge l'API GitHub pour trouver TinyTeX : sans jeton,
+          # la limite de requêtes anonymes du runner provoque un refus 403.
+          GH_TOKEN: ${{ github.token }}
         with:
           version: ${{ env.QUARTO_VERSION }}
           tinytex: true
