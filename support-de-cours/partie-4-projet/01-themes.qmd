@@ -43,7 +43,7 @@ Les trois thèmes se construisent avec la même pile, détaillée dans le chapit
 - **Injection de dépendances avec `get_it`** : les repositories, les cas d'usage et les sources non déterministes (hasard, horloge) s'enregistrent dans `get_it` et se remplacent par des fakes en test.
 - **Gestion d'état avec `flutter_bloc`** (BLoC et Cubit).
 - **Persistance avec `drift` (SQLite)** et migrations versionnées (`schemaVersion` et stratégie de migration, test d'intégrité sur base en mémoire).
-- **TDD** (`flutter_test`, `bloc_test`, `mocktail`) **et BDD** avec `bdd_widget_test` : les scénarios sont écrits en Gherkin français (Soit / Quand / Alors) dans des fichiers `.feature`, qui génèrent des tests widget via `build_runner`. Le Gherkin français est confirmé dans le dépôt-modèle avec `bdd_widget_test` 3.1.0, à une condition : le fichier `.feature` commence par la ligne `# language: fr` (sans elle, seuls les mots-clés anglais `Feature` / `Scenario` / `Given` / `When` / `Then` sont reconnus).
+- **TDD** (`flutter_test`, `bloc_test`, `mocktail`) **et BDD** avec `bdd_widget_test` : les scénarios sont écrits en Gherkin français (Soit / Quand / Alors) dans des fichiers `.feature`, qui génèrent des tests widget via `build_runner`. Les valeurs d'un scénario s'écrivent entre accolades (`{480}` pour un nombre, `{'pause'}` pour un texte) : sans elles, `bdd_widget_test` fond la valeur dans le nom de l'étape et crée une étape par valeur (constaté le 26 novembre 2026). Le Gherkin français est confirmé dans le dépôt-modèle avec `bdd_widget_test` 3.1.0, à une condition : le fichier `.feature` commence par la ligne `# language: fr` (sans elle, seuls les mots-clés anglais `Feature` / `Scenario` / `Given` / `When` / `Then` sont reconnus).
 - **Commandes de référence** : `flutter pub get`, `flutter test`, `flutter test --coverage`, `flutter analyze`, `dart format`, `dart run build_runner build --delete-conflicting-outputs`, `flutter run -d chrome`, `flutter build web` (pour la version publiée : `flutter build web --release --base-href "/<dépôt>/" --no-web-resources-cdn --web-content-hash`), et, pour les migrations, `dart run drift_dev make-migrations`. Verrouillage des dépendances : `pubspec.lock` (versionné) ; la version de Flutter est notée dans le README (et le `pubspec`) : Flutter 3.50 ou plus récent, testé avec 3.50.1. Les widgets s'importent par `package:material_ui/material_ui.dart` (`package:flutter/material.dart` est déprécié).
 - **Livraison** : build web publié par GitHub Actions sur **GitHub Pages** (analyse, tests avec couverture, détection de secrets `gitleaks`, audit des dépendances pub, build web, déploiement). **GitHub Pages est public** : données fictives uniquement, et tout ce qui est dans un build web Flutter est public (aucun secret dans l'application).
 - **Conventions de nommage** : les identifiants des énoncés ci-dessous (`souffle_actuel`, `renom_promis`, `temps_ouverture_min`...) sont donnés en snake_case ; en Dart on les écrit en lowerCamelCase (`souffleActuel`, `renomPromis`, `tempsOuvertureMin`, Effective Dart), et drift génère les colonnes SQL en snake_case. Les codes de motif (`passeur_epuise`, `voeux_insuffisants`...) sont des valeurs sérialisées, portées côté Dart par des `enum`.
@@ -88,7 +88,7 @@ La trame ci-dessous est commune aux trois thèmes. Plus bas, chaque thème ne re
 
 - **S1 : théorie et installations.** Aucun travail sur le projet.
 - **S2 : remise en route, thèmes et équipes, git, configuration de Claude Code, initialisation.** Il y a huit semaines entre S1 et S2 : la remise en route se fait donc au début de S2, sur les postes (`git`, `claude`, `flutter doctor`, mises à jour, comptes), puisqu'aucun dépôt de projet n'existe encore. Les trois thèmes sont présentés, puis les équipes se constituent en séance (composition, identifiants GitHub, classement des thèmes, tirage au sort si besoin ; numérotation par thème, rôles). Pendant les ateliers git et configuration, les dépôts sont créés par script depuis le modèle (squelette Flutter, `CLAUDE.md` et document d'architecture fournis), les membres sont ajoutés comme collaborateurs de chaque dépôt (pas d'invitation à l'organisation) et l'invitation est acceptée à la pause. Un `PROJET.md` pré-rempli (vision, 3 à 5 user stories) est fourni : à relire et compléter. Première PR relue par un coéquipier ; `main` protégée (PR obligatoire, 1 approbation) ; premiers éléments du harnais (`CLAUDE.md` minimal, première permission).
-- **S3 (4 h) : travail à plusieurs, premier TDD.** S3 n'est qu'à deux jours de S2 : elle s'ouvre sur un bref contrôle (`git pull`, `flutter pub get`, `flutter test`). *Indispensable en séance* : première user story en TDD et en BDD (scénario Gherkin, voir « Première user story et sous-règle isolée » dans chaque thème) sur une seule sous-règle isolée, avec un repository en mémoire (fake) ; tables drift, première migration (`schemaVersion`) et test d'intégrité sur base en mémoire ; bloc RGPD ; début de la fiche de conformité (rubriques 1 à 5 : finalité, données, personnes concernées, base légale ou justification « données fictives », durée) ; PR croisées entre équipes (paires de même thème tolérées en S3). *Peut glisser entre S3 et S4* (douze jours, tâche facultative de 2 h au plus par étudiant), au début de S4 ou dans le sprint : seed complet, rôles avec la garde `RequireRole` (couche domain) et test de refus. Si l'équipe est en retard, le seed et les rôles sont les premiers à glisser. **Livrable de fin de S3**, identique pour les trois thèmes : « première règle verte, modèle et migrations fusionnés, début de `docs/fiche_conformite.md` commité ».
+- **S3 (4 h) : travail à plusieurs, premier TDD.** S3 n'est qu'à deux jours de S2 : elle s'ouvre sur un bref contrôle (`git pull`, `flutter pub get`, `build_runner`, `flutter test`). *Indispensable en séance* : première user story en TDD et en BDD (scénario Gherkin, voir « Première user story et sous-règle isolée » dans chaque thème) sur une seule sous-règle isolée, avec un repository en mémoire (fake) ; tables drift, première migration (`schemaVersion`) et test d'intégrité sur base en mémoire ; bloc RGPD ; début de la fiche de conformité (rubriques 1 à 5 : finalité, données, personnes concernées, base légale ou justification « données fictives », durée) ; PR croisées entre équipes (paires de même thème tolérées en S3). *Peut glisser entre S3 et S4* (douze jours, tâche facultative de 2 h au plus par étudiant), au début de S4 ou dans le sprint : seed complet, rôles avec la garde `RequireRole` (couche domain) et test de refus. Si l'équipe est en retard, le seed et les rôles sont les premiers à glisser. **Livrable de fin de S3**, identique pour les trois thèmes : « première règle verte, modèle et migrations fusionnés, début de `docs/fiche_conformite.md` commité ».
 - **S4 (4 h) : tests d'acceptation, CI/CD, sécurité, conformité.** *Indispensable en séance* : le gardien produit écrit les cas d'acceptation du clou avant le code de l'agent sur les sous-règles restantes (celle de S3 est déjà couverte par ses propres tests) ; CI verte ; publication du build web de chaque équipe sur GitHub Pages par GitHub Actions (analyse, tests avec couverture, `gitleaks`, audit des dépendances pub, build web, déploiement ; données fictives uniquement) ; seed et rôles s'ils ont glissé ; AI Act ; passage devant le RSSI (3 tables en parallèle, 10 à 12 min par équipe, jeu de rôle intégré) ; audit croisé réduit à 5 points (installation à froid : `git clone`, `flutter pub get`, `flutter test`, `flutter run -d chrome` ; CI verte, obligatoire, avec audit des dépendances ; secrets : `gitleaks`, rien dans le dépôt ni dans le bundle web, `.env` ignoré ; rôles : garde testée ; fiche de conformité) ; les paires de même thème sont évitées en S4. **Plan B** : si la publication sur GitHub Pages bloque (réglages du dépôt, droits), l'équipe montre son build local (`flutter run -d chrome`) et termine la publication au sprint. S4 ne suppose pas le CRUD terminé, et un exposé continu ne dépasse pas 30 min : on le coupe par une activité (quiz ou cas à classer). La v1 de la fiche est déposée en PR dans les deux jours qui suivent.
 - **Sprint final : finir le périmètre.** Il va de S4 à l'avant-veille de S5, fêtes de fin d'année comprises (sans travail imposé au-delà de ce que l'équipe choisit) : import CSV, tableau de bord, clou, cas d'acceptation non encore verts, README testé à froid.
 - **S5 : gel, retouches, soutenance.** Gel (tag `v1.0-rc` l'avant-veille de S5 à 18 h), retouches bloquantes, soutenance.
@@ -205,10 +205,10 @@ Dans ce thème, vous n'écrivez pas un outil *à propos* d'un monde imaginaire :
     # language: fr
     Fonctionnalité: Jugement d'une traversée
       Scénario: total d'une traversée pour un veneur de rang 1
-        Soit un veneur de rang 1
-        Et une route de nature "bete" avec un péril de 17
-        Quand l'éclat de la lune est 11
-        Alors le total est 17
+        Soit un veneur de rang {1}
+        Et une route de nature {'bete'} avec un péril de {17}
+        Quand l'éclat de la lune est {11}
+        Alors le total est {17}
         Et le passage est tenu
     ```
 - **Import/export** : import CSV des passeurs, fichier choisi avec `file_picker`, parseur dans la couche data (colonnes `nom`, `voie_code`, `rang`, `renom`, `souffle_actuel`, `proprietaire`), avec rapport de lignes rejetées. Motifs de rejet précis :
@@ -300,14 +300,14 @@ Dans ce thème, vous n'écrivez pas un outil *à propos* d'un monde imaginaire :
     # language: fr
     Fonctionnalité: Calcul de la disponibilité d'un quart
       Scénario: disponibilité avec un arrêt planifié et deux arrêts non planifiés
-        Soit un quart de 480 minutes
-        Et un arrêt planifié "pause" de 30 minutes
-        Et un arrêt non planifié "panne" de 45 minutes
-        Et un arrêt non planifié "changement_serie" de 15 minutes
+        Soit un quart de {480} minutes
+        Et un arrêt planifié {'pause'} de {30} minutes
+        Et un arrêt non planifié {'panne'} de {45} minutes
+        Et un arrêt non planifié {'changement_serie'} de {15} minutes
         Quand je calcule la disponibilité
-        Alors le temps requis est de 450 minutes
-        Et le temps de marche est de 390 minutes
-        Et la disponibilité affichée est 86,7 %
+        Alors le temps requis est de {450} minutes
+        Et le temps de marche est de {390} minutes
+        Et la disponibilité affichée est {'86,7 %'}
     ```
 - **Import/export** : un seul import CSV dans le cœur, celui des déclarations de production (`poste`, `quart_debut_utc`, `numero_of`, `pieces_produites`, `pieces_rebutees`), fichier choisi avec `file_picker` et parseur dans la couche data ; les arrêts se saisissent par formulaire (l'import des arrêts est une extension). Motifs de rejet précis :
   1. `quantite_invalide` (pièces produites ou rebutées non entières ou négatives) ;
@@ -426,10 +426,10 @@ Tous les étudiants sont des pseudonymes (`etu_001`, `etu_002`...), tous les suj
     # language: fr
     Fonctionnalité: Répartition des sujets
       Scénario: les étudiants sont traités par rang croissant
-        Soit un étudiant "etu_010" de rang 7
-        Et un étudiant "etu_011" de rang 6
+        Soit un étudiant {'etu_010'} de rang {7}
+        Et un étudiant {'etu_011'} de rang {6}
         Quand je lance la répartition
-        Alors "etu_011" est traité avant "etu_010"
+        Alors {'etu_011'} est traité avant {'etu_010'}
     ```
 - **Import/export** : un seul import CSV dans le cœur, celui des étudiants et de leurs vœux (CSV séparé par virgule, une ligne par étudiant : `pseudonyme`, `rang`, `parcours`, `voeux`, champ entre guillemets, titres de sujets séparés par `|` dans l'ordre), avec rapport ligne par ligne (fichier choisi avec `file_picker`, parseur dans la couche data) ; les sujets se créent par formulaire (leur import est une extension). Motifs de rejet précis :
   1. `pseudonyme_invalide` (format différent de `etu_` suivi de trois chiffres : tout nom, courriel ou identifiant réel est refusé) ;
