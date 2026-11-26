@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-1/05-pratique-craft-flutter.md · synchro: 2026-11-25 -->
+<!-- source: cours/supports/day-1/05-pratique-craft-flutter.md · synchro: 2026-11-26 -->
 
 # Pratiquer le craft avec Flutter {#sec-pratique-craft-flutter}
 
@@ -556,6 +556,10 @@ Une **classe** regroupe des données (la fourmi, le compteur, les cases noires) 
 
 **Vocabulaire Flutter minimal.** Dans Flutter, l'écran est un **arbre de widgets** : un *widget* est une brique d'interface (un texte, un bouton, une ligne, une colonne). Un widget **avec état** (`StatefulWidget`) peut changer ; on demande le redessin avec `setState`. Un **widget test** (`testWidgets`) lance l'interface dans un faux écran, sans navigateur, et la manipule comme un utilisateur (`tester.tap`) ; `find` retrouve des éléments, par leur texte ou par une **clé** (`ValueKey`, une étiquette qu'on leur colle pour les retrouver). Ces fonctions sont décrites dans la documentation officielle Flutter (« An introduction to widget testing »).
 
+::: {.callout-warning title="Import des widgets : note du 26 novembre 2026"}
+Le code de ce chapitre importe `package:flutter/material.dart` : il a été exécuté le 6 octobre 2026 avec Flutter 3.47.6 et n'a pas été modifié depuis. Avec Flutter 3.50, la version du projet fil rouge, cet import est déprécié et `flutter analyze` le signale : le projet importe `package:material_ui/material_ui.dart` à la place. Remplacez l'import quand vous reprenez un extrait de ce chapitre dans le projet.
+:::
+
 ### Rouge
 
 Créez `test/ecran_test.dart` :
@@ -763,7 +767,7 @@ Fonctionnalité: Un pas de la fourmi de Langton
     Et la case (0, 0) est noire
 ```
 
-Il se lit sans connaître la programmation : c'est son intérêt, il peut être écrit et relu par un expert métier. Le dépôt de l'enseignant présente ensuite la bibliothèque `bdd_widget_test`, qui **génère** des tests Flutter à partir de fichiers `.feature` (son README indique la version `^1.7.4` ; à la date de rédaction, `flutter pub add --dev --dry-run` résout une version 2.1.4 : **vérifiez la version actuelle sur pub.dev** avant installation, la mise en œuvre complète est vue au chapitre [-@sec-s3]).
+Il se lit sans connaître la programmation : c'est son intérêt, il peut être écrit et relu par un expert métier. Le dépôt de l'enseignant présente ensuite la bibliothèque `bdd_widget_test`, qui **génère** des tests Flutter à partir de fichiers `.feature` (son README indique la version `^1.7.4` ; à la date de rédaction, `flutter pub add --dev --dry-run` résout une version 2.1.4 : **vérifiez la version actuelle sur pub.dev** avant installation, la mise en œuvre complète est vue au chapitre [-@sec-s3]). Note du 26 novembre 2026 : avec `bdd_widget_test` 3.1.0, la version du projet fil rouge, un scénario écrit en français commence par l'en-tête `# language: fr` ; sans lui, seuls les mots-clés anglais (`Feature`, `Scenario`, `Given`…) sont reconnus.
 
 **Sans outil, on peut déjà penser en BDD.** Voici le même scénario écrit à la main, dans `test/scenarios_test.dart`, avec les trois temps en commentaires (exécuté : `+1`, vert) :
 

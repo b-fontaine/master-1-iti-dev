@@ -1,6 +1,6 @@
 # Chapitre 4 · Les fiches de la séance : à imprimer ou à suivre à l'écran
 
-*Séance 2 « Git, configurer son agent, lancer le projet » · Master ITI, Nantes Université, 2026-2027. Fiches à utiliser pendant la séance. État des outils vérifié le 19 novembre 2026 (git 2.53.0, gh 2.100.0, Claude Code 2.1.325 sur le poste de rédaction).*
+*Séance 2 « Git, configurer son agent, lancer le projet » · Master ITI, Nantes Université, 2026-2027. Fiches à utiliser pendant la séance. État des outils vérifié le 19 novembre 2026 (git 2.53.0, gh 2.100.0, Claude Code 2.1.325 sur le poste de rédaction) ; fiches C et E alignées sur le dépôt-modèle le 26 novembre 2026 (Flutter 3.50.1).*
 
 Ce chapitre ne contient presque pas d'explications : il rassemble ce que vous gardez sous les yeux pendant la remise en route et les trois ateliers. Chaque fiche tient sur une page et renvoie au chapitre qui explique le pourquoi.
 
@@ -45,7 +45,8 @@ $ flutter run -d chrome
 
 - `gh auth status` répond « not logged in » : relancez `gh auth login`.
 - **Mettez Claude Code à jour**, notez sa version, lancez `claude` dans un dossier vide et posez-lui une question : s'il ne répond pas, votre session ou votre compte est à reconnecter.
-- `flutter doctor` : seule la ligne Chrome compte, la chaîne Android peut rester en rouge. **Pas de `flutter upgrade`** au-delà de la version indiquée par l'enseignant.
+- `flutter doctor` : seule la ligne Chrome compte, la chaîne Android peut rester en rouge.
+- **Version de Flutter** (première ligne de `flutter doctor`, ou `flutter --version`) : le projet d'équipe demande **Flutter 3.50 ou plus récent**. Si votre poste affiche une version plus ancienne (la séance 1 a installé 3.47.6), lancez `flutter upgrade` : il installe la dernière version stable de Flutter. Vérifiez ensuite avec `flutter --version` qu'elle est 3.50 ou plus. Ne relancez pas `flutter upgrade` en cours de projet sans raison, et ne lancez **jamais** `flutter pub upgrade`, qui changerait les bibliothèques verrouillées d'un projet.
 - Vérifiez que vous savez encore vous connecter à GitHub dans le navigateur.
 - Votre capture d'écran ne doit montrer ni nom, ni adresse, ni autre fenêtre.
 
@@ -360,7 +361,9 @@ Puis, dans une session, `/reload-plugins` et `/mcp` pour voir le serveur. **Avan
 
 **En équipe. Fini quand :** `flutter test` est vert et l'application s'affiche dans Chrome sur **chaque** poste ; une PR relue par un autre que son auteur est dans `main` ; `main` refuse un push direct ; `JOURNAL.md` et le tag `s2-fin` sont en place.
 
-**Étape 1 · Cloner, installer, vérifier** (chacun sur son poste ; remplacez l'organisation et le numéro par ceux donnés en séance). Le dépôt de votre équipe a été créé pendant les ateliers : vérifiez d'abord que vous avez **accepté l'invitation** de collaborateur (courriel de GitHub, ou `github.com/notifications`). Fermez d'abord le dossier `essai-git` et ouvrez un terminal **ailleurs**, dans votre dossier de travail habituel : on ne clone pas un dépôt dans un autre.
+**Étape 1 · Cloner, installer, vérifier** (chacun sur son poste ; remplacez l'organisation et le numéro par ceux donnés en séance). `flutter --version` doit afficher 3.50 ou plus (sinon : fiche 0). Le dépôt de votre équipe a été créé pendant les ateliers : vérifiez d'abord que vous avez **accepté l'invitation** de collaborateur (courriel de GitHub, ou `github.com/notifications`). Fermez d'abord le dossier `essai-git` et ouvrez un terminal **ailleurs**, dans votre dossier de travail habituel : on ne clone pas un dépôt dans un autre.
+
+Tapez les cinq commandes du chapitre 3 (cloner, installer, générer le code, tester, lancer), plus `flutter analyze`, que le README du dépôt ajoute :
 
 ```bash
 $ gh repo clone <organisation>/equipe_<numéro>
@@ -368,16 +371,17 @@ $ cd equipe_<numéro>
 $ flutter pub get
 $ dart run build_runner build --delete-conflicting-outputs
 $ flutter test
+$ flutter analyze
 $ flutter run -d chrome
 ```
 
-Dans le terminal de `flutter run`, la touche `q` arrête l'application.
+À voir : `Got dependencies!`, puis `Built with build_runner … wrote … outputs.` (plus d'une minute la première fois), `All tests passed!`, `No issues found!` et l'écran « Jets de dé » dans Chrome. Le premier `flutter test` télécharge une copie de SQLite : il faut Internet. Dans le terminal de `flutter run`, la touche `q` arrête l'application.
 
 **Étape 2 · Lire le contexte, compléter `PROJET.md`** (ensemble, sur un écran).
 
 1. Lisez `CLAUDE.md`, puis `docs/ARCHITECTURE.md`.
-2. Ouvrez le fichier `.feature` d'exemple et le test du BLoC d'exemple : c'est la forme de votre première user story.
-3. Dans `PROJET.md` : ajustez la vision en 5 lignes, retenez **3 à 5** user stories, écartez les autres. L'agent peut aider à reformuler ; l'équipe décide.
+2. Ouvrez le scénario d'exemple `test/scenarios/jets/lancer_un_de.feature` et le test du Cubit d'exemple `test/features/jets/presentation/jets_cubit_test.dart` : c'est la forme de votre première user story.
+3. Dans `PROJET.md` : ajustez la vision en 5 lignes ; les stories du socle restent (obligatoires) ; parmi celles « à choisir pour commencer », retenez **3 à 5** user stories, barrez les autres et notez leur raison dans « Décisions de l'équipe » ; complétez le tableau des rôles. L'agent peut aider à reformuler ; l'équipe décide. Si `PROJET.md` annonce qu'il est « en attente du thème de l'équipe », suivez d'abord les étapes qu'il donne.
 
 **Étape 3 · Branche, commit, PR** (un membre tape, les autres suivent).
 
@@ -463,7 +467,7 @@ Une ligne ne passe pas ? On ne fusionne pas : le relecteur choisit « Request ch
 
 ## Fiche E · Modèle de PR
 
-Le dépôt d'équipe fournit ce modèle dans `.github/pull_request_template.md` ; GitHub le propose à l'ouverture de chaque PR. Version de référence (le fichier de votre dépôt fait foi) :
+Le dépôt d'équipe fournit ce modèle dans `.github/pull_request_template.md` ; GitHub le propose à l'ouverture de chaque PR. Il compte quatre rubriques ; le voici tel que le fournit le dépôt-modèle (si votre équipe l'a modifié, le fichier de votre dépôt fait foi) :
 
 ```markdown
 ## Résumé
@@ -539,14 +543,14 @@ Les autres termes (commit, branche, PR, conflit, permission, skill, hook…) son
 
 ## Points non vérifiés (à signaler honnêtement)
 
-- **Fiche 0** : commandes de contrôle reprises du programme (séance 2, bloc 1) ; le projet d'exemple de la séance 1 n'a pas été relancé pour cette fiche, et la façon de mettre à jour Claude Code dépend du mode d'installation.
+- **Fiche 0** : commandes de contrôle reprises du programme (séance 2, bloc 1) ; le projet d'exemple de la séance 1 n'a pas été relancé pour cette fiche (ni avec Flutter 3.47.6, ni après passage à 3.50), et la façon de mettre à jour Claude Code dépend du mode d'installation.
 - **Fiche A, étapes 1 à 3 et 5** : jouées en entier dans un dépôt jetable (git 2.53.0). **Étape 4** : `git push -u` joué contre un dépôt distant local ; les commandes `gh repo create`, `gh pr create --web`, `gh pr merge` n'ont **pas** été exécutées (rien n'a été créé sur GitHub) ; leurs options ont été relues dans l'aide de gh 2.100.0. Les libellés des boutons de GitHub viennent de sa documentation.
 - **Fiche A, relecture par le binôme** : sur un dépôt public, la possibilité pour un compte non collaborateur de laisser une relecture « Approve » n'a pas été testée ; si elle échoue, le propriétaire ajoute son binôme comme collaborateur (Settings, Collaborators, Add people).
 - **Fiche A, boutons de VS Code** : libellés anglais relevés dans la documentation de VS Code. Avec l'interface en français, ils se lisent « Accepter la modification actuelle », « Accepter la modification entrante », « Accepter les deux modifications » d'après les fichiers de traduction ; ils n'ont pas été observés à l'écran.
 - **Fiche B** : les sept règles de refus, l'expérience avant et après et le skill ont été testés avec Claude Code 2.1.325 en exécution non interactive ; `/init`, `/permissions`, `/reload-skills` et les commandes de plugin n'ont pas été exécutés. Voir les réserves du chapitre 2.
-- **Fiche C** : le dépôt-modèle n'existe pas encore à la date de rédaction ; aucune commande Flutter n'a pu être jouée sur le squelette. La séquence git (branche, push, commit vide, `git reset --hard origin/main`, tag) a été jouée contre un dépôt distant local. Le refus `GH006` n'a pas été observé ; son libellé complet n'est attesté que par des sources communautaires.
+- **Fiche C** : les commandes Flutter de l'étape 1 ont été jouées sur le dépôt-modèle le 26 novembre 2026, sous Linux seulement, avec Flutter 3.50.1 (32 tests verts, `flutter analyze` sans remarque) ; elles n'ont été essayées ni sous Windows ni sous macOS, et le clone depuis GitHub n'a pas été fait (le dépôt-modèle n'est pas encore publié). La séquence git (branche, push, commit vide, `git reset --hard origin/main`, tag) a été jouée contre un dépôt distant local. Le refus `GH006` n'a pas été observé ; son libellé complet n'est attesté que par des sources communautaires.
 - **Fiche D** : le programme fixe « cinq lignes », pas leur texte ; celui-ci est une proposition des supports, à valider par l'enseignant.
-- **Fiche E** : le modèle réel est « à produire » avec le dépôt-modèle ; la version donnée ici reprend les rubriques imposées par le programme (résumé, proposé et refusé, temps estimé, temps réel, retouches) et y ajoute trois cases à cocher.
+- **Fiche E** : recopiée du `.github/pull_request_template.md` du dépôt-modèle ; son affichage à l'ouverture d'une PR sur GitHub n'a pas été observé (le dépôt-modèle n'est pas encore publié).
 - **Fiche F** : la sortie de vim (`Échap`, `:q!`) et le message exact d'un push refusé faute d'invitation acceptée n'ont pas été vérifiés sur une source officielle.
 
 ---

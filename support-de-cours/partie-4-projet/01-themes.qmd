@@ -1,4 +1,4 @@
-<!-- source: cours/projets/themes.md, cours/presentations/themes/ · synchro: 2026-11-25 -->
+<!-- source: cours/projets/themes.md, cours/presentations/themes/ · synchro: 2026-11-26 -->
 
 # Les trois thèmes du projet {#sec-themes}
 
@@ -43,8 +43,8 @@ Les trois thèmes se construisent avec la même pile, détaillée dans le chapit
 - **Injection de dépendances avec `get_it`** : les repositories, les cas d'usage et les sources non déterministes (hasard, horloge) s'enregistrent dans `get_it` et se remplacent par des fakes en test.
 - **Gestion d'état avec `flutter_bloc`** (BLoC et Cubit).
 - **Persistance avec `drift` (SQLite)** et migrations versionnées (`schemaVersion` et stratégie de migration, test d'intégrité sur base en mémoire).
-- **TDD** (`flutter_test`, `bloc_test`, `mocktail`) **et BDD** avec `bdd_widget_test` : les scénarios sont écrits en Gherkin français (Soit / Quand / Alors) dans des fichiers `.feature`, qui génèrent des tests widget via `build_runner`. (à vérifier : `bdd_widget_test` documente les mots-clés `Feature` / `Scenario` / `Given` / `When` / `Then` ; la prise en charge d'un Gherkin français n'est pas confirmée. À défaut, on garde les mots-clés anglais avec des textes d'étapes en français.)
-- **Commandes de référence** : `flutter pub get`, `flutter test`, `flutter test --coverage`, `flutter analyze`, `dart format`, `dart run build_runner build --delete-conflicting-outputs`, `flutter run -d chrome`, `flutter build web`. Verrouillage des dépendances : `pubspec.lock` (versionné) ; la version de Flutter est notée dans le README (et le `pubspec`).
+- **TDD** (`flutter_test`, `bloc_test`, `mocktail`) **et BDD** avec `bdd_widget_test` : les scénarios sont écrits en Gherkin français (Soit / Quand / Alors) dans des fichiers `.feature`, qui génèrent des tests widget via `build_runner`. Le Gherkin français est confirmé dans le dépôt-modèle avec `bdd_widget_test` 3.1.0, à une condition : le fichier `.feature` commence par la ligne `# language: fr` (sans elle, seuls les mots-clés anglais `Feature` / `Scenario` / `Given` / `When` / `Then` sont reconnus).
+- **Commandes de référence** : `flutter pub get`, `flutter test`, `flutter test --coverage`, `flutter analyze`, `dart format`, `dart run build_runner build --delete-conflicting-outputs`, `flutter run -d chrome`, `flutter build web` (pour la version publiée : `flutter build web --release --base-href "/<dépôt>/" --no-web-resources-cdn --web-content-hash`), et, pour les migrations, `dart run drift_dev make-migrations`. Verrouillage des dépendances : `pubspec.lock` (versionné) ; la version de Flutter est notée dans le README (et le `pubspec`) : Flutter 3.50 ou plus récent, testé avec 3.50.1. Les widgets s'importent par `package:material_ui/material_ui.dart` (`package:flutter/material.dart` est déprécié).
 - **Livraison** : build web publié par GitHub Actions sur **GitHub Pages** (analyse, tests avec couverture, détection de secrets `gitleaks`, audit des dépendances pub, build web, déploiement). **GitHub Pages est public** : données fictives uniquement, et tout ce qui est dans un build web Flutter est public (aucun secret dans l'application).
 - **Conventions de nommage** : les identifiants des énoncés ci-dessous (`souffle_actuel`, `renom_promis`, `temps_ouverture_min`...) sont donnés en snake_case ; en Dart on les écrit en lowerCamelCase (`souffleActuel`, `renomPromis`, `tempsOuvertureMin`, Effective Dart), et drift génère les colonnes SQL en snake_case. Les codes de motif (`passeur_epuise`, `voeux_insuffisants`...) sont des valeurs sérialisées, portées côté Dart par des `enum`.
 
@@ -57,7 +57,7 @@ Les trois thèmes se construisent avec la même pile, détaillée dans le chapit
 
 ## Stack commune et dépôt-modèle {#sec-themes-stack}
 
-Le dépôt-modèle fourni en formation impose la pile décrite plus haut (« Pile technique du projet ») et contient : un squelette Flutter (structure en couches, `get_it` configuré, un BLoC d'exemple, un test unitaire, un fichier `.feature` d'exemple, une CI minimale `flutter analyze` + `flutter test`), ainsi qu'un `CLAUDE.md` et un document d'architecture réutilisables d'un projet à l'autre (structure Clean Architecture, injection `get_it`, conventions BLoC, discipline TDD et BDD). Les rôles de chaque thème sont protégés par une **garde d'accès dans la couche domain** (use case ou service `RequireRole`) avec un test de refus ; il n'y a pas d'authentification réelle, seulement un utilisateur courant fictif associé à l'un des deux rôles du thème (à confirmer dans le dépôt-modèle). Aucun secret ne va dans le dépôt ni dans l'application (un fichier `.env` éventuel est ignoré par git). Les dépôts sont **publics**, dans l'organisation GitHub de la formation, et les builds web sont publics sur GitHub Pages : c'est une raison de plus de n'y mettre aucune donnée réelle.
+Le dépôt-modèle fourni en formation impose la pile décrite plus haut (« Pile technique du projet ») et contient : un squelette Flutter (structure en couches, `get_it` configuré, une fonctionnalité d'exemple avec un Cubit et ses tests, des tests unitaires, un fichier `.feature` d'exemple en français, une base drift d'exemple, une CI minimale qui lance notamment `flutter analyze` et `flutter test`), ainsi qu'un `CLAUDE.md` et un document d'architecture réutilisables d'un projet à l'autre (structure Clean Architecture, injection `get_it`, conventions BLoC, discipline TDD et BDD). Les rôles de chaque thème sont protégés par une **garde d'accès dans la couche domain** (use case ou service `RequireRole`) avec un test de refus ; il n'y a pas d'authentification réelle, seulement un utilisateur courant fictif associé à l'un des deux rôles du thème. Le dépôt-modèle le confirme : il fournit un utilisateur courant simulé (rôle choisi à l'écran, identifiant pseudonyme, sans compte ni mot de passe), deux rôles de démonstration (`meneur` et `joueur`) que chaque équipe remplace par ceux de son thème, et une garde `RequireRole` avec son test de refus. Aucun secret ne va dans le dépôt ni dans l'application (un fichier `.env` éventuel est ignoré par git). Les dépôts sont **publics**, dans l'organisation GitHub de la formation, et les builds web sont publics sur GitHub Pages : c'est une raison de plus de n'y mettre aucune donnée réelle.
 
 Docker, Rust et Antigravity sont des outils « utiles plus tard » : ils ne font pas partie de la pile des projets ni de leur livraison.
 
@@ -138,7 +138,7 @@ Dans ce thème, vous n'écrivez pas un outil *à propos* d'un monde imaginaire :
     | Les 4 issues (`tenue`, `rompue`, `tenue_pleine_lune`, `rompue_lune_noire`) | Les **factions** qui tiennent les ponts et les péages, et leurs humeurs |
     | Les 2 rôles applicatifs et la garde d'accès | Le **ton** des textes (solennel, administratif pince-sans-rire, poétique...) et le jeu de données de démonstration |
 
-  - *Livrable* : une page `docs/monde.md` (le comptoir, ses lieux, son bestiaire, ses factions, le nom de ses rangs) et **un seul fichier de libellés** dans la couche presentation (`lib/presentation/lexique.dart`, emplacement à confirmer dans le dépôt-modèle). Le générateur de seed y puise ses noms.
+  - *Livrable* : une page `docs/monde.md` (le comptoir, ses lieux, son bestiaire, ses factions, le nom de ses rangs) et **un seul fichier de libellés** dans la couche presentation commune (`lib/core/presentation/lexique.dart`, emplacement fixé par le `docs/ARCHITECTURE.md` du dépôt-modèle ; l'équipe crée ce fichier). Le générateur de seed y puise ses noms.
   - *Règle d'ingénierie* : le domaine ne connaît que les **codes** ; aucun nom inventé n'apparaît dans `domain/` ni dans les cas d'acceptation. Vérification simple : changer un libellé du lexique ne fait échouer aucun test de la règle.
   - *Deux limites* : un monde **original** (aucun nom, lieu ou créature repris d'une œuvre existante, voir la rubrique conformité) et **aucune personne réelle** (ni nom, ni caricature d'un enseignant ou d'un camarade).
   - *Charge* : du contenu, pas du code, comparable au glossaire d'équipe du thème B ; il est compris dans les 15 à 20 h.
@@ -198,10 +198,11 @@ Dans ce thème, vous n'écrivez pas un outil *à propos* d'un monde imaginaire :
     | 6 | passeur à 0 de souffle (par exemple le pisteur du cas 5 après son jugement) ; n'importe quelle route ; éclat 12 | erreur `passeur_epuise`, aucune traversée enregistrée, aucune modification |
     | 7 | heraut de rang 1, renom 50, souffle 24/24 ; route `faction`, péril 10, usure 4, renom promis 400 ; éclat 10 | total 10 + 5 + 1 = 16 ≥ 10 : passage tenu (`tenue`) ; 0 souffle perdu ; renom 50 + 400 = 450 ; rang 3 (deux rangs gagnés) ; souffle maximum 24 + 2 × 8 = 40 ; souffle 40/40 |
 
-    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (français, à vérifier : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes (celle de S3 est déjà couverte par ses propres tests). Dans ce tableau, « renom », « rang » et « souffle » sont les valeurs de la fiche après le jugement. Les cas ne citent que des codes et des nombres : ils sont identiques pour toutes les équipes du thème, quel que soit le monde inventé.
+    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (en français, avec l'en-tête `# language: fr` : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes (celle de S3 est déjà couverte par ses propres tests). Dans ce tableau, « renom », « rang » et « souffle » sont les valeurs de la fiche après le jugement. Les cas ne citent que des codes et des nombres : ils sont identiques pour toutes les équipes du thème, quel que soit le monde inventé.
 - **Première user story et sous-règle isolée (BDD)** : la sous-règle isolée de S3 (le total, règle 3) s'écrit comme un scénario `.feature` en français, sans changer les valeurs (éclat 11, veneur de rang 1, route de nature `bete`, péril 17, comme au cas 1) :
 
     ```gherkin
+    # language: fr
     Fonctionnalité: Jugement d'une traversée
       Scénario: total d'une traversée pour un veneur de rang 1
         Soit un veneur de rang 1
@@ -292,10 +293,11 @@ Dans ce thème, vous n'écrivez pas un outil *à propos* d'un monde imaginaire :
     | 7 | quart de 480 min ; panne de 480 min ; 0 pièce | D 0,0 % ; P 0,0 % ; Q 0,0 % ; OEE 0,0 % |
     | 8 | nuit du 24 au 25 octobre 2026, de 22:00 (heure d'été) à 06:00 (heure d'hiver), soit 20:00Z à 05:00Z ; aucun arrêt ; cycle 30 s ; 1 000 produites dont 10 rebutées | durée 540 min ; D 100,0 % ; P 92,6 % ; Q 99,0 % ; OEE 91,7 % |
 
-    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (français, à vérifier : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes. Le cas 8 est le seul test du changement d'heure du thème : il est pertinent ici parce que le temps d'ouverture est une durée réelle.
+    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (en français, avec l'en-tête `# language: fr` : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes. Le cas 8 est le seul test du changement d'heure du thème : il est pertinent ici parce que le temps d'ouverture est une durée réelle.
 - **Première user story et sous-règle isolée (BDD)** : la disponibilité (règles 2 et 3), sans déclaration ni performance, s'écrit comme un scénario `.feature` en français, sans changer les valeurs (cas 2 : quart de 480 min, pause 30 min, panne 45 min, changement de série 15 min) :
 
     ```gherkin
+    # language: fr
     Fonctionnalité: Calcul de la disponibilité d'un quart
       Scénario: disponibilité avec un arrêt planifié et deux arrêts non planifiés
         Soit un quart de 480 minutes
@@ -417,10 +419,11 @@ Tous les étudiants sont des pseudonymes (`etu_001`, `etu_002`...), tous les suj
     | 6 | deux sujets de `capacite_min` 2 : l'un avec 2 étudiants, l'autre avec 1 | le premier `confirme` (borne incluse), le second `sous_effectif` |
     | 7 | deux étudiants de rang 3 | erreur `rang_en_double`, aucune affectation produite |
 
-    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (français, à vérifier : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes.
+    Ces cas sont écrits par le gardien produit en S4 sous forme de fichiers `.feature` Gherkin (en français, avec l'en-tête `# language: fr` : voir la pile ci-dessus) dans `test/acceptance/` (tests widget générés par `bdd_widget_test` avec `dart run build_runner build --delete-conflicting-outputs`), avant le code de l'agent sur les sous-règles restantes.
 - **Première user story et sous-règle isolée (BDD)** : la priorité par rang (règle 2), sur des entrées simples sans capacité ni filtre de parcours, s'écrit comme un scénario `.feature` en français, sans changer les valeurs (rangs du cas 2 : etu_010 de rang 7, etu_011 de rang 6) :
 
     ```gherkin
+    # language: fr
     Fonctionnalité: Répartition des sujets
       Scénario: les étudiants sont traités par rang croissant
         Soit un étudiant "etu_010" de rang 7
