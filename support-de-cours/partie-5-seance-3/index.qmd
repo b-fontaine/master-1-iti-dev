@@ -1,0 +1,7 @@
+<!-- source: nouveau · synchro: 2026-11-26 -->
+
+# Séance 3 · Première règle métier, données et RGPD {.unnumbered}
+
+Cette partie réunit les supports de la séance 3, qui a lieu deux jours après la séance 2 : le projet d'équipe existe, il faut maintenant y livrer du concret. Elle commence par un résumé de la séance (@sec-s3), suivi de quatre chapitres : le travail à plusieurs dans un dépôt partagé (@sec-travailler-a-plusieurs), la première user story en TDD et en BDD avec l'agent (@sec-premiere-user-story), le RGPD appliqué au projet (@sec-rgpd-projet) et les données (@sec-donnees). Les fiches à garder sous les yeux pendant les ateliers, de G à N, sont rassemblées dans l'annexe [-@sec-fiches].
+
+Chaque chapitre contient un résumé, un glossaire, des sources et une liste des points non vérifiés. Les extraits de code et les sorties de commandes ont été obtenus sur une copie du dépôt-modèle ; les noms d'outils, les versions et les fonctionnalités évoluent vite : revérifiez-les sur la documentation officielle avant de vous y fier.

@@ -75,7 +75,7 @@ Tout fichier de `cours/` qui nourrit le livre figure ici. Le chemin source est c
 | Source | Chapitre (fichier · identifiant) |
 |---|---|
 | `README.md` (racine) | `partie-1-formation/01-programme.qmd` · `#sec-programme` ; glossaire repris dans `annexes/b-glossaire.qmd` · `#sec-glossaire` |
-| `cours/programme-detaille.md` | `partie-1-formation/02-programme-detaille.qmd` · `#sec-programme-detaille` ; séances à venir : `partie-5-a-venir/seance-3.qmd` · `#sec-s3`, `seance-4.qmd` · `#sec-s4`, `seance-5.qmd` · `#sec-s5` |
+| `cours/programme-detaille.md` | `partie-1-formation/02-programme-detaille.qmd` · `#sec-programme-detaille` ; séances à venir : `partie-5-a-venir/seance-4.qmd` · `#sec-s4`, `seance-5.qmd` · `#sec-s5` |
 | `cours/presentations/day-1/index.html`, `cours/presentations/day-1/notes.html` | `partie-2-seance-1/00-seance-en-bref.qmd` · `#sec-s1-en-bref` |
 | `cours/supports/day-1/01-histoire-detaillee-du-craft.md` | `partie-2-seance-1/01-histoire-du-craft.qmd` · `#sec-histoire-craft` |
 | `cours/supports/day-1/02-histoire-de-l-ia.md` | `partie-2-seance-1/02-histoire-de-l-ia.qmd` · `#sec-histoire-ia` |
@@ -91,6 +91,12 @@ Tout fichier de `cours/` qui nourrit le livre figure ici. Le chemin source est c
 | `cours/supports/day-2/02-configurer-claude-code.md` | `partie-3-seance-2/02-configurer-claude-code.qmd` · `#sec-configurer-claude-code` |
 | `cours/supports/day-2/03-demarrer-le-projet-d-equipe.md` | `partie-3-seance-2/03-demarrer-le-projet.qmd` · `#sec-demarrer-projet` |
 | `cours/supports/day-2/04-fiches-de-seance.md` | `annexes/a-fiches-pratiques.qmd` · `#sec-fiches` |
+| `cours/presentations/day-3/index.html`, `cours/presentations/day-3/notes.html` | `partie-5-seance-3/00-seance-en-bref.qmd` · `#sec-s3` |
+| `cours/supports/day-3/01-travailler-a-plusieurs.md` | `partie-5-seance-3/01-travailler-a-plusieurs.qmd` · `#sec-travailler-a-plusieurs` |
+| `cours/supports/day-3/02-premiere-user-story.md` | `partie-5-seance-3/02-premiere-user-story.qmd` · `#sec-premiere-user-story` |
+| `cours/supports/day-3/03-rgpd-applique-au-projet.md` | `partie-5-seance-3/03-rgpd-applique-au-projet.qmd` · `#sec-rgpd-projet` |
+| `cours/supports/day-3/04-les-donnees.md` | `partie-5-seance-3/04-les-donnees.qmd` · `#sec-donnees` |
+| `cours/supports/day-3/05-fiches-de-seance.md` | `annexes/a-fiches-pratiques.qmd` · `#sec-fiches` (fiches G à N) |
 | `cours/projets/themes.md`, `cours/presentations/themes/index.html`, `cours/presentations/themes/notes.html` | `partie-4-projet/01-themes.qmd` · `#sec-themes` |
 | `cours/conformite-ai-act-rgpd.md` | `partie-4-projet/02-conformite.qmd` · `#sec-conformite` |
 | _(texte original, sans source)_ | `index.qmd` (avant-propos), `partie-1-formation/03-parcours-autonome.qmd` · `#sec-parcours-autonome`, pages d'ouverture de partie |

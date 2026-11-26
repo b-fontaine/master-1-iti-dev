@@ -1,4 +1,4 @@
-<!-- source: README.md, glossaires des chapitres · synchro: 2026-11-25 -->
+<!-- source: README.md, glossaires des chapitres, cours/supports/day-3/01-travailler-a-plusieurs.md, cours/supports/day-3/02-premiere-user-story.md, cours/supports/day-3/03-rgpd-applique-au-projet.md, cours/supports/day-3/04-les-donnees.md, cours/supports/day-3/05-fiches-de-seance.md · synchro: 2026-11-26 -->
 
 # Glossaire {#sec-glossaire}
 
@@ -73,8 +73,17 @@ Bac à sable (*sandbox*)
 Banc d'essai (*benchmark*)
 :   jeu de problèmes standardisé pour comparer des modèles. (voir @sec-histoire-ia)
 
+Base en mémoire
+:   base SQLite créée vide pour un test et effacée à la fin, sans fichier. (voir @sec-donnees)
+
+Base légale
+:   motif prévu par l'article 6 du RGPD qui rend un traitement licite ; une par finalité. (voir @sec-rgpd-projet)
+
 BDD (*Behavior-Driven Development*), développement guidé par le comportement
 :   décrire le comportement attendu en scénarios lisibles par tous (Gherkin), qui deviennent des tests automatiques. (voir @sec-pratique-craft-flutter)
+
+`bdd_widget_test`
+:   bibliothèque qui transforme un fichier `.feature` en test Flutter (`testWidgets`) et crée les étapes manquantes. (voir @sec-premiere-user-story)
 
 BF16
 :   format de nombre à 16 bits utilisé pour stocker les paramètres sans quantification forte. (voir @sec-edge-ai)
@@ -88,11 +97,17 @@ BLoC
 BLoC, Cubit
 :   composants qui portent l'état d'un écran, séparés de l'affichage. (voir @sec-demarrer-projet)
 
+`bloc_test`
+:   bibliothèque de test d'un Cubit ou d'un BLoC ; `blocTest` vérifie la suite d'états produite par une action. (voir @sec-premiere-user-story)
+
 Bounded context (contexte délimité)
 :   périmètre à l'intérieur duquel un modèle et son vocabulaire ont un sens précis. (voir @sec-histoire-craft)
 
 Branche
 :   ligne de travail parallèle ; étiquette mobile posée sur un commit. (voir @sec-git)
+
+Branche courte
+:   branche créée pour une seule tâche et fusionnée dans les heures qui suivent. (voir @sec-travailler-a-plusieurs)
 
 Brownfield / greenfield
 :   projet existant, avec son code ancien (brownfield, « friche ») ; projet neuf (greenfield, « terrain vierge »). (voir @sec-craft-ia)
@@ -112,6 +127,12 @@ Cache
 Cache de prompt
 :   relecture à tarif réduit du début inchangé des requêtes. (voir @sec-outils-agentiques)
 
+Cardinalité
+:   nombre de lignes d'une table qui peuvent être reliées à une ligne d'une autre (« un et un seul », « zéro ou plusieurs »). (voir @sec-donnees)
+
+Cas d'usage (*use case*)
+:   une action de l'utilisateur, écrite dans `domain` (ici, consulter la disponibilité d'un quart). (voir @sec-premiere-user-story)
+
 Chaîne de pensée (*chain of thought*)
 :   étapes intermédiaires de raisonnement écrites avant la réponse finale. (voir @sec-histoire-ia)
 
@@ -130,6 +151,12 @@ Classe / objet
 `CLAUDE.md`
 :   fichier d'instructions du projet, lu par l'agent à chaque session. (voir @sec-configurer-claude-code)
 
+Clé étrangère
+:   colonne qui contient la clé primaire d'une ligne d'une autre table ; elle matérialise une relation. (voir @sec-donnees)
+
+Clé primaire
+:   identifiant unique et stable d'une ligne (dans le projet, la colonne `id`). (voir @sec-donnees)
+
 Clean Architecture
 :   organisation du code en couches (domaine, données, présentation) où le métier ne dépend pas des détails techniques. (voir @sec-demarrer-projet)
 
@@ -139,6 +166,9 @@ Cloner
 Cloud
 :   serveurs distants hébergés par un fournisseur. (voir @sec-edge-ai)
 
+CNIL
+:   autorité de contrôle française pour la protection des données ; reçoit les réclamations. (voir @sec-rgpd-projet)
+
 Code de sortie
 :   nombre renvoyé par une commande quand elle se termine ; 0 signifie « tout va bien ». (voir @sec-configurer-claude-code)
 
@@ -147,6 +177,9 @@ Code source
 
 Collaborateur
 :   compte GitHub autorisé à écrire dans un dépôt. (voir @sec-demarrer-projet)
+
+Commentaire bloquant
+:   remarque qui doit être réglée (par une correction ou une explication) avant la fusion ; les autres sont des questions ou des suggestions. (voir @sec-travailler-a-plusieurs)
 
 Commit
 :   enregistrement d'un ensemble de modifications dans l'historique d'un dépôt, accompagné d'un message. (voir @sec-histoire-craft)
@@ -176,7 +209,10 @@ Contexte (fenêtre de)
 :   texte total que le modèle peut considérer pour une réponse, mesuré en tokens. (voir @sec-histoire-ia)
 
 Contrainte
-:   règle appliquée par l'outil, indépendamment du modèle (permission, hook, outils d'un sous-agent). (voir @sec-configurer-claude-code)
+:   règle appliquée par l'outil, indépendamment du modèle (permission, hook, outils d'un sous-agent) ; en base de données, règle vérifiée par la base à chaque écriture (valeur obligatoire, unicité, condition, clé étrangère). (voir @sec-configurer-claude-code et @sec-donnees)
+
+Contrôle d'ouverture
+:   courte vérification, en début de séance, que le dépôt démarre sur chaque poste et que l'équipe sait où elle en est. (voir @sec-travailler-a-plusieurs)
 
 Corrélation / causalité
 :   deux phénomènes évoluent ensemble / l'un provoque l'autre. (voir @sec-craft-ia)
@@ -232,14 +268,32 @@ DevOps
 Diff
 :   différence ligne à ligne entre deux états (`+` ajouté, `-` supprimé). (voir @sec-git)
 
+Disponibilité
+:   dans le thème B, temps de marche divisé par temps requis. (voir @sec-premiere-user-story)
+
 Dojo / kata
 :   séance d'entraînement / exercice court répété pour travailler le geste. (voir @sec-pratique-craft-flutter)
 
 Domain-Driven Design (DDD)
 :   conception pilotée par le domaine métier. (voir @sec-histoire-craft)
 
+Donnée personnelle
+:   information qui se rapporte à une personne identifiée ou identifiable (art. 4). (voir @sec-rgpd-projet)
+
+Donnée sensible
+:   catégorie particulière (santé, opinions, appartenance syndicale, etc.), en principe interdite sauf exceptions (art. 9). (voir @sec-rgpd-projet)
+
 DORA
 :   programme de recherche (désormais rattaché à Google Cloud) sur la performance de livraison logicielle, source de cinq indicateurs. (voir @sec-histoire-craft)
+
+DPO
+:   délégué à la protection des données ; il qualifie les questions de données personnelles. (voir @sec-rgpd-projet)
+
+drift
+:   bibliothèque Dart qui déclare les tables en Dart et génère, avec `build_runner`, le code d'accès typé à SQLite. (voir @sec-donnees)
+
+`drift_dev make-migrations`
+:   outil de drift qui écrit l'instantané de chaque version du schéma, le fichier d'étapes et les tests de migration. (voir @sec-donnees)
 
 Edge AI (IA embarquée)
 :   exécution d'un modèle d'IA sur l'appareil de l'utilisateur. (voir @sec-edge-ai)
@@ -256,11 +310,17 @@ Embedding (plongement)
 Enregistrement (*record*)
 :   valeur composée de plusieurs éléments, avec ou sans noms, comparable directement (fonctionnalité de Dart 3). (voir @sec-pratique-craft-flutter)
 
+Entité
+:   chose dont l'outil garde la trace ; dans la base, une table. (voir @sec-donnees)
+
 Énumération (`enum`)
 :   liste fermée de valeurs possibles. (voir @sec-pratique-craft-flutter)
 
 Environnement
 :   lieu d'exécution du logiciel (test, production). (voir @sec-ci-cd)
+
+Équipe jumelée
+:   équipe désignée par le programme pour relire les PR de la vôtre pendant la revue croisée. (voir @sec-travailler-a-plusieurs)
 
 Essai contrôlé randomisé (RCT)
 :   expérience où l'on tire au sort qui reçoit le traitement. (voir @sec-craft-ia)
@@ -268,14 +328,29 @@ Essai contrôlé randomisé (RCT)
 Étape (step) et **Job**
 :   instruction et groupe d'instructions d'un workflow. (voir @sec-ci-cd)
 
+Étape de scénario (*step*)
+:   fonction Dart qui exécute une phrase d'un scénario ; une par fichier, dans `test/steps/`. (voir @sec-premiere-user-story)
+
 Example Mapping
 :   atelier où l'on s'accorde sur des exemples concrets avant de coder. (voir @sec-pratique-craft-flutter)
 
 Fast-forward (avance rapide)
 :   fusion sans nouveau commit, quand la branche qui reçoit n'a pas bougé. (voir @sec-git)
 
+Fiche de conformité
+:   document de la formation, à 13 rubriques, dans `docs/fiche_conformite.md` ; version pédagogique et allégée d'un registre, pas le registre officiel. (voir @sec-rgpd-projet)
+
 Fichier `.feature`
 :   scénarios de comportement rédigés en phrases (Soit, Quand, Alors). (voir @sec-demarrer-projet)
+
+Fichier généré
+:   fichier produit par un outil (`build_runner`) à partir d'un autre ; ne se modifie pas à la main et, dans ce projet, ne se versionne pas. (voir @sec-premiere-user-story)
+
+Finalité
+:   but déterminé d'un traitement ; ce qui justifie chaque donnée collectée. (voir @sec-rgpd-projet)
+
+Fini quand
+:   la condition, en tête de chaque fiche, qui dit que l'atelier est terminé. (voir @sec-fiches)
 
 Flutter
 :   cadre de développement de Google pour applications multiplateformes. (voir @sec-guide-flutter)
@@ -303,6 +378,9 @@ Gel du code (*code freeze*)
 
 Gherkin
 :   langage des scénarios (`Given/When/Then`, en français `Soit/Quand/Alors`). (voir @sec-pratique-craft-flutter)
+
+`git pull origin main`
+:   récupère la branche `main` du dépôt distant et la fusionne dans la branche courante. (voir @sec-travailler-a-plusieurs)
 
 Git, dépôt
 :   outil de gestion de l'historique et de partage du travail ; espace de stockage d'un projet. (voir @sec-git)
@@ -346,8 +424,17 @@ Injection de dépendances
 Injection de prompt
 :   texte malveillant glissé dans le contenu lu par l'agent. (voir @sec-outils-agentiques)
 
+Insertion orpheline
+:   tentative d'enregistrer une ligne dont la clé étrangère pointe vers une ligne qui n'existe pas. (voir @sec-fiches)
+
+Instantané (de schéma)
+:   fichier JSON de `drift_schemas/` qui décrit le schéma exact d'une version. (voir @sec-donnees)
+
 Intégration continue (CI)
 :   exécution automatique des tests sur une machine distante à chaque modification. (voir @sec-pratique-craft-flutter)
+
+Interface (contrat)
+:   déclaration de ce qu'une pièce sait faire, sans dire comment ; ici `QuartsRepository`. (voir @sec-premiere-user-story)
 
 Invite de commande (`$`)
 :   le signe affiché par le terminal avant votre saisie ; il ne se tape pas. (voir @sec-fiches)
@@ -358,8 +445,17 @@ JSON
 Langage omniprésent (ubiquitous language)
 :   vocabulaire commun entre experts du métier et développeurs. (voir @sec-histoire-craft)
 
+Ligne orpheline
+:   ligne dont la clé étrangère pointe vers une ligne qui n'existe pas. (voir @sec-donnees)
+
+Limitation de la conservation
+:   principe qui impose une durée de conservation et une suppression. (voir @sec-rgpd-projet)
+
 Lint
 :   analyse automatique du code sans l'exécuter. (voir @sec-ci-cd)
+
+Livrable
+:   ce que l'équipe doit avoir fusionné à la fin de la séance. (voir @sec-fiches)
 
 Livraison continue (CD)
 :   le logiciel est toujours prêt à être publié. (voir @sec-ci-cd)
@@ -378,6 +474,21 @@ MCP (*Model Context Protocol*)
 
 Méthode
 :   action attachée à une valeur ou à une classe. (voir @sec-pratique-craft-flutter)
+
+Mettre sa branche à jour
+:   y ramener les derniers changements de `main`, pour résoudre un conflit ou vérifier que tout marche encore ensemble. (voir @sec-travailler-a-plusieurs)
+
+Migration
+:   étape qui fait passer une base existante d'une version du schéma à la suivante, sans perdre ses données. (voir @sec-donnees)
+
+`MigrationStrategy`
+:   dans drift, l'ensemble des actions jouées à la création (`onCreate`), à la mise à niveau (`onUpgrade`) et à chaque ouverture (`beforeOpen`) de la base. (voir @sec-donnees)
+
+Minimisation
+:   principe qui impose de ne collecter que le nécessaire. (voir @sec-rgpd-projet)
+
+`mocktail`
+:   bibliothèque qui fabrique une fausse pièce dont le test dicte les réponses. (voir @sec-premiere-user-story)
 
 Mode de permission
 :   niveau global d'autonomie (manuel, `acceptEdits`, `plan`, `auto`, `dontAsk`, `bypassPermissions`). (voir @sec-outils-agentiques)
@@ -409,6 +520,9 @@ Pair / mob programming
 Paramètre
 :   réglage numérique interne à un modèle, ajusté à l'entraînement. (voir @sec-histoire-ia)
 
+Paramètre d'étape
+:   valeur entre accolades dans un scénario (`{480}`, `{'pause'}`), transmise à l'étape. (voir @sec-premiere-user-story)
+
 Paramètres (poids)
 :   nombres internes d'un modèle, ajustés à l'entraînement. (voir @sec-edge-ai)
 
@@ -420,6 +534,9 @@ Perceptron
 
 Permission
 :   règle `allow`, `ask` ou `deny` qui décide de ce que l'agent peut faire. (voir @sec-configurer-claude-code)
+
+Petite PR
+:   PR qui fait une seule chose et dont le diff se lit en entier. (voir @sec-travailler-a-plusieurs)
 
 Pipeline
 :   chaîne d'étapes parcourue par une modification. (voir @sec-ci-cd)
@@ -439,6 +556,9 @@ Porte qualité
 Pousser, tirer (*push*, *pull*)
 :   envoyer ses commits vers le dépôt distant, récupérer ceux des autres. (voir @sec-git)
 
+PRAGMA
+:   commande de réglage propre à SQLite (par exemple `PRAGMA foreign_keys = ON`). (voir @sec-donnees)
+
 Pré-entraînement
 :   phase d'apprentissage sur un énorme corpus de texte, par prédiction du token suivant. (voir @sec-histoire-ia)
 
@@ -447,6 +567,9 @@ Production
 
 Protection de branche
 :   réglages de GitHub qui imposent des conditions avant toute modification d'une branche. (voir @sec-demarrer-projet)
+
+Pseudonyme
+:   identifiant qui remplace un nom ; reste une donnée personnelle si l'on peut remonter à la personne. (voir @sec-rgpd-projet)
 
 pubspec.yaml
 :   fichier de description et de dépendances d'un projet Dart ou Flutter. (voir @sec-guide-flutter)
@@ -475,8 +598,17 @@ Release / tag
 Relecture (*review*)
 :   lecture du diff d'une PR par un autre que son auteur, conclue par un commentaire, une approbation ou une demande de modifications. (voir @sec-git)
 
+Repository
+:   pièce qui range et relit les données pour le domaine. (voir @sec-premiere-user-story)
+
+Repository en mémoire (*fake*)
+:   implémentation d'un repository qui garde les données dans des variables, sans base ; utilisée en séance 3. (voir @sec-premiere-user-story)
+
 Rétropropagation
 :   méthode qui répartit l'erreur de sortie sur les réglages de chaque couche pour les corriger. (voir @sec-histoire-ia)
+
+Revue croisée
+:   relecture de la PR d'une équipe par une autre équipe. (voir @sec-travailler-a-plusieurs)
 
 RGPD
 :   règlement européen sur la protection des données personnelles. (voir @sec-conformite)
@@ -492,6 +624,12 @@ RSSI
 
 Runner
 :   machine qui exécute un job. (voir @sec-ci-cd)
+
+Schéma
+:   description de la base (tables, colonnes, contraintes). (voir @sec-donnees)
+
+`schemaVersion`
+:   numéro de la version du schéma attendue par le code ; augmenté de 1 à chaque modification d'une table. (voir @sec-donnees)
 
 Scrum
 :   méthode agile d'organisation (rôles, réunions, cycles courts), sans pratiques techniques prescrites. (voir @sec-histoire-craft)
@@ -517,14 +655,29 @@ SOLID
 Sous-agent
 :   assistant secondaire au contexte isolé, qui renvoie un résumé. (voir @sec-configurer-claude-code)
 
+Sous-règle isolée
+:   une partie de la règle métier du thème, assez petite pour une première story (pour B : la disponibilité). (voir @sec-premiere-user-story)
+
+Sous-traitant
+:   celui qui traite des données pour le compte d'un responsable, sous contrat (art. 28). (voir @sec-rgpd-projet)
+
 Spec-driven development
 :   développement piloté par la spécification, où la description du comportement précède et guide le code. (voir @sec-craft-ia)
+
+SQLite
+:   base de données relationnelle contenue dans un seul fichier, sans serveur. (voir @sec-donnees)
 
 StatefulWidget / StatelessWidget
 :   widget avec / sans état. (voir @sec-guide-flutter)
 
+`stepByStep`
+:   fonction générée par `make-migrations` qui reçoit une étape par version (`from1To2`, `from2To3`…). (voir @sec-donnees)
+
 Système expert
 :   programme à base de règles « si... alors... » codant le savoir d'un spécialiste. (voir @sec-histoire-ia)
+
+Tâche facultative
+:   travail de 2 h au plus par étudiant, entre la séance 3 et la séance 4, pour terminer ce qui a glissé. (voir @sec-fiches)
 
 Tag
 :   étiquette fixe posée sur un commit (`s2-fin`, `v1.0`). (voir @sec-git)
@@ -534,6 +687,9 @@ TDD (Test-Driven Development)
 
 Température
 :   réglage du degré de hasard dans le choix du token suivant. (voir @sec-histoire-ia)
+
+Temps requis, temps de marche
+:   durée du quart moins les arrêts planifiés ; temps requis moins les arrêts non planifiés. (voir @sec-premiere-user-story)
 
 Test
 :   petit programme qui vérifie qu'un morceau de code fait ce qui est attendu. (voir @sec-histoire-craft)
@@ -547,8 +703,17 @@ Test unitaire, de widget, d'intégration
 Token
 :   morceau de texte (mot, syllabe, ponctuation) qui sert d'unité au modèle, à la facturation et à la mémoire. (voir @sec-histoire-ia)
 
+Transfert
+:   envoi de données vers un tiers, en particulier hors de l'Union européenne (chapitre V du RGPD). (voir @sec-rgpd-projet)
+
 Transformer
 :   architecture de réseau de neurones fondée sur l'attention (2017), base des modèles de langage actuels. (voir @sec-histoire-ia)
+
+Trio circulaire
+:   groupe de trois équipes où chacune relit la suivante (07 relit 01, 01 relit 04, 04 relit 07), utilisé quand le nombre d'équipes est impair. (voir @sec-travailler-a-plusieurs)
+
+Troncature d'un arrêt
+:   ne compter que la partie d'un arrêt comprise dans le quart. (voir @sec-premiere-user-story)
 
 TRS
 :   taux de rendement synthétique d'un équipement (disponibilité × performance × qualité) ; sujet du thème B. (voir @sec-demarrer-projet)
@@ -567,6 +732,9 @@ Versionner
 
 Vibe coding
 :   produire avec l'IA sans regarder le code, en ne jugeant que le comportement (Karpathy, 2025). (voir @sec-craft-ia)
+
+Violation de données
+:   incident qui expose des données personnelles ; notification à l'autorité dans les 72 heures si risque (art. 33). (voir @sec-rgpd-projet)
 
 Widget
 :   brique d'interface Flutter ; **widget test** : test qui manipule une interface dans un faux écran. (voir @sec-pratique-craft-flutter)

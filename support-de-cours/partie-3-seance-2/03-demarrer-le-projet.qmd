@@ -627,7 +627,8 @@ Rien n'est demandé entre la séance 2 et la séance 3. La séance 3 s'ouvre sur
 
 1. `git pull` ;
 2. `flutter pub get` ;
-3. `flutter test`.
+3. `dart run build_runner build --delete-conflicting-outputs` (les fichiers générés ne sont pas versionnés : sans cette commande, `flutter test` peut échouer ou ne pas lancer les scénarios) ;
+4. `flutter test`.
 
 Si votre équipe n'a pas terminé l'initialisation en séance 2 (première PR relue, protection de `main` vérifiée), elle la termine à ce moment-là : notez-le dans `JOURNAL.md`.
 

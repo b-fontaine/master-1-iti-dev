@@ -1,0 +1,132 @@
+<!-- source: cours/presentations/day-3/index.html, cours/presentations/day-3/notes.html · synchro: 2026-11-26 -->
+
+# La séance 3 en bref {#sec-s3}
+
+La séance 3, « Première user story, données et RGPD », a lieu deux jours après la séance 2. Le dépôt d'équipe existe, `main` est protégée, un premier circuit de relecture a fonctionné : il faut maintenant du concret. La séance livre la première vraie fonctionnalité, en TDD et en BDD, pose les données qui survivent au code et ouvre le volet RGPD : on ne choisit pas un champ ou une table sans se demander si l'on traite des données personnelles. Ce chapitre résume la séance et indique, pour chaque temps, où le retrouver dans le livre.
+
+## Objectifs
+
+À la fin de la séance, vous savez :
+
+1. **reprendre le projet** par un bref contrôle (`git pull`, `flutter pub get`, `build_runner`, `flutter test`) ;
+2. **livrer une première user story** en TDD et en BDD avec votre agent, et la faire relire ;
+3. **relire la PR d'une autre équipe** avec une checklist, et résoudre un conflit réel ;
+4. **modéliser** un domaine en entités et relations, écrire une migration, et prouver l'intégrité des données par un test sur une base en mémoire ;
+5. **qualifier vos données** au regard du RGPD (donnée personnelle, base légale, durée de conservation, sous-traitant), exercer vos droits et remplir les premières rubriques de la fiche de conformité.
+
+## Déroulé {#sec-s3-deroule}
+
+La séance suit quatre temps, puis se termine par une revue croisée entre équipes et un bilan.
+
+| Temps | Contenu | Livrable | Où le retrouver |
+|---|---|---|---|
+| 1 · Travailler à plusieurs | Contrôle d'ouverture ; petites PR, branches courtes, relecture ; pourquoi les conflits arrivent et comment les résoudre ; annonce des paires de revue croisée | Projet vert sur chaque poste, rôles confirmés | @sec-travailler-a-plusieurs, fiche G |
+| 2 · La première user story | Plan demandé à l'agent et critiqué ; scénario Gherkin en français ; tests unitaires d'abord ; code rangé dans les couches ; PR avec le modèle du dépôt | Scénario, tests et code de la sous-règle verts ; PR ouverte et relue | @sec-premiere-user-story, fiches H et I |
+| 3 · Le RGPD appliqué au projet | Le RGPD en une page ; vos droits ; test en 4 questions et qualification des données du thème ; début de la fiche de conformité | Fiche de conformité commitée (rubriques 1 à 5), relue par un coéquipier | @sec-rgpd-projet, fiche J |
+| 4 · Les données | Entités, relations, clés, contraintes ; drift et migrations versionnées ; modèle sur papier, tables, première migration, test d'intégrité | Modèle et migration fusionnés par une PR relue ; un test prouve qu'une insertion orpheline est rejetée | @sec-donnees, fiche K |
+| Revue croisée | Chaque équipe relit par commentaires une PR de l'équipe jumelée, l'auteur présent pour l'expliquer | Au moins une PR par équipe relue par une autre équipe | @sec-travailler-a-plusieurs, fiche L |
+| Bilan | `JOURNAL.md` et `CLAUDE.md` mis à jour, état de la fiche, vérification du livrable, consignes jusqu'à la séance 4 | État courant écrit, livrable vérifié | Fiche M |
+
+Le programme classe ces temps **Indispensable** (à ne pas sacrifier), sauf deux, classés **Important** (à garder sauf contrainte forte) : l'exposé sur git en équipe et le bilan. Dans le détail, le quiz éclair d'ouverture est **Pratique** (si le rythme le permet) et l'exercice de courriel de demande d'accès **Moins utile** (il peut rester en lecture).
+
+**Livrable de fin de séance (identique pour les trois thèmes).** Première règle verte, modèle et migrations fusionnés, début de `docs/fiche_conformite.md` commité. Détail : première user story livrée (scénario `.feature`, tests, code, PR relue), modèle de données (schéma, première migration, test d'intégrité), `docs/fiche_conformite.md` commité (rubriques 1 à 5), au moins une PR relue par une autre équipe.
+
+## Les idées clés
+
+### Reprendre à deux jours d'intervalle
+
+La séance 2 est toute proche : la remise en route se réduit à un contrôle de quelques minutes, sur chaque poste. On récupère ce qui a été fusionné, on réinstalle, on régénère, on teste, puis on lit l'état courant en tête de `JOURNAL.md`. Les équipes qui n'ont pas terminé l'initialisation de la séance 2 (première PR, protection de `main`) la terminent à ce moment-là.
+
+::: {.callout-warning title="Un test vert ne vaut que si le code généré est à jour"}
+Les fichiers générés par `build_runner` (code de la base, tests tirés des scénarios `.feature`) ne sont pas versionnés. Sur une copie du dépôt-modèle où ils n'avaient pas été générés, `flutter test` a échoué sur quatre fichiers, et les scénarios n'ont pas été lancés du tout. On lance donc `dart run build_runner build --delete-conflicting-outputs` entre `flutter pub get` et `flutter test`. Voir @sec-equipe-2-1 et la fiche G.
+:::
+
+### Travailler à plusieurs
+
+Quatre habitudes : des **petites PR** (une PR fait une seule chose, son diff se lit en entier), des **branches courtes** (moins une branche s'écarte de `main`, moins elle entre en conflit), une **relecture qui regarde** (quoi regarder, comment commenter : la checklist de revue, fiche I) et l'idée que **le conflit est normal** : deux branches ont touché le même fichier, on choisit, on efface les marqueurs, on commite. Pour le pas-à-pas de la résolution, voir @sec-git-conflit ; pour ce qui change dans un dépôt d'équipe dont `main` est protégée, voir @sec-equipe-6.
+
+::: {.callout-tip title="À retenir"}
+« Don't file pull requests with code you haven't reviewed yourself » (Simon Willison) : n'ouvrez pas une pull request sur du code que vous n'avez pas relu vous-même. C'est vrai du code qu'on écrit, et plus encore de celui qu'un agent a écrit pour vous.
+:::
+
+Les paires de la revue croisée dépendent du nombre d'équipes.
+
+| Promotion | Qui relit qui |
+|---|---|
+| 8 équipes | 01–04, 02–05, 03–06, 07–08 (cette dernière paire a le même thème : toléré en séance 3, évité en séance 4) |
+| 7 équipes | 02–05, 03–06, et un trio circulaire : 07 relit 01, 01 relit 04, 04 relit 07 |
+
+L'équipe jumelée commente ; elle n'a pas d'accès en écriture. L'approbation qui débloque la fusion vient d'un coéquipier de l'auteur. Détails : @sec-equipe-7 et la fiche L.
+
+### La première user story
+
+L'ordre compte : un **plan** demandé à l'agent en mode plan, et critiqué ; le **scénario** Gherkin en français, lisible par un non-développeur ; les **tests unitaires**, qui échouent d'abord ; le **code** qui les fait passer, puis le nettoyage ; enfin la **PR**, rédigée avec le modèle du dépôt. Le code se range dans les couches du squelette : le cas d'usage dans `domain`, un repository en mémoire derrière l'interface du domain (pas de base de données à ce stade), un Cubit testé. L'écran peut attendre.
+
+L'exemple suivi est celui du thème B : pour un quart de 480 minutes avec une pause de 30 minutes, une panne de 45 minutes et un changement de série de 15 minutes, le temps requis est de 450 minutes, le temps de marche de 390 minutes, la disponibilité de 86,7 %. Les thèmes A et C ont chacun leur première story et leur sous-règle isolée, données dans le `PROJET.md` de l'équipe (voir aussi @sec-themes).
+
+::: {.callout-warning title="Repérer un test triché"}
+Un agent à qui l'on demande de « faire passer les tests » peut y parvenir en changeant les tests. Cinq formes à reconnaître : un test supprimé, un test désactivé, une attente assouplie, un scénario retouché, une valeur aléatoire figée pour que le résultat tombe juste. Le réflexe, à chaque PR : regarder ce qui a bougé du côté des tests avant de regarder le code. Voir @sec-story-8.
+:::
+
+### Le RGPD appliqué au projet
+
+Le chapitre [-@sec-conformite] pose les notions ; la séance les applique au projet de l'équipe. Trois idées reviennent : une **donnée personnelle** est toute information qui se rapporte à une personne identifiée ou identifiable ; **un prompt est un transfert vers un tiers**, puisque le fournisseur du modèle reçoit tout ce qu'on y met ; et **un outil temporaire n'échappe pas au RGPD**. Chacun apprend aussi à exercer ses propres droits (information, accès, rectification, effacement, limitation, portabilité, opposition, réclamation auprès de la CNIL).
+
+::: {.callout-tip title="Le test en 4 questions"}
+Y a-t-il des données sur des personnes réelles ? L'outil décide-t-il, ou aide-t-il à décider, quelque chose pour quelqu'un ? Les données ou les prompts sortent-ils vers un tiers ? L'outil sera-t-il utilisé hors de l'équipe ? L'équipe répond pour son thème, puis remplit les rubriques 1 à 5 de la fiche de conformité : finalité, données, personnes concernées, base légale ou justification « données fictives », durée de conservation et date de suppression. Aucun nom civil ni courriel dans la fiche.
+:::
+
+Ce volet relève de la sensibilisation, pas de l'avis juridique : la validation revient au RSSI et au DPO. Détails : @sec-rgpd-projet et la fiche J.
+
+### Les données
+
+Les données survivent au code : on peut réécrire un écran, pas réinventer ce qui a été saisi. On dessine donc le modèle sur papier (entités, relations, contraintes) et on le fait valider avant de toucher au clavier. Dans le projet, les tables se déclarent en Dart avec drift, dans la couche `data`, et `build_runner` génère le code d'accès. Tout changement de schéma passe par une **migration versionnée** : on ne modifie jamais une base à la main.
+
+::: {.callout-warning title="Deux pièges, une règle"}
+Premier piège : l'agent « corrige » un test en modifiant les données ; le test passe, la règle qu'il protégeait, non. Second piège : deux branches préparent chacune une migration vers la même version et entrent en conflit. La règle à ajouter à `CLAUDE.md` : une seule migration à la fois, coordonnée par le gardien des données. La manière de s'en sortir quand le conflit est déjà là est décrite plus loin : voir @sec-donnees-7-2.
+:::
+
+Le seed complet et la garde d'accès par rôle ne sont pas demandés en séance 3 ; la migration et le test d'intégrité, eux, ne se sacrifient jamais. Détails : @sec-donnees et la fiche K.
+
+### Avant de partir, et jusqu'à la séance 4
+
+`JOURNAL.md` et `CLAUDE.md` sont mis à jour, l'état de la fiche de conformité est noté, le livrable est vérifié. Entre les séances 3 et 4, une seule tâche, facultative, de deux heures au plus par étudiant : terminer ce qui a glissé (seed complet, garde `RequireRole` avec son test de refus, PR ouvertes), ou, au choix, relire la fiche de conformité ou rédiger un courriel de demande d'accès. La séance 4 ne suppose pas le travail terminé : elle reprend ce qui n'a pas été fait. Voir la fiche M et @sec-pd-travail.
+
+## Si le temps manque
+
+L'ordre de coupe du programme, du moins utile au plus utile :
+
+1. l'écran Flutter de la première user story (le Cubit et son test restent) ;
+2. l'exercice de courriel de demande d'accès et le quiz éclair d'ouverture ;
+3. le seed complet, puis les rôles (garde `RequireRole`) : une équipe en retard les abandonne en premier, mais garde la migration et le test d'intégrité ;
+4. les rubriques 6 et 7 de la fiche ne sont pas entamées ; au besoin, les rubriques 4 et 5 se réduisent à une phrase chacune.
+
+Ne se sacrifient jamais : le contrôle d'ouverture, la première user story en TDD et en BDD sur la sous-règle isolée du thème, le modèle de données avec sa première migration et son test d'intégrité, le RGPD (dont les droits des personnes) et le début de la fiche, les PR croisées.
+
+## Lectures conseillées
+
+- **Avant la séance** : les sections sur le contrôle d'ouverture et les petites PR du chapitre [-@sec-travailler-a-plusieurs], et le dojo de la séance 1 (@sec-pratique-craft-flutter) si vous ne l'avez pas pratiqué.
+- **En séance** : les fiches G à N de l'annexe [-@sec-fiches], fiche après fiche.
+- **Quand un geste coince** : la fiche N (dépannage), puis @sec-git-erreurs.
+- **Après la séance** : @sec-premiere-user-story et @sec-donnees pour comprendre ce que vous avez fait, @sec-rgpd-projet avant de compléter la fiche.
+
+Ces chapitres ne redisent pas ceux des séances précédentes : ils y renvoient pour le pas-à-pas du conflit (@sec-git-conflit), le TDD et le BDD (@sec-pratique-craft-flutter), la configuration de l'agent (@sec-configurer-claude-code), les couches et les gardiens (@sec-demarrer-projet), les patrons d'architecture (@sec-design-patterns) et le fond du RGPD (@sec-conformite).
+
+## Ce que la séance vise
+
+| Objectif du programme | Où le travailler |
+|---|---|
+| 1. Reprendre le projet par un bref contrôle | @sec-travailler-a-plusieurs ; fiche G |
+| 2. Livrer une première user story en TDD et en BDD avec son agent, et la faire relire | @sec-premiere-user-story ; fiche H |
+| 3. Relire la PR d'une autre équipe avec une checklist, et résoudre un conflit réel | @sec-travailler-a-plusieurs ; fiches I et L |
+| 4. Modéliser un domaine, écrire une migration, vérifier l'intégrité sur une base en mémoire | @sec-donnees ; fiche K |
+| 5. Distinguer donnée personnelle, base légale, durée de conservation, sous-traitant ; connaître ses droits ; commencer la fiche de conformité | @sec-rgpd-projet ; @sec-conformite ; fiche J |
+
+::: {.callout-note title="État des connaissances"}
+Rédigés et relus avec l'aide d'un assistant, les chapitres de cette partie sont sourcés, et chacun signale ses points non vérifiés en fin de document. Quatre réserves valent pour l'ensemble.
+
+- **Vérifié sous Linux seulement.** Les extraits de code et les sorties de commandes ont été obtenus le 26 novembre 2026 sur des copies du dépôt-modèle, avec Flutter 3.50.1. Rien n'a été essayé sous Windows ni sous macOS.
+- **Rien n'a été exécuté sur GitHub.** Les étapes qui passent par GitHub (page d'une PR, commentaires, approbation, fusion, revue croisée) sont décrites d'après la documentation et le programme ; le scénario de conflit a été rejoué avec un dépôt distant local.
+- **Le travail avec l'agent n'a pas été rejoué.** Les demandes de plan, les cas de test triché et les exemples de PR sont rédigés pour ces chapitres ; les cas de triche ont été reproduits à la main.
+- **Le droit est de seconde main.** Les articles du RGPD cités viennent du chapitre [-@sec-conformite], qui liste ses propres réserves ; ces chapitres relèvent de la sensibilisation, pas de l'avis juridique.
+:::

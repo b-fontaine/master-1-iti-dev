@@ -1,4 +1,4 @@
-<!-- source: nouveau · synchro: 2026-11-25 -->
+<!-- source: nouveau · synchro: 2026-11-26 -->
 
 # Suivre le parcours en autonome {#sec-parcours-autonome}
 
@@ -33,8 +33,9 @@ Les supports de chaque séance se lisent dans l'ordre du livre. Les repères ci-
 | 2. Comprendre et s'équiper (séance 1) | Vocabulaire et contexte d'abord : l'histoire du craft et celle de l'IA. Installations en parallèle, avec le guide Flutter et le chapitre sur les outils agentiques. Avant de pratiquer : le dojo guidé et la CI/CD. Les design patterns servent à relire le code du projet ; le craft depuis l'IA et l'IA embarquée nourrissent le projet | @sec-s1-en-bref, @sec-histoire-craft, @sec-histoire-ia, @sec-guide-flutter, @sec-outils-agentiques, @sec-pratique-craft-flutter, @sec-ci-cd, @sec-design-patterns, @sec-craft-ia, @sec-edge-ai |
 | 3. Remettre le poste en route et lancer le projet (séance 2) | Reprise du poste en dix minutes, puis git pas à pas, configuration de l'assistant et démarrage du dépôt de projet | @sec-s2-en-bref, @sec-git, @sec-configurer-claude-code, @sec-demarrer-projet |
 | 4. Choisir un thème et se cadrer | Lire les trois énoncés, choisir un thème, rédiger `PROJET.md` | @sec-themes |
-| 5. Données, conformité, qualité (séances 3 et 4) | Première règle métier en TDD et en BDD, modèle de données et migrations, fiche de conformité, intégration continue, sécurité, règlement européen sur l'IA. Le programme détaillé décrit ces séances ; leurs chapitres de support sont annoncés | @sec-s3, @sec-s4, @sec-programme-detaille, @sec-conformite |
-| 6. Finir et présenter (séance 5) | Retouches, gel du code, démonstration | @sec-s5, @sec-programme-detaille |
+| 5. Première règle, données, RGPD (séance 3) | Reprise du projet, première règle métier en TDD et en BDD avec l'assistant, RGPD appliqué au projet et début de la fiche de conformité, modèle de données, première migration et test d'intégrité | @sec-s3, @sec-travailler-a-plusieurs, @sec-premiere-user-story, @sec-rgpd-projet, @sec-donnees, @sec-conformite |
+| 6. Qualité, sécurité, règlement européen sur l'IA (séance 4) | Intégration continue, sécurité, règlement européen sur l'IA, validation de la fiche de conformité. Le programme détaillé décrit cette séance ; ses chapitres de support sont annoncés | @sec-s4, @sec-programme-detaille, @sec-conformite |
+| 7. Finir et présenter (séance 5) | Retouches, gel du code, démonstration | @sec-s5, @sec-programme-detaille |
 
 Gardez sous la main les fiches pratiques (@sec-fiches) et le glossaire (@sec-glossaire). Les supports de la séance 1 recommandent de lire d'abord le vocabulaire et le contexte, puis de consulter le guide Flutter et le chapitre sur les outils agentiques au moment d'installer ; le support de la séance 2 recommande de commencer par la fiche de reprise du poste.
 
