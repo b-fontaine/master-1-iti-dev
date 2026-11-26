@@ -1,0 +1,48 @@
+# Intégration continue minimale : analyse et tests à chaque PR et à chaque fusion dans main.
+# Le workflow complet (couverture, audit, gitleaks, build web, GitHub Pages) arrive en séance 4.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  analyse-et-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v7
+
+      - name: Installer Flutter 3.50.1
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.50.1
+          cache: true
+
+      - name: Installer les dépendances
+        run: flutter pub get --enforce-lockfile
+
+      - name: Générer le code
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      # Échoue si une table drift a changé sans nouvelle version de schéma,
+      # ou si un fichier produit par make-migrations n'a pas été commité.
+      - name: Vérifier les instantanés du schéma de la base
+        run: |
+          dart run drift_dev make-migrations
+          git status --short -- drift_schemas lib/core/data test/core/data/migrations
+          test -z "$(git status --porcelain -- drift_schemas lib/core/data test/core/data/migrations)"
+
+      - name: Vérifier la mise en forme
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyser
+        run: flutter analyze
+
+      - name: Tester
+        run: flutter test

@@ -1,0 +1,23 @@
+# Réglages de la génération de code (build_runner).
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          # Base suivie par `dart run drift_dev make-migrations` (voir docs/ARCHITECTURE.md, section 7).
+          databases:
+            base_de_donnees: lib/core/data/base_de_donnees.dart
+          # Instantanés du schéma, un par version (versionnés).
+          schema_dir: drift_schemas/
+          # Tests de migration générés par la même commande (versionnés).
+          test_dir: test/core/data/migrations/
+      bdd_widget_test|featureBuilder:
+        options:
+          # Toutes les étapes des scénarios sont rangées dans test/steps/ (versionné).
+          stepFolderName: steps
+          # En-tête des tests générés depuis les .feature. bdd_widget_test les met en
+          # forme dans l'ancien style de Dart ; la ligne « @dart=3.6 » indique à
+          # `dart format` ce style, pour qu'il n'y change rien.
+          customHeaders:
+            - "// @dart=3.6"
+            - "import 'package:flutter_test/flutter_test.dart';"

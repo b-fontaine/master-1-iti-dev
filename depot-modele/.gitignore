@@ -1,0 +1,41 @@
+# Secrets locaux : jamais dans le dépôt (le modèle sans secret est .env.example).
+.env
+.env.*
+!.env.example
+
+# Code généré par `dart run build_runner build` : recréé sur chaque poste et en CI.
+*.g.dart
+# Tests générés à partir des scénarios .feature (les .feature et test/steps/ restent versionnés).
+/test/scenarios/**/*_test.dart
+/test/acceptance/**/*_test.dart
+
+# Flutter, Dart et pub
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+**/doc/api/
+migrate_working_dir/
+.widget_preview/
+# Images d'échec des tests visuels (golden)
+**/failures/
+
+# Éditeurs et systèmes
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.history
+*.swp
+.DS_Store
+Thumbs.db
+*.log
+
+# Réglages personnels de Claude Code (non partagés)
+.claude/settings.local.json
+
+# Fichiers d'état d'un outil de l'enseignant
+.omc/

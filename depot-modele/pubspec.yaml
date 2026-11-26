@@ -1,0 +1,52 @@
+# Projet fil rouge : squelette Flutter en Clean Architecture.
+# Flutter 3.50 ou plus récent ; testé avec 3.50.1 (Dart 3.14.0), la version de la CI, qui fait foi.
+# Les versions exactes des dépendances sont figées dans pubspec.lock (versionné).
+# Ajouter une dépendance se fait par une PR dédiée, avec l'accord de l'équipe et de l'enseignant :
+#   1. flutter pub add <paquet>
+#   2. vérifier flutter analyze et flutter test
+#   3. commiter pubspec.yaml et pubspec.lock ensemble, dans cette PR
+name: projet_fil_rouge
+description: "Projet fil rouge du Master ITI : squelette Flutter en Clean Architecture."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  # Flutter 3.50 ou plus récent (comme le gabarit de `flutter create` 3.50.1) : build_runner 2.17.1
+  # et build 5, nécessaires à bdd_widget_test 3.1.0, ne se résolvent qu'à partir de Flutter 3.50.
+  # `flutter upgrade` met à jour Flutter (permis pour un poste plus ancien) ;
+  # `flutter pub upgrade` changerait les bibliothèques verrouillées (interdit).
+  sdk: ^3.14.0
+  flutter: ">=3.50.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Widgets Material : importer package:material_ui/material_ui.dart (package:flutter/material.dart
+  # est déprécié). 1.11.1 au minimum : version dont l'export des délégués de localisation est vérifié.
+  material_ui: ^1.11.1
+  # Base de données SQLite et son ouverture sur chaque plateforme (dont le web).
+  drift: ^2.35.4
+  drift_flutter: ^0.3.1
+  # Égalité par valeur des entités et des états.
+  equatable: ^3.0.0
+  # Choix d'un fichier (import CSV, à partir de la séance 3).
+  file_picker: ^13.4.1
+  # État des écrans (BLoC et Cubit).
+  flutter_bloc: ^9.1.2
+  # Injection de dépendances.
+  get_it: ^9.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  # Génération de code (base drift, scénarios .feature).
+  build_runner: ^2.17.1
+  drift_dev: ^2.35.3
+  # Tests : BLoC, fausses pièces, scénarios BDD.
+  bloc_test: ^10.0.1
+  mocktail: ^1.0.5
+  bdd_widget_test: ^3.1.0
+
+flutter:
+  uses-material-design: true

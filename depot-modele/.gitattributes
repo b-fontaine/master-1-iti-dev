@@ -1,0 +1,3 @@
+# Instantanés du schéma drift : comparés au caractère près par `dart run drift_dev make-migrations`.
+# On force les fins de ligne LF, pour que Windows ne les convertisse pas en CRLF.
+drift_schemas/** text eol=lf

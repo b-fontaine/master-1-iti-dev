@@ -1,0 +1,20 @@
+# Règles de `flutter analyze` : recommandations officielles de Flutter (flutter_lints).
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  # Fichiers générés par build_runner : ils ne sont ni écrits ni relus à la main.
+  exclude:
+    - build/**
+    - web/**
+    - "**/*.g.dart"
+    - test/scenarios/**/*_test.dart
+    - test/acceptance/**/*_test.dart
+
+linter:
+  # Règles ajoutées : constantes et variables finales, Future non attendu, closures inutiles.
+  rules:
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - prefer_final_locals
+    - unawaited_futures
+    - unnecessary_lambdas
