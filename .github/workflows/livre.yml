@@ -37,7 +37,7 @@ jobs:
       contents: write # création du tag et de la release
     steps:
       - name: Récupérer le dépôt (historique et tags complets)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -160,7 +160,7 @@ jobs:
           ls -l dist
 
       - name: Déposer les fichiers en artefact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.fichiers.outputs.base }}
           path: dist/
