@@ -1,21 +1,24 @@
 # Master ITI · Ingénierie logicielle à l'ère de l'IA agentique
 
-Enseignement de Master, Nantes Université, année 2026-2027. *IA agentique : assistants capables d'exécuter eux-mêmes des tâches de programmation sous le contrôle de l'utilisateur.*
+Enseignement du Master ITI (Interdisciplinaire en Technologies Innovantes) de l'IUT de Nantes, Nantes Université, année 2026-2027. *IA agentique : assistants capables d'exécuter eux-mêmes des tâches de programmation sous le contrôle de l'utilisateur.*
 
 ## Présentation
 
 | | |
 |---|---|
-| **Public** | Étudiants de Master orientés industrie et innovation, à l'aise avec les chiffres et la gestion de projet |
+| **Public** | Étudiants de 1re année du Master ITI, en alternance, orientés industrie et innovation, à l'aise avec les chiffres et la gestion de projet |
 | **Prérequis** | Aucune compétence en programmation. Usage courant d'un ordinateur portable personnel |
 | **Effectif** | 32 étudiants, répartis en équipes de 3 à 5 personnes |
-| **Volume horaire encadré** | 20 heures : 5 séances de 4 heures, de 8h15 à 12h15 |
-| **Travail hors présentiel** | Environ 15 à 20 heures par équipe, soit 4 à 5 heures par étudiant, entre la séance 4 (16 décembre 2026) et la séance 5, en janvier 2027 (date à préciser), vacances de fin d'année comprises (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus, sans travail imposé pendant cette période), auxquelles s'ajoutent de brèves tâches de liaison (vérification de reprise du poste de 10 minutes avant la séance 2, tâche facultative de 2 heures au plus par étudiant avant la séance 4) |
-| **Dates** | Mercredi 7 octobre, mercredi 2 décembre, vendredi 4 décembre et mercredi 16 décembre 2026, puis soutenance en janvier 2027 (date à préciser) |
+| **Volume horaire encadré** | 20 heures, soit 5 séances de 4 heures : de 8h15 à 12h15 pour les séances 1 à 4, de 13h45 à 17h45 pour la séance 5 |
+| **Travail hors présentiel** | Environ 15 à 20 heures par équipe, soit 4 à 5 heures par étudiant, entre la séance 4 (16 décembre 2026) et la séance 5, le vendredi 29 janvier 2027 après-midi, vacances de fin d'année comprises (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus, sans travail imposé pendant cette période), auxquelles s'ajoutent de brèves tâches de liaison (vérification de reprise du poste de 10 minutes avant la séance 2, tâche facultative de 2 heures au plus par étudiant avant la séance 4) |
+| **Dates** | Mercredi 7 octobre, mercredi 2 décembre, vendredi 4 décembre et mercredi 16 décembre 2026, puis soutenance le vendredi 29 janvier 2027 après-midi |
 | **Langue** | Français |
-| **Responsable de l'enseignement** | [à compléter] |
-| **Rattachement (Master, semestre, unité d'enseignement) et crédits ECTS** | [à compléter] |
-| **Lieu** | [à compléter] |
+| **Enseignant** | Benoît Fontaine |
+| **Responsable de la formation** | Isabelle Petit |
+| **Directrice des études** | Élodie Paquet |
+| **Rattachement** | Master mention Ingénierie des systèmes complexes, parcours Interdisciplinaire en Technologies Innovantes (ITI), en alternance. 1re année (M1), semestre 1, unité d'enseignement « Formation transversale », élément constitutif « Algorithmique » (coefficient 2, 20 heures en présentiel) |
+| **Crédits ECTS** | 10 crédits pour l'unité d'enseignement « Formation transversale », qui regroupe six éléments constitutifs ; la maquette n'attribue pas de crédits à l'élément lui-même |
+| **Lieu** | IUT de Nantes, campus de la Fleuriaye, 2 avenue du Professeur Jean Rouxel, 44475 Carquefou Cedex |
 | **Modalité** | Enseignement par projet : une séance de cours et d'installations, puis des ateliers sur un projet commun mené en équipe |
 | **Évaluation** | Projet d'équipe, soutenance orale et questions individuelles |
 
@@ -49,8 +52,8 @@ Les assistants de programmation fondés sur l'intelligence artificielle changent
 | **S2** | mer. 2 décembre 2026 | Git, configurer son assistant, lancer le projet |
 | **S3** | ven. 4 décembre 2026 | Première règle métier, données et RGPD |
 | **S4** | mer. 16 décembre 2026 | Qualité, sécurité et règlement européen sur l'IA |
-| Travail d'équipe | du 16 décembre 2026 à l'avant-veille de la séance 5 (vacances du 19 décembre au 3 janvier comprises) | Finalisation du projet |
-| **S5** | janvier 2027 (date à préciser) | Retouches finales et soutenance |
+| Travail d'équipe | du 16 décembre 2026 au mercredi 27 janvier 2027, avant-veille de la séance 5 (vacances du 19 décembre au 3 janvier comprises) | Finalisation du projet |
+| **S5** | ven. 29 janvier 2027, après-midi | Retouches finales et soutenance |
 
 **S1 · Comprendre et s'équiper.** Moitié théorie, moitié installations (à prévoir largement, compte tenu de l'effectif). Histoire du savoir-faire logiciel (*software craftsmanship*) en neuf jalons, de la crise du logiciel de 1968 à la livraison continue, en passant par le développement guidé par les tests, la conception pilotée par le domaine et le développement guidé par le comportement ; pourquoi la qualité compte ; notions de code (en Dart) et de développement guidé par les tests ; fonctionnement et limites des modèles d'IA et de leur cadre de contrôle ; intégration et déploiement continus en ligne ; première sensibilisation à la protection des données. Installations indispensables : environnement de développement (VS Code), gestion de versions (git et GitHub), assistant de code (Claude Code et Claude Desktop) et Flutter (SDK, exécution dans Chrome). Installations facultatives, utiles plus tard : Docker, Rust et Antigravity.
 
@@ -104,7 +107,7 @@ Un bonus d'un point au plus (règle métier avancée facultative) peut s'ajouter
 ## Moyens nécessaires
 
 - **Étudiants** : un ordinateur portable personnel permettant d'installer des logiciels, une connexion internet et un compte GitHub gratuit. Le SDK Flutter est téléchargé chez soi avant la première séance ; Docker n'est pas requis. Les accès à un assistant de code par IA pour les 32 étudiants sont mis à disposition pour la durée de l'enseignement (comptes ou crédits nominatifs, modalités et financement précisés avant la première séance).
-- **Salle** : une salle avec tables d'équipe, vidéoprojecteur, prises électriques pour 32 ordinateurs portables et réseau sans fil dimensionné pour 32 postes (téléchargements simultanés lors de la séance 1). Pour la soutenance de la séance 5, en janvier 2027 (date à préciser), deux salles simultanées.
+- **Salle** : une salle avec tables d'équipe, vidéoprojecteur, prises électriques pour 32 ordinateurs portables et réseau sans fil dimensionné pour 32 postes (téléchargements simultanés lors de la séance 1). Pour la soutenance de la séance 5, le vendredi 29 janvier 2027 après-midi, deux salles simultanées.
 - **Encadrement** : 2 à 3 assistants en renfort de l'enseignant lors des séances 1 et 2 (installations), 1 en séance 3 et 2 en séance 4. Lors de la séance 4, trois intervenants tiennent le rôle du RSSI pour les passages en parallèle ; un second évaluateur par salle est souhaité pour la soutenance.
 - **RSSI** : le rôle est tenu soit par l'enseignant (simulation), soit par le RSSI de l'établissement, invité lors de la séance 4 ou répondant par écrit au plus tard une semaine avant la séance 5. L'établissement est invité à indiquer s'il peut mettre à disposition cette ressource.
 - **Hébergement** : les dépôts de projet sont hébergés dans une organisation GitHub dédiée à l'enseignement. Chaque équipe publie sa version web sur GitHub Pages, publique : données fictives uniquement, et rien de secret dans l'application.

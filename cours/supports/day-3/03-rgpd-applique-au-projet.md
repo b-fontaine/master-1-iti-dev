@@ -375,7 +375,7 @@ timeline
     Du 5 au 15 décembre : Tâche facultative (2 h au plus) : ce qui a glissé, relecture de la fiche ou courriel d'accès
     Mercredi 16 décembre 2026 : Séance 4 : classement AI Act, brouillon de fiche présenté au RSSI
     Vendredi 18 décembre 2026 : Fiche v1 déposée en pull request
-    Janvier 2027 : Réponse du RSSI au plus tard une semaine avant la séance 5 ; mise à jour avant la soutenance (date à préciser)
+    Janvier 2027 : Réponse du RSSI au plus tard une semaine avant la séance 5 ; mise à jour avant la soutenance du vendredi 29 janvier 2027 (après-midi)
 ```
 
 Une validation « go sous conditions » liste des actions datées ; sans réponse, la décision est **no-go** par défaut ; et un « go » ne vaut que pour le périmètre pédagogique à données fictives (module de conformité, section 6.2).
@@ -435,7 +435,7 @@ Une validation « go sous conditions » liste des actions datées ; sans répons
 - **Durées proposées** (30 jours, trois mois, un trimestre) : ce sont des exemples des énoncés, pas des durées légales.
 - **Date de suppression du dépôt dans la formation** : aucun document du cours ne la fixe. Le module demande de supprimer « données et dépôt » à la fin de vie, alors que les `PROJET.md` prévoient un archivage du dépôt : l'équipe se renseigne auprès de l'enseignant.
 - **Exemple de fiche (8.7) et trame de courriel (5.3)** : rédigés pour ce chapitre, à valider par l'enseignant. Les gestes git de la PR de la fiche renvoient au chapitre 3 de la séance 2 et n'ont pas été rejoués pour ce chapitre.
-- **Dates et calendrier** (4, 16 et 18 décembre 2026, séance 5 en janvier 2027, date à préciser) : repris du programme, susceptibles d'ajustement par l'enseignant.
+- **Dates et calendrier** (4, 16 et 18 décembre 2026, séance 5 le vendredi 29 janvier 2027 après-midi) : repris du programme, susceptibles d'ajustement par l'enseignant.
 
 ---
 
