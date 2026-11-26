@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notes · Séance 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/notes.css">
+</head>
+<body data-deck="day-3">
+<div class="wrap">
+<nav><h1>Notes · S3</h1><div class="sub">STORY, DONNÉES, RGPD</div></nav>
+<main>
+<div class="top">
+  <div class="tag">Master ITI · 4 décembre 2026</div>
+  <h1>Notes du conférencier<br>Séance 3 · Première user story, données et RGPD</h1>
+  <p>Séance de pratique, deux jours après la séance 2 : le diaporama est court et sert à <b>cadrer et relancer les ateliers</b>. Cinq slides de consigne (marquées «&nbsp;Atelier&nbsp;») restent affichées pendant que la salle travaille ; chacune renvoie à sa fiche (chapitre 5 des supports, fiches G à N). Les durées ci-dessous ne valent que pour les passages d'exposé : le programme raisonne en onze blocs pondérés, pas en minutage. Lancée avec <code>npm run day-3</code>, cette page se synchronise avec le diaporama. Le détail est dans les supports (<code>cours/supports/day-3/</code>) : chapitre 1 Travailler à plusieurs, 2 La première user story, 3 Le RGPD appliqué à votre projet, 4 Les données, 5 Les fiches.</p>
+  <div class="legend"><span class="pill">À dire</span><span class="pill" style="color:#A55F00">À savoir · pièges · si la séance prend du retard</span><span class="pill" style="color:#007C93">Question à poser</span></div>
+</div>
+
+<div class="part-h">Ouverture · bloc 1</div>
+<section class="s" id="titre"><header><span class="n"></span><h2>Titre</h2><span class="t">1 min</span></header>
+<div class="shows">Première user story, données, RGPD · «&nbsp;La première règle verte, relue par une autre équipe&nbsp;»</div>
+<h3>À dire</h3><p>Mercredi, vous avez lancé le projet. Aujourd'hui, il faut du concret : votre première vraie fonctionnalité, écrite en TDD et en BDD avec votre agent ; les données qui survivront au code ; et le RGPD, parce qu'on ne choisit pas un champ ou une table sans se demander s'il s'agit de données personnelles. À midi, chaque équipe aura une règle verte, un modèle de données fusionné, le début de sa fiche de conformité, et une PR relue par une autre équipe.</p>
+<h3 class="w">À savoir</h3><ul><li>Une aide au moins dans la salle ; l'enseignant circule en priorité dans les équipes en difficulté (programme, matériel).</li><li>Avoir sous la main la liste des équipes avec leur numéro et leur thème : elle sert à la slide des paires.</li><li>Les dépôts doivent porter le tag <code>s2-fin</code> et un état courant en tête de <code>JOURNAL.md</code> : repérer avant la séance les dépôts où il manque.</li></ul></section>
+
+<section class="s" id="objectifs"><header><span class="n"></span><h2>Objectifs de la séance</h2><span class="t">1 min</span></header>
+<div class="shows">Cinq objectifs : reprendre, livrer une story, relire et résoudre un conflit, modéliser et migrer, qualifier les données au regard du RGPD</div>
+<h3>À dire</h3><p>Les cinq objectifs du programme, lus vite. Le premier prend quelques minutes, les quatre autres occupent la matinée. Retenez que le deuxième et le cinquième se font avec l'agent mais sont relus par un humain : la relecture est le fil de la séance.</p>
+<h3 class="w">À savoir</h3><p>Ce sont les objectifs d'apprentissage du programme, reformulés pour tenir sur une ligne. L'objectif 5 comprend la distinction entre donnée personnelle, base légale, durée de conservation et sous-traitant, et la connaissance des droits.</p></section>
+
+<section class="s" id="plan-seance"><header><span class="n"></span><h2>La matinée en quatre temps</h2><span class="t">1 min</span></header>
+<div class="shows">1 Travailler à plusieurs (fiche G) · 2 Première user story (H, I) · 3 RGPD appliqué (J) · 4 Les données (K) · puis revue croisée (L), bilan (M), dépannage (N)</div>
+<h3>À dire</h3><p>Quatre temps, chacun avec sa fiche. Vous ne lirez pas les fiches maintenant : vous les ouvrirez au début de chaque atelier. La revue croisée entre équipes se fait quand vos premières PR sont prêtes, et on termine par le bilan.</p>
+<h3 class="w">À savoir</h3><ul><li>Correspondance avec les onze blocs du programme : temps 1 = blocs 1 et 2 ; temps 2 = bloc 3 ; temps 3 = blocs 4 à 7 ; temps 4 = blocs 8 et 9 ; puis bloc 10 (revue croisée) et bloc 11 (bilan).</li><li>Tous les blocs sont «&nbsp;Indispensable&nbsp;» sauf le bloc 2 (git en équipe) et le bloc 11 (bilan), «&nbsp;Important&nbsp;».</li></ul>
+<h3 class="w">Si la séance prend du retard</h3><p>Ordre de coupe du programme, du moins utile au plus utile : (1) l'écran Flutter de la première user story (le BLoC et son test restent) ; (2) l'exercice de courriel de demande d'accès (bloc 5) et le quiz éclair (bloc 1) ; (3) le seed complet, puis la garde <code>RequireRole</code>, en gardant la migration et le test d'intégrité ; (4) ne pas entamer les rubriques 6 et 7 de la fiche, et au besoin réduire les rubriques 4 et 5 à une phrase chacune. Ne se sacrifient jamais : contrôle d'ouverture, première user story en TDD et BDD sur la sous-règle isolée, modèle avec première migration et test d'intégrité, RGPD (dont les droits) et début de la fiche, PR croisées.</p></section>
+
+<section class="s" id="atelier-ouverture"><header><span class="n"></span><h2>Atelier · Contrôle d'ouverture</h2><span class="t">atelier</span></header>
+<div class="shows">git pull, flutter pub get, build_runner, flutter test · JOURNAL.md · finir l'initialisation de S2 · point d'équipe · quiz éclair (facultatif) · fiches G et N</div>
+<h3>À dire</h3><p>Deux jours seulement depuis mercredi : pas de remise en route, un contrôle. Chacun récupère <code>main</code>, installe, lance les tests. Ensuite on lit ensemble les cinq lignes en tête de <code>JOURNAL.md</code>. Les équipes qui n'ont pas fini l'initialisation de mercredi (première PR, protection de <code>main</code>) la terminent maintenant. Puis un point d'équipe de deux minutes : où on en est, qui tient quel rôle. Les rôles sont confirmés aujourd'hui.</p>
+<h3 class="w">À savoir</h3><ul><li>Poids du programme : la vérification du poste et la lecture du journal sont Indispensables ; le point d'équipe est Important ; le quiz éclair de 5 questions sur S1 et S2 est Pratique, d'où l'étape 5 grisée.</li><li>Les fichiers générés par <code>build_runner</code> ne sont pas versionnés : sur un clone frais ou après un <code>git pull</code> qui touche un <code>.feature</code>, lancer <code>dart run build_runner build --delete-conflicting-outputs</code> avant <code>flutter test</code>.</li><li>Laisser la slide affichée ; l'objectif est de quelques minutes, pas d'un bloc.</li></ul>
+<h3 class="w">Pièges</h3><ul><li>Un étudiant qui n'a jamais cloné (absent mercredi, invitation non acceptée) : le faire accepter l'invitation et cloner tout de suite, fiche N.</li><li>Un <code>git pull</code> qui échoue parce que des modifications locales traînent : <code>git status</code> d'abord, fiche N.</li></ul></section>
+
+<div class="part-h">01 · Travailler à plusieurs · bloc 2</div>
+<section class="s" id="div-equipe"><header><span class="n"></span><h2>Titre de partie : travailler à plusieurs</h2><span class="t">0,5 min</span></header>
+<h3>À dire</h3><p>Mercredi, vous avez appris git seul ou en binôme, dans un dépôt d'essai. Aujourd'hui, quatre ou cinq personnes et autant d'agents écrivent dans le même dépôt : il faut des habitudes communes.</p></section>
+
+<section class="s" id="git-equipe"><header><span class="n"></span><h2>Git en équipe : quatre habitudes</h2><span class="t">5 min, démonstration comprise</span></header>
+<div class="shows">Petites PR · branches courtes · une relecture qui regarde · le conflit est normal · démonstration d'un conflit</div>
+<h3>À dire</h3><p>Une petite PR se relit en entier ; une grosse se survole. Une branche qui reste courte s'écarte peu de <code>main</code> et entre rarement en conflit. Relire, c'est regarder le diff avec une checklist et commenter précisément, sur la ligne. Et quand le conflit arrive, ce n'est ni une erreur ni une faute : deux personnes ont touché le même endroit, git vous demande de choisir.</p>
+<p>Démonstration courte, en direct : deux branches qui modifient le même fichier, la fusion de la seconde déclenche le conflit, on le résout.</p>
+<h3 class="w">À savoir</h3><ul><li>Le conflit pas à pas a été fait mercredi (séance 2, chapitre 1, section 7) : ne pas le refaire, le montrer dans un dépôt d'équipe dont <code>main</code> est protégée, donc via deux PR (chapitre 1 de la séance 3).</li><li>Préparer la démonstration à froid dans un dépôt jetable, pour ne pas dépendre du réseau.</li><li>Le bloc 2 est Important, pas Indispensable : s'il faut gagner du temps, réduire la démonstration, pas l'annonce des paires.</li></ul>
+<h3 class="q">Question à poser</h3><p>«&nbsp;Qui a déjà eu un conflit depuis mercredi ? Qu'avez-vous fait ?&nbsp;»</p></section>
+
+<section class="s" id="willison"><header><span class="n"></span><h2>La règle de l'auteur : Simon Willison</h2><span class="t">1 min</span></header>
+<div class="shows">«&nbsp;Don't file pull requests with code you haven't reviewed yourself&nbsp;» · traduction · «&nbsp;c'est l'agent qui l'a écrit&nbsp;» n'est pas une réponse recevable</div>
+<h3>À dire</h3><p>Avant la relecture par un autre, il y a la vôtre. Une PR ouverte avec du code que vous n'avez pas lu vous-même fait faire votre travail au relecteur. Avec un agent, c'est d'autant plus tentant : il produit vite, beaucoup, et proprement en apparence. Vous êtes l'auteur de ce que vous proposez.</p>
+<h3 class="w">À savoir</h3><p>Citation telle qu'au programme (bloc 2). La page source n'a pas été relue pour ce diaporama : ne pas lui attribuer davantage à l'oral. Elle était donnée en lecture à la fin de la séance 2.</p></section>
+
+<section class="s" id="paires"><header><span class="n"></span><h2>Revue croisée : qui relit qui</h2><span class="t">2 min</span></header>
+<div class="shows">8 équipes : 01–04, 02–05, 03–06, 07–08 · 7 équipes : 02–05, 03–06, trio circulaire 01–04–07 (07 relit 01, 01 relit 04, 04 relit 07)</div>
+<h3>À dire</h3><p>Les numéros attribués mercredi servent maintenant. Chaque équipe relira au moins une PR de l'équipe jumelée, plus tard dans la matinée. Annoncer la configuration de la promotion (8 ou 7 équipes) et laisser l'autre ligne de côté.</p>
+<h3 class="w">À savoir</h3><ul><li>À 8 équipes, la paire 07–08 réunit deux équipes du même thème : c'est toléré en séance 3, évité en séance 4.</li><li>À 7 équipes, l'équipe 07 rejoint la paire 01–04 en trio circulaire : 07 relit 01, 01 relit 04, 04 relit 07. Chacune relit une équipe et est relue par une autre.</li><li>Si la promotion compte un autre nombre d'équipes, le programme ne le prévoit pas : décider sur place et le noter.</li></ul></section>
+
+<div class="part-h">02 · La première user story · bloc 3</div>
+<section class="s" id="div-story"><header><span class="n"></span><h2>Titre de partie : la première user story</h2><span class="t">0,5 min</span></header>
+<h3>À dire</h3><p>Le cœur de la matinée. Dix minutes de démonstration, puis chacun travaille avec son agent, sur sa branche.</p></section>
+
+<section class="s" id="story-chemin"><header><span class="n"></span><h2>De la story au code</h2><span class="t">10 min, démonstration</span></header>
+<div class="shows">Plan → scénario .feature → tests unitaires (rouge) → code (vert, nettoyage) → PR · scénario du thème B (disponibilité) · use case, repository fake, Cubit</div>
+<h3>À dire</h3><p>L'ordre compte. D'abord un plan, en mode plan, que vous critiquez. Puis le scénario en français, celui qu'un non-développeur peut lire : ici l'exemple du thème B, la disponibilité d'un quart de 480 minutes avec une pause de 30, une panne de 45 et un changement de série de 15. Le temps requis est de 450 minutes, le temps de marche de 390, la disponibilité de 86,7 %. Puis les tests unitaires, qui échouent ; puis le code qui les fait passer ; puis le nettoyage. Enfin la PR.</p>
+<p>Le code se range dans les couches du squelette : le use case dans le domain, un repository «&nbsp;fake&nbsp;» qui stocke en mémoire derrière l'interface du domain, un Cubit testé avec <code>bloc_test</code>. Pas de base de données à ce stade, et l'écran peut attendre.</p>
+<h3 class="w">À savoir</h3><ul><li>Démonstration du programme, avant l'atelier : lancer le <code>.feature</code> d'exemple du squelette, montrer le test généré et le test du BLoC d'exemple.</li><li>Pour une sous-règle de domaine, les steps appellent directement le use case sans monter d'écran (vérifié avec <code>bdd_widget_test</code> 3.1.0 sur une copie du dépôt-modèle : chapitre 2, section 7).</li><li>Les valeurs du scénario sont entre accolades (<code>{480}</code>, <code>{'pause'}</code>) : sans elles, l'outil fond la valeur dans le nom de l'étape et fabrique une étape par valeur (chapitre 2, section 4). Les scénarios de l'énoncé des thèmes sont écrits ainsi.</li><li>Première ligne <code># language: fr</code> obligatoire ; <code>dart run build_runner build --delete-conflicting-outputs</code> génère le test widget.</li><li>Sous-règles des autres thèmes (<code>cours/projets/themes.md</code>) : A, le total (règle 3) ; C, la priorité par rang (règle 2). Chacune est dans le <code>PROJET.md</code> de l'équipe.</li></ul></section>
+
+<section class="s" id="triche"><header><span class="n"></span><h2>Repérer un test «&nbsp;triché&nbsp;»</h2><span class="t">2 min</span></header>
+<div class="shows">Test supprimé · désactivé · assoupli · scénario retouché · hasard en dur</div>
+<h3>À dire</h3><p>Un agent à qui l'on demande «&nbsp;fais passer les tests&nbsp;» peut y arriver en changeant les tests. Cinq formes à reconnaître : un test supprimé, un test désactivé, une attente assouplie, un scénario retouché, ou une valeur aléatoire figée pour que le résultat tombe juste. Le réflexe : dans le diff de la PR, regarder d'abord ce qui a bougé du côté des tests.</p>
+<h3 class="q">Question à poser</h3><p>«&nbsp;Si l'agent remplace "86,7 %" par "87 %" dans le scénario, qu'est-ce qui a changé : le code ou la règle ?&nbsp;»</p>
+<h3 class="w">À savoir</h3><p>Le programme cite «&nbsp;test ou scénario supprimé, désactivé, assoupli, hasard en dur&nbsp;». C'est l'intention du bloc 3 : vivre le TDD avec un agent et apprendre à repérer un test triché.</p></section>
+
+<section class="s" id="atelier-story"><header><span class="n"></span><h2>Atelier · Première user story</h2><span class="t">atelier</span></header>
+<div class="shows">Cinq étapes : plan, scénario, tests puis code, couches, vérifier la triche et PR · fini quand : vert et relu · fiches H et I</div>
+<h3>À dire</h3><p>Chacun sur sa branche, avec son agent, sur la première user story de <code>PROJET.md</code> et sa sous-règle isolée. Fiche H en main. Quand la PR est prête, un coéquipier la relit avec la checklist de la fiche I.</p>
+<h3 class="w">À savoir</h3><ul><li>Laisser la slide affichée pendant tout l'atelier.</li><li>Si plusieurs membres de l'équipe travaillent sur la même story, ils se répartissent : scénario, use case, Cubit. Sinon, les conflits sont garantis.</li><li>L'écran Flutter est Pratique en séance 3 : il peut glisser au sprint. C'est le premier élément de l'ordre de coupe.</li><li>Le modèle de PR du dépôt demande ce que l'agent a proposé et ce que l'étudiant a refusé : insister sur cette rubrique.</li></ul>
+<h3 class="w">Pièges</h3><ul><li><code>flutter test</code> échoue sur un clone frais : <code>build_runner</code> n'a pas été lancé (fiche N).</li><li><code># language: fr</code> oublié : les mots-clés français ne sont pas reconnus.</li><li>L'agent ajoute une base de données ou un écran : le ramener au repository fake et au Cubit.</li></ul></section>
+
+<div class="part-h">03 · Le RGPD appliqué · blocs 4 à 7</div>
+<section class="s" id="div-rgpd"><header><span class="n"></span><h2>Titre de partie : le RGPD appliqué à votre projet</h2><span class="t">0,5 min</span></header>
+<h3>À dire</h3><p>On s'arrête de coder un moment. Avant de créer des tables, il faut savoir ce qu'on va y mettre et si c'est une donnée personnelle.</p></section>
+
+<section class="s" id="rgpd-page"><header><span class="n"></span><h2>Le RGPD en une page</h2><span class="t">8 min</span></header>
+<div class="shows">Donnée personnelle (art. 4) · principes (art. 5) · base légale (art. 6) · sous-traitants et transferts (art. 28, chapitre V) · violation, 72 h (art. 33) · un outil temporaire n'échappe pas au RGPD</div>
+<h3>À dire</h3><p>Le RGPD, règlement (UE) 2016/679, s'applique depuis le 25 mai 2018. Une donnée personnelle, c'est toute information sur une personne identifiée ou identifiable, y compris par un pseudonyme qu'on peut lever. Trois principes nous servent tout de suite : une finalité précise, ne collecter que le nécessaire, fixer une durée de conservation. Il faut une base légale par finalité.</p>
+<p>Le point qui vous concerne chaque jour : le fournisseur du modèle d'IA reçoit tout ce qui est dans un prompt. Écrire un prompt, c'est transmettre à un tiers. En cas de fuite, la notification à l'autorité se fait dans les 72 heures. Et un outil temporaire n'échappe pas au RGPD : dès qu'une donnée réelle y entre, tout s'applique, même pour une semaine.</p>
+<h3 class="w">À savoir</h3><ul><li>Source : <code>cours/conformite-ai-act-rgpd.md</code>, sections 2, 4 et 5. Ne rien affirmer qui n'y soit pas.</li><li>Le fournisseur du modèle est, selon le cas, sous-traitant ou destinataire : c'est au DPO de le qualifier (module, section 2).</li><li>Un secret commité dans un dépôt public est un incident à signaler au RSSI immédiatement.</li></ul>
+<h3 class="q">Question à poser</h3><p>«&nbsp;Un pseudonyme dans une base, est-ce encore une donnée personnelle ?&nbsp;»</p></section>
+
+<section class="s" id="droits"><header><span class="n"></span><h2>Vos droits de citoyen européen</h2><span class="t">6 min</span></header>
+<div class="shows">Information, accès, rectification, effacement, limitation, portabilité, opposition, pas de décision uniquement automatisée · réponse sous un mois · réclamation à la CNIL</div>
+<h3>À dire</h3><p>Ces droits sont les vôtres, pas seulement ceux des utilisateurs de vos applications. Vous pouvez demander à un service quelles données il a sur vous, les faire corriger, effacer, geler, récupérer, vous opposer à leur usage, et refuser qu'une décision importante vous concernant soit prise par une machine seule. Le service doit répondre sous un mois, délai prolongeable. Sans réponse, ou en cas de refus injustifié, on saisit la CNIL.</p>
+<h3 class="w">À savoir</h3><ul><li>Articles : 13 et 14 (information), 15 (accès), 16 (rectification), 17 (effacement, pas absolu), 18 (limitation), 20 (portabilité), 21 (opposition), 22 (décision automatisée), 77 (réclamation), 12 (délai : un mois, prolongeable de deux mois).</li><li>C'est l'un des deux buts du module de conformité : que chacun sache exercer ses droits. Le bloc est Indispensable.</li><li>L'exercice de courriel de demande d'accès (module, section 5) est Moins utile en séance : le laisser en lecture ou le donner en tâche facultative avant la séance 4.</li></ul>
+<h3 class="q">Question à poser</h3><p>«&nbsp;Quel service, que vous utilisez tous les jours, aimeriez-vous interroger sur ce qu'il sait de vous ?&nbsp;»</p></section>
+
+<section class="s" id="quatre-questions"><header><span class="n"></span><h2>Le test en 4 questions</h2><span class="t">4 min</span></header>
+<div class="shows">Personnes réelles ? Décider pour quelqu'un ? Sortie vers un tiers ? Usage hors de l'équipe ? · données par thème : A, B, C · un seul «&nbsp;oui&nbsp;» : fiche et RSSI</div>
+<h3>À dire</h3><p>Quatre questions, à appliquer à votre propre thème, dans l'atelier qui suit. Un seul «&nbsp;oui&nbsp;» suffit pour qu'il faille une fiche de conformité et un passage devant le RSSI. Rappel : vos données sont fictives ; la fiche raisonne sur ce qui se passerait en usage réel.</p>
+<h3 class="w">À savoir</h3><ul><li>Qualification par thème, telle qu'au programme : A, l'identifiant de l'utilisateur qui possède une fiche de passeur (un compte pseudonymisé reste personnel) ; B, postes et quarts, sans identifiant d'opérateur ; C, des étudiants et une décision d'affectation.</li><li>Le thème C demande plus de travail : décision qui touche des étudiants, question de l'art. 22. Passer d'abord dans ces équipes.</li><li>Le thème B n'est pas «&nbsp;sans risque&nbsp;» pour autant : les données de poste sont confidentielles pour l'entreprise (module, section 7).</li></ul></section>
+
+<section class="s" id="atelier-conformite"><header><span class="n"></span><h2>Atelier · Test en 4 questions et début de la fiche</h2><span class="t">atelier</span></header>
+<div class="shows">Quatre étapes : 4 questions, qualification, rubriques 1 à 5, PR relue · aucun nom civil ni courriel · fiche J</div>
+<h3>À dire</h3><p>En équipe, sous la conduite du gardien produit et conformité. Répondez aux quatre questions pour votre thème, qualifiez vos données, puis remplissez les cinq premières rubriques de <code>docs/fiche_conformite.md</code> : finalité, données, personnes concernées, base légale ou justification «&nbsp;données fictives&nbsp;», durée de conservation et date de suppression. La fiche passe par une PR relue par un coéquipier.</p>
+<h3 class="w">À savoir</h3><ul><li>Le gabarit compte 13 rubriques (module, section 6.1) ; seules les rubriques 1 à 5 sont demandées aujourd'hui. Les rubriques 6 et 7 glissent entre S3 et S4.</li><li>Aucun nom civil ni courriel dans la fiche : «&nbsp;équipe n° X&nbsp;» et identifiants GitHub.</li><li>Sensibilisation, pas avis juridique : la validation revient au RSSI et au DPO.</li></ul>
+<h3 class="w">Pièges</h3><ul><li>«&nbsp;Données fictives&nbsp;» écrit sans justification : la definition of done exige la justification.</li><li>Une durée de conservation sans date de suppression.</li></ul></section>
+
+<div class="part-h">04 · Les données · blocs 8 et 9</div>
+<section class="s" id="div-donnees"><header><span class="n"></span><h2>Titre de partie : les données</h2><span class="t">0,5 min</span></header>
+<h3>À dire</h3><p>Le code se réécrit ; les données, elles, restent. C'est pourquoi on les modélise avec soin et on ne les change que par des migrations.</p></section>
+
+<section class="s" id="donnees-modele"><header><span class="n"></span><h2>Les données survivent au code</h2><span class="t">6 min</span></header>
+<div class="shows">Modéliser (entités, relations, clés, contraintes) · drift (tables en Dart, code généré) · migrations versionnées (schemaVersion, onUpgrade) · jamais de modification à la main</div>
+<h3>À dire</h3><p>Une entité, c'est une chose que l'on enregistre : un poste, un quart, un arrêt. Une relation les relie : un arrêt appartient à un quart. La clé primaire identifie chaque ligne ; la clé étrangère pointe vers une ligne d'une autre table ; les contraintes refusent ce qui n'a pas de sens.</p>
+<p>drift, en une phrase : on déclare les tables en Dart, <code>build_runner</code> génère le code d'accès typé, sur SQLite. Chaque changement de schéma est une migration versionnée : un numéro, <code>schemaVersion</code>, et une stratégie, <code>onUpgrade</code>. On ne modifie jamais une base à la main : sinon personne ne peut rejouer le changement.</p>
+<h3 class="w">À savoir</h3><ul><li>Démonstration du programme : l'agent ajoute une table avec une migration et un test. La préparer à froid.</li><li>Le programme demande de vérifier <code>MigrationStrategy</code> et <code>onUpgrade</code> sur la version de drift utilisée : voir chapitre 4 des supports.</li><li>Les exemples d'entités ci-dessus sont ceux du thème B ; chaque équipe a les siennes dans <code>PROJET.md</code>.</li></ul></section>
+
+<section class="s" id="pieges"><header><span class="n"></span><h2>Deux pièges, une règle</h2><span class="t">3 min</span></header>
+<div class="shows">Piège 1 : l'agent corrige un test en modifiant les données · piège 2 : deux branches incrémentent schemaVersion · règle : une seule migration à la fois, coordonnée par le gardien des données</div>
+<h3>À dire</h3><p>Premier piège : un test échoue, et l'agent le fait passer en changeant les données plutôt que le code. C'est la triche de tout à l'heure, du côté des données. Second piège : deux branches ajoutent chacune une migration et passent chacune <code>schemaVersion</code> au même numéro ; elles entrent en conflit. D'où la règle, que vous ajoutez à <code>CLAUDE.md</code> aujourd'hui : une seule migration à la fois, coordonnée par le gardien des données.</p>
+<h3 class="w">À savoir</h3><p>Si deux branches ont malgré tout chacune leur migration, l'une est fusionnée, l'autre se met à jour depuis <code>main</code> et renumérote la sienne : le détail est au chapitre 4 des supports.</p>
+<h3 class="q">Question à poser</h3><p>«&nbsp;Dans votre équipe, qui est le gardien des données ? Levez la main.&nbsp;»</p></section>
+
+<section class="s" id="atelier-donnees"><header><span class="n"></span><h2>Atelier · Modéliser et implémenter</h2><span class="t">atelier</span></header>
+<div class="shows">Cinq étapes : modèle papier validé, tables drift, première migration, test d'intégrité, PR et fiche · fini quand : migrations rejouées, orpheline rejetée · fiche K</div>
+<h3>À dire</h3><p>D'abord le papier : entités, relations, contraintes, et vous me le montrez, ou à une aide, avant de toucher au code. Ensuite, avec l'agent : les tables du thème dans la couche data, la première migration, et un test sur une base en mémoire qui prouve qu'on ne peut pas insérer une ligne orpheline, par exemple un arrêt qui pointe vers un quart inexistant. Le tout passe par une PR relue. Notez en commentaire dans la fiche de conformité les rubriques qui touchent aux données.</p>
+<h3 class="w">À savoir</h3><ul><li>Avec SQLite, les clés étrangères doivent être activées explicitement (le programme demande de le vérifier avec drift) : sans cela, le test d'intégrité passe pour de mauvaises raisons. Voir chapitre 4.</li><li>Le seed complet et la garde <code>RequireRole</code> (couche domain, avec test de refus) ne sont pas demandés en séance 3 : ils glissent.</li><li>Valider vite les modèles papier : c'est le goulet d'étranglement de l'atelier. Une aide peut s'en charger.</li></ul>
+<h3 class="w">Pièges</h3><ul><li>Le test d'intégrité passe sans que les clés étrangères soient actives : vérifier qu'il échoue quand on les désactive.</li><li>Deux membres de l'équipe écrivent chacun une migration.</li></ul></section>
+
+<div class="part-h">Revue croisée et bilan · blocs 10 et 11</div>
+<section class="s" id="atelier-revue"><header><span class="n"></span><h2>Atelier · Revue croisée entre équipes</h2><span class="t">atelier</span></header>
+<div class="shows">Quatre étapes : une PR de l'équipe jumelée, l'auteur explique, relire et commenter, un coéquipier approuve · fiches L et I</div>
+<h3>À dire</h3><p>Chaque équipe relit au moins une PR de son équipe jumelée, par des commentaires sur GitHub, auteur présent : l'auteur explique sa PR à voix haute. L'approbation qui débloque la fusion vient d'un coéquipier de l'auteur, pas de l'équipe jumelée.</p>
+<h3 class="w">À savoir</h3><ul><li>Les équipes jumelées n'ont pas d'accès en écriture au dépôt de l'autre : le programme note cette variante «&nbsp;à vérifier&nbsp;». Vérifier avant la séance qu'un compte sans droit d'écriture peut bien commenter une PR du dépôt public.</li><li>Le bloc peut commencer dès que des PR sont ouvertes : inutile d'attendre la fin des autres ateliers.</li><li>La definition of done demande aussi que chaque étudiant ait ouvert une PR et relu celle d'un autre.</li></ul>
+<h3 class="w">Pièges</h3><ul><li>«&nbsp;LGTM&nbsp;» sans lecture : demander au relecteur ce qu'il a regardé.</li><li>Un commentaire vague («&nbsp;c'est bizarre&nbsp;») : demander une ligne et une proposition.</li></ul></section>
+
+<section class="s" id="livrable"><header><span class="n"></span><h2>Livrable de fin de séance et definition of done</h2><span class="t">3 min</span></header>
+<div class="shows">Première règle verte, modèle et migrations fusionnés, début de la fiche commité · quatre critères · fiche M</div>
+<h3>À dire</h3><p>Le livrable est le même pour les trois thèmes. En détail : la première user story livrée (scénario <code>.feature</code>, tests, code, PR relue) ; le modèle de données (schéma, première migration, test d'intégrité) ; la fiche de conformité commitée avec ses rubriques 1 à 5 ; au moins une PR relue par une autre équipe. Vérifiez-le avec la fiche M avant de partir.</p>
+<h3 class="w">À savoir</h3><p>Definition of done du programme : sur une base en mémoire vide, le schéma se crée et les migrations se rejouent sans erreur (test), une seule migration à la fois, <code>flutter test</code> vert ; un test prouve qu'une insertion orpheline est rejetée ; chaque étudiant a ouvert une PR (même petite) et relu celle d'un autre ; aucune donnée personnelle réelle dans le dépôt, la fiche existe et indique «&nbsp;données fictives&nbsp;» avec une justification, sans nom civil ni courriel ; la fiche est commitée (rubriques 1 à 5) et relue par un coéquipier. Le seed complet est attendu entre S3 et S4, au début de S4 ou au sprint.</p></section>
+
+<section class="s" id="consignes-fin"><header><span class="n"></span><h2>Consignes de fin</h2><span class="t">3 min</span></header>
+<div class="shows">Aujourd'hui : JOURNAL.md et CLAUDE.md à jour · d'ici la séance 4 : 2 h au plus, facultatif · séance 4 le mercredi 16 décembre, fiche v1 le vendredi 18 décembre</div>
+<h3>À dire</h3><ul><li><strong>Aujourd'hui</strong> : <code>JOURNAL.md</code> à jour (où on en est, ce qui a glissé), <code>CLAUDE.md</code> enrichi des règles de données, état de la fiche noté. Le livrable vérifié.</li><li><strong>Les douze jours avant la séance 4</strong> : une tâche facultative de deux heures au plus par étudiant, pour terminer ce qui a glissé : seed complet, garde <code>RequireRole</code> avec son test de refus, rubriques 6 et 7 de la fiche, exercice de courriel de demande d'accès.</li><li><strong>Ensuite</strong> : séance 4 le mercredi 16 décembre (qualité, CI/CD, sécurité, AI Act, passage devant le RSSI) ; fiche de conformité v1 en PR le vendredi 18 décembre.</li></ul>
+<h3 class="w">À savoir</h3><ul><li>Le journal et <code>CLAUDE.md</code> passent par une PR comme le reste.</li><li>Ce qui a glissé et n'est pas fait dans les douze jours se reprend au début de la séance 4 ou au sprint : le dire, pour que personne ne travaille plus de deux heures.</li><li>Une équipe en retard sur le livrable le note dans <code>JOURNAL.md</code> : c'est ce qu'on lira au début de la séance 4.</li></ul></section>
+</main>
+</div>
+<script src="../shared/notes.js"></script>
+</body>
+</html>

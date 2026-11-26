@@ -1,0 +1,625 @@
+<!-- source: cours/supports/day-3/01-travailler-a-plusieurs.md · synchro: 2026-11-26 -->
+
+# Travailler à plusieurs : petites PR, relecture, conflits, revue croisée {#sec-travailler-a-plusieurs}
+
+::: {.callout-note title="État des connaissances"}
+Commandes git et `gh` vérifiées le 26 novembre 2026 sous Linux (git 2.53.0, gh 2.100.0, Flutter 3.50.1), dans des dépôts jetables reliés à un dépôt distant local, sans GitHub.
+:::
+
+En séance 2, vous avez appris les gestes de git dans un dépôt d'essai, puis fait passer une première PR dans le dépôt de votre équipe. Ce chapitre traite de ce qui change quand **quatre ou cinq personnes et autant d'agents** travaillent en même temps dans ce dépôt : reprendre le projet en quelques minutes, découper le travail en petites PR, relire celles des autres sans les froisser ni les laisser passer les yeux fermés, résoudre un conflit quand `main` est protégée, et relire la PR d'une autre équipe. Il couvre l'ouverture de la séance, l'exposé « Git en équipe » et l'atelier de revue croisée de fin de séance ; les fiches G, I et L de l'annexe [-@sec-fiches] en sont la version à suivre au clavier.
+
+::: {.callout-tip title="Ce que vous allez retenir"}
+
+- La séance s'ouvre sur un **contrôle**, pas sur une remise en route : `git pull`, `flutter pub get`, `build_runner`, `flutter test`, lecture de l'état courant de `JOURNAL.md`. Les équipes qui n'ont pas terminé l'initialisation de la séance 2 la terminent à ce moment-là.
+- Une **petite PR** fait une seule chose et se lit en entier ; une **branche courte** vit quelques heures, pas plusieurs jours. Les deux réduisent les conflits et rendent la relecture possible.
+- Simon Willison : « Don't file pull requests with code you haven't reviewed yourself ». Le premier relecteur d'une PR, c'est son auteur.
+- **Relire**, c'est lire le diff en entier avec une checklist ; **commenter**, c'est poser une question précise, dire si elle bloque la fusion, et parler du code, jamais de la personne.
+- Dans un dépôt dont `main` est protégée, on ne résout pas un conflit sur `main` : on **ramène `main` dans sa branche** (`git pull origin main`), on résout, on pousse, et la PR se débloque.
+- La **revue croisée** se fait par paires d'équipes fixées par le programme. L'équipe jumelée **commente** ; l'**approbation** qui permet la fusion vient d'un coéquipier de l'auteur.
+
+:::
+
+## Pourquoi ce chapitre {#sec-equipe-1}
+
+Jusqu'ici, une seule personne de l'équipe a porté une PR (`PROJET.md`) pendant que les autres relisaient. En séance 3, chacun ouvre au moins une PR et en relit au moins une autre : c'est une exigence de la definition of done de la séance. Plusieurs branches avancent donc en même temps, toutes destinées à `main`, et c'est de cette simultanéité que viennent les difficultés de ce chapitre.
+
+Le chapitre ne redit pas ce qui est déjà écrit. Les gestes de base (branche, commit, push, PR, relecture, fusion) sont dans le chapitre [-@sec-git] (sections « Une branche, un commit, un push » et « GitHub : pousser, ouvrir une pull request, relire, fusionner ») ; le conflit pas à pas dans VS Code est dans la section [-@sec-git-conflit] ; le modèle de PR et la checklist en cinq lignes sont dans le chapitre [-@sec-demarrer-projet] (sections [-@sec-projet-premiere-pr] et [-@sec-projet-relire]) et dans les fiches D et E de l'annexe [-@sec-fiches]. La configuration de l'agent (modes, permissions) est dans le chapitre [-@sec-configurer-claude-code]. La première user story elle-même, celle dont vous ouvrirez la PR, est dans le chapitre [-@sec-premiere-user-story].
+
+Les exemples s'appuient, comme en séance 2, sur le **thème B** (le TRS d'un atelier) et sur une équipe fictive, l'équipe 05.
+
+Le circuit d'une modification, du début à la fin :
+
+1. le contrôle d'ouverture (`git pull`, `flutter pub get`, `build_runner`, `flutter test`) ;
+2. une branche courte, pour une seule chose ;
+3. la relecture par soi-même, puis l'ouverture de la PR ;
+4. s'il y a un conflit avec `main` : `git pull origin main`, résoudre, pousser ;
+5. la relecture, par un coéquipier et par l'équipe jumelée ;
+6. l'approbation d'un coéquipier, puis la fusion.
+
+::: {.callout-tip title="À retenir"}
+Ce chapitre ne vous apprend pas de nouvelles commandes, ou presque : il vous apprend à vous servir de celles de la séance 2 quand vous n'êtes plus seuls.
+:::
+
+
+## Le contrôle d'ouverture {#sec-equipe-2}
+
+La séance 2 a eu lieu deux jours plus tôt, et rien n'a été demandé entre les deux séances. Il n'y a donc pas de remise en route à faire, seulement un **contrôle** : vérifier en quelques minutes que le dépôt démarre sur chaque poste et que chacun sait où en est l'équipe.
+
+### Les commandes, dans l'ordre {#sec-equipe-2-1}
+
+Chacun, sur son poste, dans le dossier du dépôt de l'équipe (`equipe_<numéro>`) :
+
+```bash
+git status
+git switch main
+git pull
+flutter pub get
+dart run build_runner build --delete-conflicting-outputs
+flutter test
+```
+
+| Commande | Pourquoi | Ce que vous devez voir |
+|---|---|---|
+| `git status` | Savoir s'il reste du travail non commité de la séance 2, et sur quelle branche vous êtes | `nothing to commit, working tree clean` ; sinon, voir la section [-@sec-equipe-2-5] |
+| `git switch main` | Repartir de `main` | `Switched to branch 'main'` (ou `Already on 'main'`) |
+| `git pull` | Récupérer tout ce qui a été fusionné depuis votre dernier passage, dont le `JOURNAL.md` et le tag `s2-fin` | La liste des fichiers reçus, ou `Already up to date.` |
+| `flutter pub get` | Installer les bibliothèques aux versions de `pubspec.lock` | `Got dependencies!` |
+| `dart run build_runner build --delete-conflicting-outputs` | Régénérer le code de la base et les tests des scénarios `.feature` : ces fichiers ne sont pas versionnés | `Built with build_runner … wrote … outputs.` (`wrote 0 outputs` si rien n'a changé) |
+| `flutter test` | Vérifier que le projet est vert chez vous | `All tests passed!` |
+
+La ligne `… packages have newer versions incompatible with dependency constraints` que `flutter pub get` peut afficher n'est pas une erreur : les versions sont verrouillées exprès. N'y répondez surtout pas par `flutter pub upgrade`, interdit dans le projet.
+
+**Ne sautez pas `build_runner`.** Il est indispensable après un clone, et dès que `git pull` apporte un fichier `.feature` ou une table modifiée. Comme on ne sait pas toujours ce que le `pull` a apporté, on le lance à chaque contrôle d'ouverture, **avant** `flutter test` : quand rien n'a changé, il ne réécrit rien. Les fichiers générés ne sont pas versionnés (section [-@sec-projet-demarrage]) : sur une copie du dépôt-modèle où ils n'avaient pas été générés, `flutter test` s'est terminé ainsi.
+
+```text
+00:11 +20 -4: Some tests failed.
+```
+
+Vingt tests passent, quatre fichiers de tests ne se chargent même pas, et, plus discret, les scénarios `.feature` **ne sont pas lancés du tout**, puisque leurs tests n'ont pas été générés. Après `build_runner`, la même commande affiche `All tests passed!`. Retenez la leçon : un `flutter test` vert ne vaut que si `build_runner` a tourné après le dernier changement de scénario ou de table.
+
+### Lire l'état courant de `JOURNAL.md` {#sec-equipe-2-2}
+
+Ouvrez `JOURNAL.md` et lisez sa rubrique « État courant », écrite en séance 2 par le gardien du harnais : où on en est, prochaine étape, commandes clés, décisions, reste à faire. Trois questions, à voix haute, en équipe :
+
+1. La ligne « Reste à faire » est-elle vide ? Sinon, qui s'en charge, et maintenant ?
+2. La « Prochaine étape » est-elle bien la première user story de `PROJET.md` ? (Pour le thème B, la story 4, limitée à la disponibilité.)
+3. Le tag `s2-fin` est-il visible (`git tag` l'affiche après le `git pull`) ?
+
+C'est le premier usage réel du journal : il a été écrit pour quelqu'un qui aurait tout oublié, et c'est le cas de tout le monde au bout de quelques jours.
+
+### Les équipes qui n'ont pas terminé l'initialisation {#sec-equipe-2-3}
+
+Le programme prévoit que la fin de l'initialisation peut glisser de la séance 2 à ce contrôle. Si votre équipe n'a pas encore, dans `main`, une première PR relue par un autre que son auteur, ou si le refus d'un push direct sur `main` n'a pas été constaté, terminez-le **maintenant**, avant toute user story : reprenez la fiche C (section [-@sec-fiche-c]) à l'étape où vous vous étiez arrêtés (le pas-à-pas est dans le chapitre [-@sec-demarrer-projet], sections [-@sec-projet-premiere-pr] et [-@sec-projet-relire]). Notez dans `JOURNAL.md` ce qui a été terminé à ce moment-là.
+
+Pourquoi c'est prioritaire : toute la séance repose sur des PR relues et une `main` protégée. Une équipe qui commence sa user story sans protection active travaille sans filet, et sans le savoir.
+
+### Point d'équipe et rôles confirmés {#sec-equipe-2-4}
+
+Quelques minutes, debout s'il le faut : où en est-on, et qui tient quel rôle ? Les gardiens fixés en séance 2 (produit et conformité, données, harnais et CI, et selon la taille de l'équipe conformité et démonstration) sont **confirmés** en séance 3 : chacun a une raison de l'être dans cette séance. Le gardien des données coordonnera la première migration (chapitre [-@sec-donnees]), le gardien produit et conformité la fiche de conformité (chapitre [-@sec-rgpd-projet]), le gardien du harnais `CLAUDE.md` et `JOURNAL.md`. Si un rôle change, le tableau des rôles de `PROJET.md` est mis à jour, par une PR comme le reste.
+
+Si le temps le permet, l'enseignant propose un quiz éclair de cinq questions sur les séances 1 et 2. Il est classé **Pratique** : c'est l'un des premiers éléments que l'on coupe si la séance prend du retard.
+
+### Quand le contrôle coince {#sec-equipe-2-5}
+
+| Symptôme | Que faire |
+|---|---|
+| `git status` montre des fichiers modifiés de la séance 2 | Les regarder (`git diff`) : à garder, on crée une branche et on commite ; à jeter, `git restore <fichier>` (irréversible, voir la section [-@sec-git-erreurs], « Annuler ») |
+| `git pull` refuse à cause de modifications locales | Même chose : commiter sur une branche ou restaurer, puis relancer |
+| `git pull` affiche un conflit sur `main` | Vous aviez commité sur `main` en local : voir la section [-@sec-git-erreurs] (« J'ai travaillé sur la mauvaise branche »), et appeler un encadrant |
+| `flutter test` échoue sur des fichiers manquants | `build_runner` n'a pas tourné (section [-@sec-equipe-2-1]) |
+| Tout est rouge chez un seul membre | Comparer `flutter --version` avec un poste qui marche ; la fiche N (section [-@sec-fiche-n]) reprend les pannes de la séance |
+
+::: {.callout-tip title="À retenir"}
+Le contrôle d'ouverture prend quelques minutes s'il est fait par tous, et une matinée s'il est sauté par un seul. Vert sur **chaque** poste, état courant lu, rôles confirmés : alors seulement, on ouvre une branche.
+:::
+
+
+## Petites PR, branches courtes {#sec-equipe-3}
+
+### Pourquoi petit {#sec-equipe-3-1}
+
+Une PR est une **demande de relecture**. Sa taille décide de la qualité de cette relecture : un diff de vingt lignes se lit, se comprend et se discute ; un diff de deux mille lignes se fait approuver sans être lu, parce que personne n'a le temps ni le courage de le lire. La deuxième ligne de la checklist de la séance 2 (« elle fait une seule chose, et le diff se lit en entier ») n'est pas une préférence de style : c'est la condition pour que les autres lignes aient un sens.
+
+Avec un agent, la tentation est forte : il produit en une minute ce qu'un humain écrirait en une journée, et il ne s'arrête pas de lui-même au bord de la tâche demandée. Le programme range les « PR énormes » parmi les signes du *vibe coding sans comprendre*, à côté de l'étudiant incapable d'expliquer sa PR. La parade est simple et vous appartient : **demander peu à la fois**, et refuser ce qui déborde.
+
+Petit a trois autres avantages :
+
+- **moins de conflits** : une PR qui touche peu de fichiers croise rarement celle d'un coéquipier ;
+- **une fusion plus rapide** : elle est relue dans l'heure, pas dans trois jours ;
+- **une erreur plus facile à défaire** : une PR fusionnée qui pose problème s'annule d'un bloc, sans emporter le reste (`git revert`, voir la section [-@sec-git-erreurs], « Annuler » ; comme `main` est protégée, cette annulation passe elle aussi par une branche et une PR).
+
+### À quoi ressemble une séance découpée en PR {#sec-equipe-3-2}
+
+Pour l'équipe 05 (thème B), la séance produit naturellement plusieurs PR indépendantes, chacune portée par une personne, sur sa propre branche :
+
+| PR | Branche (exemple) | Contenu | Chapitre |
+|---|---|---|---|
+| 1 | `disponibilite-quart` | Première user story : scénario `.feature`, tests, use case, repository fake, Cubit | [-@sec-premiere-user-story] |
+| 2 | `fiche-conformite-1-5` | Rubriques 1 à 5 de `docs/fiche_conformite.md` | [-@sec-rgpd-projet] |
+| 3 | `modele-donnees-v2` | Tables du thème, première migration, test d'intégrité | [-@sec-donnees] |
+| 4 | `journal-s3` | État courant de fin de séance dans `JOURNAL.md`, règle de données dans `CLAUDE.md` | Annexe [-@sec-fiches], fiche M |
+
+Deux remarques. Une PR peut contenir **plusieurs commits** : la PR 1 en aura au moins deux, le test qui échoue puis le code qui le fait passer, et c'est voulu (règle du jeu n° 3 : le commit de test précède le code dans l'historique). « Petite » parle du sujet, pas du nombre de commits. Et si la story elle-même est trop grosse pour une PR lisible, c'est un signal que la story est mal découpée : revenez à `PROJET.md`, pas à une PR géante.
+
+### Une branche vit quelques heures {#sec-equipe-3-3}
+
+Pendant que votre branche existe, `main` avance : vos coéquipiers y fusionnent leurs PR. Plus votre branche vit longtemps, plus l'écart grandit, et plus le conflit final est gros. D'où trois habitudes :
+
+- **une branche par tâche**, créée depuis un `main` à jour (`git switch main`, `git pull`, puis `git switch -c nom`) ;
+- **fusionner dans la séance** ce qui a été commencé dans la séance, quitte à livrer moins ;
+- **ramener `main` dans sa branche** dès qu'une PR d'un coéquipier vient d'être fusionnée, sans attendre le conflit (section [-@sec-equipe-6-6]).
+
+Une fois votre PR fusionnée, la branche a fini sa vie : sur votre poste, `git switch main`, `git pull`, puis `git branch -d nom-de-la-branche`.
+
+### Avant d'ouvrir la PR : relire soi-même {#sec-equipe-3-4}
+
+Simon Willison, que le programme cite pour cette séance :
+
+> « Don't file pull requests with code you haven't reviewed yourself »
+
+Autrement dit : n'ouvrez pas de PR avec du code que vous n'avez pas relu vous-même. Avec un agent, la phrase prend tout son sens : si vous ouvrez la PR sans avoir lu ce que l'agent a écrit, vous demandez à un coéquipier de faire à votre place une relecture que vous n'avez pas faite. C'est aussi la première case du modèle de PR : « Je peux expliquer chaque modification. »
+
+Concrètement, avant `gh pr create --web` :
+
+1. `git status` : rien d'inattendu, aucun fichier que vous ne connaissez pas ;
+2. `git diff main` : le diff de toute la branche, lu **en entier**, comme le lira votre relecteur ;
+3. les six commandes de vérification du `README.md` (« Vérifier avant une PR »), dans l'ordre : `flutter pub get --enforce-lockfile`, `dart run build_runner build --delete-conflicting-outputs`, `dart run drift_dev make-migrations` (qui ne doit rien changer), `dart format --output=none --set-exit-if-changed .`, `flutter analyze`, `flutter test` ; résultat regardé, pas supposé ;
+4. la checklist de la section [-@sec-equipe-5], passée sur votre propre PR ;
+5. le modèle de PR rempli honnêtement, y compris « ce que l'agent a proposé, ce que j'ai refusé » et le suivi des temps (fiche E, section [-@sec-fiche-e]).
+
+::: {.callout-tip title="À retenir"}
+Une PR, une chose ; une branche, quelques heures. Et personne ne relit votre PR avant vous.
+:::
+
+
+## Relire une PR {#sec-equipe-4}
+
+### Ce qu'on regarde, et dans quel ordre {#sec-equipe-4-1}
+
+Relire n'est pas tout lire au même niveau. Un ordre qui marche, du plus général au plus précis :
+
+1. **La description.** Le modèle est-il rempli ? Le résumé dit-il ce que fait la PR et pourquoi ? La rubrique « ce que l'agent a proposé, ce que j'ai refusé » contient-elle autre chose que des cases vides ? Une PR sans description est renvoyée à son auteur avant d'aller plus loin.
+2. **La pastille de CI.** Verte, rouge ou en cours. Elle ne bloque pas encore la fusion (elle le fera en séance 4), mais une pastille rouge se regarde avant tout le reste.
+3. **La liste des fichiers modifiés** (onglet « Files changed »). Avant de lire une ligne, regardez **quels** fichiers changent. Un fichier de test supprimé, un fichier sous `test/acceptance/` ou `drift_schemas/` modifié, `pubspec.yaml` ou `pubspec.lock` touchés sans que la PR le dise : chacun de ces signaux mérite une question, quel que soit le reste.
+4. **Les tests, avant le code.** Ils disent ce que la PR prétend faire. Pour la première user story du thème B, le scénario `.feature` doit reprendre les valeurs de `PROJET.md` (quart de 480 minutes, pause de 30, panne de 45, changement de série de 15 : temps requis 450 minutes, temps de marche 390 minutes, disponibilité affichée 86,7 %). Si le test attend autre chose, il ne vérifie pas la règle demandée.
+5. **Le code, couche par couche.** Vous n'avez pas à savoir l'écrire ; vous savez où chaque chose doit aller (section [-@sec-projet-pile]). Un calcul dans un écran, une requête de base dans `domain/`, un Cubit qui reçoit un repository au lieu d'un cas d'usage : ce sont des écarts aux règles de `CLAUDE.md`, visibles sans lire le détail.
+6. **L'historique des commits.** Le commit du test vient-il avant celui du code ? C'est ce que l'historique doit montrer, et c'est pour cela que le projet n'autorise que le merge commit.
+
+Pour aller plus loin, le relecteur peut récupérer la branche de la PR sur son poste et lancer les tests lui-même : `gh pr checkout <numéro>` crée la branche locale correspondante, puis `flutter test`. Ce n'est pas obligatoire quand la CI est verte, mais c'est la seule façon de **voir** le comportement d'une PR qui touche un écran.
+
+### Comment commenter {#sec-equipe-4-2}
+
+Un commentaire de relecture vise à améliorer le code et à faire comprendre, pas à avoir raison. Quatre règles :
+
+- **Parler du code, pas de la personne.** « Ce test n'utilise pas les valeurs du critère d'acceptation » plutôt que « tu n'as pas lu `PROJET.md` ».
+- **Poser une question plutôt que donner un ordre**, quand vous n'êtes pas sûr. Une question laisse à l'auteur la possibilité d'avoir une bonne raison que vous ne connaissez pas ; elle l'oblige aussi à formuler cette raison, ce qui est précisément l'exercice demandé (règle du jeu n° 2 : chacun explique sa PR).
+- **Être précis.** Commentez la ligne concernée (bouton `+` au survol de la ligne, voir « Relire la PR de son binôme » dans le chapitre [-@sec-git]), citez la règle ou le critère, proposez ce qui serait mieux.
+- **Dire si le commentaire bloque la fusion.** L'auteur doit savoir ce qu'il doit corriger avant la fusion et ce qu'il peut laisser pour plus tard. Les supports proposent de préfixer chaque commentaire par l'un de trois mots : **[bloquant]**, **[question]**, **[suggestion]**. Une question peut devenir bloquante si la réponse révèle un problème.
+
+Exemples sur la première user story du thème B :
+
+| À éviter | À préférer |
+|---|---|
+| « C'est faux. » | « [bloquant] Le scénario attend une disponibilité de 86 %, le critère de `PROJET.md` dit 86,7 %. Le test a-t-il été arrondi pour passer ? » |
+| « Pourquoi t'as mis ça là ?? » | « [question] Le calcul du temps requis est dans le Cubit. `CLAUDE.md` le voudrait dans un cas d'usage de `domain/` : y a-t-il une raison ? » |
+| « Renomme. » | « [suggestion] `calc` pourrait s'appeler `calculerDisponibilite`, comme le veut la convention des noms en français de `docs/ARCHITECTURE.md`. Non bloquant. » |
+| « LGTM » (*looks good to me*) sans autre mot, sur une PR de 400 lignes | Un commentaire d'ensemble qui dit ce que vous avez vérifié : « Lu le scénario et les tests, valeurs conformes à `PROJET.md` ; code non relu en détail dans `data/`. » |
+
+Le dernier exemple compte plus qu'il n'y paraît. Dire **ce que vous n'avez pas relu** est honnête et utile : l'auteur sait où demander un second regard.
+
+Et si vous ne comprenez pas une partie du code, dites-le : « je ne comprends pas ce que fait cette fonction » est un commentaire légitime. Si le relecteur ne comprend pas, soit le code est obscur, soit l'auteur a quelque chose à expliquer ; dans les deux cas, la PR n'est pas prête.
+
+### Conclure la relecture {#sec-equipe-4-3}
+
+Sur GitHub, la relecture se conclut par « Review changes », un commentaire d'ensemble et l'un des trois choix déjà vus en séance 2 :
+
+| Choix | Quand | Qui, dans ce projet |
+|---|---|---|
+| **Comment** | Vous avez des remarques, sans vous prononcer sur la fusion | Tout relecteur, et **toujours** l'équipe jumelée (section [-@sec-equipe-7]) |
+| **Request changes** | Au moins un point [bloquant] | Un coéquipier de l'auteur |
+| **Approve** | Toutes les lignes de la checklist passent, les points bloquants sont réglés | Un coéquipier de l'auteur, **autre que lui** |
+
+Approuver engage : celui qui approuve doit pouvoir expliquer la PR aussi bien que celui qui l'a ouverte (règle du jeu n° 2). « L'agent m'a dit que c'était bon » ne compte pas plus pour le relecteur que pour l'auteur.
+
+### Côté auteur : recevoir des commentaires {#sec-equipe-4-4}
+
+- Répondez à **chaque** commentaire : par une correction (un nouveau commit sur la même branche, poussé ; la PR se met à jour) ou par une explication. Un commentaire sans réponse est une question laissée ouverte.
+- Un commentaire porte sur le code. Il n'est pas un jugement sur vous, et vous n'êtes pas tenu d'être d'accord : expliquez pourquoi, et si le désaccord persiste, l'équipe tranche, et la décision va dans « Décisions de l'équipe » de `PROJET.md` ou dans `JOURNAL.md`.
+- Si un commentaire révèle une erreur de l'agent que vous n'aviez pas vue, c'est une information : notez-la dans la rubrique « refusé » de la PR et ajoutez l'étiquette `erreur-agent`. L'équipe doit en documenter au moins deux sur le projet.
+
+::: {.callout-tip title="À retenir"}
+Lire dans l'ordre : description, CI, fichiers, tests, code, historique. Commenter en question, sur la ligne, en disant si c'est bloquant. Approuver, c'est signer.
+:::
+
+
+## La checklist de revue de PR {#sec-equipe-5}
+
+Cette checklist reprend les cinq lignes de la séance 2 (fiche D, section [-@sec-fiche-d]), qui restent la base, et les complète par les points propres à cette séance : la première user story en TDD et en BDD, les données et la fiche de conformité. Elle sert au relecteur, coéquipier ou équipe jumelée, et à l'auteur avant d'ouvrir sa PR. Elle est reprise telle quelle dans la fiche I (section [-@sec-fiche-i]). Les lignes 1 à 5 suffisent pour une PR qui ne touche que de la documentation ; les lignes 6 à 10 s'ajoutent selon ce que la PR contient.
+
+**Pour toute PR**
+
+1. **Je comprends ce que fait cette PR, et je saurais l'expliquer.**
+2. **Elle fait une seule chose, et le diff se lit en entier.**
+3. **Les vérifications passent : `flutter analyze`, `flutter test`** (pastille de CI verte, ou résultat collé par l'auteur).
+4. **Aucun secret, aucune donnée réelle ou personnelle**, ni nom civil ni courriel, y compris dans la fiche de conformité et dans `JOURNAL.md`.
+5. **Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées.**
+
+**Si la PR livre une user story**
+
+6. **Le scénario `.feature` dit la règle avec les valeurs de `PROJET.md`**, commence par `# language: fr`, et rien n'a été « arrangé » pour qu'il passe (valeur arrondie, cas retiré, hasard en dur).
+7. **Le commit du test précède celui du code** dans l'onglet des commits.
+8. **Chaque fichier est dans la bonne couche** : la règle dans `domain/`, le stockage derrière l'interface du domain (repository fake en mémoire à ce stade), le Cubit ou le BLoC ne reçoit que des cas d'usage.
+
+**Si la PR touche aux données ou à la conformité**
+
+9. **Une seule migration à la fois** : `schemaVersion` augmente de un, aucun instantané de `drift_schemas/` déjà présent sur `main` n'est modifié ni supprimé (seul un nouvel instantané s'ajoute), et le gardien des données est au courant (chapitre [-@sec-donnees]).
+10. **La fiche de conformité dit « données fictives »** avec une justification, et ne contient aucun nom civil ni courriel (« équipe n° X », identifiants GitHub).
+
+**Et pour finir**
+
+- **Le modèle de PR est rempli**, avec au moins une ligne « proposé et refusé » ou un « rien refusé » assumé.
+
+Une ligne ne passe pas ? On ne fusionne pas : le coéquipier relecteur choisit « Request changes » et dit laquelle ; l'équipe jumelée le dit en commentaire.
+
+::: {.callout-tip title="À retenir"}
+Les cinq premières lignes valent pour toute PR, du premier jour à la soutenance. Les suivantes sont celles que la séance 3 rend nécessaires.
+:::
+
+
+## Le conflit dans le dépôt d'équipe {#sec-equipe-6}
+
+### Ce qui change par rapport au dépôt d'essai {#sec-equipe-6-1}
+
+En séance 2, vous avez provoqué un conflit en fusionnant une branche dans `main`, sur votre poste, puis vous l'avez résolu (section [-@sec-git-conflit]). Dans le dépôt d'équipe, ce geste est impossible : `main` est protégée, personne n'y fusionne en local ni n'y pousse. Trois choses changent donc.
+
+| Dépôt d'essai (séance 2) | Dépôt d'équipe (séance 3) |
+|---|---|
+| Vous fusionnez une branche **dans `main`** | Vous ramenez **`main` dans votre branche** |
+| Le conflit apparaît dans votre terminal | Le conflit apparaît d'abord **sur la page de la PR** : *This branch has conflicts that must be resolved* |
+| Vous provoquez le conflit vous-même | Il naît du travail d'un coéquipier, fusionné avant le vôtre |
+| Après la résolution, `main` contient le résultat | Après la résolution, vous **poussez votre branche** ; la PR se met à jour et peut être fusionnée |
+
+Le reste est identique : les marqueurs, les choix de VS Code, `git add`, `git commit`, la sortie de secours `git merge --abort`. Ce pas-à-pas n'est pas repris ici : gardez la section [-@sec-git-conflit] ouverte à côté.
+
+### Pourquoi les conflits arrivent {#sec-equipe-6-2}
+
+Un conflit naît quand deux branches modifient **la même zone du même fichier**. Grâce au rangement « une fonctionnalité, un dossier » (section [-@sec-projet-pile]), deux personnes qui travaillent sur deux fonctionnalités se croisent rarement dans le code. Elles se croisent en revanche dans les **fichiers que tout le monde touche** :
+
+- `JOURNAL.md` et la rubrique « Décisions de l'équipe » de `PROJET.md`, où chacun ajoute une ligne **au même endroit**, à la fin ;
+- les fichiers d'assemblage communs de `lib/core/`, comme l'annuaire `get_it` de `lib/core/di/` où chaque fonctionnalité enregistre ses pièces, ou la base de `lib/core/data/` qui liste les tables ;
+- `CLAUDE.md`, quand deux personnes y ajoutent une règle le même jour.
+
+Un conflit n'est donc pas le signe d'une erreur : c'est le prix normal du travail en parallèle. Le programme le dit en une ligne : il faut « faire comprendre que les conflits sont normaux ».
+
+### Le scénario, rejoué {#sec-equipe-6-3}
+
+Voici le cas le plus probable de la séance, rejoué dans un dépôt jetable relié à un dépôt distant local ; les sorties sont celles obtenues, les adresses réécrites sous la forme GitHub. Deux membres de l'équipe 05 notent chacun une décision dans `JOURNAL.md`, sur deux branches, **à la fin de la rubrique « Décisions et apprentissages »** :
+
+- le membre 1, sur la branche `journal-unite-minutes`, ajoute « toutes les durées sont en minutes entières » ;
+- le membre 2, sur la branche `journal-arrondi`, ajoute « la disponibilité s'affiche arrondie au dixième (86,7 %) ».
+
+Chacun pousse sa branche et ouvre sa PR. Celle du membre 1 est relue, approuvée et fusionnée la première. La PR du membre 2 affiche alors un conflit : les deux lignes ont été ajoutées au même endroit, et git ne sait pas dans quel ordre les mettre, ni s'il faut les garder toutes les deux.
+
+Le membre 2, sur son poste, se place sur sa branche et y ramène `main` :
+
+```bash
+$ git switch journal-arrondi
+$ git status
+On branch journal-arrondi
+Your branch is up to date with 'origin/journal-arrondi'.
+
+nothing to commit, working tree clean
+$ git pull origin main
+From https://github.com/<organisation>/equipe_05
+ * branch            main       -> FETCH_HEAD
+   09b55bc..963376b  main       -> origin/main
+Auto-merging JOURNAL.md
+CONFLICT (content): Merge conflict in JOURNAL.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+`git pull origin main` veut dire : récupère la branche `main` de GitHub et fusionne-la dans la branche où je suis. C'est exactement l'inverse de la fusion de la séance 2, et c'est pour cela qu'elle est permise : elle ne touche que votre branche. Le réglage `pull.rebase false` de la séance 2 (section [-@sec-git-identite]) garantit que `git pull` fusionne, au lieu de vous poser une question.
+
+`git status` dit la même chose qu'en séance 2, sortie de secours comprise :
+
+```bash
+$ git status
+On branch journal-arrondi
+Your branch is up to date with 'origin/journal-arrondi'.
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+	both modified:   JOURNAL.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+### Lire le conflit, et décider {#sec-equipe-6-4}
+
+Dans `JOURNAL.md`, à la fin :
+
+```text
+<<<<<<< HEAD
+- 04/12/2026 : la disponibilité s'affiche arrondie au dixième (86,7 %) ; le calcul garde la valeur exacte.
+=======
+- 04/12/2026 : toutes les durées sont en minutes entières, dans le code comme dans les scénarios (l'agent mélangeait minutes et secondes).
+>>>>>>> 963376b8297007e4f54c003365e28ad5a56dd504
+```
+
+Deux différences avec le dépôt d'essai, à bien lire :
+
+- **`HEAD` est maintenant votre branche** (`journal-arrondi`), puisque c'est elle qui reçoit. Dans VS Code, la « modification actuelle » (*Current Change*) est la vôtre, la « modification entrante » (*Incoming Change*) est celle de `main`, donc celle de votre coéquipier. C'est l'inverse de la séance 2, où vous étiez sur `main`.
+- **La ligne de fin ne porte pas le nom `main`** mais un identifiant de commit (`963376b…`), parce que `git pull` a récupéré `main` sous un nom provisoire. C'est bien le `main` de GitHub, tel qu'il était au moment du `pull`.
+
+Ici, la bonne réponse n'est ni « la mienne » ni « la sienne » : ce sont **deux décisions différentes**, et le journal doit garder les deux. Dans VS Code, **Accept Both Changes** (*Accepter les deux modifications*) garde les deux lignes, la vôtre d'abord. On peut préférer l'ordre chronologique et remettre en premier celle qui a été fusionnée la première, ce qui a été fait ici :
+
+```text
+- 04/12/2026 : toutes les durées sont en minutes entières, dans le code comme dans les scénarios (l'agent mélangeait minutes et secondes).
+- 04/12/2026 : la disponibilité s'affiche arrondie au dixième (86,7 %) ; le calcul garde la valeur exacte.
+```
+
+Ce n'est pas toujours aussi simple. Si les deux lignes avaient dit des choses **contradictoires** (« arrondi au dixième » contre « arrondi à l'unité »), le conflit de fichier cacherait un désaccord d'équipe : on ne le résout pas seul au clavier, on en parle, et la décision prise va dans le journal. Résoudre un conflit est une décision, pas une opération mécanique (section [-@sec-git-conflit], « Résoudre dans VS Code »).
+
+Avant de valider, `git diff` montre le résultat par rapport aux deux côtés :
+
+```bash
+$ git diff
+diff --cc JOURNAL.md
+index dbd3180,10c9599..0000000
+--- a/JOURNAL.md
++++ b/JOURNAL.md
+@@@ -13,4 -13,4 +13,5 @@@ Ce fichier garde la mémoire du projet
+  
+  Une entrée par décision ou par apprentissage : date, ce qui a été décidé ou appris, pourquoi.
+  
++ - 04/12/2026 : toutes les durées sont en minutes entières, dans le code comme dans les scénarios (l'agent mélangeait minutes et secondes).
+ +- 04/12/2026 : la disponibilité s'affiche arrondie au dixième (86,7 %) ; le calcul garde la valeur exacte.
+```
+
+Ce diff a deux colonnes de signes, une par côté de la fusion. Pas besoin de tout décoder : vérifiez que **chaque ligne que l'un ou l'autre avait ajoutée est présente**, et qu'aucun marqueur `<<<<<<<`, `=======` ou `>>>>>>>` ne reste. Une résolution qui « perd » une ligne d'un coéquipier est la faute la plus fréquente, et la plus discrète.
+
+### Terminer, pousser, la PR se débloque {#sec-equipe-6-5}
+
+```bash
+$ git add JOURNAL.md
+$ git status
+On branch journal-arrondi
+Your branch is up to date with 'origin/journal-arrondi'.
+
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+	modified:   JOURNAL.md
+
+$ git commit -m "Fusionne main dans journal-arrondi : on garde les deux décisions"
+[journal-arrondi 3a926a1] Fusionne main dans journal-arrondi : on garde les deux décisions
+$ git push
+To https://github.com/<organisation>/equipe_05.git
+   2c42a06..3a926a1  journal-arrondi -> journal-arrondi
+```
+
+Un simple `git push` suffit, puisque la branche suit déjà `origin/journal-arrondi`. Ce n'est **pas** un `git push --force` : vous ajoutez un commit, vous ne réécrivez rien. Si l'agent ou un tutoriel vous propose `--force` à ce moment-là, refusez (la permission est d'ailleurs refusée par le `.claude/settings.json` du projet).
+
+Sur GitHub, la PR reçoit le nouveau commit, le message de conflit disparaît, et la PR peut être fusionnée dès qu'elle est approuvée. L'historique, vu depuis `main` après la fusion de cette deuxième PR, garde la trace de tout :
+
+```bash
+$ git switch main
+$ git pull
+$ git log --oneline --graph
+*   f27213f Merge pull request #8 from <organisation>/journal-arrondi
+|\
+| *   3a926a1 Fusionne main dans journal-arrondi : on garde les deux décisions
+| |\
+| |/
+|/|
+* |   963376b Merge pull request #7 from <organisation>/journal-unite-minutes
+|\ \
+| * | 756d407 Journal : durées en minutes
+|/ /
+| * 2c42a06 Journal : règle d'arrondi
+|/
+* 09b55bc Ajoute le journal
+```
+
+Le graphe est plus touffu qu'en séance 2, et c'est normal : on y lit les deux PR, et entre les deux le commit où `main` a été ramenée dans la branche du membre 2. Vos identifiants de commit seront différents.
+
+Le bouton **Resolve conflicts** de la page de la PR permet aussi de résoudre un conflit simple dans le navigateur (section [-@sec-git-conflit], « Conflit dans une pull request »). Préférez votre poste dès que le conflit touche du code : c'est le seul endroit où vous pouvez relancer les tests **avant** de pousser le résultat.
+
+### Sans conflit, la mise à jour reste utile {#sec-equipe-6-6}
+
+Quand `main` a changé dans d'autres fichiers que les vôtres, `git pull origin main` fusionne sans rien demander. Rejoué sur une branche qui ajoutait le scénario de la disponibilité pendant qu'une autre PR modifiait le journal :
+
+```bash
+$ git pull origin main
+From https://github.com/<organisation>/equipe_05
+ * branch            main       -> FETCH_HEAD
+   f27213f..5e20cbe  main       -> origin/main
+Merge made by the 'ort' strategy.
+ JOURNAL.md | 1 +
+ 1 file changed, 1 insertion(+)
+$ git push
+```
+
+Selon votre configuration, git peut ouvrir un éditeur avec un message de fusion déjà rédigé : enregistrez et fermez (section [-@sec-git-erreurs], « Un éditeur étrange s'est ouvert »).
+
+Pourquoi le faire alors que GitHub ne signale aucun conflit ? Parce que deux modifications peuvent se fusionner **sans conflit de texte** et pourtant ne pas marcher ensemble : un coéquipier renomme une fonction dans `domain/`, vous l'appelez sous l'ancien nom dans votre nouveau fichier. Git ne voit rien, les tests si. Après chaque `git pull origin main`, relancez donc `dart run build_runner build --delete-conflicting-outputs` si un `.feature` ou une table ont changé, puis `flutter test`, **avant** de pousser. Dans les dépôts d'équipe, la CI ne bloque pas encore la fusion : c'est vous qui faites ce contrôle.
+
+### Les fichiers particuliers {#sec-equipe-6-7}
+
+| Fichier | Conflit possible ? | Que faire |
+|---|---|---|
+| Fichiers générés (`*.g.dart`, tests tirés des `.feature`) | **Non** : ils sont ignorés par git (`.gitignore` du dépôt), chacun les régénère | Relancer `build_runner` après la fusion. Si l'un d'eux apparaît dans un conflit ou dans le diff d'une PR, c'est qu'il a été commité par erreur : le signaler en relecture |
+| `pubspec.yaml` et `pubspec.lock` | En principe non : ajouter une dépendance se fait par une PR dédiée, avec l'accord de l'équipe et de l'enseignant (`README.md` du dépôt) | Ne jamais corriger `pubspec.lock` à la main. `git merge --abort`, prévenir le gardien du harnais et un encadrant ; la dépendance sera rajoutée sur un `main` à jour |
+| `drift_schemas/`, `base_de_donnees.steps.dart`, `schemaVersion` | Oui, si deux branches préparent chacune une migration | La section [-@sec-donnees-7-2] du chapitre [-@sec-donnees], sur la règle « une migration à la fois », dit comment l'éviter et comment s'en sortir. Les instantanés et le fichier `.steps.dart` ne se modifient jamais à la main ; `schemaVersion`, lui, se change à la main, d'une version à la fois |
+| `JOURNAL.md`, « Décisions de l'équipe » de `PROJET.md` | **Oui, souvent** : tout le monde ajoute à la fin | Garder les deux entrées (section [-@sec-equipe-6-4]). Pour l'« État courant », une seule plume : le gardien du harnais |
+
+::: {.callout-tip title="À retenir"}
+Dans le dépôt d'équipe : `git switch ma-branche`, `git pull origin main`, résoudre, `git add`, `git commit`, `flutter test`, `git push`. Jamais sur `main`, jamais `--force`. Et un conflit dans un journal se résout presque toujours en gardant les deux.
+:::
+
+
+## La revue croisée entre équipes {#sec-equipe-7}
+
+### Les paires {#sec-equipe-7-1}
+
+Chaque équipe relit au moins une PR de l'**équipe jumelée**, fixée par le programme d'après les numéros attribués en séance 2. Les numéros vont par thème : avec 8 équipes, 01 à 03 pour le thème A, 04 à 06 pour le B, 07 et 08 pour le C ; avec 7 équipes, 01 à 03 pour le A, 04 et 05 pour le B, 06 et 07 pour le C.
+
+**Avec 8 équipes**, quatre paires ; dans chaque paire, chaque équipe relit l'autre :
+
+| Paire | Thèmes |
+|---|---|
+| 01–04 | A et B |
+| 02–05 | A et B |
+| 03–06 | A et B |
+| 07–08 | C et C |
+
+**Avec 7 équipes**, deux paires et un trio :
+
+| Groupe | Qui relit qui |
+|---|---|
+| 02–05 | 02 relit 05, 05 relit 02 |
+| 03–06 | 03 relit 06, 06 relit 03 |
+| Trio 01, 04, 07 (circulaire) | 07 relit 01, 01 relit 04, 04 relit 07 |
+
+Dans le trio, chaque équipe relit une équipe et est relue par une autre : personne ne relit deux équipes, personne n'est oublié. L'équipe 07 rejoint la paire 01–04 parce que le nombre d'équipes est impair.
+
+La paire 07–08 réunit deux équipes du même thème : c'est **toléré** pour cette séance ; les paires de même thème sont évitées en séance 4. Relire un autre thème a un avantage : vous ne connaissez pas la règle métier, donc vous voyez tout de suite si le scénario `.feature` la rend compréhensible pour un lecteur extérieur. L'équipe 05 de nos exemples relit donc l'équipe 02 (thème A), et réciproquement.
+
+### Ce que l'équipe jumelée peut faire, et ce qu'elle ne peut pas {#sec-equipe-7-2}
+
+Les dépôts sont **publics** : l'équipe jumelée lit tout, sans invitation. Mais seuls les membres de l'équipe ont été ajoutés comme collaborateurs avec un accès en écriture par le script de création des dépôts ; l'équipe jumelée n'en a pas.
+
+| L'équipe jumelée peut | Elle ne peut pas, ou ne doit pas |
+|---|---|
+| Lire la PR, son diff, ses commits, la pastille de CI | Pousser un commit sur la branche de la PR |
+| Commenter une ligne et laisser une relecture de type **Comment** | Fusionner la PR |
+| Poser des questions à l'auteur, à voix haute et par écrit | Approuver à la place de l'équipe : son avis ne remplace pas celui d'un coéquipier |
+| Récupérer la branche pour lancer les tests en local (`gh pr checkout`) | Corriger elle-même ce qu'elle a trouvé |
+
+Le programme laisse une variante « à vérifier » : l'enseignant peut décider d'un autre arrangement. Si c'est le cas, c'est sa consigne qui s'applique.
+
+### Le déroulé {#sec-equipe-7-3}
+
+1. **L'équipe choisit la PR à faire relire** : une PR ouverte de la séance, par exemple la première user story. Une PR déjà fusionnée se relit aussi, mais les remarques ne pourront plus l'empêcher d'entrer dans `main`.
+2. **L'auteur est présent** et présente sa PR **à voix haute**, en quelques minutes : ce qu'elle fait, pourquoi, ce que l'agent a proposé et ce qu'il a refusé. C'est l'exercice de la règle du jeu n° 2, et une répétition des deux questions individuelles de la soutenance, dont l'une porte sur une PR tirée au sort.
+3. **L'équipe jumelée relit avec la checklist** de la section [-@sec-equipe-5] et pose ses questions, d'abord à l'oral, puis **par écrit sur GitHub** : un commentaire oral qui n'est pas écrit est perdu pour l'auteur et pour l'évaluation.
+4. **L'auteur répond** à chaque commentaire (section [-@sec-equipe-4-4]) : par un commit ou par une explication.
+5. **Les rôles s'inversent** : l'autre équipe présente à son tour (ou, dans le trio, l'équipe suivante).
+
+Pour l'auteur, expliquer à quelqu'un qui ne connaît pas votre thème est le meilleur test de compréhension : si vous ne savez pas dire pourquoi un fichier est là, l'équipe jumelée le verra tout de suite.
+
+### L'approbation vient d'un coéquipier {#sec-equipe-7-4}
+
+La protection de `main` exige une approbation, et l'équipe jumelée ne peut pas la donner utilement : c'est un **coéquipier de l'auteur**, autre que lui, qui approuve, après avoir lu la PR **et** les commentaires de l'équipe jumelée. Il vérifie que chaque point [bloquant] a reçu une correction ou une réponse convaincante. Une PR approuvée par un coéquipier alors qu'un commentaire bloquant de l'équipe jumelée reste sans réponse est une PR mal relue.
+
+Le livrable de la séance demande **au moins une PR relue par une autre équipe** ; la definition of done demande que **chaque étudiant** ait ouvert une PR, même petite, et relu celle d'un autre. Les deux se cumulent : la revue croisée ne dispense pas des relectures internes.
+
+::: {.callout-tip title="À retenir"}
+L'équipe jumelée commente, l'auteur explique à voix haute, un coéquipier approuve. Tout ce qui est dit à l'oral est aussi écrit sur la PR.
+:::
+
+
+## Et l'agent, dans tout cela ? {#sec-equipe-8}
+
+Le chapitre [-@sec-configurer-claude-code] a réglé l'agent : mode manuel, permissions, refus testés. On ne revient pas sur ces réglages ; voici seulement ce qu'ils changent au travail à plusieurs.
+
+**Avant d'ouvrir la PR, c'est vous qui relisez.** L'agent peut vous aider à relire (« passe la checklist de la fiche I sur le diff de cette branche, et liste ce qui ne passe pas, sans rien modifier »), mais sa réponse est un avis de plus, pas une relecture. La phrase de Willison s'adresse à vous, pas à lui.
+
+**Ne faites pas résoudre un conflit à l'aveugle.** Un agent sait effacer des marqueurs de conflit. Il ne sait pas ce que votre coéquipier voulait dire, ni ce que l'équipe a décidé. Les risques sont précis : garder un seul côté et perdre le travail de l'autre sans le dire ; « arranger » un test pour que la fusion passe ; proposer `git push --force` pour en finir. Ce qui marche :
+
+1. en mode plan, demander une **explication** : « explique ce conflit dans `JOURNAL.md` : d'où vient chaque version, quelle PR a apporté l'autre, et que proposes-tu ; ne modifie rien » ;
+2. **décider vous-même**, avec le coéquipier concerné si les deux versions se contredisent ;
+3. si vous laissez l'agent écrire la résolution, **lire `git diff` avant `git add`** (section [-@sec-equipe-6-4]), puis relancer `flutter test`.
+
+**L'agent n'approuve pas à votre place.** `gh pr review --approve` existe et l'agent saurait la lancer avec votre compte, puisque `gh` est connecté à votre nom. En mode manuel, il vous demande la permission avant toute commande : refusez celle-ci. Une approbation engage une personne, pas un outil.
+
+**L'agent travaille sur votre branche, pas sur celle des autres.** Un étudiant, un agent, une branche (règle du jeu n° 8). Avant de lui confier une tâche : `git status`, pour vérifier la branche. Pour relire la PR d'un coéquipier avec son aide, récupérez la branche (`gh pr checkout`), demandez des explications, mais ne poussez rien sur une branche qui n'est pas la vôtre sans l'accord de son auteur.
+
+::: {.callout-tip title="À retenir"}
+L'agent explique un conflit, vous le résolvez. L'agent peut lister ce qui ne passe pas, vous approuvez ou non.
+:::
+
+
+## Avez-vous fini ? La part de ce chapitre dans la definition of done {#sec-equipe-9}
+
+- [ ] Chaque membre a passé le contrôle d'ouverture : `git pull`, `flutter pub get`, `build_runner`, `flutter test` vert sur son poste ; l'état courant de `JOURNAL.md` a été lu.
+- [ ] Si l'initialisation de la séance 2 n'était pas terminée : première PR relue dans `main`, refus d'un push direct constaté, et la mention dans `JOURNAL.md`.
+- [ ] Les rôles sont confirmés (et `PROJET.md` mis à jour par une PR s'ils ont changé).
+- [ ] Chaque étudiant a ouvert au moins une PR, même petite, et relu celle d'un autre.
+- [ ] Au moins une PR de l'équipe a été relue par l'équipe jumelée, auteur présent, avec des commentaires écrits sur GitHub.
+- [ ] Chaque PR fusionnée a été approuvée par un coéquipier de son auteur.
+- [ ] Les conflits rencontrés ont été résolus sur la branche, sans `--force`, et `flutter test` a été relancé avant de pousser.
+
+
+## Glossaire
+
+- **Approbation (*approve*)** : avis favorable d'un relecteur sur une PR ; dans ce projet, il vient d'un coéquipier de l'auteur et engage sa responsabilité.
+- **Branche courte** : branche créée pour une seule tâche et fusionnée dans les heures qui suivent.
+- **Commentaire bloquant** : remarque qui doit être réglée (par une correction ou une explication) avant la fusion ; les autres sont des questions ou des suggestions.
+- **Conflit** : situation où deux branches ont modifié la même zone d'un fichier ; git demande à un humain de choisir.
+- **Contrôle d'ouverture** : courte vérification, en début de séance, que le dépôt démarre sur chaque poste et que l'équipe sait où elle en est.
+- **Diff** : différence ligne à ligne entre deux états d'un fichier ou d'un projet.
+- **Équipe jumelée** : équipe désignée par le programme pour relire les PR de la vôtre pendant la revue croisée.
+- **`git pull origin main`** : récupère la branche `main` du dépôt distant et la fusionne dans la branche courante.
+- **Mettre sa branche à jour** : y ramener les derniers changements de `main`, pour résoudre un conflit ou vérifier que tout marche encore ensemble.
+- **Petite PR** : PR qui fait une seule chose et dont le diff se lit en entier.
+- **Relecture (*review*)** : lecture du diff d'une PR par un autre que son auteur, conclue par un commentaire, une approbation ou une demande de modifications.
+- **Revue croisée** : relecture de la PR d'une équipe par une autre équipe.
+- **Trio circulaire** : groupe de trois équipes où chacune relit la suivante (07 relit 01, 01 relit 04, 04 relit 07), utilisé quand le nombre d'équipes est impair.
+
+
+## Pour aller plus loin
+
+- Séance 2 : le chapitre [-@sec-git] (section « GitHub : pousser, ouvrir une pull request, relire, fusionner » pour la PR et la relecture, section [-@sec-git-conflit] pour le conflit pas à pas, section [-@sec-git-erreurs] pour les erreurs fréquentes, section « Git, l'agent et la suite du projet ») ; le chapitre [-@sec-demarrer-projet] (sections [-@sec-projet-premiere-pr] et [-@sec-projet-relire] : le modèle de PR, la relecture, la protection de `main`) ; les fiches D (checklist en cinq lignes), E (modèle de PR) et F (dépannage) de l'annexe [-@sec-fiches].
+- Séance 1 : section [-@sec-pratique-craft-flutter-11] (un commit par étape verte) ; chapitre [-@sec-ci-cd] (branches, pull requests et protections).
+- Séance 3 : chapitre [-@sec-premiere-user-story] pour la PR de la première user story, chapitre [-@sec-donnees] pour la règle « une migration à la fois », annexe [-@sec-fiches] pour les fiches G (contrôle d'ouverture), I (checklist de revue) et L (revue croisée).
+- Simon Willison, « Don't file pull requests with code you haven't reviewed yourself ».
+- Documentation de GitHub : relire une pull request, résoudre un conflit sur GitHub (liens dans les sources).
+
+
+## Points non vérifiés {#sec-equipe-non-verifies}
+
+:::: {.callout-note title="Points non vérifiés"}
+
+- **Tout ce qui passe par GitHub n'a pas été exécuté** : affichage du conflit sur la page de la PR, bouton *Resolve conflicts*, commentaires de ligne, choix *Comment*, *Approve* et *Request changes*, fusion, disparition du message de conflit après le push. Le comportement de GitHub a été **simulé** : un dépôt `--bare` local tenait lieu de dépôt distant, les fusions de PR ont été jouées par `git merge --no-ff` dans un clone séparé, et `git merge-tree` a confirmé que la branche du membre 2 entrait en conflit avec `main` avant la résolution et plus après. Les numéros de PR (#7, #8), les noms de commit de fusion et les adresses `https://github.com/<organisation>/equipe_05` ont été écrits à la main sur le modèle de GitHub.
+- **Séquence git rejouée** (sections [-@sec-equipe-6-3] à [-@sec-equipe-6-6]) : git 2.53.0, `LC_ALL=C`, `pull.rebase false`, le 26 novembre 2026. Les sorties sont celles obtenues, adresses réécrites ; les lignes du graphe de `git log` et de `git diff` ont été débarrassées de leurs espaces de fin. L'arrivée du tag `s2-fin` avec un simple `git pull` (section [-@sec-equipe-2-2]) a été vérifiée de la même façon. Les messages de git en français n'ont pas été relevés.
+- **Contrôle d'ouverture** (section [-@sec-equipe-2-1]) : `flutter pub get`, `flutter test` sans puis avec `build_runner` ont été lancés sur une copie du dépôt-modèle, sous Linux, avec Flutter 3.50.1. Le compte « +20 -4 » vaut pour le dépôt-modèle ; il sera différent sur un dépôt d'équipe qui a déjà ajouté des tests. Non essayé sous Windows ni macOS.
+- **Droits de l'équipe jumelée** : l'absence d'accès en écriture découle du script de création des dépôts (le script de création des dépôts, qui n'ajoute que les membres de l'équipe, avec la permission `push`) ; ce script n'a pas encore été essayé en réel sur l'organisation. Que tout compte GitHub puisse commenter et laisser une relecture sur une PR d'un dépôt public, et qu'une approbation d'un compte sans accès en écriture ne compte pas pour la règle « 1 approbation requise », vient de la pratique courante de GitHub et n'a pas été revérifié dans sa documentation pour ce chapitre. Le programme lui-même note une « variante à vérifier ».
+- **Approbation après un nouveau commit** : le script de protection ne demande pas l'invalidation des approbations anciennes quand un commit est poussé ; une approbation donnée avant la résolution d'un conflit resterait donc valable. Comportement par défaut de GitHub non vérifié ; dans le doute, demandez une nouvelle relecture après une résolution qui touche du code.
+- **`gh pr checkout` et `gh pr review --approve`** : options relues dans l'aide de gh 2.100.0, non exécutées contre GitHub.
+- **Exemples illustratifs** : les entrées de `JOURNAL.md`, les commentaires de relecture et le découpage en quatre PR de la section [-@sec-equipe-3-2] sont rédigés pour ce chapitre. Les noms de branches sont des exemples.
+- **Convention [bloquant] / [question] / [suggestion]** et **lignes 6 à 10 de la checklist** : propositions des supports, à valider par l'enseignant. Le programme fixe le contenu de la relecture (« quoi regarder, comment commenter, checklist »), pas ce texte.
+- **Paires de revue croisée** : reprises du programme. Elles supposent la numérotation par thème de la séance 2 ; si l'attribution réelle s'en écarte, c'est l'annonce de l'enseignant en séance qui fait foi.
+- **Libellés français de VS Code** (*Accepter les deux modifications*) : repris du chapitre [-@sec-git], qui les a relevés dans les fichiers de traduction, non observés dans une interface.
+
+:::
+
+
+## Sources
+
+Documents du cours :
+
+- Le programme détaillé (@sec-programme-detaille) : séance 3 (blocs 1, 2 et 10, ordre de coupe, livrable, definition of done), séance 2 (« Peut glisser »), section [-@sec-pd-seances] (rôles d'équipe), section [-@sec-pd-travail] (travail entre les séances, ligne S2 → S3), section [-@sec-pd-stack] (règles du jeu), numérotation des équipes par thème (séance 2, bloc 2, et procédure de constitution), tableau des risques (« Vibe coding sans comprendre »).
+- Séance 2 : @sec-git, @sec-configurer-claude-code, @sec-demarrer-projet et les fiches C, D, E et F de l'annexe [-@sec-fiches].
+- Dépôt-modèle du projet (relu le 26 novembre 2026) : `README.md` (commandes après le clone, « Vérifier avant une PR », ajout d'une dépendance), `CLAUDE.md`, `.claude/settings.json`, `.gitignore`, `JOURNAL.md`, `.github/pull_request_template.md`, `docs/ARCHITECTURE.md` (sections 6 et 7), `themes/PROJET-B.md`.
+- Le script de création des dépôts (voir @sec-programme-detaille) : protection de `main` (une approbation, pas de contournement par les administrateurs, pas de contrôle de CI requis) et ajout des membres comme collaborateurs avec la permission `push`.
+
+Documentation officielle :
+
+- GitHub, relire les modifications proposées : https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request
+- GitHub, approuver une PR avec relectures requises : https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/approving-a-pull-request-with-required-reviews
+- GitHub, résoudre un conflit sur GitHub : https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-on-github
+- GitHub, branches protégées : https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches
+- GitHub CLI, `gh pr checkout` et `gh pr review` : https://cli.github.com/manual/gh_pr_checkout et https://cli.github.com/manual/gh_pr_review
+- git, `git-pull`, `git-merge`, `git-diff` (section « Combined diff format ») : https://git-scm.com/docs
+
+Autres sources :
+
+- Simon Willison, « Don't file pull requests with code you haven't reviewed yourself », cité d'après le programme (page non relue pour ce chapitre).
+
+Vérifications locales (26 novembre 2026, Linux) : scénario de conflit des sections [-@sec-equipe-6-3] à [-@sec-equipe-6-6] rejoué avec git 2.53.0 dans des clones jetables reliés à un dépôt distant `--bare` local ; `flutter pub get`, `flutter test` (sans puis avec `dart run build_runner build --delete-conflicting-outputs`) sur une copie du dépôt-modèle avec Flutter 3.50.1 ; aide de `gh pr review` et `gh pr checkout` (gh 2.100.0).

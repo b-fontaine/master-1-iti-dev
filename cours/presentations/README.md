@@ -1,10 +1,11 @@
 # Présentations
 
-Trois diaporamas HTML (sans dépendance, Node ≥ 18 pour le lanceur) avec une fenêtre de notes synchronisée.
+Quatre diaporamas HTML (sans dépendance, Node ≥ 18 pour le lanceur) avec une fenêtre de notes synchronisée.
 
 ```bash
 npm run day-1     # séance 1 : diaporama + notes
 npm run day-2     # séance 2 : diaporama + notes
+npm run day-3     # séance 3 : diaporama + notes
 npm run themes    # présentation des trois projets : diaporama + notes
 ```
 

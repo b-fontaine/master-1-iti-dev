@@ -1,0 +1,455 @@
+# Chapitre 3 · Le RGPD appliqué à votre projet : qualifier ses données, commencer la fiche
+
+*Séance 3 « Première user story, données et RGPD » · Master ITI, Nantes Université, 2026-2027. Chapitre à lire avant ou après la séance. Faits juridiques repris du module de conformité du cours (`cours/conformite-ai-act-rgpd.md`), dont les sources ont été consultées le 1er octobre 2026 ; gabarit de fiche et énoncés des thèmes relus dans le dépôt-modèle le 26 novembre 2026.*
+
+Ce chapitre accompagne les quatre blocs RGPD de la séance : les notions (bloc 4), vos droits (bloc 5), le test en quatre questions et la qualification des données de votre thème (bloc 6), puis le début de la fiche de conformité (bloc 7). Il ne redit pas le cours de droit : celui-ci est dans le **module de conformité** (`cours/conformite-ai-act-rgpd.md`), qui fait foi. Pour chaque notion, vous trouverez ici une phrase de rappel, le renvoi précis vers le module, puis ce que cette notion veut dire **dans le dépôt de votre équipe**. Les exemples suivis portent sur le thème B (le TRS de la ligne 4) ; les thèmes A et C ont leur ligne dans chaque tableau.
+
+> **Sensibilisation, pas avis juridique : la validation revient au RSSI et au DPO.** Ce chapitre vous apprend à reconnaître les questions et à les écrire proprement dans une fiche. Il ne tranche aucune question de droit à la place du responsable de la sécurité des systèmes d'information (RSSI) ni du délégué à la protection des données (DPO). Dans la formation, le RSSI est simulé par l'enseignant ou tenu par le RSSI de l'établissement.
+
+## Ce que vous allez retenir
+
+- Une **donnée personnelle** est une information qui se rapporte à une personne identifiée ou identifiable ; un **pseudonyme** en reste une si l'on peut remonter à la personne. Dans le projet, la question n'est pas « y a-t-il des noms ? » mais « peut-on, par ce champ, retrouver ou évaluer quelqu'un ? ».
+- **Un prompt est un transfert vers un tiers** : tout ce que vous écrivez à l'agent, et tout ce qu'il lit pour vous répondre, part chez le fournisseur du modèle. Dans un dépôt public, une donnée réelle est donc exposée deux fois : au fournisseur et à tout le monde.
+- **Un outil temporaire n'échappe pas au RGPD** : dès la première donnée personnelle réelle, les règles s'appliquent, même pour une semaine.
+- Vos **droits** (accès, rectification, effacement, etc.) s'exercent par une demande écrite, gratuite en principe, avec une réponse attendue dans un mois. C'est aussi pour vous que ce cours existe.
+- Le **test en quatre questions** dit si une fiche et un passage devant le RSSI sont nécessaires. Pour votre projet, la réponse est oui : ne serait-ce que parce que vos prompts partent chez un fournisseur.
+- En fin de séance, `docs/fiche_conformite.md` est commité avec ses **rubriques 1 à 5** remplies, **sans nom civil ni courriel**, et relu par un coéquipier. Le reste viendra en séance 4 et au sprint.
+
+---
+
+## 1. Pourquoi ce chapitre
+
+La règle d'or vous accompagne depuis la séance 1 : **aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public**. Jusqu'ici, c'était une consigne. À partir d'aujourd'hui, votre équipe crée des tables, des champs et des écrans (chapitre 4) : chacun de ces choix décide quelles données l'outil **pourrait** recueillir le jour où quelqu'un l'utiliserait pour de vrai. C'est le bon moment pour se demander, champ par champ, si l'on traite des données personnelles.
+
+Le module de conformité poursuit deux buts (module de conformité, section 1) : **connaître les limites de ses projets** et **connaître ses droits de citoyen européen**. Ce chapitre suit le même ordre. Les sections 2 à 4 qualifient votre projet, la section 5 vous parle de vous, les sections 6 à 8 reviennent au projet pour écrire la fiche.
+
+Tous les thèmes de la formation travaillent en **données fictives**. La fiche ne décrit donc pas seulement ce qu'il y a dans le dépôt (rien de réel) : elle décrit aussi **ce qui se passerait en usage réel**, et c'est précisément ce que le RSSI vous demandera (module de conformité, section 7, en introduction).
+
+```mermaid
+flowchart LR
+    A["Notions<br>bloc 4"] --> B["Vos droits<br>bloc 5"]
+    B --> C["Test en 4 questions<br>bloc 6"]
+    C --> D["Qualifier les données<br>du thème · bloc 6"]
+    D --> E["Fiche, rubriques 1 à 5<br>PR relue · bloc 7"]
+```
+
+> **À retenir.** Ce chapitre est un mode d'emploi du module de conformité pour votre dépôt. Quand une phrase vous paraît trop courte, la version complète est dans la section du module indiquée.
+
+---
+
+## 2. Les notions dont vous avez besoin (bloc 4)
+
+Le RGPD est le règlement (UE) 2016/679, applicable depuis le 25 mai 2018 ; l'autorité de contrôle française est la **CNIL** (module de conformité, section 2). Sept notions suffisent pour qualifier votre projet.
+
+| Notion | Rappel en une phrase | Dans le module | Ce que cela veut dire dans votre dépôt |
+|---|---|---|---|
+| Donnée personnelle | Information qui se rapporte à une personne identifiée ou identifiable (art. 4) | Section 2, « Champ » | Chaque champ de vos tables se juge : renvoie-t-il, même indirectement, à une personne ? |
+| Finalité | Le but du traitement, déterminé à l'avance (art. 5, limitation des finalités) ; pour un outil ponctuel, une seule finalité (module, section 4) | Section 2, « Principes » | Une phrase, en rubrique 1 de la fiche ; tout champ qui ne la sert pas est en trop |
+| Minimisation | Ne collecter que le nécessaire (art. 5) | Section 2, « Principes » et « Minimisation et conservation » | Un champ que la finalité ne demande pas ne se crée pas, même « pour plus tard » |
+| Limitation de la conservation | Fixer une durée et un mécanisme de suppression (art. 5) | Section 2, « Minimisation et conservation » | Une date de fin de vie fixée **au départ**, en rubrique 5 |
+| Base légale | Le motif qui rend le traitement licite ; il en faut une, par finalité (art. 6) | Section 2, « Bases légales » | En rubrique 4 : « données fictives » avec sa justification, et ce qu'il faudrait en usage réel |
+| Sous-traitant | Celui qui traite des données pour le compte d'un responsable, sous contrat (art. 28) | Section 2, « Sous-traitants et transferts » | Le fournisseur du modèle d'IA en est un, ou un destinataire : c'est au DPO de le dire |
+| Violation de données | Incident qui expose des données ; notification à l'autorité dans les 72 heures si risque (art. 33 et 34) | Section 2, « Violation de données » | Un secret ou une donnée réelle commités : on prévient tout de suite, on ne « répare » pas en silence |
+
+### 2.1 Donnée personnelle : la question à poser à chaque champ
+
+Le module précise deux points (module de conformité, section 2, « Champ ») : un **pseudonyme reste une donnée personnelle** si la ré-identification est possible (art. 4, point 5, et considérant 26), et une donnée **vraiment anonyme** sort du champ du RGPD, mais c'est rarement facile à garantir.
+
+Dans votre dépôt, cela donne une habitude de relecture : devant chaque table proposée par l'agent, demandez « ce champ permet-il de **retrouver** quelqu'un, ou de l'**évaluer** ? ». Pour le thème B, un poste n'est pas une personne, mais un poste tenu par une seule personne, un commentaire d'arrêt qui cite un prénom ou le compte `operateur` peuvent renvoyer à un salarié (`cours/projets/themes.md`, thème B, rubrique « Conformité »). Les données sensibles (santé, opinions, appartenance syndicale, etc.) sont en principe interdites, sauf exceptions (art. 9) : un commentaire libre est exactement l'endroit où l'une d'elles peut se glisser sans que personne l'ait voulu.
+
+### 2.2 Finalité et minimisation : le champ en trop
+
+Les principes de l'article 5 (licéité, loyauté, transparence ; limitation des finalités ; minimisation ; exactitude ; limitation de la conservation ; intégrité et confidentialité ; responsabilité) sont listés dans le module (section 2, « Principes »). Deux d'entre eux pèsent sur vos choix d'aujourd'hui.
+
+- **La finalité** se dit en une phrase et ne s'élargit pas en cours de route. Le `PROJET.md` de chaque thème la fixe déjà, dans sa vision, à la ligne « Ce que l'outil ne fera pas » : pour B, « évaluer une personne ».
+- **La minimisation** se lit dans le modèle de données. Pour B, la mesure est écrite dans `PROJET.md` : **aucun identifiant d'opérateur n'est stocké dans les données métier** (seul le compte de connexion existe), et l'agrégation se fait par poste et par quart, jamais par personne. Si l'agent propose une colonne `operateur_id` dans la table des arrêts, c'est un refus à noter dans la PR (rubrique « Ce que l'agent a proposé, ce que j'ai refusé »).
+
+La protection des données dès la conception (art. 25 : champs minimaux, pseudonymes, durées par défaut courtes, accès par rôle ; module de conformité, section 2) n'est pas un chantier séparé : c'est ce que vous faites en refusant ce champ.
+
+### 2.3 Limitation de la conservation : la date de fin de vie
+
+Le module donne la règle pour un outil temporaire : **la date de fin de vie est fixée au départ**, et l'on supprime données et dépôt à cette date (module de conformité, section 2, « Minimisation et conservation » ; section 4, « Ce qui change »). Chaque `PROJET.md` annonce déjà une durée de vie dans sa vision (« pour combien de temps ») : une saison des brumes pour A, une campagne de mesure pour B, une campagne de vœux pour C. La rubrique 5 de la fiche transforme cette durée en règle de conservation (section 8).
+
+### 2.4 Base légale : il en faut une, et ce n'est pas vous qui la choisissez seuls
+
+L'article 6 en énumère six : consentement, contrat, obligation légale, sauvegarde d'intérêts vitaux, mission d'intérêt public, intérêts légitimes (module de conformité, section 2, « Bases légales »). Il en faut **une, par finalité**.
+
+Dans la formation, vos données sont fictives : la rubrique 4 de la fiche demande alors une **justification « données fictives »** (section 8.5). Pour l'usage réel, le module ne désigne de base légale pour aucun des trois thèmes : ne l'inventez pas. Écrivez que la question se pose et qu'elle est à trancher avec le DPO.
+
+### 2.5 Sous-traitant : le fournisseur du modèle
+
+Un sous-traitant traite des données pour le compte d'un responsable, avec un contrat obligatoire (art. 28). Le fournisseur d'un modèle d'IA (API, service en ligne) est, selon le cas, **sous-traitant ou destinataire**, à qualifier par le DPO ; et les envois hors de l'Union relèvent des transferts du chapitre V (module de conformité, section 2, « Sous-traitants et transferts »). C'est la notion qui fonde la section 3 de ce chapitre. Elle reviendra à la rubrique 6 de la fiche (hébergement et sous-traitants), qui n'est pas à remplir aujourd'hui.
+
+### 2.6 Violation de données : prévenir, pas effacer en silence
+
+Une violation se notifie à l'autorité **dans les 72 heures** après en avoir pris connaissance, s'il y a un risque pour les personnes, et les personnes sont informées si le risque est élevé (art. 33 et 34). Le module ajoute une règle qui vous concerne directement : **un secret commité dans un dépôt public est un incident à signaler au RSSI immédiatement** (module de conformité, section 2, « Violation de données »).
+
+Dans votre dépôt, le réflexe est donc : si une vraie clé, un export réel ou une liste de personnes réelles arrive sur GitHub, **prévenez l'enseignant tout de suite**. Supprimer le fichier dans un nouveau commit ne suffit pas : l'historique de git le garde, et le dépôt est public (chapitre 1 de la séance 2 pour l'historique). Ce n'est pas à vous, ni à l'agent, de décider seuls que « ce n'est pas grave ».
+
+> **À retenir.** Donnée personnelle, finalité, minimisation, conservation, base légale, sous-traitant, violation : chacune a sa trace dans le dépôt (un champ refusé, une phrase de finalité, une date, une justification, une ligne sur le fournisseur, un signalement). C'est cette trace que le RSSI regardera.
+
+---
+
+## 3. Un prompt est un transfert vers un tiers
+
+### 3.1 Ce que dit le module
+
+Tout texte envoyé dans un prompt **part chez un tiers**, souvent hors de l'Union européenne ; il faut connaître les conditions du fournisseur (conservation, usage pour l'entraînement, localisation) ; donc **pas de données personnelles dans un prompt** sans accord préalable du RSSI et du DPO (module de conformité, section 2, « Sous-traitants et transferts » ; section 4 : « l'envoi dans un prompt reste un transfert vers un tiers »). Le programme le dit en une ligne : le fournisseur du modèle d'IA reçoit tout ce qui est dans un prompt.
+
+### 3.2 Ce que cela veut dire avec un agent de code
+
+Avec un agent comme Claude Code, le « prompt » n'est pas seulement la phrase que vous tapez. Pour vous répondre, l'agent lit des fichiers de votre dossier, lance des commandes et lit leur résultat : tout cela entre dans ce qu'il envoie au fournisseur du modèle. C'est la raison pour laquelle la configuration du projet lui **refuse la lecture de `.env`** (chapitre 2 de la séance 2, section 5) : un fichier que l'agent lit est un fichier qui sort.
+
+```mermaid
+flowchart LR
+    V["Vous<br>(la consigne)"] --> AG["Agent de code<br>sur votre poste"]
+    F["Fichiers du dossier,<br>résultats de commandes"] --> AG
+    AG -->|"prompt complet"| FM["Fournisseur du modèle<br>(un tiers)"]
+    AG -->|"commit, push"| GH["Dépôt GitHub<br>public"]
+    GH --> TOUS["Tout le monde"]
+```
+
+Dans un dépôt public, une donnée réelle est donc exposée **deux fois** : au fournisseur du modèle quand l'agent la lit, et à n'importe qui quand elle est poussée. Concrètement, dans votre projet :
+
+- **Ne collez jamais de données réelles** dans une conversation avec l'agent, même « pour tester » : ni liste d'étudiants, ni export d'un atelier, ni capture d'écran d'une messagerie. Pour tester, l'équipe a un jeu de données fictif à graine fixe.
+- **Ne laissez pas de fichier réel dans le dossier du projet**, même non commité et même ignoré par git : l'agent peut le lire. Un fichier ignoré par git n'est pas publié, mais il n'est pas pour autant invisible pour l'agent.
+- **Méfiez-vous des textes qui en contiennent d'autres** : un message d'erreur, un journal ou un courriel recopié peuvent porter des noms. Relisez avant de coller.
+- **Racontez sans nommer.** « Un opérateur a signalé que… » suffit ; un nom de collègue réel dans un prompt est une donnée personnelle.
+- **Un outil qu'on ajoute à l'agent est un tiers de plus.** Les plugins et serveurs MCP font entrer d'autres services (chapitre 2 de la séance 2, section 10).
+
+La rubrique 7 de la fiche (« Ce qui part dans les prompts ») vous demandera de **confirmer** que rien de personnel n'y part. Elle n'est pas à remplir aujourd'hui, mais c'est dès aujourd'hui que vous rendez cette confirmation vraie.
+
+> **À retenir.** Ce que l'agent lit sort de votre poste. La meilleure protection est qu'il n'y ait, dans le dossier du projet, rien de réel à lire.
+
+---
+
+## 4. Un outil temporaire n'échappe pas au RGPD
+
+Le module le dit sans détour : **dès qu'une donnée personnelle réelle entre dans un outil, les principes, droits et obligations s'appliquent, même pour une semaine** (module de conformité, section 4, « Ce qui ne change pas » ; c'est aussi la deuxième de ses « trois phrases d'or », section 8.4 : « Temporaire ne veut pas dire hors la loi »). Il n'y a pas de seuil de durée (module de conformité, section 8.3, question 1).
+
+Ce qui change pour un applicatif ponctuel (module de conformité, section 4) : une durée de conservation courte, une date de suppression fixée dès le départ, un périmètre réduit et, dans la formation, des données fictives. Ce qui ne change pas : le RGPD, la confidentialité de l'entreprise (un tableau de production réel est une donnée confidentielle), le transfert vers un tiers par les prompts, le fait que **l'usage détermine le risque, pas la sophistication**, et la validation du RSSI avant toute mise en usage.
+
+Pour votre équipe, la conséquence pratique est simple : l'argument « ce n'est qu'un projet de cours, il ne durera que quelques semaines » ne vaut rien. Ce qui vous protège n'est pas la durée du projet, c'est le fait qu'il ne contient **aucune donnée réelle**. Le jour où quelqu'un voudrait y mettre de vraies données, il faudrait une nouvelle fiche et une nouvelle validation (module de conformité, section 6.2, « Portée d'un go »).
+
+> **À retenir.** Ni la petite taille, ni la courte durée, ni le statut « projet étudiant » ne font sortir un outil du RGPD. Seule l'absence de toute donnée personnelle réelle l'en tient à l'écart.
+
+---
+
+## 5. Vos droits de citoyen européen : mode d'emploi pour vous-même (bloc 5)
+
+Cette section ne parle pas du projet : elle parle de vous. Vos courriels, vos notes, vos vœux, vos données de connexion et votre usage des services d'IA sont des données personnelles, et ces règles vous protègent (module de conformité, section 1).
+
+### 5.1 Vos droits, en un tableau
+
+Tableau condensé de la section 5 du module de conformité, qui donne pour chaque droit la façon de l'exercer.
+
+| Je veux… | Droit | Texte |
+|---|---|---|
+| savoir ce qu'un service fait de mes données | Être informé | RGPD art. 13 et 14 |
+| recevoir une copie de mes données et des informations sur le traitement | Accès | art. 15 |
+| faire corriger une donnée inexacte | Rectification | art. 16 |
+| faire supprimer mes données (pas absolu : exceptions de l'art. 17(3)) | Effacement | art. 17 |
+| « geler » un traitement pendant une vérification | Limitation | art. 18 |
+| récupérer mes données dans un format structuré (selon la base légale et le traitement) | Portabilité | art. 20 |
+| m'opposer à un traitement pour des raisons tenant à ma situation, et sans condition à la prospection | Opposition | art. 21 |
+| ne pas subir une décision uniquement automatisée à effet significatif : demander une intervention humaine, donner mon point de vue, contester | Décision automatisée | art. 22 |
+| me plaindre si l'on ne me répond pas ou si l'on refuse sans raison | Réclamation auprès de la CNIL | art. 77 |
+
+Le module ajoute, pour l'AI Act, un droit à l'explication d'une décision prise sur la base d'un système d'IA à haut risque (AI Act, art. 86, dont le champ exact est **à vérifier**) : il sera abordé en séance 4.
+
+### 5.2 Comment faire, en quatre temps
+
+1. **À qui écrire** : au responsable du traitement, par son DPO ou par le contact indiqué dans sa politique de confidentialité (courriel ou formulaire dédié). Commencez donc par lire cette politique : elle doit indiquer la finalité, la durée, les destinataires et vos droits.
+2. **Comment** : une demande écrite et datée, avec un objet clair, par exemple « Exercice de mon droit d'accès, art. 15 RGPD » ; un justificatif d'identité seulement s'il existe un doute, et proportionné ; gardez la preuve de l'envoi. La CNIL propose des modèles de courriers sur son site.
+3. **Délai** : réponse sans retard injustifié et **au plus tard dans un mois**, prolongeable de deux mois si la demande est complexe ou si les demandes sont nombreuses, à condition de vous en informer dans le premier mois (art. 12, par. 3). L'exercice est **gratuit** en principe (art. 12, par. 5).
+4. **Sans réponse ou refus injustifié** : relancer, puis réclamation auprès de la CNIL (formulaire en ligne), gratuite ; des recours devant le juge restent possibles (art. 78 et 79).
+
+Tout cela est la section 5 du module de conformité, « À qui s'adresser », « Comment », « Délais » et « Sans réponse ou refus injustifié ».
+
+### 5.3 L'exercice du courriel : pour après la séance
+
+Le module propose un exercice de dix minutes : rédiger, pour un service que vous utilisez vraiment, un **courriel de demande d'accès (art. 15) de cinq lignes**. En séance, il est classé **Moins utile** : il saute si le temps manque. Il devient l'une des options de la **tâche facultative entre la séance 3 et la séance 4** (douze jours, deux heures au plus par étudiant), après la priorité qui est de terminer ce qui a glissé de la séance (seed, rôles, PR ouvertes).
+
+Une trame possible, en cinq lignes, sans aucune donnée réelle dans ce support :
+
+```text
+Objet : Exercice de mon droit d'accès, art. 15 RGPD
+1. Qui je suis : utilisateur du service, avec l'identifiant de mon compte.
+2. Ce que je demande : une copie des données me concernant.
+3. Et les informations sur le traitement : finalités, destinataires, durée de conservation.
+4. Le délai : une réponse dans le mois, comme le prévoit l'art. 12 du RGPD.
+5. Date, et formule de politesse.
+```
+
+Le courriel s'adresse à l'adresse de contact du service indiquée dans sa politique de confidentialité. **Vous n'êtes pas obligé de l'envoyer** ; si vous le faites, c'est parce que vous le souhaitez vraiment. Et ce brouillon ne va ni dans le dépôt, ni dans un prompt : il contient votre identité.
+
+> **À retenir.** Un droit qu'on ne sait pas exercer ne protège personne. Une demande écrite, datée, avec un objet clair ; un mois pour répondre ; la CNIL si rien ne vient.
+
+---
+
+## 6. Le test en quatre questions, pas à pas sur le thème B (bloc 6)
+
+### 6.1 Le test
+
+Le module propose un test rapide (module de conformité, section 4) :
+
+1. Y a-t-il des données sur des personnes réelles ?
+2. L'outil décide-t-il ou aide-t-il à décider quelque chose pour quelqu'un ?
+3. Les données ou prompts sortent-ils vers un fournisseur tiers ?
+4. L'outil sera-t-il utilisé en dehors de l'équipe ?
+
+**Un seul « oui » suffit** : il faut une fiche de conformité et un passage devant le RSSI.
+
+Chaque question se pose deux fois : **dans la formation** (données fictives, dépôt public, démonstration) et **en usage réel** (si l'outil servait vraiment). La fiche consigne les deux réponses.
+
+### 6.2 Appliqué au thème B
+
+Rappel du thème : un calcul du TRS par poste et par quart pour la ligne 4 d'un fabricant fictif, pendant une campagne de mesure ; l'outil n'évalue jamais une personne (`PROJET.md` du thème B, vision).
+
+**Question 1. Des données sur des personnes réelles ?**
+- Dans la formation : **non**. Postes, quarts, OF, déclarations, arrêts, opérateurs : tout est fictif, et le jeu de démonstration est généré avec une graine fixe.
+- En usage réel : **oui, possiblement**. Les données de poste sont d'abord des données industrielles confidentielles, mais elles deviennent personnelles dès qu'elles permettent d'identifier ou d'évaluer un salarié : poste tenu par une seule personne, commentaire nominatif, compte `operateur` (`cours/projets/themes.md`, thème B ; module de conformité, section 7, thème B).
+- Ce que l'équipe en fait : aucun identifiant d'opérateur dans les données métier ; consigne affichée dans le formulaire des arrêts (aucun nom dans le commentaire).
+
+**Question 2. L'outil aide-t-il à décider pour quelqu'un ?**
+- Par conception, **non** : le TRS est calculé par poste et sert à décider sur des équipements. C'est un indicateur d'aide à la décision, pas une sanction automatique.
+- Mais un TRS par quart peut, en pratique, évaluer **indirectement** une équipe ou un opérateur (`cours/projets/themes.md`, thème B). C'est la vigilance du thème : si l'outil servait à suivre la performance individuelle, la qualification changerait (séance 4).
+
+**Question 3. Des données ou des prompts vers un tiers ?**
+- **Oui**, dès aujourd'hui : vos prompts et ce que l'agent lit partent chez le fournisseur du modèle (section 3). Le dépôt est sur GitHub et, en séance 4, le build web sera publié sur GitHub Pages.
+- Ce que l'équipe en fait : rien de réel dans le dossier du projet, donc rien de réel dans les prompts. La rubrique 7 le confirmera.
+
+**Question 4. Utilisé en dehors de l'équipe ?**
+- Dans la formation : **oui**, d'une certaine façon. Le dépôt est lu par une autre équipe (revue croisée), par l'enseignant et par un jury, et le build web public peut être ouvert par n'importe qui.
+- En usage réel : **oui**, par une responsable et des opérateurs.
+
+**Conclusion pour B** : au moins un « oui » (trois, en fait). Fiche de conformité et passage devant le RSSI, ce qui est prévu au calendrier. Le même raisonnement mène à la même conclusion pour A et C : **la question 3 suffit à elle seule**, parce que tous les projets se construisent avec un agent.
+
+> **À retenir.** Le test n'a pas pour but de répondre « non partout ». Il sert à savoir **pourquoi** on passe devant le RSSI, et donc quoi écrire dans la fiche.
+
+---
+
+## 7. Qualifier les données de votre thème : A, B et C
+
+Le programme résume la qualification attendue en une ligne par thème ; le module et l'énoncé des thèmes la détaillent. Le tableau ci-dessous les rassemble. Repérez votre ligne : c'est elle que vous transposez dans les rubriques 2 et 3 de votre fiche.
+
+| | Thème A · registre des Passeurs | Thème B · TRS de la ligne 4 | Thème C · répartition des sujets |
+|---|---|---|---|
+| **Ce qui qualifie le thème** (programme, bloc 6) | L'identifiant de l'utilisateur qui possède une fiche de passeur | Postes et quarts, **sans identifiant d'opérateur** | Des étudiants et une décision d'affectation |
+| **Données traitées** | Noms de passeurs (fictifs), identifiant de connexion de l'utilisateur (champ `proprietaire`), historique des traversées jugées | Productions (déclarations), arrêts avec commentaire libre, postes, quarts ; seul le compte de connexion existe | Pseudonymes d'étudiants, rang, parcours, vœux, affectations et motifs de non-affectation |
+| **Pourquoi c'est (ou ce serait) personnel** | Le passeur est un personnage de fiction, mais le compte qui possède sa fiche appartient à une personne réelle : un compte pseudonymisé reste personnel | Donnée industrielle confidentielle, qui devient personnelle dès qu'elle identifie ou évalue un salarié | En réel, le rang et les vœux sont des données personnelles d'étudiants, avec un effet sur leur parcours (le rang peut révéler des résultats scolaires) |
+| **Personnes concernées (usage réel)** | Les utilisateurs qui tiennent un compte `passeur` ou `greffier` | Les opérateurs et les responsables de la ligne (comptes, et salariés dont le travail est mesuré) | Les étudiants (et, à un degré moindre, les enseignants) |
+| **Sensibilité** (énoncé des thèmes) | Faible | Moyenne | Élevée |
+| **Point de vigilance** | Effacement d'un utilisateur et information des utilisateurs | Glissement vers l'évaluation d'individus | Décision automatisée (art. 22) : un humain valide avant publication |
+| **Mesures obligatoires** (`PROJET.md` du thème) | Mention d'information visible (art. 13) ; suppression documentée d'un utilisateur et de ses données (art. 17) ; pseudonymes uniquement, journal sans nom | Aucun identifiant d'opérateur dans les données métier ; consigne « aucun nom » dans le commentaire d'arrêt, revue en audit croisé ; agrégation par poste et par quart ; journal sans nom | Statut `brouillon` / `publie` ; explication de la décision pour chaque étudiant ; règles publiées avant la collecte des vœux ; pseudonymisation de bout en bout, journal sans pseudonyme ni vœu |
+| **Durée proposée** (énoncé des thèmes) | La saison ; suppression ou anonymisation des pseudonymes à la clôture (par exemple 30 jours après la dernière traversée jugée) | La campagne de mesure, puis suppression ou agrégation par poste et par semaine (par exemple 3 mois au plus pour les données par quart) | Jusqu'à la fin du délai de réclamation après publication (par exemple 30 jours), puis suppression des vœux et des rangs |
+
+Sources du tableau : programme, séance 3, bloc 6 ; module de conformité, section 7 ; `cours/projets/themes.md`, rubrique « Conformité » de chaque thème ; `depot-modele/themes/PROJET-A.md`, `PROJET-B.md`, `PROJET-C.md`.
+
+Trois remarques pour les équipes qui ne sont pas du thème B :
+
+- **Thème A** : la fiche se rédige **hors de la fiction**. Elle décrit l'outil réel et ses utilisateurs réels, pas le comptoir ni ses passeurs. Le champ `proprietaire` est la donnée personnelle de votre projet ; c'est lui que la mesure d'effacement devra pouvoir supprimer.
+- **Thème C** : c'est le thème qui demande le plus de travail de conformité. Tous les étudiants sont `etu_NNN`, jamais de vraie liste, même partielle, jamais de courriel ; la correspondance entre pseudonyme et identité resterait hors de l'application et hors du dépôt. L'analyse de l'article 22 et du niveau de risque AI Act est pour la séance 4, mais la décision d'affectation se nomme dès la rubrique 1.
+- **Pour tous** : la qualification AI Act (est-ce un système d'IA ? quel niveau de risque ?) n'est **pas** à faire aujourd'hui. Elle a son atelier en séance 4.
+
+> **À retenir.** Qualifier les données, c'est dire pour chaque catégorie : réelle ou fictive, personnelle ou non (et pourquoi), qui elle concernerait, combien de temps on la garde.
+
+---
+
+## 8. Commencer la fiche de conformité : rubriques 1 à 5 (bloc 7)
+
+### 8.1 Le fichier et ses règles
+
+Le gabarit à 13 rubriques est déjà dans votre dépôt, vide : `docs/fiche_conformite.md` (module de conformité, section 6.1, qui fait foi pour le gabarit). C'est un chemin unique pour toutes les équipes. La fiche est une version allégée et pédagogique d'un registre des traitements (art. 30), **pas** le registre officiel (module de conformité, section 2).
+
+L'en-tête se remplit ainsi :
+
+- **Équipe n° X**, suivie des **identifiants GitHub** des membres ; le thème ; une version ; une date.
+- **Aucun nom civil, aucune adresse de courriel**, ni dans l'en-tête ni ailleurs dans la fiche : le dépôt est public. Le gabarit le rappelle en deuxième ligne ; ne l'effacez pas.
+- Le RSSI s'y désigne par son **rôle**, jamais par son nom (rubrique 13, en séance 4).
+
+Le gardien produit et conformité (ou le gardien conformité, dans une équipe de quatre ou cinq) veille sur la fiche ; il ne l'écrit pas seul. Pour chaque rubrique ci-dessous : ce qu'on y écrit, l'erreur fréquente, puis la version du thème B. La fiche complète d'exemple est en 8.7.
+
+### 8.2 Rubrique 1 · Finalité (une phrase)
+
+- **Ce qu'on y écrit** : le but de l'outil, en une phrase, et ce qu'il exclut s'il y a un risque de dérive. Reprenez la vision de `PROJET.md`.
+- **Erreur fréquente** : décrire l'outil (« une application Flutter qui calcule… ») au lieu de son but ; empiler plusieurs buts (« mesurer le TRS, et aussi suivre les équipes ») ; rester vague (« améliorer la production »).
+- **Thème B** : « Mesurer et améliorer le rendement des équipements de la ligne 4 (TRS par poste et par quart) pendant une campagne de mesure, sans jamais évaluer individuellement un salarié. »
+
+### 8.3 Rubrique 2 · Données traitées (liste ; réelles ou fictives ; sensibles oui ou non)
+
+- **Ce qu'on y écrit** : la liste des catégories de données, telles qu'elles existent ou existeront dans vos tables (chapitre 4) ; pour chacune, réelle ou fictive ; puis, pour l'ensemble, sensible oui ou non.
+- **Erreur fréquente** : oublier ce qui n'est pas « métier » : le **compte de connexion** et son rôle, les **commentaires libres**, les **journaux techniques**. Ou écrire « aucune donnée personnelle » sans dire pourquoi.
+- **Thème B** : postes, quarts (début, fin, pause), arrêts (cause, durée, commentaire libre), déclarations de production, OF ; compte de connexion fictif à deux rôles (`responsable`, `operateur`). Toutes fictives. Sensibles : non ; vigilance sur le commentaire libre, qui pourrait en recevoir.
+
+Le programme demande aussi, dans l'atelier données (bloc 9), de noter **en commentaire** dans la fiche les rubriques touchées par le modèle de données : quand une table change, la rubrique 2 change avec elle (chapitre 4).
+
+### 8.4 Rubrique 3 · Personnes concernées (qui ? combien ?)
+
+- **Ce qu'on y écrit** : qui sont les personnes dont l'outil traiterait les données, dans la formation (aucune personne réelle) et en usage réel ; un ordre de grandeur.
+- **Erreur fréquente** : répondre « personne » sans distinguer les deux cas ; oublier les personnes **mesurées** qui ne sont pas utilisatrices ; confondre avec les membres de l'équipe qui développent l'outil.
+- **Thème B** : dans la formation, aucune personne réelle (utilisateur courant fictif). En usage réel, les opérateurs et les responsables de la ligne 4, comme titulaires de comptes, et les salariés dont le travail est mesuré ; nombre à estimer par l'équipe (6 postes dans le jeu de démonstration).
+
+### 8.5 Rubrique 4 · Base légale ou justification « données fictives »
+
+- **Ce qu'on y écrit** : pour la formation, la justification « données fictives » : d'où viennent les données, pourquoi elles ne se rapportent à aucune personne réelle, comment on s'en assure. Pour l'usage réel, que la base légale de l'art. 6 serait à déterminer, une par finalité, avec le DPO.
+- **Erreur fréquente** : choisir soi-même une base légale « réelle » et l'affirmer comme acquise ; ou écrire « le RGPD ne s'applique pas, c'est un projet étudiant » (section 4).
+- **Thème B** : « Données fictives : jeu de démonstration généré avec une graine fixe ; site, postes, produits, OF et opérateurs inventés ; aucun export réel d'un atelier dans le dépôt ; vérifié à chaque PR (case "Aucun secret, aucune donnée réelle ou personnelle") et en revue croisée. En usage réel : base légale (art. 6) à déterminer avec le DPO ; information et consultation du CSE à examiner avant toute mise en usage (à vérifier). »
+
+### 8.6 Rubrique 5 · Durée de conservation et date de suppression
+
+- **Ce qu'on y écrit** : une **durée** et une **date** (ou l'événement qui la déclenche), et ce qui se passe à cette date : suppression, agrégation, archivage.
+- **Erreur fréquente** : « tant que nécessaire », ou « 3 mois » sans dire à partir de quand ni ce qui est supprimé. Le module demande une date fixée au départ et un mécanisme de suppression.
+- **Thème B** : en usage réel, la durée de la campagne de mesure (par exemple un trimestre), puis données par quart supprimées ou agrégées par poste et par semaine, trois mois au plus ; export CSV des TRS, archivage du dépôt et arrêt du service à la fin de la campagne. Dans la formation, la date de fin du dépôt n'est fixée par aucun document : l'équipe la demande à l'enseignant et l'écrit.
+
+### 8.7 La fiche du thème B, rubriques 1 à 5
+
+Exemple **rédigé pour ce chapitre**, cohérent avec `PROJET.md` du thème B et la section 7 du module. Les chevrons sont à remplacer par vos valeurs ; les rubriques 6 à 13 restent vides aujourd'hui.
+
+```markdown
+# Fiche de conformité : le TRS de la ligne 4
+Équipe n° <X> (identifiants GitHub : <@identifiant-1>, <@identifiant-2>, <@identifiant-3>) · Thème : B · Version : 0.1 (début, séance 3) · Date : 04/12/2026
+(Dépôt public : aucun nom civil, aucune adresse de courriel dans cette fiche.)
+
+1. Finalité (une phrase) : mesurer et améliorer le rendement des équipements
+   de la ligne 4 (TRS par poste et par quart) pendant une campagne de mesure,
+   sans jamais évaluer individuellement un salarié.
+2. Données traitées (liste ; réelles ou fictives ; sensibles oui/non) :
+   postes ; quarts (début, fin, pause) ; arrêts (cause, durée, commentaire
+   libre) ; déclarations de production ; OF ; compte de connexion fictif à
+   deux rôles (responsable, operateur). Aucun identifiant d'opérateur dans les
+   données métier. Toutes fictives. Sensibles : non (consigne « aucun nom »
+   dans le commentaire d'arrêt, qui pourrait en recevoir).
+3. Personnes concernées (qui ? combien ?) : dans la formation, aucune
+   personne réelle. En usage réel : opérateurs et responsables de la ligne 4
+   (comptes) et salariés dont le travail est mesuré ; nombre : <à estimer>.
+4. Base légale ou justification (art. 6 RGPD) / justification « données
+   fictives » : données fictives (jeu de démonstration à graine fixe ; site,
+   postes, produits, OF et opérateurs inventés ; aucun export réel ; contrôle
+   à chaque PR et en revue croisée). En usage réel : base légale à déterminer
+   avec le DPO ; information et consultation du CSE à examiner (à vérifier).
+5. Durée de conservation et date de suppression : en usage réel, la campagne
+   de mesure (un trimestre par exemple), puis données par quart supprimées ou
+   agrégées par poste et par semaine (3 mois au plus) ; à la fin : export CSV
+   des TRS, archivage du dépôt, arrêt du service. Dans la formation : dépôt
+   <supprimé ou archivé> le <JJ/MM/AAAA, date fixée avec l'enseignant>.
+6. Hébergement et sous-traitants (…) :
+7. Ce qui part dans les prompts (rien de personnel : confirmer) :
+…
+```
+
+N'écrivez pas de vrais identifiants dans un support de cours ni dans une description de PR pour l'exemple : sur GitHub, un `@identifiant` dans un commentaire prévient la personne qui porte ce nom.
+
+Pour les thèmes A et C, la structure est la même ; changez le contenu à partir de votre ligne du tableau de la section 7. En particulier : en A, la rubrique 2 nomme le champ `proprietaire` comme donnée personnelle (pseudonyme) ; en C, la rubrique 1 nomme la décision d'affectation et la rubrique 2 le rang et les vœux.
+
+### 8.8 La PR relue par un coéquipier
+
+La fiche passe par le même circuit que tout le reste (chapitre 3 de la séance 2, sections 9 et 10) : une branche, un commit, une PR rédigée avec le modèle du dépôt, une relecture par un coéquipier **autre que l'auteur**, une fusion. Le relecteur vérifie en plus quatre points propres à la fiche :
+
+1. Aucun nom civil, aucune adresse de courriel, nulle part (en-tête compris).
+2. La finalité tient en une phrase et ressemble à la vision de `PROJET.md`.
+3. Les rubriques 2 et 3 distinguent la formation (fictif) de l'usage réel.
+4. Les rubriques 4 et 5 ne tranchent rien qui revienne au DPO ou au RSSI, et donnent une durée avec une date ou un événement déclencheur.
+
+La fiche J du chapitre 5 reprend ces gestes à suivre pendant l'atelier.
+
+> **À retenir.** Une fiche commencée n'a pas besoin d'être parfaite : elle doit être honnête (fictif ici, réel là-bas), sans nom civil ni courriel, et relue.
+
+---
+
+## 9. Ce qui n'est pas à faire aujourd'hui, et la suite
+
+### 9.1 Pas en séance 3
+
+- **Les rubriques 6 et 7** (hébergement et sous-traitants ; ce qui part dans les prompts) : on ne les entame pas en séance. Elles peuvent avancer pendant la tâche facultative entre la séance 3 et la séance 4, ou au sprint.
+- **Les rubriques 8 à 13** (décision automatisée, rôle et classement AI Act, droits, mesures, risques résiduels, validation du RSSI) : elles se préparent en séance 4, avec l'atelier de classification.
+- **Le passage devant le RSSI** : en séance 4, pas avant.
+- Si la séance prend du retard, les rubriques 4 et 5 peuvent se réduire à une phrase chacune : la fiche commitée avec ses rubriques 1 à 5 reste, elle, au livrable.
+
+### 9.2 La suite du calendrier
+
+```mermaid
+timeline
+    title La fiche de conformité, de la séance 3 à la soutenance
+    Vendredi 4 décembre 2026 : Séance 3 : rubriques 1 à 5 commitées, relues par un coéquipier
+    Du 5 au 15 décembre : Tâche facultative (2 h au plus) : ce qui a glissé, relecture de la fiche ou courriel d'accès
+    Mercredi 16 décembre 2026 : Séance 4 : classement AI Act, brouillon de fiche présenté au RSSI
+    Vendredi 18 décembre 2026 : Fiche v1 déposée en pull request
+    Janvier 2027 : Réponse du RSSI au plus tard une semaine avant la séance 5 ; mise à jour avant la soutenance (date à préciser)
+```
+
+Une validation « go sous conditions » liste des actions datées ; sans réponse, la décision est **no-go** par défaut ; et un « go » ne vaut que pour le périmètre pédagogique à données fictives (module de conformité, section 6.2).
+
+---
+
+## 10. Avez-vous fini ? La part RGPD de la definition of done
+
+- [ ] Chaque membre sait dire, pour son thème, quelle donnée serait personnelle en usage réel et pourquoi.
+- [ ] Le test en quatre questions a été passé, avec ses réponses pour la formation et pour l'usage réel.
+- [ ] Aucune donnée personnelle réelle dans le dépôt ; aucun fichier réel dans le dossier du projet.
+- [ ] `docs/fiche_conformite.md` est commité, rubriques 1 à 5 remplies, et indique « données fictives » avec une justification.
+- [ ] La fiche ne contient ni nom civil ni courriel (« équipe n° X », identifiants GitHub).
+- [ ] La PR de la fiche a été relue et approuvée par un coéquipier autre que l'auteur.
+
+---
+
+## Glossaire
+
+- **Base légale** : motif prévu par l'article 6 du RGPD qui rend un traitement licite ; une par finalité.
+- **CNIL** : autorité de contrôle française pour la protection des données ; reçoit les réclamations.
+- **Donnée personnelle** : information qui se rapporte à une personne identifiée ou identifiable (art. 4).
+- **Donnée sensible** : catégorie particulière (santé, opinions, appartenance syndicale, etc.), en principe interdite sauf exceptions (art. 9).
+- **DPO** : délégué à la protection des données ; il qualifie les questions de données personnelles.
+- **Finalité** : but déterminé d'un traitement ; ce qui justifie chaque donnée collectée.
+- **Fiche de conformité** : document de la formation, à 13 rubriques, dans `docs/fiche_conformite.md` ; version pédagogique et allégée d'un registre, pas le registre officiel.
+- **Limitation de la conservation** : principe qui impose une durée de conservation et une suppression.
+- **Minimisation** : principe qui impose de ne collecter que le nécessaire.
+- **Pseudonyme** : identifiant qui remplace un nom ; reste une donnée personnelle si l'on peut remonter à la personne.
+- **RGPD** : règlement (UE) 2016/679, applicable depuis le 25 mai 2018.
+- **RSSI** : responsable de la sécurité des systèmes d'information ; valide toute mise en usage réelle d'un applicatif.
+- **Sous-traitant** : celui qui traite des données pour le compte d'un responsable, sous contrat (art. 28).
+- **Transfert** : envoi de données vers un tiers, en particulier hors de l'Union européenne (chapitre V du RGPD).
+- **Violation de données** : incident qui expose des données personnelles ; notification à l'autorité dans les 72 heures si risque (art. 33).
+
+---
+
+## Pour aller plus loin
+
+- Module de conformité du cours, `cours/conformite-ai-act-rgpd.md` : section 2 (le RGPD en une page), section 4 (applicatif ponctuel et test en quatre questions), section 5 (vos droits), section 6 (fiche et validation), section 7 (les trois thèmes), section 8.4 (trois phrases d'or).
+- L'énoncé de votre thème dans `cours/projets/themes.md`, rubrique « Conformité (RGPD et AI Act) », et le `PROJET.md` de votre dépôt, rubriques « Mesures de conformité obligatoires » et « Ce que l'outil ne fera pas ».
+- Supports de la séance 2 : chapitre 2, sections 5 et 10 (permissions, refus de `.env`, faire entrer un tiers) ; chapitre 3, sections 9 et 10 (PR et relecture).
+- Séance 3 : chapitre 4 (le modèle de données, dont découlent les rubriques 2 et 3) ; chapitre 5, fiche J.
+- CNIL, rubriques « Besoin d'aide » et « Plaintes » de son site, pour les modèles de courriers et la réclamation.
+
+---
+
+## Points non vérifiés (à signaler honnêtement)
+
+- **Faits juridiques de seconde main.** Tous les articles, délais et définitions de ce chapitre sont repris du module de conformité du cours, sans relecture directe du texte du RGPD sur EUR-Lex pour ce chapitre.
+- **Statut du RGPD après les réformes en cours.** Le module signale qu'un omnibus numérique « données/RGPD », distinct de l'omnibus sur l'IA, existe et que son statut n'a pas été vérifié : rien dans ce chapitre n'affirme que le RGPD a été assoupli, et rien ne garantit qu'il n'a pas été modifié depuis la vérification du module (1er octobre 2026).
+- **Qualification du fournisseur du modèle.** Sous-traitant ou destinataire « selon le cas, à qualifier par le DPO » ; les garanties des transferts hors de l'Union (décision d'adéquation ou clauses types) sont **à vérifier fournisseur par fournisseur**, selon le module. Les conditions du fournisseur utilisé dans la formation (conservation, entraînement, localisation) n'ont pas été relues pour ce chapitre.
+- **Ce qu'un agent envoie au fournisseur.** La description de la section 3.2 (fichiers lus et résultats de commandes compris dans le prompt) décrit le fonctionnement général d'un agent de code ; elle n'a pas été mesurée sur le trafic réel de Claude Code.
+- **Décision automatisée.** Le fait qu'une intervention humaine purement formelle ne suffise pas est marqué « à vérifier sur les lignes directrices du CEPD » dans le module ; la portée exacte de l'art. 22 pour un sujet de projet (thème C) est aussi à vérifier.
+- **Droit à l'explication (AI Act, art. 86) et réclamation au titre de l'AI Act (art. 85)** : champ exact et autorité désignée en France, à vérifier selon le module.
+- **CSE.** L'information et la consultation des représentants du personnel pour un outil de mesure de l'activité (thème B, Code du travail, art. L. 2312-38) sont marquées « à vérifier » dans l'énoncé des thèmes (`cours/projets/themes.md`), d'où elles viennent.
+- **Durées proposées** (30 jours, trois mois, un trimestre) : ce sont des exemples des énoncés, pas des durées légales.
+- **Date de suppression du dépôt dans la formation** : aucun document du cours ne la fixe. Le module demande de supprimer « données et dépôt » à la fin de vie, alors que les `PROJET.md` prévoient un archivage du dépôt : l'équipe se renseigne auprès de l'enseignant.
+- **Exemple de fiche (8.7) et trame de courriel (5.3)** : rédigés pour ce chapitre, à valider par l'enseignant. Les gestes git de la PR de la fiche renvoient au chapitre 3 de la séance 2 et n'ont pas été rejoués pour ce chapitre.
+- **Dates et calendrier** (4, 16 et 18 décembre 2026, séance 5 en janvier 2027, date à préciser) : repris du programme, susceptibles d'ajustement par l'enseignant.
+
+---
+
+## Sources
+
+Documents du cours :
+
+- `cours/programme-detaille.md` : séance 3 (blocs 4 à 7 et 11, ordre de coupe, « peut glisser », livrable, definition of done) ; section 5 (travail entre la séance 3 et la séance 4, tâche facultative).
+- `cours/conformite-ai-act-rgpd.md` (module de conformité) : sections 0, 1, 2, 4, 5, 6.1, 6.2, 7, 8.3 et 8.4.
+- `cours/projets/themes.md` : « Règle d'or et conformité (RGPD et AI Act) », tableau chiffré de comparaison (sensibilité conformité), rubrique « Conformité (RGPD et AI Act) » des thèmes A, B et C.
+- Dépôt-modèle du projet (`depot-modele/`, relu le 26 novembre 2026) : `docs/fiche_conformite.md` ; `themes/PROJET-A.md`, `themes/PROJET-B.md`, `themes/PROJET-C.md` (vision, mesures de conformité obligatoires, ce que l'outil ne fera pas).
+- Supports de la séance 2 : chapitre 2 (`02-configurer-claude-code.md`, sections 5 et 10) et chapitre 3 (`03-demarrer-le-projet-d-equipe.md`, sections 9 à 11).
+
+Textes officiels cités par le module (non relus directement pour ce chapitre) :
+
+- RGPD, règlement (UE) 2016/679 : https://eur-lex.europa.eu/eli/reg/2016/679/oj
+- CNIL, exercer ses droits et réclamation : https://www.cnil.fr

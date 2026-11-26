@@ -47,9 +47,13 @@ book:
       chapters:
         - partie-4-projet/01-themes.qmd
         - partie-4-projet/02-conformite.qmd
-    - part: "Séance 3 · Première règle métier, données et RGPD"
+    - part: partie-5-seance-3/index.qmd
       chapters:
-        - partie-5-a-venir/seance-3.qmd
+        - partie-5-seance-3/00-seance-en-bref.qmd
+        - partie-5-seance-3/01-travailler-a-plusieurs.qmd
+        - partie-5-seance-3/02-premiere-user-story.qmd
+        - partie-5-seance-3/03-rgpd-applique-au-projet.qmd
+        - partie-5-seance-3/04-les-donnees.qmd
     - part: "Séance 4 · Qualité, sécurité et règlement européen sur l'IA"
       chapters:
         - partie-5-a-venir/seance-4.qmd

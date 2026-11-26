@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séance 3 · Première user story, données et RGPD · Master ITI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/deck.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body data-deck="day-3" data-notes="notes.html">
+<div id="stage">
+<canvas id="bg"></canvas><div id="grid"></div>
+<div id="prog"></div>
+<div id="top"><span class="l"><span class="dot"></span><b>ITI</b> // S3 · Story, données, RGPD</span><span><b id="cur">1</b> / <span id="tot">1</span></span></div>
+
+<section class="slide title-slide" data-id="titre">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true">
+    <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4338F5"/><stop offset=".55" stop-color="#7B3FF2"/><stop offset="1" stop-color="#00A8C6"/></linearGradient></defs>
+    <g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g>
+    <g stroke="url(#gg)" stroke-width="6" fill="#fff"><rect x="250" y="250" width="300" height="80" rx="18"/><rect x="250" y="360" width="300" height="80" rx="18"/><rect x="250" y="470" width="300" height="80" rx="18"/></g>
+    <path d="M400 330v30M400 440v30" stroke="url(#gg)" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <div class="label">Master ITI · Séance 3</div>
+  <h1 style="font-size:11rem">Première <span class="grad">user story</span>,<br>données, RGPD</h1>
+  <p class="sub">La première règle verte, relue par une autre équipe.</p>
+  <div class="meta"><span class="chip">Nantes Université</span><span class="chip">Vendredi 4 déc. 2026</span><span class="chip">Benoît Fontaine</span></div>
+</section>
+
+<section class="slide" data-id="objectifs">
+  <div class="label">À la fin de la matinée, vous saurez</div>
+  <div class="check">
+    <div class="it step"><b>1</b><h3>Reprendre le projet par un bref contrôle : <code>git pull</code>, <code>flutter pub get</code>, <code>build_runner</code>, <code>flutter test</code></h3></div>
+    <div class="it step"><b>2</b><h3>Livrer une première user story en TDD et en BDD avec votre agent, et la faire relire</h3></div>
+    <div class="it step"><b>3</b><h3>Relire la PR d'une autre équipe avec une checklist, et résoudre un conflit réel</h3></div>
+    <div class="it step"><b>4</b><h3>Modéliser en entités et relations, écrire une migration, prouver l'intégrité par un test</h3></div>
+    <div class="it step"><b>5</b><h3>Qualifier vos données au regard du RGPD, connaître vos droits, commencer la fiche de conformité</h3></div>
+  </div>
+</section>
+
+<section class="slide" data-id="plan-seance">
+  <div class="label">La matinée en quatre temps</div>
+  <div class="cols c4" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="num grad" style="font-size:8rem">1</span><h3 class="mt" style="font-size:4rem">Travailler à plusieurs</h3><p class="mt" style="font-size:2.8rem">Contrôle d'ouverture, git en équipe, paires de revue.</p><p class="cap mt">blocs 1 et 2 · fiche G</p></div>
+    <div class="card hl step"><span class="num grad" style="font-size:8rem">2</span><h3 class="mt" style="font-size:4rem">La première user story</h3><p class="mt" style="font-size:2.8rem">Scénario en français, tests d'abord, code, PR.</p><p class="cap mt">bloc 3 · fiches H et I</p></div>
+    <div class="card step"><span class="num grad" style="font-size:8rem">3</span><h3 class="mt" style="font-size:4rem">Le RGPD appliqué</h3><p class="mt" style="font-size:2.8rem">Notions, droits, test en 4 questions, début de la fiche.</p><p class="cap mt">blocs 4 à 7 · fiche J</p></div>
+    <div class="card step"><span class="num grad" style="font-size:8rem">4</span><h3 class="mt" style="font-size:4rem">Les données</h3><p class="mt" style="font-size:2.8rem">Modèle, migration, test d'intégrité.</p><p class="cap mt">blocs 8 et 9 · fiche K</p></div>
+  </div>
+  <p class="cap mt2 step" style="text-align:center">puis revue croisée entre équipes (bloc 10 · fiche L) et bilan (bloc 11 · fiche M) · dépannage : fiche N</p>
+</section>
+
+<section class="slide atelier" data-id="atelier-ouverture">
+  <div class="label"><em>Atelier</em> Contrôle d'ouverture · chacun, puis en équipe</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Mettre à jour et vérifier son poste</h3><p>git pull · flutter pub get · build_runner · flutter test</p></div></div>
+      <div class="it"><b>2</b><div><h3>Lire l'état courant en tête de <code>JOURNAL.md</code></h3><p>où on en est · prochaine étape · ce qui reste en suspens</p></div></div>
+      <div class="it"><b>3</b><div><h3>Initialisation de la séance 2 pas finie ? On la termine ici</h3><p>première PR relue et fusionnée · main protégée</p></div></div>
+      <div class="it"><b>4</b><div><h3>Point d'équipe : où on en est, qui tient quel rôle</h3><p>les rôles sont confirmés</p></div></div>
+      <div class="it opt"><b>5</b><div><h3>Quiz éclair : 5 questions sur les séances 1 et 2</h3><p>si le rythme le permet</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p><code>flutter test</code> est vert sur <strong>chaque poste</strong>, et chacun sait quel rôle il tient.</p></div>
+      <div class="rule"><b>Quelques minutes</b><p>C'est un contrôle, pas un bloc de remise en route.</p></div>
+      <div class="rule info"><b>Fiches</b><p>Chapitre 5 : fiche <strong>G</strong> · Contrôle d'ouverture ; fiche <strong>N</strong> · Dépannage.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-equipe">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="330" cy="400" r="120" stroke="url(#gg)" stroke-width="4"/><circle cx="470" cy="400" r="120" stroke="url(#gg)" stroke-width="4"/></svg>
+  <div class="big grad">01</div>
+  <h2>Travailler<br>à plusieurs</h2>
+</section>
+
+<section class="slide" data-id="git-equipe">
+  <div class="label">Git en équipe · quatre habitudes</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:4rem">
+    <div class="card step"><h3 style="font-size:4.6rem">Petites PR</h3><p class="mt">Une PR fait une seule chose. Son diff se lit en entier.</p></div>
+    <div class="card step"><h3 style="font-size:4.6rem">Branches courtes</h3><p class="mt">Fusionnée vite : moins elle s'écarte de <code>main</code>, moins elle entre en conflit.</p></div>
+    <div class="card step"><h3 style="font-size:4.6rem">Une relecture qui regarde</h3><p class="mt">Quoi regarder, comment commenter : la checklist de revue.</p></div>
+    <div class="card good step"><h3 style="font-size:4.6rem">Le conflit est <span class="pos">normal</span></h3><p class="mt">Deux branches touchent le même fichier. On choisit, on efface les marqueurs, on commite.</p></div>
+  </div>
+  <p class="cap mt step" style="text-align:center">démonstration courte : deux branches, le même fichier, un conflit, sa résolution · pas à pas : séance 2, chapitre 1</p>
+</section>
+
+<section class="slide" data-id="willison">
+  <div class="label">La règle de l'auteur · Simon Willison</div>
+  <p class="quote" lang="en">Don't file pull requests with code you haven't reviewed yourself</p>
+  <p class="mt2 step" style="font-size:4.4rem">Ne proposez pas de PR avec du code que <strong>vous n'avez pas relu vous-même</strong>.</p>
+  <p class="cap mt step">«&nbsp;c'est l'agent qui l'a écrit&nbsp;» n'est pas une réponse recevable</p>
+</section>
+
+<section class="slide" data-id="paires">
+  <div class="label">Revue croisée · qui relit qui</div>
+  <h3 class="step" style="font-size:4.4rem">8 équipes · quatre paires</h3>
+  <div class="pairs mt step" style="margin-top:2.4rem">
+    <div class="pair">01 – 04</div><div class="pair">02 – 05</div><div class="pair">03 – 06</div><div class="pair">07 – 08<small>même thème : toléré en S3</small></div>
+  </div>
+  <h3 class="mt step" style="font-size:4.4rem">7 équipes · deux paires et un trio circulaire</h3>
+  <div class="pairs step" style="margin-top:2.4rem">
+    <div class="pair">02 – 05</div><div class="pair">03 – 06</div><div class="pair hl" style="grid-column:span 2">01 – 04 – 07<small>07 relit 01 · 01 relit 04 · 04 relit 07</small></div>
+  </div>
+  <p class="cap mt step">les paires de même thème sont évitées en séance 4</p>
+</section>
+
+<section class="slide divider" data-id="div-story">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><path d="M300 410l70 70 140-160" stroke="url(#gg)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <div class="big grad">02</div>
+  <h2>La première<br>user story</h2>
+</section>
+
+<section class="slide" data-id="story-chemin">
+  <div class="label">De la story au code · dans cet ordre</div>
+  <div class="flow step">
+    <div class="fn" style="font-size:3rem">Plan<small>mode plan · critiqué</small></div>
+    <span>→</span>
+    <div class="fn" style="font-size:3rem">Scénario<small>.feature · en français</small></div>
+    <span>→</span>
+    <div class="fn" style="font-size:3rem">Tests unitaires<small>rouge</small></div>
+    <span>→</span>
+    <div class="fn" style="font-size:3rem">Code<small>vert · nettoyage</small></div>
+    <span>→</span>
+    <div class="fn i" style="font-size:3rem">PR<small>avec le modèle</small></div>
+  </div>
+  <div class="row grow mt" style="gap:5rem">
+    <div class="grow step"><div class="term sm"><div class="bar"><i></i><i></i><i></i><span>thème B · calculer_la_disponibilite.feature</span></div><pre><span class="d"># language: fr</span>
+<span class="c">Fonctionnalité:</span> Calcul de la disponibilité d'un quart
+  <span class="c">Scénario:</span> un arrêt planifié et deux non planifiés
+    <span class="y">Soit</span> un quart de {480} minutes
+    <span class="y">Et</span> un arrêt planifié {'pause'} de {30} minutes
+    <span class="y">Et</span> un arrêt non planifié {'panne'} de {45} minutes
+    <span class="y">Et</span> un arrêt non planifié {'changement_serie'} de {15} minutes
+    <span class="y">Quand</span> je calcule la disponibilité
+    <span class="y">Alors</span> le temps requis est de {450} minutes
+    <span class="y">Et</span> le temps de marche est de {390} minutes
+    <span class="y">Et</span> la disponibilité affichée est {'86,7 %'}</pre></div></div>
+    <div style="flex:0 0 54rem" class="step">
+      <div class="chips"><span class="chip i">use case · domain</span><span class="chip c">repository fake</span><span class="chip n">Cubit · bloc_test</span></div>
+      <p class="mt" style="font-size:3rem">Stockage <strong>en mémoire</strong>, derrière l'interface du domain : pas de base à ce stade.</p>
+      <p class="cap mt">l'écran est facultatif aujourd'hui · thèmes A et C : votre story est dans PROJET.md</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="triche">
+  <div class="label">Repérer un test «&nbsp;triché&nbsp;»</div>
+  <h2 style="font-size:8rem">Le test passe au vert…<br><span class="grad">parce qu'on l'a changé</span></h2>
+  <div class="chips mt2 bigchip">
+    <span class="chip r step">test supprimé</span><span class="chip r step">test désactivé</span><span class="chip r step">test assoupli</span><span class="chip r step">scénario retouché</span><span class="chip r step">hasard en dur</span>
+  </div>
+  <p class="cap mt2 step">à chaque PR : regarder ce qui a bougé dans test/ avant ce qui a bougé dans lib/</p>
+</section>
+
+<section class="slide atelier" data-id="atelier-story">
+  <div class="label"><em>Atelier</em> Première user story · chacun sur sa branche, avec son agent</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Demander un plan, le critiquer</h3><p>mode plan · la première story de PROJET.md · une seule sous-règle</p></div></div>
+      <div class="it"><b>2</b><div><h3>Le scénario <code>.feature</code> d'abord, en français</h3><p># language: fr · build_runner génère le test widget</p></div></div>
+      <div class="it"><b>3</b><div><h3>Tests unitaires d'abord : rouge, vert, nettoyage</h3><p>use case · Cubit ou BLoC avec bloc_test et mocktail</p></div></div>
+      <div class="it"><b>4</b><div><h3>Respecter les couches : domain, repository fake, get_it</h3><p>pas de base de données · l'écran peut attendre</p></div></div>
+      <div class="it"><b>5</b><div><h3>Vérifier que l'agent ne triche pas, puis ouvrir la PR</h3><p>modèle de PR du dépôt · relecture avec la checklist</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Scénario, tests et code de la sous-règle sont <strong>verts</strong> ; la PR est ouverte et <strong>relue</strong>.</p></div>
+      <div class="rule"><b>Clone frais ?</b><p>Lancer <code>build_runner</code> avant <code>flutter test</code> : les fichiers générés ne sont pas versionnés.</p></div>
+      <div class="rule info"><b>Fiches</b><p><strong>H</strong> · Première user story en TDD et en BDD ; <strong>I</strong> · Checklist de revue de PR. Chapitre 2.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-rgpd">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><path d="M400 250l140 50v100c0 90-60 140-140 170-80-30-140-80-140-170V300z" stroke="url(#gg)" stroke-width="5" stroke-linejoin="round"/></svg>
+  <div class="big grad">03</div>
+  <h2>Le RGPD appliqué<br>à votre projet</h2>
+</section>
+
+<section class="slide" data-id="rgpd-page">
+  <div class="label">Le RGPD en une page · règlement (UE) 2016/679, applicable depuis le 25 mai 2018</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><h3>Donnée personnelle</h3><p class="mt" style="font-size:2.8rem">Toute information sur une personne identifiée ou identifiable.</p><p class="cap mt">art. 4</p></div>
+    <div class="card step"><h3>Principes</h3><p class="mt" style="font-size:2.8rem">Une finalité, la <strong>minimisation</strong>, la <strong>limitation de la conservation</strong>.</p><p class="cap mt">art. 5</p></div>
+    <div class="card step"><h3>Base légale</h3><p class="mt" style="font-size:2.8rem">Il en faut une par finalité : consentement, contrat, obligation légale…</p><p class="cap mt">art. 6</p></div>
+    <div class="card warn step"><h3>Sous-traitants et transferts</h3><p class="mt" style="font-size:2.8rem">Le fournisseur du modèle d'IA <strong>reçoit tout ce qui est dans un prompt</strong>.</p><p class="cap mt">art. 28 · chapitre V</p></div>
+    <div class="card bad step"><h3>Violation de données</h3><p class="mt" style="font-size:2.8rem">Notification à l'autorité dans les <strong>72 heures</strong>.</p><p class="cap mt">art. 33</p></div>
+    <div class="card hl step"><h3>Un outil temporaire</h3><p class="mt" style="font-size:2.8rem"><strong>n'échappe pas au RGPD.</strong> Même pour une semaine.</p><p class="cap mt">module de conformité, § 4</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="droits">
+  <div class="label">Vos droits de citoyen européen</div>
+  <div class="row grow" style="gap:6rem">
+    <div class="grow">
+      <div class="chips bigchip step"><span class="chip">être informé · 13-14</span><span class="chip">accès · 15</span><span class="chip">rectification · 16</span><span class="chip">effacement · 17</span><span class="chip">limitation · 18</span><span class="chip">portabilité · 20</span><span class="chip">opposition · 21</span><span class="chip i">pas de décision uniquement automatisée · 22</span></div>
+      <p class="cap mt step">articles du RGPD</p>
+    </div>
+    <div style="flex:0 0 56rem">
+      <div class="card step"><h3 style="font-size:4.4rem">Un mois</h3><p class="mt" style="font-size:3rem">pour répondre, prolongeable.</p><p class="cap mt">art. 12</p></div>
+      <div class="card good step mt" style="margin-top:3rem"><h3 style="font-size:4.4rem">La CNIL</h3><p class="mt" style="font-size:3rem">Réclamation possible, sans réponse ou refus injustifié.</p><p class="cap mt">art. 77</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="quatre-questions">
+  <div class="label">Le test en 4 questions · appliqué à votre thème</div>
+  <div class="row" style="gap:5rem;align-items:flex-start">
+    <div class="check" style="flex:1;min-width:0">
+      <div class="it step"><b>1</b><h3>Y a-t-il des données sur des personnes réelles ?</h3></div>
+      <div class="it step"><b>2</b><h3>L'outil aide-t-il à décider pour quelqu'un ?</h3></div>
+      <div class="it step"><b>3</b><h3>Les données ou les prompts sortent-ils vers un tiers ?</h3></div>
+      <div class="it step"><b>4</b><h3>L'outil sera-t-il utilisé hors de l'équipe ?</h3></div>
+      <p class="cap step" style="margin-top:1rem">un seul «&nbsp;oui&nbsp;» : fiche de conformité et RSSI</p>
+    </div>
+    <div class="side step" style="flex:0 0 62rem">
+      <div class="card"><span class="chip i" style="align-self:flex-start">Vos données, par thème</span>
+        <p class="mt" style="font-size:2.8rem"><strong>A</strong> · l'identifiant de l'utilisateur qui possède une fiche de passeur</p>
+        <p class="mt" style="font-size:2.8rem;margin-top:2rem"><strong>B</strong> · postes et quarts, sans identifiant d'opérateur</p>
+        <p class="mt" style="font-size:2.8rem;margin-top:2rem"><strong>C</strong> · des étudiants, et une décision d'affectation</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide atelier" data-id="atelier-conformite">
+  <div class="label"><em>Atelier</em> Test en 4 questions et début de la fiche · en équipe</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Répondre aux 4 questions pour votre thème</h3><p>une réponse argumentée par question</p></div></div>
+      <div class="it"><b>2</b><div><h3>Qualifier les données du thème</h3><p>qui est concerné ? quelle donnée est personnelle ?</p></div></div>
+      <div class="it"><b>3</b><div><h3>Remplir les rubriques 1 à 5 de <code>docs/fiche_conformite.md</code></h3><p>finalité · données · personnes · base légale · durée et suppression</p></div></div>
+      <div class="it"><b>4</b><div><h3>PR relue par un coéquipier</h3><p>la fiche est commitée dans main</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>La fiche est <strong>commitée</strong> (rubriques 1 à 5), dit «&nbsp;données fictives&nbsp;» avec une justification, et a été relue.</p></div>
+      <div class="rule"><b>Interdit</b><p>Aucun nom civil ni courriel : «&nbsp;équipe n° X&nbsp;», identifiants GitHub.</p></div>
+      <div class="rule info"><b>Fiche J</b><p>Sensibilisation, pas avis juridique : la validation revient au RSSI et au DPO. Chapitre 3.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-donnees">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><ellipse cx="400" cy="300" rx="130" ry="40" stroke="url(#gg)" stroke-width="5"/><path d="M270 300v200c0 22 58 40 130 40s130-18 130-40V300M270 400c0 22 58 40 130 40s130-18 130-40" stroke="url(#gg)" stroke-width="5"/></svg>
+  <div class="big grad">04</div>
+  <h2>Les données</h2>
+</section>
+
+<section class="slide" data-id="donnees-modele">
+  <div class="label">Les données survivent au code</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Modéliser</span><h3 class="mt">Entités, relations</h3><p class="mt" style="font-size:2.8rem">Clés primaires et étrangères, contraintes. D'abord sur papier.</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">drift</span><h3 class="mt">Les tables en Dart</h3><p class="mt" style="font-size:2.8rem">On déclare les tables, <code>build_runner</code> génère le code d'accès typé, sur SQLite.</p></div>
+    <div class="card hl step"><span class="chip i" style="align-self:flex-start">Migrations</span><h3 class="mt">Versionnées</h3><p class="mt" style="font-size:2.8rem"><code>schemaVersion</code> et <code>onUpgrade</code> : chaque changement de schéma est écrit et rejouable.</p></div>
+  </div>
+  <h3 class="mt2 step" style="font-size:5rem;text-align:center">On ne modifie <span class="neg">jamais</span> une base à la main.</h3>
+</section>
+
+<section class="slide" data-id="pieges">
+  <div class="label">Deux pièges, une règle</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:4rem">
+    <div class="card bad step"><span class="chip r" style="align-self:flex-start">piège 1</span><h3 class="mt" style="font-size:4.6rem">L'agent «&nbsp;corrige&nbsp;» un test en modifiant les données</h3><p class="mt" style="font-size:3rem">Le test passe ; la règle qu'il protégeait, non.</p></div>
+    <div class="card bad step"><span class="chip r" style="align-self:flex-start">piège 2</span><h3 class="mt" style="font-size:4.6rem">Deux branches incrémentent chacune <code>schemaVersion</code></h3><p class="mt" style="font-size:3rem">Elles entrent en conflit.</p></div>
+  </div>
+  <div class="card good mt step" style="align-items:center;text-align:center"><span class="cap">règle ajoutée à CLAUDE.md</span><h3 class="mt" style="font-size:5rem;margin-top:1.6rem">Une seule migration à la fois, coordonnée par le <span class="pos">gardien des données</span></h3></div>
+</section>
+
+<section class="slide atelier" data-id="atelier-donnees">
+  <div class="label"><em>Atelier</em> Modéliser et implémenter · en équipe</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Le modèle sur papier, validé par un encadrant</h3><p>entités · relations · contraintes</p></div></div>
+      <div class="it"><b>2</b><div><h3>Les tables drift du thème, dans la couche data</h3><p>avec l'agent · le gardien des données coordonne</p></div></div>
+      <div class="it"><b>3</b><div><h3>La première migration</h3><p>schemaVersion · une seule migration à la fois</p></div></div>
+      <div class="it"><b>4</b><div><h3>Le test d'intégrité sur base en mémoire</h3><p>une insertion orpheline est rejetée · clés étrangères activées</p></div></div>
+      <div class="it"><b>5</b><div><h3>PR relue et fusionnée</h3><p>rubriques «&nbsp;données&nbsp;» en commentaire dans docs/fiche_conformite.md</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Sur une base vide, le schéma se crée et les migrations se rejouent ; un test <strong>rejette l'insertion orpheline</strong> ; <code>flutter test</code> vert.</p></div>
+      <div class="rule"><b>Pas aujourd'hui</b><p>Le seed complet et la garde <code>RequireRole</code> peuvent glisser.</p></div>
+      <div class="rule info"><b>Fiche K</b><p>Modèle de données, migration, test d'intégrité. Chapitre 4.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide atelier" data-id="atelier-revue">
+  <div class="label"><em>Atelier</em> Revue croisée entre équipes · avec l'équipe jumelée</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Choisir au moins une PR de l'équipe jumelée</h3><p>voir la slide des paires</p></div></div>
+      <div class="it"><b>2</b><div><h3>L'auteur explique sa PR à voix haute</h3><p>ce qu'elle fait · ce que l'agent a proposé · ce qu'il a refusé</p></div></div>
+      <div class="it"><b>3</b><div><h3>Relire avec la checklist, commenter sur GitHub</h3><p>commentaires précis, sur la ligne concernée</p></div></div>
+      <div class="it"><b>4</b><div><h3>Un coéquipier de l'auteur approuve, puis fusion</h3><p>l'équipe jumelée commente, elle n'approuve pas</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Chaque équipe a relu <strong>au moins une PR</strong> de l'autre, et chaque étudiant a relu celle d'un autre.</p></div>
+      <div class="rule"><b>Pourquoi un coéquipier ?</b><p>Les équipes jumelées n'ont pas d'accès en écriture au dépôt.</p></div>
+      <div class="rule info"><b>Fiches</b><p><strong>L</strong> · Revue croisée ; <strong>I</strong> · Checklist de revue de PR. Chapitre 1.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="livrable">
+  <div class="label">Livrable de fin de séance · le même pour les trois thèmes</div>
+  <h2 style="font-size:7rem">Première règle <span class="pos">verte</span>, modèle et migrations <span class="grad">fusionnés</span>, début de la fiche commité.</h2>
+  <div class="row mt" style="gap:4rem;align-items:flex-start">
+    <div class="check grow">
+      <div class="it step"><b>1</b><h3>Base vide : le schéma se crée, les migrations se rejouent, une à la fois</h3></div>
+      <div class="it step"><b>2</b><h3>Un test rejette l'insertion orpheline ; <code>flutter test</code> est vert</h3></div>
+      <div class="it step"><b>3</b><h3>Chaque étudiant a ouvert une PR et relu celle d'un autre</h3></div>
+      <div class="it step"><b>4</b><h3>Aucune donnée personnelle réelle ; fiche «&nbsp;données fictives&nbsp;», justifiée, relue</h3></div>
+    </div>
+    <div class="side step" style="flex:0 0 46rem">
+      <div class="rule info"><b>Fiche M</b><p>Bilan et livrable de fin de séance : <code>JOURNAL.md</code> et <code>CLAUDE.md</code> à jour.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="consignes-fin">
+  <div class="label">Avant de partir · et les douze jours qui viennent</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:4rem">
+    <div class="card hl step"><span class="chip i" style="align-self:flex-start">Aujourd'hui</span><h3 class="mt"><code>JOURNAL.md</code> et <code>CLAUDE.md</code> à jour</h3><p class="mt" style="font-size:3rem">Règles de données comprises. État de la fiche noté.</p><p class="cap mt">livrable vérifié avant de partir</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">D'ici la séance 4</span><h3 class="mt">2 h au plus, facultatif</h3><p class="mt" style="font-size:3rem">Terminer ce qui a glissé : seed complet, garde <code>RequireRole</code>, rubriques 6 et 7, courriel de demande d'accès.</p><p class="cap mt">par étudiant</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Ensuite</span><h3 class="mt">Séance 4 : mercredi 16&nbsp;déc.</h3><p class="mt" style="font-size:3rem">Fiche de conformité v1 : vendredi 18&nbsp;déc.</p><p class="cap mt">qualité · CI/CD · sécurité · AI&nbsp;Act · RSSI</p></div>
+  </div>
+</section>
+
+</div>
+<div id="help">← → naviguer · F plein écran · N notes · O vue d'ensemble</div>
+<script src="../shared/deck.js"></script>
+</body>
+</html>
