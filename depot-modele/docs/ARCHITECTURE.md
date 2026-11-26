@@ -196,6 +196,6 @@ Une colonne ajoutée plus tard sera la version 3 : modifier la table, passer `sc
 - Pas de règle métier dans un écran ou dans un Cubit ; pas de requête de base dans `domain`.
 - Pas de `sl<…>()` dans `domain` : les pièces y arrivent par le constructeur.
 - Pas de repository dans un Cubit ou un BLoC : uniquement des cas d'usage.
-- Pas d'import `package:flutter/material.dart` (déprécié depuis Flutter 3.47) : on importe `package:material_ui/material_ui.dart`.
+- Pas d'import `package:flutter/material.dart` (déprécié depuis Flutter 3.50) : on importe `package:material_ui/material_ui.dart`.
 - Pas de donnée réelle, de secret ni de nom de personne, ni dans le code, ni dans les tests, ni dans le seed.
 - Pas de modification de `test/acceptance/` par l'agent ; pas de test désactivé ou assoupli.

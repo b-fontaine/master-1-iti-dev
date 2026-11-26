@@ -26,7 +26,7 @@ Les libellés affichés du monde (noms des rangs, lieux, textes) se rangent dans
 
 ### À choisir pour commencer
 
-> L'équipe en retient 3 à 5 pour les premières séances, ajuste le texte et décide. Les sous-règles du clou non retenues ici restent à livrer plus tard : le clou niveau 1 est obligatoire. Les autres stories restent ici, barrées ou supprimées, avec la raison dans « Décisions de l'équipe ».
+> L'équipe en retient 3 à 5 pour les premières séances, ajuste le texte et décide. Les sous-règles du clou non retenues ici restent à livrer plus tard : le clou niveau 1 est obligatoire. Les stories écartées restent ici, barrées, avec la raison dans « Décisions de l'équipe ».
 
 1. En tant que greffier, je veux inscrire un passeur d'une voie donnée, avec le souffle du rang 1 de cette voie, afin que son registre existe dès son arrivée au comptoir.
 2. En tant que greffier, je veux ouvrir une route (nature du péril, péril, usure, renom promis), afin que les traversées puissent être jugées contre une route connue.

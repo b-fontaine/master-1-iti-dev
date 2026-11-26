@@ -16,7 +16,7 @@ Ajouter une dépendance se fait par une PR dédiée, avec l'accord de l'équipe 
 2. vérifier que les commandes de « Vérifier avant une PR » restent vertes ;
 3. commiter `pubspec.yaml` et `pubspec.lock` ensemble, dans cette PR.
 
-**Import des widgets.** Depuis Flutter 3.47, `package:flutter/material.dart` est déprécié : ce projet importe `package:material_ui/material_ui.dart`, et `flutter analyze` signale l'ancien import. Les supports de la séance 1 montrent encore l'ancien import : remplacez-le quand vous reprenez un exemple.
+**Import des widgets.** Depuis Flutter 3.50, `package:flutter/material.dart` est déprécié : ce projet importe `package:material_ui/material_ui.dart`, et `flutter analyze` signale l'ancien import. Les supports de la séance 1 montrent encore l'ancien import : remplacez-le quand vous reprenez un exemple.
 
 ## Démarrer : les commandes après le clone
 

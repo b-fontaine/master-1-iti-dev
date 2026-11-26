@@ -22,7 +22,7 @@ Ces stories ne se choisissent pas : elles font partie du socle commun. L'équipe
 
 ### À choisir pour commencer
 
-> L'équipe en retient 3 à 5 pour les premières séances, ajuste le texte et décide. Les sous-règles du clou non retenues ici restent à livrer plus tard : le clou niveau 1 est obligatoire. Les autres stories restent ici, barrées ou supprimées, avec la raison dans « Décisions de l'équipe ».
+> L'équipe en retient 3 à 5 pour les premières séances, ajuste le texte et décide. Les sous-règles du clou non retenues ici restent à livrer plus tard : le clou niveau 1 est obligatoire. Les stories écartées restent ici, barrées, avec la raison dans « Décisions de l'équipe ».
 
 1. En tant que gestionnaire, je veux saisir les étudiants (pseudonyme, rang, parcours) et leurs vœux, afin d'avoir de quoi lancer une répartition.
 2. En tant que gestionnaire, je veux que les étudiants soient traités par rang croissant, afin que la priorité soit connue et identique pour tous (règle 2).
