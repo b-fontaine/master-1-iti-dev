@@ -322,6 +322,8 @@ Cet arbre est celui de l'exemple de la section 5, dans sa version complète avec
 
 Les composants de style « Material » (`Scaffold`, `AppBar`, `ElevatedButton`) proviennent de la bibliothèque `package:flutter/material.dart`, d'où l'import en tête de fichier. Le catalogue complet des widgets est sur [docs.flutter.dev/ui/widgets](https://docs.flutter.dev/ui/widgets).
 
+> **Note du 26 novembre 2026 : l'import des widgets a changé.** Le code de ce chapitre importe `package:flutter/material.dart` : le code exécuté de ce chapitre l'a été le 6 octobre 2026 avec Flutter 3.47.6, et rien n'a été modifié depuis. Avec Flutter 3.50, la version du projet fil rouge, cet import est déprécié et `flutter analyze` le signale : le projet importe `package:material_ui/material_ui.dart` à la place. Remplacez l'import quand vous reprenez un extrait de ce chapitre dans le projet.
+
 ### 4.3 La composition plutôt que l'héritage
 
 Un widget ne se personnalise pas en le « déformant », mais en l'**enveloppant** dans d'autres widgets : pour mettre une marge autour d'un texte, on place le `Text` dans un `Padding`. Pour réutiliser un morceau d'interface, on crée **son propre widget**, qui assemble d'autres widgets. C'est ce qu'on fait dans la section 6 avec `CarteQuete`.

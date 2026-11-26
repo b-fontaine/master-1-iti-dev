@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-1/04-guide-flutter.md · synchro: 2026-11-25 -->
+<!-- source: cours/supports/day-1/04-guide-flutter.md · synchro: 2026-11-26 -->
 
 # Guide Flutter {#sec-guide-flutter}
 
@@ -332,6 +332,10 @@ Cet arbre est celui de l'exemple de la section [-@sec-guide-flutter-5], dans sa 
 | `ListView` | Une liste qui défile | Un rouleau |
 
 Les composants de style « Material » (`Scaffold`, `AppBar`, `ElevatedButton`) proviennent de la bibliothèque `package:flutter/material.dart`, d'où l'import en tête de fichier. Le catalogue complet des widgets est sur [docs.flutter.dev/ui/widgets](https://docs.flutter.dev/ui/widgets).
+
+::: {.callout-warning title="Import des widgets : note du 26 novembre 2026"}
+Le code de ce chapitre importe `package:flutter/material.dart` : le code exécuté de ce chapitre l'a été le 6 octobre 2026 avec Flutter 3.47.6, et rien n'a été modifié depuis. Avec Flutter 3.50, la version du projet fil rouge, cet import est déprécié et `flutter analyze` le signale : le projet importe `package:material_ui/material_ui.dart` à la place. Remplacez l'import quand vous reprenez un extrait de ce chapitre dans le projet.
+:::
 
 ### La composition plutôt que l'héritage
 

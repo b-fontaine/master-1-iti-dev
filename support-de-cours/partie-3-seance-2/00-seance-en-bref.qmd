@@ -1,4 +1,4 @@
-<!-- source: cours/presentations/day-2/index.html, cours/presentations/day-2/notes.html · synchro: 2026-11-25 -->
+<!-- source: cours/presentations/day-2/index.html, cours/presentations/day-2/notes.html · synchro: 2026-11-26 -->
 
 # La séance 2 en bref {#sec-s2-en-bref}
 
@@ -33,7 +33,7 @@ Pendant les ateliers git et configuration, les dépôts d'équipe sont créés p
 
 ### Remettre le poste en route
 
-Huit semaines ont passé : des mises à jour sont sorties, des sessions ont expiré. On vérifie le poste avant tout le reste, avec `git --version`, `gh auth status`, `claude --version`, `flutter doctor` et `flutter test`. Seule la ligne Chrome de `flutter doctor` compte, et l'on ne lance pas `flutter upgrade`. Il n'y a pas encore de dépôt d'équipe : la remise en route porte sur le poste. Détails : fiche 0 de l'annexe [-@sec-fiches].
+Huit semaines ont passé : des mises à jour sont sorties, des sessions ont expiré. On vérifie le poste avant tout le reste, avec `git --version`, `gh auth status`, `claude --version`, `flutter doctor` et `flutter test`. Seule la ligne Chrome de `flutter doctor` compte. Le projet demande Flutter 3.50 ou plus récent : un poste resté à la version de la séance 1 lance `flutter upgrade`, qui installe la dernière version stable, puis vérifie avec `flutter --version` qu'elle est 3.50 ou plus ; jamais `flutter pub upgrade`, qui changerait les bibliothèques verrouillées. Il n'y a pas encore de dépôt d'équipe : la remise en route porte sur le poste. Détails : fiche 0 de l'annexe [-@sec-fiches].
 
 ::: {.callout-warning title="La règle d'or"}
 Aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public : un prompt part chez un tiers, et les dépôts de la formation sont publics. Données fictives uniquement, y compris « juste pour tester ». Un fichier de stage ou un export d'entreprise ressemble rarement à une donnée personnelle, et en contient presque toujours.
@@ -89,7 +89,7 @@ Au test (Claude Code 2.1.325, mode auto, 19 novembre 2026), la règle `Read(./.e
 
 Le dépôt d'équipe contient déjà une application Flutter qui démarre, rangée en trois couches : `presentation` (écrans et état), `domain` (la règle métier, qui ne dépend de personne) et `data` (base, fichiers, import). Une fonctionnalité correspond à un dossier, avec les trois couches à l'intérieur. Vous n'avez pas à savoir écrire ce code, mais à savoir où il va, parce que c'est ce que vous vérifierez quand l'agent proposera quelque chose. Deux fichiers fournis servent de premier contexte : `CLAUDE.md` (commandes, règles, interdits) et `docs/ARCHITECTURE.md` (les couches et les conventions).
 
-L'atelier d'initialisation enchaîne cinq étapes : cloner, installer et vérifier sur chaque poste ; lire le contexte et compléter `PROJET.md` (trois à cinq user stories retenues) ; ouvrir une PR avec le modèle du dépôt ; la faire relire, la fusionner et constater que `main` refuse un push direct ; écrire l'état courant dans `JOURNAL.md` et poser le tag `s2-fin`.
+L'atelier d'initialisation enchaîne cinq étapes : cloner, installer et vérifier sur chaque poste ; lire le contexte et compléter `PROJET.md` (les stories du socle sont obligatoires ; parmi celles à choisir, trois à cinq sont retenues) ; ouvrir une PR avec le modèle du dépôt ; la faire relire, la fusionner et constater que `main` refuse un push direct ; écrire l'état courant dans `JOURNAL.md` et poser le tag `s2-fin`.
 
 ::: {.callout-tip title="Relire une PR : cinq lignes"}
 1. Je comprends ce que fait cette PR, et je saurais l'expliquer. 2. Elle fait une seule chose, et le diff se lit en entier. 3. Les vérifications passent. 4. Aucun secret, aucune donnée réelle ou personnelle. 5. Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées. Celui qui approuve est aussi responsable que celui qui ouvre.
@@ -120,10 +120,11 @@ Ces chapitres ne redisent pas ceux de la séance 1 : ils y renvoient pour l'hist
 | 7. Situer où ranger quoi dans le projet | @sec-demarrer-projet |
 
 ::: {.callout-note title="État des connaissances"}
-Rédigés et relus avec l'aide d'un assistant, les chapitres de cette partie sont sourcés, et chacun signale ses points non vérifiés en fin de document. Quatre réserves valent pour l'ensemble.
+Rédigés et relus avec l'aide d'un assistant, les chapitres de cette partie sont sourcés, et chacun signale ses points non vérifiés en fin de document. Cinq réserves valent pour l'ensemble.
 
 - **Les outils changent vite.** L'état décrit est celui du 19 novembre 2026 (git 2.53, gh 2.100, Claude Code 2.1.325 à 2.1.328). Les commandes git locales, les sept règles de refus et le skill ont été essayés sur le poste de rédaction (hors session interactive) ; le reste est repris de la documentation. Réessayez les extraits sur la version installée avant de vous y fier.
-- **Rien n'a été exécuté sur GitHub ni sur le dépôt du projet.** Aucun dépôt n'a été créé en ligne pour écrire ces chapitres, et le dépôt-modèle du projet n'existait pas encore : les étapes qui passent par GitHub et par le squelette Flutter sont décrites d'après la documentation et le programme.
+- **Rien n'a été exécuté sur GitHub.** Aucun dépôt n'a été créé en ligne pour écrire ces chapitres : les étapes qui passent par GitHub (clone d'un dépôt d'équipe, PR, relecture, protection de `main`, CI) sont décrites d'après la documentation et le programme.
+- **Le dépôt-modèle est vérifié sous Linux seulement.** Ses commandes ont été exécutées le 26 novembre 2026 avec Flutter 3.50.1 (32 tests verts, `flutter analyze` sans remarque, build web ouvert dans Chrome), et les chapitres ont été alignés sur lui. Il n'a été essayé ni sous Windows ni sous macOS, il n'est pas encore publié, et sa CI n'a jamais tourné en ligne.
 - **Les dates.** Le programme date la séance du mercredi 2 décembre 2026 ; le calendrier a glissé (la séance était d'abord prévue le 9 octobre). Les dates citées dans cette partie sont celles du programme (@sec-programme-detaille), qui fait foi.
 - **Un écart avec la documentation a été constaté** : la règle de refus `Read(./.env)` n'a pas, à elle seule, empêché la lecture du fichier par une commande du terminal (voir @sec-cc-test-appris). Les fiches en tiennent compte.
 :::
