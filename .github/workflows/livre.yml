@@ -107,13 +107,25 @@ jobs:
           "$chs" --version
           echo "QUARTO_CHROMIUM=$chs" >> "$GITHUB_ENV"
 
+      # Quarto 1.8 s'abonne à la fin de chargement de la page APRÈS l'avoir
+      # demandée : si Chrome est plus rapide, l'événement est perdu et le rendu
+      # attend sans fin (blocage intermittent). Voir .github/scripts/.
+      - name: Corriger le pilotage de Chrome par Quarto
+        run: |
+          quarto_js="$(dirname "$(readlink -f "$(command -v quarto)")")/quarto.js"
+          sudo python3 -I .github/scripts/corriger-quarto-cri.py "$quarto_js"
+
       - name: Tester le rendu d'un schéma (échec rapide en cas de blocage)
         timeout-minutes: 4
         run: |
           mkdir -p "$RUNNER_TEMP/essai"
           cd "$RUNNER_TEMP/essai"
           printf -- '---\ntitle: Essai\n---\n\n```{mermaid}\nflowchart LR\n  A --> B\n```\n' > essai.qmd
-          timeout 180 quarto render essai.qmd --to epub --log-level debug
+          for essai in 1 2 3; do
+            timeout 60 quarto render essai.qmd --to epub && break
+            echo "::warning::rendu d'essai bloqué ou en échec (tentative $essai)"
+            [ "$essai" = 3 ] && exit 1
+          done
           ls -l
 
       - name: Inscrire la version dans le livre
@@ -121,9 +133,19 @@ jobs:
           bash support-de-cours/scripts/ecrire-version.sh \
             "${{ steps.version.outputs.version }}" "$(git log -1 --format=%cs)"
 
+      # Filet de sécurité : un rendu bloqué (code 124 de timeout) est relancé
+      # jusqu'à deux fois ; toute autre erreur arrête la CI tout de suite.
       - name: Vérifier et compiler (PDF et EPUB)
-        timeout-minutes: 20
-        run: bash support-de-cours/scripts/verifier.sh
+        timeout-minutes: 30
+        run: |
+          for essai in 1 2 3; do
+            code=0
+            timeout 480 bash support-de-cours/scripts/verifier.sh || code=$?
+            [ "$code" = 0 ] && exit 0
+            [ "$code" != 124 ] && exit "$code"
+            echo "::warning::compilation bloquée, relance (tentative $essai)"
+          done
+          exit 124
 
       - name: Nommer les fichiers
         id: fichiers
