@@ -602,7 +602,7 @@ timeline
     Mercredi 16 décembre : Séance 4 : qualité, CI/CD, sécurité, AI Act, passage devant le RSSI
     Vendredi 18 décembre : Fiche de conformité v1 déposée en PR
     Du samedi 19 décembre au dimanche 3 janvier : Vacances de fin d'année, sans travail imposé
-    Janvier 2027 (date à préciser) : Séance 5 : retouches et soutenance
+    Vendredi 29 janvier 2027, après-midi : Séance 5 : retouches et soutenance
 ```
 
 ### 12.1 D'ici vendredi
@@ -618,7 +618,7 @@ Si votre équipe n'a pas terminé l'initialisation aujourd'hui (première PR rel
 ### 12.2 Plus tard dans le calendrier
 
 - **Entre la séance 3 et la séance 4, douze jours** : une tâche facultative, de 2 h au plus par étudiant, pour terminer ce qui aura glissé de la séance 3 (jeu de données complet, rôles). Elle sera précisée en séance 3.
-- **Le sprint final** se place entre la séance 4 (16 décembre) et la soutenance, en janvier 2027 (date à préciser) : 15 à 20 heures par équipe. Il englobe les vacances de fin d'année (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus) : aucun travail n'est imposé pendant les vacances au-delà de ce que votre équipe choisit.
+- **Le sprint final** se place entre la séance 4 (16 décembre) et la soutenance, le vendredi 29 janvier 2027 après-midi : 15 à 20 heures par équipe. Il englobe les vacances de fin d'année (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus) : aucun travail n'est imposé pendant les vacances au-delà de ce que votre équipe choisit.
 - **Jalons** : fiche de conformité v1 en PR le vendredi 18 décembre 2026 ; réponse du RSSI au plus tard une semaine avant la soutenance ; gel et tag `v1.0-rc` l'avant-veille de la soutenance à 18 h ; lecture des dépôts par les évaluateurs la veille.
 
 ### 12.3 Ce qu'il ne faut pas faire d'ici là
@@ -705,7 +705,7 @@ Elles valent pour toute la durée du projet. Vous avez déjà pratiqué les quat
 - **Séquence git locale** (branche, commit, `git push -u`, `git commit --allow-empty`, `git reset --hard origin/main`, `git tag`, `git push origin s2-fin`) : jouée avec git 2.53.0 dans un dépôt jetable relié à un dépôt distant local, sans GitHub.
 - **Pannes de la section 7.2** : causes probables tirées de l'expérience courante, non reproduites ; le code d'erreur 403 pour une invitation non acceptée est donné à titre indicatif.
 - **Checklist de PR** : texte proposé par les supports, à valider par l'enseignant.
-- **Dates et calendrier** : les dates des 4, 16 et 18 décembre, des vacances et de la soutenance, en janvier 2027 (date à préciser), sont reprises du programme et susceptibles d'ajustement par l'enseignant.
+- **Dates et calendrier** : les dates des 4, 16 et 18 décembre, des vacances et de la soutenance, le vendredi 29 janvier 2027 après-midi, sont reprises du programme et susceptibles d'ajustement par l'enseignant.
 - **Création des dépôts pendant la séance** : le script du programme (section 13) n'a pas été exécuté pour ce chapitre ; le délai entre le formulaire et la réception de l'invitation n'est pas mesuré.
 
 ---

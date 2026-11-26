@@ -1,8 +1,8 @@
-<!-- source: cours/programme-detaille.md · synchro: 2026-11-25 -->
+<!-- source: cours/programme-detaille.md · synchro: 2026-11-26 -->
 
 # Séance 5 · Retouches finales et soutenance {#sec-s5}
 
-**Principe du rendu.** Le **tag `v1.0-rc` et le dossier de rendu sont déposés l'avant-veille de S5 à 18h**, pour que les évaluateurs lisent les dépôts avant la séance. Le matin de S5, seuls des correctifs bloquants sont autorisés avant le tag final `v1.0`.
+**Principe du rendu.** Le **tag `v1.0-rc` et le dossier de rendu sont déposés l'avant-veille de S5 à 18h**, pour que les évaluateurs lisent les dépôts avant la séance. Au début de S5, seuls des correctifs bloquants sont autorisés avant le tag final `v1.0`.
 
 **Objectifs d'apprentissage.** À la fin de la séance, l'étudiant :
 
