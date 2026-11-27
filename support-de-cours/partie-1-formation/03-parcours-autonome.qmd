@@ -35,7 +35,7 @@ Les supports de chaque séance se lisent dans l'ordre du livre. Les repères ci-
 | 4. Choisir un thème et se cadrer | Lire les trois énoncés, choisir un thème, rédiger `PROJET.md` | @sec-themes |
 | 5. Première règle, données, RGPD (séance 3) | Reprise du projet, première règle métier en TDD et en BDD avec l'assistant, RGPD appliqué au projet et début de la fiche de conformité, modèle de données, première migration et test d'intégrité | @sec-s3, @sec-travailler-a-plusieurs, @sec-premiere-user-story, @sec-rgpd-projet, @sec-donnees, @sec-conformite |
 | 6. Qualité, sécurité, règlement européen sur l'IA (séance 4) | Test d'acceptation écrit avant le code, intégration continue complète et publication de la version web, sécurité et audit d'un autre dépôt, règlement européen sur l'IA et validation de la fiche de conformité | @sec-s4, @sec-test-acceptation, @sec-ci-publication, @sec-securite-audit, @sec-ai-act-rssi, @sec-conformite |
-| 7. Finir et présenter (séance 5) | Retouches, gel du code, démonstration | @sec-s5, @sec-programme-detaille |
+| 7. Finir et présenter (séance 5) | Arrêter le périmètre et le dossier de rendu, poser le tag `v1.0-rc` puis `v1.0`, préparer et répéter la démonstration, expliquer une de ses PR et lire la grille de notation | @sec-s5, @sec-geler-livrer, @sec-soutenance-equipe, @sec-oral-individuel |
 
 Gardez sous la main les fiches pratiques (@sec-fiches) et le glossaire (@sec-glossaire). Les supports de la séance 1 recommandent de lire d'abord le vocabulaire et le contexte, puis de consulter le guide Flutter et le chapitre sur les outils agentiques au moment d'installer ; le support de la séance 2 recommande de commencer par la fiche de reprise du poste.
 

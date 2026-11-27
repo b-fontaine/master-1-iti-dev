@@ -9,12 +9,12 @@ Dépôt d'un cours (Master ITI) : les sources vivent dans `cours/`, le livre Qua
 
 ## Règle de synchronisation (même PR)
 
-Tout fichier source créé ou modifié qui figure dans la table de correspondance de `support-de-cours/README.md` (support, diaporama, `README.md` racine, `cours/programme-detaille.md`, `cours/projets/themes.md`, `cours/conformite-ai-act-rgpd.md`) est aussi adapté dans `support-de-cours/`, dans la même PR, sinon le livre diffuse un contenu périmé. `cours/programme-detaille.md` alimente aussi `partie-5-a-venir/seance-*.qmd` :
+Tout fichier source créé ou modifié qui figure dans la table de correspondance de `support-de-cours/README.md` (support, diaporama, `README.md` racine, `cours/programme-detaille.md`, `cours/projets/themes.md`, `cours/conformite-ai-act-rgpd.md`) est aussi adapté dans `support-de-cours/`, dans la même PR, sinon le livre diffuse un contenu périmé. Pour chaque fichier concerné :
 
 1. Chapitre nouveau, ou mise à jour du chapitre existant (retrouvé par la table de `support-de-cours/README.md`).
 2. Date `synchro:` du commentaire de tête du chapitre mise à jour.
 3. Table de correspondance source → chapitre de `support-de-cours/README.md` mise à jour.
-4. Quand les chapitres réels d'une séance existent, la page « à paraître » correspondante (`partie-5-a-venir/`) est remplacée par eux et retirée de `_quarto.yml`.
+4. Pour une nouvelle séance, suivre « Ajouter la partie d'une séance » de `support-de-cours/README.md` (les cinq séances ont leur partie : il n'y a plus de page « à paraître »).
 
 Les règles d'adaptation (ton, renvois, encadrés, nettoyage, fidélité) sont dans `support-de-cours/README.md` : les lire avant d'écrire un chapitre, ne pas les recopier ici.
 

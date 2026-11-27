@@ -1,0 +1,683 @@
+<!-- source: cours/supports/day-5/03-l-oral-individuel-et-la-note.md · synchro: 2026-11-27 -->
+
+# L'oral individuel et la note {#sec-oral-individuel}
+
+::: {.callout-note title="État des connaissances"}
+Les commandes git et `flutter test` ont été exécutées le 27 novembre 2026 sous Linux (git 2.53.0, Flutter 3.50.1, Dart 3.14.0), sur une copie du dépôt-modèle placée hors du dépôt du cours, avec un dépôt distant local : rien n'a été écrit sur GitHub ; quelques commandes `gh` ont été essayées en lecture seule sur le dépôt du cours (gh 2.100.0), pas sur un dépôt d'équipe.
+:::
+
+Ce chapitre accompagne la fin du bloc 5 de la séance 5 (les questions individuelles qui suivent la partie commune de chaque soutenance), puis les blocs 6, 7 et 8 : fiches d'évaluation par les pairs, retour d'expérience collectif, clôture. Il répond à deux questions que chacun se pose avant la séance 5 (le vendredi 29 janvier 2027) : « sur quoi vais-je être interrogé, et comment m'y préparer sans savoir lire le Dart ? » et « comment ma note est-elle construite ? ». Tout ce qui touche au barème est **cité mot pour mot** du programme détaillé (@sec-programme-detaille), puis commenté. Tout ce qui est un conseil de préparation est **signalé comme une proposition** des supports. L'exemple suivi est le dépôt `equipe_04`, du thème B.
+
+::: {.callout-tip title="Ce que vous allez retenir"}
+
+- Chaque étudiant reçoit **deux questions**, avec la même trame pour tous : la question 1 porte sur **une PR tirée au sort** parmi celles qu'il a ouvertes ou approuvées, la question 2 est une question de compréhension, posée sur le vif.
+- La PR de la question 1 vous est communiquée la veille de la séance 5 avant 9h, soit le **jeudi 28 janvier 2027 avant 9h**. Vous avez donc plus de 24 heures pour la préparer.
+- On prépare une PR **par les preuves**, sans lire le code : sa description, la liste de ses fichiers, le nom de ses tests et de ses scénarios, l'application lancée, et le test qui rougirait si l'on changeait quelque chose.
+- Chaque question est notée sur une **échelle de 0 à 4**. Le niveau 2 explique ce que fait la PR et pourquoi ; le niveau 3 prévoit la conséquence d'un changement et repère un risque ; le niveau 4 ajoute un test ou une alternative, un lien avec le thème, les données ou la conformité, et une limite, **en langage clair**.
+- « C'est l'agent qui l'a écrit » n'est pas une réponse recevable. L'usage de l'IA est autorisé et encouragé ; il est encadré par **cinq règles**, chacune rattachée à un critère de la grille.
+- La note est sur 20 : **14 points collectifs et 6 points individuels** (4 pour la compréhension orale, 2 pour la contribution vérifiée, dont 1 par l'évaluation par les pairs).
+- Les fiches d'évaluation par les pairs ne se sacrifient jamais, même si la séance prend du retard ; elles restent confidentielles. La communication des notes peut glisser après la séance.
+
+:::
+
+## Pourquoi ce chapitre {#sec-oral-1}
+
+Le quatrième objectif de la séance, dans le programme : l'étudiant « répond à des questions individuelles sur une PR de son équipe et sur la compréhension du projet ». C'est la mise à l'épreuve d'une règle que vous connaissez depuis la séance 2, la règle du jeu n° 2 : « On comprend ce qu'on livre. Chacun peut expliquer n'importe quelle PR qu'il a ouverte ou approuvée » (chapitre [-@sec-demarrer-projet] de la séance 2, section [-@sec-projet-regles]).
+
+Le chapitre ne redit pas ce qui est déjà écrit ailleurs :
+
+- **relire une PR par les preuves** (description, pastille de CI, liste des fichiers, scénario et tests, place des fichiers, historique) : chapitre [-@sec-travailler-a-plusieurs] de la séance 3, section [-@sec-equipe-4], et sa checklist dans la section [-@sec-equipe-5], reprise dans la fiche I (annexe [-@sec-fiche-i]) ;
+- **le modèle de PR** et ses rubriques (résumé ; ce que l'agent a proposé, ce que j'ai refusé ; suivi) : chapitre [-@sec-demarrer-projet] de la séance 2, sections « Ouvrir la PR avec le modèle » et « Pourquoi ce suivi », et fiche E (annexe [-@sec-fiche-e]) ;
+- **où ranger quoi** (les trois couches `domain`, `data`, `presentation`) : chapitre [-@sec-demarrer-projet] de la séance 2, section [-@sec-projet-pile] ;
+- **fausser une valeur pour vérifier qu'un test vérifie vraiment** : chapitre [-@sec-test-acceptation] de la séance 4, sections [-@sec-acceptation-8-3] et [-@sec-acceptation-10] ;
+- **les patrons d'architecture du projet** et la question « quel patron, quel problème » : chapitre [-@sec-design-patterns] de la séance 1, sections « Patrons d'architecture : ceux du projet Flutter » et « Patrons et agents de code » ;
+- **les droits des personnes** : chapitre [-@sec-rgpd-projet] de la séance 3, section [-@sec-rgpd-5] ;
+- **les règles de votre thème** : l'énoncé de votre thème (@sec-themes), et le `PROJET.md` de votre dépôt ;
+- **le dossier de rendu, les tags `v1.0-rc` et `v1.0`** : @sec-geler-livrer ; **la partie commune de la soutenance** (démonstration, « sous le capot », conformité) : @sec-soutenance-equipe.
+
+Ce que ce chapitre ajoute : ce que le programme dit de l'oral individuel et de la note, mot pour mot, et une façon de s'y préparer quand on n'est pas développeur.
+
+::: {.callout-tip title="À retenir"}
+L'oral individuel ne vous demande pas d'avoir écrit le code. Il vous demande de pouvoir expliquer ce que vous avez ouvert ou approuvé.
+:::
+
+
+## Les deux questions, la même trame pour tous {#sec-oral-2}
+
+Le programme détaillé (@sec-pd-evaluation, « Format de la soutenance »), mot pour mot :
+
+> **Questions individuelles** : **chaque étudiant reçoit deux questions**, avec la même trame pour tous. Question 1 (la plus longue) : une PR tirée au sort parmi celles qu'il a ouvertes ou approuvées, dont la taille atteint le seuil de **20 lignes modifiées hors fichiers générés** (à défaut, sa plus grosse PR), **communiquée 24 h avant** (la veille de S5 avant 9h). Question 2 (brève) : une question de compréhension, par exemple nommer un patron d'architecture présent dans le code de l'équipe et dire quel problème il résout.
+
+| | Question 1 | Question 2 |
+|---|---|---|
+| Sur quoi | Une PR tirée au sort parmi celles que vous avez ouvertes ou approuvées | La compréhension du projet |
+| Longueur | « la plus longue » | « brève » |
+| Connue à l'avance | Oui : « communiquée 24 h avant » | Non : elle « vérifie la compréhension sur le vif » |
+| Notée | De 0 à 4, sur l'échelle de la section [-@sec-oral-5] | De 0 à 4, sur la même échelle |
+| Où la préparer | Sections [-@sec-oral-3] et [-@sec-oral-4] | Section [-@sec-oral-6] |
+
+**Quand.** Les questions individuelles viennent après la partie commune de votre équipe : le bloc 5 décrit le passage comme « démonstration en direct, « sous le capot », conformité, puis questions individuelles ». Le déroulement de la partie commune est dans la section [-@sec-sout-11].
+
+**Combien de temps.** Le programme ne fixe pas de minutage. Il donne un **ordre de grandeur d'organisation**, « à ajuster », dans la formule du budget par équipe : « une partie commune d'une dizaine de minutes + quatre minutes de questions par étudiant + une transition de quatre minutes » (section [-@sec-sout-2]). Les deux questions tiennent donc dans quelques minutes : la réponse à la question 1 se prépare courte.
+
+**Qui pose les questions, et avec quoi.** Dans chaque salle, un évaluateur, et un second évaluateur ou un observateur. D'après le programme, l'évaluateur dispose d'une « **fiche de notation pré-remplie par étudiant** (équipe, étudiant, PR tirée au sort, échelle de compréhension de 0 à 4 pour les deux questions) », et l'observateur « chronomètre et note les écarts ». Avant les passages, les évaluateurs se calibrent entre eux (bloc 4) : ils appliquent l'échelle « à deux exemples de réponses ». Ces deux exemples ne sont pas publiés ; ce chapitre ne les connaît pas.
+
+**« La même trame pour tous ».** Tout le monde reçoit le même type de questions, notées sur la même échelle, y compris l'étudiant absent, interrogé plus tard (section [-@sec-oral-11]). La trame est fixée ; la PR et la question 2 changent d'un étudiant à l'autre.
+
+::: {.callout-tip title="À retenir"}
+Deux questions, une échelle. La première se prépare la veille, sur une PR connue. La seconde se prépare en connaissant son projet.
+:::
+
+
+## La PR tirée au sort {#sec-oral-3}
+
+### Parmi quelles PR {#sec-oral-3-1}
+
+Le programme le dit dans la phrase citée dans la section [-@sec-oral-2]. Quatre éléments :
+
+1. **Tirée au sort** : vous ne la choisissez pas, et votre équipe non plus.
+2. **Parmi celles que vous avez ouvertes ou approuvées** : une PR dont vous n'êtes pas l'auteur peut vous être attribuée, si vous l'avez approuvée. Approuver engage autant qu'ouvrir (chapitre [-@sec-travailler-a-plusieurs] de la séance 3, section [-@sec-equipe-4-3]).
+3. **Dont la taille atteint le seuil de 20 lignes modifiées hors fichiers générés** : une PR minuscule (une faute corrigée dans le `README`) n'entre pas dans le tirage.
+4. **À défaut, votre plus grosse PR** : si aucune de vos PR n'atteint le seuil.
+
+La taille d'une PR se lit sur sa page GitHub : deux nombres, l'un vert, l'autre rouge, donnent les lignes ajoutées et les lignes retirées. En ligne de commande :
+
+```bash
+gh pr view <numéro> --json number,title,additions,deletions,changedFiles
+```
+
+La réponse est de ce type (essai en lecture seule sur une PR du dépôt du cours) :
+
+```text
+{"additions":88,"changedFiles":8,"deletions":47,"number":11,"title":"…"}
+```
+
+`additions` et `deletions` sont les lignes ajoutées et retirées, `changedFiles` le nombre de fichiers touchés. Le programme ne dit pas quels fichiers comptent comme « générés » : voir @sec-oral-non-verifies.
+
+### Quand, et ce que cela vous laisse {#sec-oral-3-2}
+
+La PR est « communiquée 24 h avant (la veille de S5 avant 9h) » : la veille de la séance 5 avant 9h, soit le **jeudi 28 janvier 2027 avant 9h**. La partie « Matériel et prérequis » de la séance le redit : « Lecture des dépôts la veille de S5 ; les PR tirées au sort sont communiquées aux étudiants ce jour-là avant 9h, soit au moins 24 h avant le premier passage. » La séance commence à 13h45 (voir @sec-programme) : entre le jeudi 9h et votre passage, il y a donc plus de 24 heures.
+
+Ce jour-là, le tag `v1.0-rc` est déjà posé (l'avant-veille de la séance 5 à 18h, soit le mercredi 27 janvier 2027 à 18h : section [-@sec-gel-2]). Si votre PR est fusionnée, son contenu ne change plus. La journée du jeudi sert à la **comprendre**.
+
+Le programme ne précise pas par quel moyen la PR vous est communiquée, ni sur quel état du dépôt le tirage est fait : l'enseignant le dira.
+
+### Ne pas attendre le tirage {#sec-oral-3-3}
+
+*Proposition, au-delà du programme.* N'importe laquelle de vos PR peut sortir. Faites-en la liste dès le gel des fonctionnalités, et repérez celles que vous auriez du mal à expliquer. Les deux commandes ci-dessous n'écrivent rien ; elles ont été essayées en lecture seule sur le dépôt du cours, pas sur un dépôt d'équipe.
+
+```bash
+gh pr list --state merged --author "@me"
+gh pr list --state all --search "reviewed-by:@me"
+```
+
+La première liste les PR fusionnées que vous avez ouvertes (une ligne par PR : numéro, titre, branche, état, date). La seconde liste les PR que vous avez **relues**, que vous les ayez approuvées ou seulement commentées : seules celles que vous avez approuvées entrent dans le tirage. Sur GitHub, l'équivalent est l'onglet « Pull requests » du dépôt, filtre « Closed », puis le filtre par auteur ou par relecteur.
+
+::: {.callout-warning title="Une PR approuvée les yeux fermés"}
+Une PR que vous avez approuvée « les yeux fermés » peut être celle qui sort. Si vous en repérez une dans votre liste, demandez à son auteur de vous la présenter avant la séance : c'est exactement l'exercice de la revue croisée (chapitre [-@sec-travailler-a-plusieurs] de la séance 3, section [-@sec-equipe-7-3]).
+:::
+
+::: {.callout-tip title="À retenir"}
+Une PR tirée au sort, parmi celles que vous avez ouvertes **ou approuvées**, d'au moins 20 lignes modifiées, connue la veille de la séance 5 avant 9h, soit le jeudi 28 janvier 2027 avant 9h.
+:::
+
+
+## Préparer sa PR par les preuves {#sec-oral-4}
+
+Vous n'allez pas apprendre le Dart en une journée, et personne ne vous le demande. Une PR se comprend par ce qu'elle **annonce**, par les **fichiers** qu'elle touche, par ce que ses **tests vérifient** et par ce qui **change à l'écran**. Ce sont les gestes de la relecture par les preuves (chapitre [-@sec-travailler-a-plusieurs] de la séance 3, section [-@sec-equipe-4]), appliqués cette fois à une PR que vous devez expliquer seul.
+
+Le programme ne donne que la trame des questions et l'échelle. **Toute cette section est une proposition des supports**, à valider par l'enseignant.
+
+### Retrouver la PR {#sec-oral-4-1}
+
+Sur GitHub : onglet « Pull requests » (filtre « Closed » si elle est fusionnée), puis le numéro ou le titre communiqué. Gardez la page ouverte : ses onglets « Conversation », « Commits » et « Files changed » sont vos trois sources.
+
+### Relire sa description {#sec-oral-4-2}
+
+La description suit le modèle du dépôt (`.github/pull_request_template.md`). Chacune de ses rubriques nourrit une partie de votre réponse.
+
+| Rubrique du modèle | Ce que vous y trouvez | Ce qu'elle vous permet de dire |
+|---|---|---|
+| **Résumé** | « ce que change cette PR, et pourquoi » | Ce que fait la PR et pourquoi : le cœur du niveau 2 de l'échelle |
+| **Ce que l'agent a proposé, ce que j'ai refusé** | Une ligne « Proposé et gardé », une ligne « Proposé et refusé » | Ce que vous avez décidé vous-même ; souvent, un risque repéré ou une alternative écartée |
+| **Suivi** | Temps estimé, temps réel, retouches | Ce qui a été plus difficile que prévu, chiffres à l'appui |
+| **Avant de demander la relecture** | Trois cases, dont « Je peux expliquer chaque modification. » | Ce à quoi l'auteur s'est engagé |
+
+Lisez aussi l'onglet « Conversation » : les commentaires de relecture et les réponses de l'auteur. Si vous étiez le relecteur, vos propres commentaires disent ce que vous avez vérifié avant d'approuver.
+
+Reliez la PR à ce qui l'a motivée : une user story de `PROJET.md`, une issue de l'audit croisé, une condition du RSSI, une règle de l'énoncé du thème. C'est le « pourquoi ».
+
+**Si la description est vide ou pauvre**, notez pour vous ce qu'elle aurait dû dire, à partir des gestes suivants. Le programme ne dit pas si une description peut encore être complétée après `v1.0-rc` : demandez à l'enseignant. Dans tous les cas, n'inventez rien, et dites-le franchement si la question vient.
+
+### La liste des fichiers {#sec-oral-4-3}
+
+L'onglet « Files changed » de la PR donne la liste des fichiers modifiés, avec le nombre de lignes ajoutées et retirées pour chacun : il suffit. La même liste en ligne de commande, un fichier par ligne :
+
+```bash
+gh pr diff <numéro> --name-only
+```
+
+En complément seulement, pour avoir les nombres de lignes par fichier dans le terminal (commande essayée sous Linux seulement) :
+
+```bash
+gh pr view <numéro> --json files --jq '.files[] | "\(.additions)+ \(.deletions)- \(.path)"'
+```
+
+Une ligne par fichier, de la forme (essai sur une PR du dépôt du cours) :
+
+```text
+27+ 20- <chemin du fichier>
+```
+
+Vous n'ouvrez pas les fichiers : vous lisez leur **chemin**. Le chemin dit dans quelle partie du projet le fichier se trouve, donc à quoi il sert.
+
+| Le chemin commence par | Ce que la PR a touché |
+|---|---|
+| `lib/features/<nom>/domain/` | Une règle du métier, ou un cas d'usage |
+| `lib/features/<nom>/data/` | Le stockage, l'accès à la base, un import |
+| `lib/features/<nom>/presentation/` | Un écran, ou le composant qui porte son état |
+| `lib/core/` | Du commun : injection, base, rôles |
+| `test/scenarios/` | Un scénario `.feature`, écrit en français |
+| `test/steps/` | Les étapes de ces scénarios |
+| `test/acceptance/` | Les cas d'acceptation du clou (jamais modifiés par l'agent) |
+| `test/` (le reste) | Des tests unitaires, rangés comme `lib/` |
+| `drift_schemas/` | Un instantané du schéma : la PR contient une migration |
+| `docs/`, `README.md`, `JOURNAL.md`, `PROJET.md`, `CLAUDE.md` | De la documentation, la fiche de conformité, le contexte de l'agent |
+| `pubspec.yaml`, `pubspec.lock` | Une dépendance ajoutée |
+
+Pour chaque fichier de la liste, préparez **une phrase** : « ce fichier est dans la PR parce que… ». Un fichier que vous ne savez pas justifier est le point à travailler, avec l'auteur ou avec un coéquipier, avant la séance.
+
+L'onglet « Commits » donne l'ordre des commits : le commit du test vient-il avant celui du code ? La même liste en ligne de commande, un titre de commit par ligne : `gh pr view <numéro> --json commits --jq '.commits[].messageHeadline'` (essayée en lecture seule sur une PR du dépôt du cours).
+
+### Ce que les tests vérifient {#sec-oral-4-4}
+
+Parmi les fichiers de la PR, ceux de `test/` sont les plus utiles pour vous : **leurs noms se lisent en français**. Un scénario `.feature` s'ouvre et se lit comme un texte. Celui de la fonctionnalité d'exemple du dépôt-modèle, tel qu'il est dans le dépôt :
+
+```gherkin
+  Scénario: un jet égal au degré de difficulté est une réussite
+    Soit le dé va donner {10}
+    Et l'écran des jets est ouvert
+    Quand je lance le dé
+    Alors je vois le texte {'Dernier jet : 10 · Réussite'}
+```
+
+Ce scénario dit une règle (« égal, c'est réussi »), une situation et ce que l'écran doit afficher. Les tests unitaires portent eux aussi un nom en français : dans le même dépôt, « un total égal au degré de difficulté est une réussite », « la base refuse un jet de valeur 0 », « refuse l'accès à un joueur ».
+
+Pour votre PR, notez : quels scénarios et quels tests elle **ajoute**, et ce que chacun vérifie, dit avec vos mots. Vérifiez deux choses de plus : la pastille de CI de la PR était verte, et aucun test n'a été supprimé ou affaibli (un fichier de `test/` retiré dans la liste, un fichier de `test/acceptance/` touché : chapitre [-@sec-test-acceptation] de la séance 4, section [-@sec-acceptation-10]).
+
+### Voir l'application, avant et après {#sec-oral-4-5}
+
+Si la PR touche un écran, lancez l'application sur `main` à jour (commandes du `README` de votre dépôt : `flutter pub get`, `dart run build_runner build --delete-conflicting-outputs`, puis `flutter run -d chrome`) et retrouvez à l'écran ce que la PR a apporté. C'est l'« après ».
+
+Pour voir l'« avant », on peut se placer sur l'état de `main` juste avant la fusion de la PR. Le commit de fusion d'une PR se reconnaît à son titre (`Merge pull request #<numéro>`) ; `~1` veut dire « un cran avant ». Sur la copie de vérification, qui ne contient qu'une fusion (chez vous, remplacez `5d2e30f` par l'identifiant de votre commit de fusion) :
+
+```bash
+git log --oneline --merges -3
+git switch --detach 5d2e30f~1
+git status
+git switch main
+```
+
+Les quatre réponses, dans l'ordre :
+
+```text
+5d2e30f Merge pull request #42 from equipe/correctif/titre-ecran
+
+HEAD est maintenant sur b53f271 Dépôt d'équipe créé depuis le modèle
+
+HEAD détachée sur b53f271
+rien à valider, la copie de travail est propre
+
+La position précédente de HEAD était sur b53f271 Dépôt d'équipe créé depuis le modèle
+Basculement sur la branche 'main'
+Votre branche est à jour avec 'origin/main'.
+```
+
+« HEAD détachée » est normal : vous regardez un état passé, vous n'y travaillez pas (même situation que la relecture à froid depuis un tag, section [-@sec-gel-6]). Entre la deuxième et la quatrième commande, relancez `dart run build_runner build --delete-conflicting-outputs` avant `flutter test` ou `flutter run -d chrome`, et de nouveau une fois revenu sur `main` : les fichiers générés ne sont pas versionnés. N'oubliez pas `git switch main` à la fin.
+
+Ce détour n'est pas obligatoire. Pour une PR sans écran (une règle, une migration, la fiche de conformité), l'« avant » et l'« après » se lisent dans les tests : avant la PR, ces tests n'existaient pas ou étaient rouges ; après, ils sont verts.
+
+### « Et si on changeait… » : quel test rougirait ? {#sec-oral-4-6}
+
+Le niveau 3 de l'échelle demande de prévoir « les conséquences d'une modification (« que se passe-t-il si je supprime cette ligne ? ») ». Vous ne lisez pas les lignes ; vous pouvez tout de même répondre, parce que **chaque test est une conséquence déjà écrite** : si l'on change ce que le test vérifie, il rougit.
+
+Un essai fait pour ce chapitre le montre, sur la fonctionnalité d'exemple du dépôt-modèle. Sa règle : « un jet réussit si son total atteint le degré de difficulté ». Sur la copie de vérification, la règle a été changée **à la main** pour qu'un jet égal au degré de difficulté devienne un échec (un seul fichier modifié, `lib/features/jets/domain/regles/est_reussite.dart`), puis `flutter test` a été relancé. Extraits de la sortie (chemins raccourcis, lignes vides retirées, coupes marquées `[…]`) :
+
+```text
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Dernier jet : 10 · Réussite": []>
+[…]
+The test description was:
+  un jet égal au degré de difficulté est une réussite
+[…]
+00:02 +28 -4: Some tests failed.
+Failing tests:
+  test/features/jets/domain/regles/est_reussite_test.dart: estReussite, cas par cas total 10 contre DD 10 donne true
+  test/features/jets/domain/regles/est_reussite_test.dart: estReussite, cas par cas total 20 contre DD 20 donne true
+  test/features/jets/domain/regles/est_reussite_test.dart: un total égal au degré de difficulté est une réussite
+  test/scenarios/jets/lancer_un_de_test.dart: Lancer un dé contre un degré de difficulté un jet égal au degré de difficulté est une réussite
+```
+
+Comment lire : les premières lignes disent ce que l'écran n'affiche plus ; la fin compte 28 tests verts et 4 rouges, et **leurs noms disent la conséquence en français**. La réponse à « et si on changeait cette règle ? » tient en une phrase : « un jet de 10 contre un degré de 10 serait compté comme un échec, l'écran n'afficherait plus Réussite, et quatre tests le signaleraient, dont le scénario du jet égal ». Les 28 tests restés verts disent aussi quelque chose : ce changement ne touche ni la base, ni les rôles.
+
+L'essai a été annulé aussitôt : après `git restore lib/`, `git status` répond « rien à valider, la copie de travail est propre », et `flutter test` de nouveau :
+
+```text
+00:02 +32: All tests passed!
+```
+
+Pour votre PR, trois façons de préparer cette question, de la plus simple à la plus poussée :
+
+1. **Sans rien toucher.** Pour chaque test ou scénario de la PR, écrivez la phrase : « si l'on changeait [ce que le test vérifie], ce test rougirait, et l'utilisateur verrait [ce qui change] ». C'est la première moitié du niveau 3 (prévoir une conséquence) ; il reste à repérer un risque (fin de cette section).
+2. **En faussant une valeur d'un scénario**, sur votre poste : c'est le geste de la valeur faussée, que vous connaissez (chapitre [-@sec-test-acceptation] de la séance 4, section [-@sec-acceptation-8-3], avec les trois commandes pour annuler). Le fichier `.feature` est en français.
+3. **En demandant le changement à votre agent**, sur votre poste, puis en lançant vous-même `flutter test` pour lire les noms des tests rouges. Ce que l'agent *affirme* n'est pas une preuve ; la sortie de `flutter test` en est une.
+
+::: {.callout-warning title="Des essais jetables, annulés aussitôt"}
+Les essais 2 et 3 sont **jetables** : rien n'est commité, rien n'est poussé, et l'on annule tout de suite : `git restore lib/ test/`, puis `dart run build_runner build --delete-conflicting-outputs`, puis `git status`, qui doit répondre « la copie de travail est propre ». `git restore` sans nom de dossier échoue, et sans `build_runner` un scénario faussé reste faussé dans le test généré. Après le tag `v1.0`, « on ne pousse plus » (section [-@sec-gel-9]).
+:::
+
+Repérez aussi **un risque** : ce que la PR ne vérifie pas, ce qui pourrait mal se passer. La ligne « Proposé et refusé » et les commentaires de relecture en donnent souvent un.
+
+### Une trame de préparation en sept lignes {#sec-oral-4-7}
+
+*Proposition, au-delà du programme.* Une page, écrite pour vous, hors du dépôt. Les lignes suivent l'ordre de l'échelle.
+
+1. **Ce que fait la PR**, en une phrase, comme à un chef de projet.
+2. **Pourquoi** : la user story, l'issue, la règle du thème ou la condition du RSSI qui l'a motivée.
+3. **Les fichiers**, par groupes : la règle, le stockage, l'écran, les tests ; une phrase par groupe.
+4. **Ce que les tests vérifient** : les scénarios et les tests ajoutés, avec leurs valeurs.
+5. **Ce que l'agent a proposé, ce qui a été gardé, ce qui a été refusé**, et pourquoi.
+6. **Et si on changeait…** : un changement, sa conséquence, le test qui rougirait ; un risque.
+7. **Pour aller au bout** : un test que vous ajouteriez ou une autre façon de faire ; le lien avec une règle du thème, les données ou la fiche de conformité ; une limite.
+
+Puis dites-la **à voix haute** à un coéquipier, sans la lire, en vous chronométrant : la question 1 dure quelques minutes, pas un quart d'heure.
+
+::: {.callout-tip title="À retenir"}
+Description, fichiers, tests, écran, « et si on changeait… ». Cinq preuves, aucune ne demande de lire le code.
+:::
+
+
+## L'échelle de compréhension de 0 à 4, niveau par niveau {#sec-oral-5}
+
+Le programme (@sec-pd-evaluation), mot pour mot :
+
+> **Échelle de compréhension orale (0 à 4).** Chaque question est notée de 0 à 4, la note est la moyenne des deux questions arrondie au demi-point. La question 1, préparée à l'avance sur une PR communiquée 24 h avant, porte l'essentiel de la note ; la question 2 vérifie la compréhension sur le vif (elle peut porter sur une règle du thème, un cas d'erreur d'agent, la fiche de conformité ou les droits d'une personne concernée).
+>
+> - **0** : ne reconnaît pas la PR ou le projet, aucune explication.
+> - **1** : lit à voix haute sans dire pourquoi.
+> - **2** : explique ce que fait la PR et pourquoi, mais ne sait pas prévoir les conséquences d'un changement.
+> - **3** : explique, prévoit les conséquences d'une modification (« que se passe-t-il si je supprime cette ligne ? ») et repère un risque.
+> - **4** : en plus, propose un test ou une alternative argumentée, relie le travail aux règles du thème, aux données ou à la conformité, et nomme une limite. L'explication est faite **en langage clair**, comme à un chef de projet.
+
+### Ce qui sépare un niveau du suivant {#sec-oral-5-1}
+
+La colonne de droite est une lecture des supports : elle relie chaque niveau aux gestes de la section [-@sec-oral-4].
+
+| Niveau | Ce que dit le programme | Ce qui manque pour le niveau suivant | Le geste qui y prépare |
+|---|---|---|---|
+| **0** | Ne reconnaît pas la PR ou le projet | Savoir de quelle PR il s'agit | Retrouver la PR, relire sa description (sections [-@sec-oral-4-1] et [-@sec-oral-4-2]) |
+| **1** | Lit à voix haute sans dire pourquoi | Le « pourquoi » | Relier la PR à une story, une issue, une règle (section [-@sec-oral-4-2]) |
+| **2** | Explique ce que fait la PR et pourquoi | Prévoir la conséquence d'un changement | Les tests comme conséquences écrites (sections [-@sec-oral-4-4] et [-@sec-oral-4-6]) |
+| **3** | Prévoit les conséquences d'une modification et repère un risque | Un test ou une alternative, un lien avec le thème, les données ou la conformité, une limite | La ligne 7 de la trame (section [-@sec-oral-4-7]) |
+| **4** | Tout cela, **en langage clair**, comme à un chef de projet | | Le dire à voix haute à un coéquipier (section [-@sec-oral-4-7]) |
+
+Trois remarques, qui sont des lectures des supports.
+
+**« Lit à voix haute » ne vaut pas explication.** Lire le résumé de la PR, la liste des fichiers ou un nom de test sans dire à quoi cela sert, c'est le niveau 1, que le texte lu soit du code ou du français.
+
+**« Que se passe-t-il si je supprime cette ligne ? »** La question est citée du programme. Elle peut vous être posée sous cette forme ; le programme ne dit pas si la PR est affichée. Vous n'avez pas à traduire la ligne : dites dans quel fichier elle se trouve et à quoi sert ce fichier (section [-@sec-oral-4-3]), puis quelle règle ou quel écran en dépend, et quel test le signalerait (section [-@sec-oral-4-6]). Si vous ne savez pas, dites-le, et raisonnez à voix haute à partir de ce que vous savez de la PR.
+
+**Le niveau 4 n'est pas un niveau « de développeur ».** Il demande un test ou une alternative **argumentée**, un lien avec le thème, les données ou la conformité, une limite, et un langage clair. Ce sont des compétences de chef de projet : exactement celles que vise la formation.
+
+### Un exemple, sur le thème B {#sec-oral-5-2}
+
+*Exemple rédigé pour ce chapitre : une proposition, à valider par l'enseignant. Ce ne sont pas les exemples de réponses qui servent au calibrage des évaluateurs, que le programme ne publie pas.* La PR imaginée est celle de la première user story du thème B, la disponibilité d'un quart, avec les valeurs de l'énoncé (quart de 480 minutes, pause de 30, panne de 45, changement de série de 15 : temps requis 450 minutes, temps de marche 390 minutes, disponibilité affichée 86,7 %).
+
+| Niveau | Ce que l'étudiant dit |
+|---|---|
+| 1 | Il lit le résumé de la PR et les noms des fichiers, et s'arrête là. |
+| 2 | « Cette PR calcule la disponibilité d'un quart : le temps de marche divisé par le temps requis. Elle sert à la story 4 de `PROJET.md`, consulter la disponibilité d'un poste pour un quart. Le scénario reprend le quart de 480 minutes de l'énoncé et attend 86,7 %. » |
+| 3 | « Si l'on rangeait la pause parmi les arrêts non planifiés, le temps requis ne serait plus de 450 minutes mais de 480, la disponibilité affichée ne serait plus 86,7 %, et le scénario rougirait. Le risque : une catégorie d'arrêt mal rangée fausse tous les quarts sans que l'écran le montre. » |
+| 4 | « J'ajouterais un scénario avec une panne qui dépasse la fin du quart, pour vérifier qu'elle est tronquée, comme le demande la règle 2 de l'énoncé. Côté conformité, le chiffre est calculé par poste et par quart, jamais par personne. La limite : cette PR ne calcule que la disponibilité, pas encore la performance ni la qualité. » |
+
+::: {.callout-tip title="À retenir"}
+Niveau 2 : quoi et pourquoi. Niveau 3 : « et si… » et un risque. Niveau 4 : un test ou une alternative, un lien avec le thème, les données ou la conformité, une limite, le tout en langage clair.
+:::
+
+
+## La question 2, sur le vif {#sec-oral-6}
+
+La question 2 est « brève » et n'est pas communiquée à l'avance. Le programme annonce **quatre sujets et un exemple**. Les quatre sujets : elle « peut porter sur une règle du thème, un cas d'erreur d'agent, la fiche de conformité ou les droits d'une personne concernée ». L'exemple, donné ailleurs dans le programme : « nommer un patron d'architecture présent dans le code de l'équipe et dire quel problème il résout ». Elle est notée sur la même échelle de 0 à 4.
+
+Le tableau ci-dessous dit où réviser chaque sujet. La colonne « ce qu'il faut pouvoir dire » est une *proposition des supports*.
+
+| Sujet (programme) | Où réviser | Ce qu'il faut pouvoir dire, en langage clair |
+|---|---|---|
+| Une règle du thème | L'énoncé de votre thème, règle métier « clou » et cas d'acceptation (@sec-themes) ; `PROJET.md` | La règle, un exemple chiffré pris dans l'énoncé, et le test qui la vérifie |
+| Un cas d'erreur d'agent | Les deux PR de votre équipe qui portent l'étiquette `erreur-agent` (section [-@sec-sout-7-4]) | Ce que l'agent a fait de faux, comment l'équipe l'a vu, ce qu'elle en a fait |
+| La fiche de conformité | `docs/fiche_conformite.md`, ses 13 rubriques, la réponse du RSSI en rubrique 13 (sections [-@sec-gel-4-5] et [-@sec-sout-8]) | La finalité, ce qui est fictif, le classement et le rôle AI Act, les limites d'usage, la décision du RSSI et ses conditions |
+| Les droits d'une personne concernée | Chapitre [-@sec-rgpd-projet] de la séance 3, section [-@sec-rgpd-5] ; rubrique 10 de votre fiche | Un droit, à qui s'adresser, dans quel délai, et comment votre outil y répondrait |
+| L'exemple du programme : un patron d'architecture et le problème qu'il résout | Chapitre [-@sec-design-patterns] de la séance 1, sections « Patrons d'architecture : ceux du projet Flutter » et « Patrons et agents de code » ; `docs/ARCHITECTURE.md` de votre dépôt | Le nom du patron, où il se voit dans le dépôt (un dossier), le problème qu'il résout |
+
+La façon de retrouver les deux PR étiquetées `erreur-agent` est dans la section [-@sec-sout-7-4].
+
+Pour le patron d'architecture, l'exemple du programme, le chapitre [-@sec-design-patterns] de la séance 1 donne la matière : le Repository « cache d'où viennent les données » derrière une interface (section « Repository »), l'injection de dépendances donne à un objet ses collaborateurs au lieu de le laisser les créer (section [-@sec-dp-injection]), le BLoC sépare la logique de l'écran (section « BLoC »). Sa section « Patrons et agents de code » pose la question dans les mêmes termes : « Quel patron as-tu utilisé, et quel problème résout-il ici ? ». Un patron se montre dans votre dépôt par un chemin : le dossier `data/` d'une fonctionnalité pour le Repository (son interface est dans `domain/`), `lib/core/` pour l'injection, `presentation/` pour le BLoC ou le Cubit. Et « le problème qu'il résout » se dit par une preuve que vous avez vue : en séance 3, votre première user story a tourné avec un repository en mémoire, sans base, parce que le reste de l'application ne sait pas d'où viennent les données.
+
+*Proposition, au-delà du programme.* La partie commune de la soutenance traite déjà de ces sujets (sections [-@sec-sout-6] à [-@sec-sout-9]). Faites en sorte que **chaque** membre sache répondre sur chacun, pas seulement le gardien du sujet : en équipe, posez-vous une question par ligne du tableau, à tour de rôle, une minute par réponse.
+
+::: {.callout-tip title="À retenir"}
+La question 2 ne se révise pas la veille : elle vérifie que vous connaissez votre projet. Le programme annonce quatre sujets et un exemple.
+:::
+
+
+## « C'est l'agent qui l'a écrit » {#sec-oral-7}
+
+Le programme (@sec-pd-evaluation, « Règles d'usage de l'IA »), mot pour mot :
+
+> **L'usage de l'IA est autorisé et encouragé** : c'est l'objet de la formation. Il est encadré par cinq règles, chacune rattachée à un critère mesurable.
+>
+> 1. **Transparence** (« Process git et équipe »). Chaque PR contient une section « ce que l'agent a proposé, ce que j'ai refusé » et trois lignes de suivi (temps estimé, temps réel, retouches). L'étiquette `erreur-agent` retrouve les cas d'erreur. Les commits générés avec l'agent peuvent porter un trailer `Co-Authored-By`. Ce suivi sert à apprendre, pas à punir.
+> 2. **Responsabilité** (« Compréhension orale »). L'étudiant qui ouvre ou approuve une PR en est responsable et doit pouvoir l'expliquer. « C'est l'agent qui l'a écrit » n'est pas une réponse recevable.
+> 3. **Intégrité** (« Harnais et tests » et « Qualité, sécurité et livraison »). Interdits : désactiver ou supprimer un test pour le faire passer, copier le code d'une autre équipe sans le dire.
+> 4. **Esprit critique** (« Process git et équipe »). Au moins **deux cas** documentés où l'équipe a repéré une erreur de l'agent et ce qu'elle en a fait.
+> 5. **Confidentialité et conformité** (« Données et conformité »). **Aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public ; aucun secret dans le dépôt ; aucun outil mis en usage réel sans validation du RSSI.**
+
+Et, dans les repères pour la notation, mot pour mot :
+
+> **Transparence de l'usage de l'IA** : prise en compte dans « Process git et équipe ». Un usage caché ou des cas d'erreur inventés sont sanctionnés, un usage franc ne l'est jamais.
+
+Un *trailer* est une ligne ajoutée à la fin du message d'un commit. Dans le tableau ci-dessous, les deux colonnes de droite sont une lecture des supports.
+
+| Règle | Critère de la grille | Ce qui se constate | Où vous en parlez |
+|---|---|---|---|
+| 1. Transparence | Process git et équipe | Dans chaque PR : la rubrique « Ce que l'agent a proposé, ce que j'ai refusé » et les trois lignes de suivi | Question 1 ; « sous le capot » (sections [-@sec-sout-6] et [-@sec-sout-7]) |
+| 2. Responsabilité | Compréhension orale | Votre réponse sur la PR tirée au sort, ouverte ou approuvée | Question 1 |
+| 3. Intégrité | Harnais et tests ; Qualité, sécurité et livraison | Aucun test désactivé ou supprimé dans la liste des fichiers des PR ; `test/acceptance/` intact ; aucun code d'une autre équipe copié sans le dire | Lecture du dépôt ; question 1 si la PR touche des tests |
+| 4. Esprit critique | Process git et équipe | Deux PR étiquetées `erreur-agent`, « contrôlés en soutenance » d'après la grille | « Sous le capot » ; question 2 possible |
+| 5. Confidentialité et conformité | Données et conformité | Contrôle de secrets vert en CI, données fictives, fiche de conformité et réponse du RSSI | Point de conformité ; question 2 possible |
+
+Ce que la règle 2 change à l'oral. Dire que l'agent a écrit le code n'est pas une faute : c'est la vérité, et la règle 1 vous demande de le dire. Ce qui n'est pas recevable, c'est de s'en servir **à la place** d'une explication. La bonne forme de réponse est déjà dans votre PR : « l'agent a proposé ceci ; j'ai gardé cela, parce que… ; j'ai refusé ceci, parce que… ». Elle montre que quelqu'un a décidé.
+
+Deux conséquences pratiques. Une rubrique « refusé » remplie honnêtement est votre meilleure alliée à l'oral : elle prouve un choix. Et, dans les mots du programme, « des cas d'erreur inventés sont sanctionnés, un usage franc ne l'est jamais » : n'inventez pas un cas pour atteindre le compte de deux.
+
+::: {.callout-tip title="À retenir"}
+L'IA est autorisée, la responsabilité ne se délègue pas. Dites ce que l'agent a fait, puis ce que vous avez décidé.
+:::
+
+
+## La grille sur 20, critère par critère, et la preuve qui va avec {#sec-oral-8}
+
+Le programme (@sec-pd-evaluation), mot pour mot. Les renvois « section 8 » sont ceux du programme (voir @sec-pd-stack).
+
+| Critère | Points | Ce qu'on regarde | Support |
+|---|---|---|---|
+| **Fonctionnalité** | 3 | Le produit fonctionne en démonstration live et couvre le socle obligatoire (section 8) ; le clou niveau 1 est noté sur la **réussite des cas d'acceptation publiés** dans l'énoncé du thème (cas verts sur cas totaux), pas sur l'appréciation ; les user stories annoncées sont livrées | Démonstration, `PROJET.md`, résultat de `test/acceptance/` |
+| **Process git et équipe** | 2 | Commits petits et lisibles, PR relues, issues, branches courtes, pas de push direct, traçabilité des décisions ; TDD visible (commit de test avant le code) ; **deux cas d'erreur d'agent documentés** dans les PR (étiquette `erreur-agent`), contrôlés en soutenance | Dépôt GitHub |
+| **Harnais et tests** | 2 | `CLAUDE.md` utile et à jour, permissions (dont `test/acceptance/**` protégé), hooks, tests pertinents (unitaires, intégrité, scénarios BDD, acceptation), aucun test supprimé ou assoupli | Dépôt |
+| **Données et conformité** | 3 | **1 point données** : modèle cohérent, contraintes, migrations rejouables, seed fictif reproductible, tests d'intégrité. **2 points conformité** : fiche de conformité complète et honnête (13 rubriques), justification du niveau de risque AI Act, mesures réellement présentes dans l'application (accès par rôle testé, mesures propres au thème, durée de conservation), le rôle AI Act (fournisseur ou déployeur) et la case de classement justifiés, **réponse du RSSI datée** et suites données aux conditions, limites d'usage écrites | Dépôt, `docs/fiche_conformite.md`, soutenance |
+| **Qualité, sécurité et livraison** | 3 | CI verte sur le tag, audit croisé traité (issues priorisées, constats corrigés ou justifiés), `README` testé à froid en moins de 10 minutes, aucun secret (contrôle en CI), build web publié sur GitHub Pages (ou plan B documenté), tests dédiés sur l'import CSV (obligatoire) et sur l'export CSV s'il est livré | Dépôt, CI, issues |
+| **Soutenance** | 1 | Clarté, respect du temps, démonstration maîtrisée, plan de secours, compilation des mesures (temps estimé, réel, retouches) | Soutenance |
+| **Compréhension orale** (individuel) | 4 | **Deux questions posées à chaque étudiant**, notées sur l'échelle ci-dessous | Questions individuelles |
+| **Contribution vérifiée** (individuel) | 2 | 1 point : lecture de **3 PR tirées au sort** parmi celles que l'étudiant a ouvertes ou approuvées ; 1 point : évaluation par les pairs | Dépôt, fiches |
+| **Total** | **20** | 14 collectifs et 6 individuels | |
+
+> Vérification : 3 + 2 + 2 + 3 + 3 + 1 = 14 ; 4 + 2 = 6 ; 14 + 6 = 20.
+
+Deux lectures de cette grille, qui sont des lectures des supports. **Une bonne part se joue avant la séance.** Trois critères ont pour seul support le dépôt, la CI ou les issues (« Process git et équipe », « Harnais et tests », « Qualité, sécurité et livraison ») ; deux autres s'appuient aussi sur la démonstration ou la soutenance (« Fonctionnalité », « Données et conformité »). Le jour de la séance apporte la démonstration, le point « Soutenance » et vos 4 points de compréhension orale.
+
+**Presque tout se prouve par quelque chose qui s'observe.** Le tableau ci-dessous relie chaque critère à sa preuve, et renvoie au chapitre qui l'explique. C'est une aide de lecture des supports, pas un barème de plus.
+
+| Critère | La preuve à avoir sous la main | Où c'est expliqué |
+|---|---|---|
+| Fonctionnalité (3) | La démonstration en direct ; la ligne de résultat de `flutter test test/acceptance` (cas verts, cas rouges) ; les stories de `PROJET.md` | Section [-@sec-sout-4] ; chapitre [-@sec-test-acceptation] de la séance 4, section [-@sec-acceptation-8-1] |
+| Process git et équipe (2) | Les onglets « Pull requests » et « Commits » du dépôt ; les deux PR étiquetées `erreur-agent` | Sections [-@sec-gel-4-7], [-@sec-sout-6] et [-@sec-sout-7] |
+| Harnais et tests (2) | `CLAUDE.md`, les permissions, `test/acceptance/` protégé, les tests | Sections [-@sec-gel-4-3] et [-@sec-sout-6] |
+| Données et conformité (3) | Migrations, seed et tests d'intégrité ; `docs/fiche_conformite.md` à 13 rubriques, avec la réponse datée du RSSI | Sections [-@sec-gel-4-5] et [-@sec-sout-8] |
+| Qualité, sécurité et livraison (3) | La pastille verte sur le commit tagué ; les issues de l'audit croisé ; le `README` testé à froid ; le site publié | Sections [-@sec-gel-4-2] et [-@sec-gel-6] |
+| Soutenance (1) | Le chronomètre respecté, le plan de secours, les mesures compilées | Sections [-@sec-sout-5], [-@sec-sout-7] et [-@sec-sout-10] |
+| Compréhension orale (4) | Vos deux réponses | Sections [-@sec-oral-2] à [-@sec-oral-6] de ce chapitre |
+| Contribution vérifiée (2) | Vos PR, ouvertes ou approuvées ; les fiches de vos coéquipiers | Section [-@sec-oral-9] de ce chapitre |
+
+::: {.callout-tip title="À retenir"}
+14 points pour l'équipe, 6 pour vous. Les 14 se lisent dans le dépôt et dans la soutenance ; les 6 dépendent de ce que vous savez expliquer et de ce que vous avez réellement fait.
+:::
+
+
+## La contribution vérifiée {#sec-oral-9}
+
+Deux points individuels, en deux moitiés. Le programme précise, dans ses repères pour la notation, mot pour mot :
+
+> Les contributions sont vérifiées par la **lecture de PR tirées au sort et l'évaluation par les pairs**, non par un décompte de commits.
+
+Le nombre de commits ne compte donc pas. Inutile de découper artificiellement son travail pour « faire du volume ».
+
+### Un point : la lecture de trois PR tirées au sort {#sec-oral-9-1}
+
+La grille dit : « 1 point : lecture de **3 PR tirées au sort** parmi celles que l'étudiant a ouvertes ou approuvées ». Ce sont les évaluateurs qui lisent ; le programme place la lecture des dépôts la veille de la séance.
+
+Ce que le programme ne dit pas : ce qui, dans ces trois PR, rapporte le point ; si la PR de votre question 1 fait partie des trois ; si les trois vous sont communiquées. Ces points sont listés dans la section [-@sec-oral-non-verifies]. Le seul indice est dans la règle du plafonnement (section [-@sec-oral-10]), qui parle d'une PR « ouverte ou approuvée de façon substantielle ».
+
+*Proposition, au-delà du programme.* Ce qu'un lecteur extérieur voit dans une PR : une description remplie (les quatre rubriques du modèle) ; une liste de fichiers qui correspond à l'annonce ; pour une PR approuvée, une relecture qui a laissé une trace (un commentaire qui dit ce qui a été vérifié, plutôt qu'une approbation muette : chapitre [-@sec-travailler-a-plusieurs] de la séance 3, section [-@sec-equipe-4-2]). C'est une raison de plus de tenir ses PR tout au long du sprint (section [-@sec-gel-4-7]).
+
+### Un point : l'évaluation par les pairs {#sec-oral-9-2}
+
+Le programme, mot pour mot :
+
+> **Évaluation par les pairs** (1 point) : chaque étudiant note les autres membres de son équipe de 0 à 2 sur trois questions fixes. Pour chaque étudiant noté, on calcule **la somme des trois notes donnée par chaque évaluateur (0 à 6)**, puis **la médiane de ces sommes sur les évaluateurs**, convertie ainsi : **0 point si la médiane vaut 0 à 2, 0,5 point si elle vaut 3 à 4, 1 point si elle vaut 5 à 6**. Les fiches restent confidentielles.
+
+Les trois questions figurent sur la fiche distribuée en séance.
+
+Le calcul, pas à pas :
+
+1. Vous notez **chacun de vos coéquipiers** (pas vous-même) sur trois questions, de 0 à 2 par question.
+2. Pour un étudiant noté, chaque coéquipier lui donne donc une **somme** de 0 à 6.
+3. On prend la **médiane** de ces sommes : la valeur du milieu, une fois les sommes rangées par ordre croissant.
+4. La médiane est convertie en points : 0 à 2 donne 0 point ; 3 à 4 donne 0,5 point ; 5 à 6 donne 1 point.
+
+**Un exemple inventé pour illustrer**, qui applique strictement cette règle. Dans une équipe de quatre, une étudiante est notée par ses trois coéquipiers.
+
+| Coéquipier qui note | Question 1 | Question 2 | Question 3 | Somme |
+|---|---|---|---|---|
+| Premier | 2 | 1 | 2 | 5 |
+| Deuxième | 1 | 1 | 1 | 3 |
+| Troisième | 2 | 2 | 2 | 6 |
+
+Les sommes rangées : 3, 5, 6. La médiane est la valeur du milieu : **5**. La conversion du programme donne **1 point**. Second exemple inventé, mêmes règles : les sommes sont 2, 4 et 3. Rangées : 2, 3, 4. La médiane vaut **3** : **0,5 point**.
+
+Pourquoi la médiane plutôt que la moyenne : une seule fiche très sévère ou très généreuse ne déplace pas le résultat. Dans le premier exemple, que le deuxième coéquipier ait mis 3 ou 0, la médiane reste 5.
+
+Avec quatre coéquipiers qui notent (équipe de cinq), le nombre de sommes est pair, et la médiane peut tomber entre deux valeurs : le programme ne dit pas comment elle est alors convertie (voir @sec-oral-non-verifies).
+
+« Les fiches restent confidentielles » : vos coéquipiers ne voient pas ce que vous avez écrit. *Proposition des supports :* remplissez la vôtre seul, à partir de ce que vous avez **constaté** pendant le projet (PR ouvertes, relectures faites, engagements tenus), pas de l'ambiance du dernier jour.
+
+::: {.callout-tip title="À retenir"}
+Pas de décompte de commits. Trois PR lues par les évaluateurs, et la médiane des notes de vos coéquipiers : 0, 0,5 ou 1 point.
+:::
+
+
+## Plafonnement, bonus du clou niveau 2, données réelles et secrets {#sec-oral-10}
+
+Trois repères du programme modifient la note. Ils sont cités mot pour mot.
+
+**Le plafonnement.**
+
+> **Plafonnement, annoncé en S1 et rappelé en S2** : si la contribution d'un étudiant est jugée nulle (aucune PR ouverte ou approuvée de façon substantielle, évaluation des pairs concordante), ses notes collectives sont plafonnées à **10 sur 14**. Le plafond ne sanctionne pas l'usage de l'IA : il vise l'étudiant qui profite du travail des autres, ou de l'agent, sans rien comprendre.
+
+À lire attentivement :
+
+- le plafond porte sur les **notes collectives** (les 14 points), pas sur les 6 points individuels ;
+- lecture des supports : il suppose **deux constats qui concordent**, aucune PR ouverte ou approuvée de façon substantielle **et** une évaluation des pairs qui dit la même chose (le programme écrit « concordante », sans donner de seuil) ;
+- il ne concerne pas l'étudiant qui a beaucoup utilisé l'agent et sait expliquer ce qu'il a livré.
+
+**Le bonus du clou niveau 2.**
+
+> **Bonus du clou niveau 2** : plafonné à 1 point, il s'ajoute à la note collective avant plafonnement : note collective finale = min(14, collectif + bonus) ; puis, si la contribution est jugée nulle, min(10, note collective finale).
+
+« min(14, …) » veut dire : le plus petit des deux nombres. Le bonus s'ajoute à la note collective, mais le total collectif ne dépasse jamais 14. L'ordre compte : le bonus d'abord, le plafonnement à 10 ensuite, pour l'étudiant concerné seulement. Le niveau 2 du clou de chaque thème est décrit dans son énoncé (@sec-themes, « Niveau 2 (bonus, plafonné à 1 point) »). Le niveau 1 reste noté sur ses cas d'acceptation, dans le critère « Fonctionnalité » ; le bonus, lui, s'ajoute à la note collective.
+
+**Données réelles et secrets.**
+
+> **Un projet qui met des données réelles dans le dépôt ou dans un prompt** perd les points de conformité correspondants ; un secret commité est un incident à traiter (révocation) et à documenter.
+
+C'est la règle d'or de la séance 1, traduite en points. Deux situations différentes :
+
+- **des données réelles** dans le dépôt ou dans un prompt : les points de conformité correspondants sont perdus ;
+- **un secret commité** : ce n'est pas d'abord une question de points, c'est un **incident**. On révoque le secret, on prévient, on documente (chapitre [-@sec-securite-audit] de la séance 4, section [-@sec-audit-2-4] ; chapitre [-@sec-ci-publication] de la séance 4, section [-@sec-cipub-7-3]). Le supprimer du fichier ne suffit pas : il reste dans l'historique.
+
+*Proposition, au-delà du programme :* si vous découvrez l'un ou l'autre la veille de la soutenance, ne le cachez pas et prévenez l'enseignant ; pour un secret, le programme demande de le révoquer et de documenter l'incident.
+
+::: {.callout-tip title="À retenir"}
+Le bonus ne fait jamais dépasser 14. Le plafond à 10 vise la contribution jugée nulle. Une donnée réelle coûte des points ; un secret se révoque et se documente.
+:::
+
+
+## Cas particuliers : l'étudiant absent, le format dégradé {#sec-oral-11}
+
+**L'étudiant absent.** Le programme, mot pour mot :
+
+> **Absent** : l'équipe passe normalement ; l'étudiant absent le jour de la soutenance est interrogé dans les 15 jours avec la même trame.
+
+L'équipe ne reporte donc pas son passage : la démonstration, le « sous le capot » et le point de conformité ont lieu sans l'absent (section [-@sec-sout-10], pour la répartition de la parole). L'étudiant absent répond plus tard aux deux mêmes types de questions, sur la même échelle. Le programme ne dit pas si la PR tirée au sort reste la même, ni comment se font, pour lui, les fiches d'évaluation par les pairs : l'enseignant le précisera.
+
+*Proposition, au-delà du programme.* Si vous savez à l'avance que vous serez absent, prévenez l'enseignant et votre équipe dès que possible, et préparez votre PR comme si vous passiez le jour même.
+
+**Le format dégradé.** Le format prévu est à deux salles, avec un évaluateur et un second évaluateur ou un observateur par salle (section [-@sec-sout-2]). Si le second évaluateur est absent, le programme prévoit un **format dégradé** : une salle, un seul évaluateur, un budget réduit « de l'ordre de **20 minutes par équipe** (démonstration brève, « sous le capot » et conformité très courts, trois minutes de questions par étudiant) ». Pour l'oral individuel, le programme dit :
+
+> Ce format est **dégradé** : la compréhension orale (4 points) est alors évaluée sur une durée plus courte par étudiant (question 1 brève, question 2 très brève) par un seul évaluateur, sans observateur ; le barème ne change pas, mais l'enseignant le **signale aux étudiants** (dossier de notes et note d'oral marqués « format dégradé ») et relit les notes extrêmes à partir des fiches pré-remplies.
+
+Ce que cela change pour vous : moins de temps par question, donc une réponse encore plus ramassée. Ce que cela ne change pas : les deux questions, l'échelle, les points, et votre préparation. Dans ce format, la plénière « est remplacée par un retour d'expérience écrit (questionnaire en ligne) ».
+
+::: {.callout-tip title="À retenir"}
+Absent : même trame, dans les 15 jours. Format dégradé : même barème, moins de temps, et c'est signalé.
+:::
+
+
+## Après les passages (blocs 6, 7 et 8) {#sec-oral-12}
+
+Le programme, bloc par bloc (contenu et intention mot pour mot) :
+
+| Bloc | Poids | Contenu | Intention |
+|---|---|---|---|
+| **6. Fiches d'évaluation par les pairs et harmonisation des notes** | **Indispensable** pour les fiches des pairs (1 point de la note) ; **Important** pour l'harmonisation entre évaluateurs | Fiches d'évaluation par les pairs remplies par les étudiants ; les évaluateurs harmonisent leurs notes entre eux (second calibrage). | Recueillir l'évaluation des pairs et garantir l'équité de la notation entre les deux salles. |
+| **7. Retour d'expérience collectif (plénière)** | **Pratique** | Ce qui a marché, ce qui a échoué, ce que je ferais autrement ; l'IA, les limites, la conformité ; ce que je dirais à une équipe de développement. | Prendre du recul sur l'ensemble de la formation. Peut être remplacé par le questionnaire en ligne. |
+| **8. Clôture** | **Important** | Consignes pour la suite (questionnaire de fin de formation en ligne, notes). | Clore la formation proprement. |
+
+**Les fiches des pairs.** Le bloc 6 réunit deux activités : les fiches d'évaluation par les pairs (barème et calcul dans la section [-@sec-oral-9-2]) et l'harmonisation des notes entre évaluateurs. Les fiches sont protégées par le programme : « Ne se sacrifient jamais : le gel et le tag `v1.0`, les soutenances avec leurs deux questions individuelles, les fiches d'évaluation par les pairs. » Quant au moment de les remplir, le programme les place à la fois pendant les passages et au bloc 6 : l'enseignant dit quand les remplir.
+
+L'harmonisation est l'affaire des évaluateurs : elle sert à ce qu'une même réponse reçoive la même note dans les deux salles.
+
+**La plénière.** Elle est classée **Pratique** : c'est le premier élément de l'ordre de coupe (« La plénière (bloc 7, Pratique), remplacée par le questionnaire en ligne »), et le programme ajoute : « Si les passages d'une salle prennent du retard, on raccourcit la plénière avant de toucher à un passage. » Si elle a lieu, ses trois thèmes sont ceux du tableau. Ils recoupent le regard critique que votre équipe a préparé pour la soutenance (section [-@sec-sout-9]) : vous avez déjà la matière.
+
+**La clôture, et ce qui vient après.** La clôture donne les consignes pour la suite : le questionnaire de fin de formation, en ligne, et les notes. Le programme, mot pour mot (sa « section 7 » est celle de l'évaluation, voir @sec-pd-evaluation) :
+
+> **Peut glisser.** Le retour d'expérience collectif (par questionnaire en ligne) et la communication des notes après la séance. L'étudiant absent le jour de la soutenance est interrogé dans les 15 jours avec la même trame (section 7).
+
+Le programme prévoit donc que la communication des notes peut glisser après la séance. Si la clôture est écourtée (elle est le dernier élément de l'ordre de coupe, « réduite aux consignes essentielles »), retenez l'essentiel : répondre au questionnaire en ligne.
+
+::: {.callout-tip title="À retenir"}
+La fiche des pairs se remplit quoi qu'il arrive. La plénière peut devenir un questionnaire en ligne. La communication des notes peut glisser après la séance.
+:::
+
+
+## Avez-vous fini ? {#sec-oral-13}
+
+La part de ce chapitre dans le livrable (« Tag `v1.0`, dossier de rendu à jour (voir @sec-pd-evaluation) et soutenance passée ») et dans la definition of done de la séance 5, texte du programme :
+
+- [ ] Chaque étudiant a répondu à **deux questions individuelles** : une sur une PR tirée au sort communiquée la veille de S5, une de compréhension.
+- [ ] `JOURNAL.md` est à jour et les PR portent leur section « ce que l'agent a proposé, ce que j'ai refusé » et leurs temps.
+
+Et, hors definition of done :
+
+- [ ] Les fiches d'évaluation par les pairs sont remplies (le programme les range parmi ce qui ne se sacrifie jamais).
+
+Votre préparation personnelle, avant la séance (propositions de ce chapitre) :
+
+- [ ] J'ai la liste de mes PR, ouvertes **et** approuvées, et je sais lesquelles atteignent 20 lignes modifiées.
+- [ ] La veille de la séance 5 (jeudi 28 janvier 2027), j'ai pris connaissance de la PR tirée au sort ; j'ai relu sa description et sa conversation.
+- [ ] Je sais dire ce qu'elle fait et pourquoi, justifier chaque fichier de sa liste, et dire ce que vérifient ses tests.
+- [ ] J'ai un « et si on changeait… » (un changement, sa conséquence, le test qui rougirait) et un risque.
+- [ ] J'ai un test ou une alternative à proposer, un lien avec le thème, les données ou la conformité, et une limite.
+- [ ] Je l'ai dit à voix haute à un coéquipier, en quelques minutes, sans lire.
+- [ ] Je sais répondre en une minute sur les quatre sujets et sur l'exemple de la question 2 (section [-@sec-oral-6]).
+- [ ] Mes essais sur mon poste sont annulés : `git status` répond « la copie de travail est propre ».
+
+
+## Glossaire
+
+- **Calibrage** : courte séance où les évaluateurs appliquent l'échelle aux mêmes exemples de réponses, pour noter de la même façon.
+- **Contribution vérifiée** : critère individuel de la grille (2 points) : lecture de trois PR tirées au sort, et évaluation par les pairs.
+- **Échelle de compréhension orale** : les cinq niveaux, de 0 à 4, sur lesquels chaque question individuelle est notée.
+- **Étiquette `erreur-agent`** : étiquette GitHub posée sur une PR qui documente une erreur de l'agent repérée par l'équipe.
+- **Évaluation par les pairs** : note donnée à chaque étudiant par les autres membres de son équipe, sur trois questions fixes ; les fiches restent confidentielles.
+- **Fiche de notation pré-remplie** : feuille de l'évaluateur, une par étudiant : équipe, étudiant, PR tirée au sort, échelle de 0 à 4 pour les deux questions.
+- **Format dégradé** : soutenances dans une seule salle, avec un seul évaluateur, quand le second évaluateur est absent ; même barème, temps réduit.
+- **Harmonisation** : mise en accord des notes entre les évaluateurs des deux salles, après les passages (second calibrage).
+- **Médiane** : valeur du milieu d'une série rangée par ordre croissant ; elle ne bouge pas quand une seule valeur extrême change.
+- **Plafonnement** : limite de 10 sur 14 appliquée aux notes collectives d'un étudiant dont la contribution est jugée nulle.
+- **Trailer** : ligne ajoutée à la fin du message d'un commit, par exemple `Co-Authored-By`.
+- **Trame** : le canevas commun des deux questions individuelles, identique pour tous les étudiants.
+
+Les autres termes (PR, approbation, tag, clou, cas d'acceptation, valeur faussée, repository, patron de conception, HEAD détachée, partie commune…) sont définis dans les glossaires des séances 1 à 4 et des chapitres [-@sec-geler-livrer] et [-@sec-soutenance-equipe].
+
+
+## Pour aller plus loin
+
+- Séance 5 : chapitre [-@sec-geler-livrer], sections [-@sec-gel-2] (le calendrier de la fin du sprint), [-@sec-gel-4] (le dossier de rendu, dont [-@sec-gel-4-5] la fiche de conformité et [-@sec-gel-4-7] les PR et leurs sections de suivi), [-@sec-gel-6] (vérifier le rendu comme un évaluateur), [-@sec-gel-9] (le gel et le tag `v1.0`).
+- Séance 5 : chapitre [-@sec-soutenance-equipe], sections [-@sec-sout-2] (le dispositif, le budget, le format dégradé), [-@sec-sout-6] et [-@sec-sout-7] (« sous le capot », les mesures, et dans la section [-@sec-sout-7-4] les deux cas `erreur-agent`), [-@sec-sout-8] (le point de conformité), [-@sec-sout-9] (le regard critique), [-@sec-sout-11] (le passage).
+- Les fiches pratiques : fiche Z (oral individuel, fiche des pairs et livrable, annexe [-@sec-fiche-z]).
+- Séance 3 : chapitre [-@sec-travailler-a-plusieurs], sections [-@sec-equipe-4] et [-@sec-equipe-5] (relire par les preuves, la checklist), section [-@sec-equipe-7-3] (présenter sa PR à voix haute) ; fiche I (annexe [-@sec-fiche-i]). Séance 3 : chapitre [-@sec-rgpd-projet], section [-@sec-rgpd-5] : vos droits.
+- Séance 2 : chapitre [-@sec-demarrer-projet], section [-@sec-projet-pile] (les couches), sections « Ouvrir la PR avec le modèle » et « Pourquoi ce suivi » (le modèle de PR et le suivi), section [-@sec-projet-regles] (les dix règles du jeu).
+- Séance 4 : chapitre [-@sec-test-acceptation], sections [-@sec-acceptation-8-3] et [-@sec-acceptation-10] (la valeur faussée, relire sans lire le code).
+- Séance 1 : chapitre [-@sec-design-patterns], sections « Patrons d'architecture : ceux du projet Flutter » et « Patrons et agents de code » (les patrons d'architecture du projet ; patrons et agents de code).
+- Les thèmes (@sec-themes) : l'énoncé de votre thème (règle métier « clou », cas d'acceptation, conformité).
+
+
+## Points non vérifiés {#sec-oral-non-verifies}
+
+::: {.callout-note title="Points non vérifiés"}
+
+- **Dates déduites.** Les trois échéances écrites en clair (vendredi 22 janvier 2027, mercredi 27 janvier 2027 à 18h, jeudi 28 janvier 2027 avant 9h) sont déduites de la date de la séance 5, le vendredi 29 janvier 2027. Le programme, qui écrit « une semaine avant », « l'avant-veille » et « la veille », fait foi.
+- **Une PR ou trois PR tirées au sort.** La question 1 porte sur « une PR tirée au sort » ; la contribution vérifiée repose sur la « lecture de 3 PR tirées au sort ». Le programme ne dit pas si la PR de l'oral fait partie des trois, ni si les trois sont communiquées aux étudiants (il écrit, au pluriel, « les PR tirées au sort sont communiquées aux étudiants »). À préciser par l'enseignant.
+- **Ce qui rapporte le point de la lecture des trois PR.** Le programme ne publie pas de critère pour ce point ; la section [-@sec-oral-9-1] n'en propose pas, et se limite à ce qu'un lecteur extérieur voit dans une PR.
+- **Moins de trois PR.** Le programme ne dit rien du cas d'un étudiant qui a ouvert ou approuvé moins de trois PR.
+- **Moyenne ou poids inégal.** Le programme écrit à la fois « la note est la moyenne des deux questions arrondie au demi-point » et « la question 1 […] porte l'essentiel de la note ». Une moyenne simple donne le même poids aux deux questions. Par ailleurs, si chaque question reçoit une note entière, la moyenne des deux tombe déjà sur un demi-point : l'arrondi n'a d'effet que si une question peut recevoir une note intermédiaire. Le chapitre cite les deux phrases sans trancher.
+- **L'échelle est écrite pour une PR.** Ses niveaux parlent de « la PR », mais elle sert aussi à noter la question 2, qui ne porte pas sur une PR : le programme ne dit pas comment la transposer.
+- **Deux listes de sujets pour la question 2.** Le programme en cite quatre à un endroit (règle du thème, cas d'erreur d'agent, fiche de conformité, droits d'une personne concernée) et donne le patron d'architecture en exemple à un autre. La section [-@sec-oral-6] les rassemble dans un seul tableau.
+- **L'échelle suppose une lecture ligne à ligne.** « Lit à voix haute » et « que se passe-t-il si je supprime cette ligne ? » décrivent un oral devant du code, alors que les étudiants ne sont pas développeurs. Le chapitre cite l'échelle mot pour mot et prépare par les preuves ; la forme réelle des questions appartient aux évaluateurs.
+- **Le seuil de 20 lignes « hors fichiers générés ».** Dans le dépôt-modèle, les fichiers produits par `build_runner` ne sont pas versionnés : ils ne figurent dans aucune PR. Le programme ne dit pas quels fichiers versionnés comptent comme « générés » (instantanés de `drift_schemas/`, test de migration généré, `pubspec.lock` ?).
+- **« 24 h avant ».** La PR est communiquée la veille avant 9h et la séance commence à 13h45 (voir @sec-programme) : l'intervalle dépasse 24 heures, ce qui est cohérent avec « au moins 24 h avant le premier passage ». Le moyen de communication et l'état du dépôt sur lequel le tirage est fait ne sont pas précisés.
+- **Médiane avec un nombre pair de coéquipiers.** Dans une équipe de cinq (ou de trois), chaque étudiant est noté par quatre (ou deux) coéquipiers : la médiane peut alors valoir 2,5 ou 4,5, des valeurs que la conversion du programme (0 à 2, 3 à 4, 5 à 6) ne prévoit pas. L'exemple chiffré de la section [-@sec-oral-9-2] est inventé, et se limite au cas de trois coéquipiers.
+- **Moment où les fiches des pairs sont remplies.** Le programme les place à la fois pendant les passages et au bloc 6 : l'enseignant dit quand les remplir. Les trois questions figurent sur la fiche distribuée en séance.
+- **Fiche des pairs : nominative ou anonyme.** Le programme écrit « Les fiches restent confidentielles », sans dire si la fiche porte le nom de celui qui la remplit, ni qui la recueille.
+- **Plafonnement.** Le programme écrit « évaluation des pairs concordante » sans donner de seuil ; « deux constats qui concordent » (section [-@sec-oral-10]) est une lecture des supports.
+- **Bonus du clou niveau 2.** Il est « plafonné à 1 point » ; le programme ne donne pas de barème en dessous de 1.
+- **Description d'une PR après `v1.0-rc`.** Le programme ne dit pas si une description peut encore être complétée, ni que la PR tirée au sort est fusionnée (il écrit « ouvertes ou approuvées »).
+- **L'étudiant absent.** Le programme ne dit pas si sa PR tirée au sort reste la même, ni comment sont recueillies les fiches des pairs qui le concernent.
+- **Definition of done et étudiant absent.** La ligne « Chaque étudiant a répondu à deux questions individuelles » ne peut pas être vraie le jour même si un étudiant est interrogé « dans les 15 jours ».
+- **Exemples de calibrage.** Les « deux exemples de réponses » sur lesquels les évaluateurs se calibrent ne sont pas publiés ; l'exemple de la section [-@sec-oral-5-2] n'en fait pas partie.
+- **Textes proposés, à valider par l'enseignant.** Section [-@sec-oral-3-3] : lister ses PR avant le tirage. Toute la section [-@sec-oral-4] : les gestes de préparation par les preuves, le tableau des chemins, le détour « avant et après », les trois façons de préparer « et si on changeait… » (dont le recours à l'agent) et la façon d'annuler un essai, la trame en sept lignes. Section [-@sec-oral-5] : la colonne « le geste qui y prépare », les trois remarques de la section [-@sec-oral-5-1], l'exemple de réponses par niveau sur le thème B (section [-@sec-oral-5-2]). Section [-@sec-oral-6] : la colonne « ce qu'il faut pouvoir dire » et l'entraînement en équipe. Section [-@sec-oral-7] : les colonnes « ce qui se constate » et « où vous en parlez », la forme de réponse proposée. Section [-@sec-oral-8] : la lecture « une bonne part se joue avant la séance » et le tableau « la preuve à avoir sous la main ». Section [-@sec-oral-9] : ce qu'un lecteur voit dans une PR (section [-@sec-oral-9-1]), le conseil sur la fiche des pairs (section [-@sec-oral-9-2]). Section [-@sec-oral-10] : la lecture du plafonnement, le conseil de prévenir l'enseignant pour une donnée réelle ou un secret. Section [-@sec-oral-11] : le conseil à l'étudiant absent. Section [-@sec-oral-13] : la liste de préparation personnelle.
+- **Commandes `gh`.** Elles ont été essayées en lecture seule sur le dépôt du cours, pas sur un dépôt d'équipe (il n'en existait pas à la date de l'essai). `gh pr list --state all --search "reviewed-by:@me"` a répondu une liste vide (aucune PR relue) : son résultat sur un dépôt d'équipe n'a pas été observé. La commande avec `--jq` de la section [-@sec-oral-4-3] n'a été essayée que sous Linux. Les écrans GitHub équivalents (filtres de l'onglet « Pull requests », onglets d'une PR) sont décrits de façon générale, sans avoir été rejoués pour ce chapitre.
+- **Essais locaux.** Les essais des sections [-@sec-oral-4-5] et [-@sec-oral-4-6] ont été faits sur une copie du dépôt-modèle nu (fonctionnalité d'exemple `jets`, 32 tests), avec un dépôt distant local, où la fusion d'une PR est simulée par une fusion locale. Ils n'ont pas été faits sur une vraie PR d'équipe. La modification de la règle a été faite à la main, pas par un agent. L'annulation (`git restore lib/ test/`, `build_runner`, `git status`) a été rejouée sur cette copie, avec la règle et un scénario faussés. `flutter run -d chrome` n'a pas été rejoué pour la séance 5. Linux seulement : ni Windows ni macOS.
+- **Le déroulement réel de l'oral** (ordre des questions, affichage de la PR, temps réellement accordé) n'a pas été observé : il est décrit d'après le programme.
+
+:::
+
+
+## Sources
+
+Documents du cours :
+
+- Le programme détaillé (@sec-programme-detaille) : séance 5 (principe du rendu, objectifs, matériel et prérequis, « Format de la soutenance (contrainte de logistique) », blocs 4 à 8, ordre de coupe, « Ne se sacrifient jamais », « Peut glisser », livrable, definition of done) ; section [-@sec-pd-travail] (calendrier du sprint final) ; section [-@sec-pd-evaluation] (grille sur 20, échelle de compréhension orale, repères pour la notation, format de la soutenance, règles d'usage de l'IA).
+- Les thèmes (@sec-themes) : thème B (règle métier « clou », niveaux 1 et 2, cas d'acceptation, première user story, conformité).
+- Le programme (@sec-programme) : horaires de la séance 5.
+- Séance 1 : @sec-design-patterns (sections « Patrons d'architecture : ceux du projet Flutter » et « Patrons et agents de code »). Séance 2 : @sec-demarrer-projet (sections [-@sec-projet-pile], « Ouvrir la PR avec le modèle », « Pourquoi ce suivi » et [-@sec-projet-regles]) et fiche E (annexe [-@sec-fiche-e]). Séance 3 : @sec-travailler-a-plusieurs (sections [-@sec-equipe-4], [-@sec-equipe-5] et [-@sec-equipe-7-3]), @sec-rgpd-projet (section [-@sec-rgpd-5]) et fiche I (annexe [-@sec-fiche-i]). Séance 4 : @sec-test-acceptation (sections [-@sec-acceptation-8-1], [-@sec-acceptation-8-3] et [-@sec-acceptation-10]), @sec-ci-publication (section [-@sec-cipub-7-3]), @sec-securite-audit (section [-@sec-audit-2-4]) et @sec-ai-act-rssi (section [-@sec-aiact-9-3]).
+
+Dépôt-modèle (relu le 27 novembre 2026) : `.github/pull_request_template.md`, `README.md` (« Démarrer », « Ce que contient le dépôt »), `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/fiche_conformite.md`, `test/scenarios/jets/lancer_un_de.feature`.
+
+Vérifications locales (27 novembre 2026, Linux, git 2.53.0, Flutter 3.50.1, Dart 3.14.0), sur une copie du dépôt-modèle placée hors du dépôt du cours, avec un dépôt distant local :
+
+- clone, `flutter pub get`, `dart run build_runner build --delete-conflicting-outputs` (83 sorties), `flutter test` (`+32: All tests passed!`) ;
+- règle d'exemple modifiée à la main (un jet égal au degré de difficulté devient un échec) : `flutter test` donne `+28 -4: Some tests failed.` et la liste des quatre tests rouges citée dans la section [-@sec-oral-4-6] ; puis `git restore lib/`, `git status` (copie de travail propre) et `flutter test` de nouveau vert ;
+- annulation rejouée : `git restore` sans chemin (`fatal: vous devez spécifier un ou des chemins à restaurer`) ; règle et scénario faussés, puis `git restore lib/ test/`, `dart run build_runner build --delete-conflicting-outputs`, `git status` (copie de travail propre), `flutter test` (`+32: All tests passed!`) ;
+- `git log --oneline --merges -3`, `git switch --detach 5d2e30f~1`, `git status`, `git switch main` (sorties citées dans la section [-@sec-oral-4-5]).
+
+Commandes `gh` (gh 2.100.0), essayées en lecture seule sur le dépôt du cours le 27 novembre 2026 : `gh pr list --state merged --author "@me"`, `gh pr list --state all --search "reviewed-by:@me"`, `gh pr view <numéro> --json number,title,additions,deletions,changedFiles`, `gh pr view <numéro> --json files --jq …`, `gh pr view <numéro> --json commits --jq '.commits[].messageHeadline'`, `gh pr diff <numéro> --name-only`.

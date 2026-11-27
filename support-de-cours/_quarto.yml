@@ -61,9 +61,12 @@ book:
         - partie-6-seance-4/02-ci-cd-et-publication.qmd
         - partie-6-seance-4/03-securite-et-audit-croise.qmd
         - partie-6-seance-4/04-ai-act-et-rssi.qmd
-    - part: "Séance 5 · Retouches finales et soutenance"
+    - part: partie-7-seance-5/index.qmd
       chapters:
-        - partie-5-a-venir/seance-5.qmd
+        - partie-7-seance-5/00-seance-en-bref.qmd
+        - partie-7-seance-5/01-geler-et-livrer.qmd
+        - partie-7-seance-5/02-la-soutenance-d-equipe.qmd
+        - partie-7-seance-5/03-l-oral-individuel-et-la-note.qmd
   appendices:
     - annexes/a-fiches-pratiques.qmd
     - annexes/b-glossaire.qmd

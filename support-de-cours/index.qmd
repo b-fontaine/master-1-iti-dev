@@ -13,7 +13,7 @@ Ce livre accompagne la formation « Créer avec l'IA, dialoguer avec les dévelo
 ## Trois parcours de lecture
 
 1. **Étudiant** : la partie I (programme), puis les parties de séance dans l'ordre, en gardant les fiches pratiques en annexe sous la main.
-2. **Responsable pédagogique** : la partie I, le chapitre sur la conformité et la page d'annonce de la séance à venir.
+2. **Responsable pédagogique** : la partie I, le chapitre sur la conformité et la partie de la séance 5, qui décrit la soutenance et la notation.
 3. **Lecteur autonome** : le chapitre « Suivre le parcours en autonome » (@sec-parcours-autonome), puis les séances dans l'ordre.
 
 ## Réserves
@@ -21,7 +21,6 @@ Ce livre accompagne la formation « Créer avec l'IA, dialoguer avec les dévelo
 - Ce livre a été rédigé avec l'assistance d'outils d'IA, puis relu.
 - Certains points n'ont pas pu être vérifiés ; ils sont signalés dans les chapitres concernés.
 - Les outils décrits évoluent vite : l'état des outils est daté dans chaque chapitre qui en parle.
-- La séance 5 est annoncée ; ses chapitres paraîtront dans une prochaine édition.
 
 ## Édition et licence
 

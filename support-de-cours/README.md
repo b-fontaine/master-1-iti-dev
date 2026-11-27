@@ -55,15 +55,15 @@ bash support-de-cours/scripts/version-suivante.sh --notes  # commits qui la comp
 4. Ajouter la ligne correspondante à la table ci-dessous.
 5. Lancer `task book:check`.
 
-### Remplacer la page « à paraître » d'une séance K (5)
+### Ajouter la partie d'une séance
 
-Des chapitres existants (par exemple `@sec-s3`, `@sec-s4`, `@sec-s5`) renvoient à ces pages : on garde donc l'identifiant `#sec-sK` sur le chapitre « La séance en bref » de la nouvelle partie, et les renvois continuent de fonctionner (vérifier d'abord avec `grep -rn "sec-sK" support-de-cours/*/*.qmd`).
+Les cinq séances ont leur partie (`partie-2-seance-1/` à `partie-7-seance-5/`) : il n'y a plus de page « à paraître ». Pour une séance K supplémentaire, ou pour refondre une partie :
 
-1. Créer `partie-N-seance-K/` en suivant `partie-3-seance-2/` : `index.qmd` (page de la partie), `00-seance-en-bref.qmd` (tiré du diaporama, titre `# La séance K en bref {#sec-sK}` : le numéro dans le titre distingue les entrées de la table des matières de l'EPUB, qui n'a pas de pages de partie) et les chapitres numérotés.
-2. Dans `_quarto.yml`, remplacer l'entrée `part: "Séance K · …"` (qui liste l'unique chapitre `partie-5-a-venir/seance-K.qmd`) par `part: partie-N-seance-K/index.qmd` listant les nouveaux chapitres, dans l'ordre des séances, avant les parties d'annonce restantes.
-3. Supprimer `partie-5-a-venir/seance-K.qmd`.
-4. Ajouter les lignes à la table de correspondance et retirer l'ancienne mention de la page d'annonce.
-5. Dans `index.qmd`, mettre à jour la ligne « Réserves » (« Les séances 3 à 5 sont annoncées… ») et la version (« version du … »), puis `book.date` dans `_quarto.yml`.
+1. Créer `partie-N-seance-K/` en suivant `partie-7-seance-5/` : `index.qmd` (page de la partie), `00-seance-en-bref.qmd` (tiré du diaporama, titre `# La séance K en bref {#sec-sK}` : le numéro dans le titre distingue les entrées de la table des matières de l'EPUB, qui n'a pas de pages de partie) et les chapitres numérotés. Des chapitres existants renvoient à `@sec-s3`, `@sec-s4` et `@sec-s5` : ces identifiants restent sur le chapitre « La séance K en bref » (vérifier avec `grep -rn "sec-sK" support-de-cours/*/*.qmd`).
+2. Donner à chaque section numérotée du support l'identifiant `sec-<préfixe>-N` et à chaque sous-section `sec-<préfixe>-N-M`, avec les numéros du support : les renvois entre chapitres s'écrivent alors sans chercher.
+3. Dans `_quarto.yml`, ajouter l'entrée `part: partie-N-seance-K/index.qmd` listant les nouveaux chapitres, dans l'ordre des séances.
+4. Ajouter les lignes à la table de correspondance.
+5. Dans `index.qmd`, mettre à jour les « Réserves » si elles citent la séance.
 6. Dans `partie-1-formation/03-parcours-autonome.qmd`, mettre à jour la ligne de la séance dans le tableau du parcours.
 7. Fusionner les nouvelles entrées dans `annexes/b-glossaire.qmd` et ajouter les nouvelles fiches dans `annexes/a-fiches-pratiques.qmd`.
 8. Lancer `task book:check`.
@@ -75,7 +75,7 @@ Tout fichier de `cours/` qui nourrit le livre figure ici. Le chemin source est c
 | Source | Chapitre (fichier · identifiant) |
 |---|---|
 | `README.md` (racine) | `partie-1-formation/01-programme.qmd` · `#sec-programme` ; glossaire repris dans `annexes/b-glossaire.qmd` · `#sec-glossaire` |
-| `cours/programme-detaille.md` | `partie-1-formation/02-programme-detaille.qmd` · `#sec-programme-detaille` ; séance à venir : `partie-5-a-venir/seance-5.qmd` · `#sec-s5` |
+| `cours/programme-detaille.md` | `partie-1-formation/02-programme-detaille.qmd` · `#sec-programme-detaille` |
 | `cours/presentations/day-1/index.html`, `cours/presentations/day-1/notes.html` | `partie-2-seance-1/00-seance-en-bref.qmd` · `#sec-s1-en-bref` |
 | `cours/supports/day-1/01-histoire-detaillee-du-craft.md` | `partie-2-seance-1/01-histoire-du-craft.qmd` · `#sec-histoire-craft` |
 | `cours/supports/day-1/02-histoire-de-l-ia.md` | `partie-2-seance-1/02-histoire-de-l-ia.qmd` · `#sec-histoire-ia` |
@@ -103,6 +103,11 @@ Tout fichier de `cours/` qui nourrit le livre figure ici. Le chemin source est c
 | `cours/supports/day-4/03-securite-et-audit-croise.md` | `partie-6-seance-4/03-securite-et-audit-croise.qmd` · `#sec-securite-audit` |
 | `cours/supports/day-4/04-ai-act-et-rssi.md` | `partie-6-seance-4/04-ai-act-et-rssi.qmd` · `#sec-ai-act-rssi` |
 | `cours/supports/day-4/05-fiches-de-seance.md` | `annexes/a-fiches-pratiques.qmd` · `#sec-fiches` (fiches O à V) |
+| `cours/presentations/day-5/index.html`, `cours/presentations/day-5/notes.html` | `partie-7-seance-5/00-seance-en-bref.qmd` · `#sec-s5` |
+| `cours/supports/day-5/01-geler-et-livrer.md` | `partie-7-seance-5/01-geler-et-livrer.qmd` · `#sec-geler-livrer` |
+| `cours/supports/day-5/02-la-soutenance-d-equipe.md` | `partie-7-seance-5/02-la-soutenance-d-equipe.qmd` · `#sec-soutenance-equipe` |
+| `cours/supports/day-5/03-l-oral-individuel-et-la-note.md` | `partie-7-seance-5/03-l-oral-individuel-et-la-note.qmd` · `#sec-oral-individuel` |
+| `cours/supports/day-5/04-fiches-de-seance.md` | `annexes/a-fiches-pratiques.qmd` · `#sec-fiches` (fiches W à Z) |
 | `cours/projets/themes.md`, `cours/presentations/themes/index.html`, `cours/presentations/themes/notes.html` | `partie-4-projet/01-themes.qmd` · `#sec-themes` |
 | `cours/conformite-ai-act-rgpd.md` | `partie-4-projet/02-conformite.qmd` · `#sec-conformite` |
 | _(texte original, sans source)_ | `index.qmd` (avant-propos), `partie-1-formation/03-parcours-autonome.qmd` · `#sec-parcours-autonome`, pages d'ouverture de partie |
