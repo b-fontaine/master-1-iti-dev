@@ -177,7 +177,7 @@ Chemin unique pour toutes les équipes. Les rubriques résumées dans `themes.md
 
 | Question | Réponse |
 |---|---|
-| **Qui** | Le RSSI (simulé par l'enseignant ou tenu par le RSSI de l'établissement ; choix à indiquer aux étudiants), avec le DPO le cas échéant. En S4, trois tables en parallèle : un RSSI par table (enseignant, RSSI de l'établissement, aide ou second intervenant ; à défaut étudiant volontaire avec la grille) |
+| **Qui** | Le RSSI (simulé par l'enseignant), avec le DPO le cas échéant. En S4, trois tables en parallèle : un RSSI par table (enseignant, RSSI de l'établissement, aide ou second intervenant ; à défaut étudiant volontaire avec la grille) |
 | **Quand** | Début de fiche en S3 (avec le modèle de données) ; passage devant le RSSI en S4 (mercredi 16 décembre 2026) ; v1 de la fiche en pull request le vendredi 18 décembre 2026 ; réponse du RSSI au plus tard une semaine avant S5 ; mise à jour avant la soutenance en S5, le vendredi 29 janvier 2027 après-midi |
 | **Quoi** | La fiche, le dépôt (aucun secret, aucune donnée réelle), la CI verte, l'analyse des données |
 | **Critères go** | Données fictives ou justifiées ; finalité unique ; durée et suppression définies ; pas de donnée personnelle dans les prompts ; rôle AI Act et classement qualifiés et argumentés ; accès par rôle testé ; limites d'usage écrites |

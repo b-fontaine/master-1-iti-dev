@@ -1,4 +1,4 @@
-<!-- source: cours/presentations/day-3/index.html, cours/presentations/day-3/notes.html · synchro: 2026-11-26 -->
+<!-- source: cours/presentations/day-3/index.html, cours/presentations/day-3/notes.html · synchro: 2026-11-27 -->
 
 # La séance 3 en bref {#sec-s3}
 
@@ -43,10 +43,10 @@ Les fichiers générés par `build_runner` (code de la base, tests tirés des sc
 
 ### Travailler à plusieurs
 
-Quatre habitudes : des **petites PR** (une PR fait une seule chose, son diff se lit en entier), des **branches courtes** (moins une branche s'écarte de `main`, moins elle entre en conflit), une **relecture qui regarde** (quoi regarder, comment commenter : la checklist de revue, fiche I) et l'idée que **le conflit est normal** : deux branches ont touché le même fichier, on choisit, on efface les marqueurs, on commite. Pour le pas-à-pas de la résolution, voir @sec-git-conflit ; pour ce qui change dans un dépôt d'équipe dont `main` est protégée, voir @sec-equipe-6.
+Quatre habitudes : des **petites PR** (une PR annonce une seule chose : elle se démontre et se vérifie facilement), des **branches courtes** (moins une branche s'écarte de `main`, moins elle entre en conflit), une **relecture par les preuves** (lire ce que la PR annonce, la voir fonctionner, vérifier que la liste des fichiers touchés correspond à l'annonce, sans juger le code ligne à ligne : la checklist de revue, fiche I) et l'idée que **le conflit est normal** : deux branches ont touché le même fichier, on choisit, on efface les marqueurs, on commite. Pour le pas-à-pas de la résolution, voir @sec-git-conflit ; pour ce qui change dans un dépôt d'équipe dont `main` est protégée, voir @sec-equipe-6.
 
 ::: {.callout-tip title="À retenir"}
-« Don't file pull requests with code you haven't reviewed yourself » (Simon Willison) : n'ouvrez pas une pull request sur du code que vous n'avez pas relu vous-même. C'est vrai du code qu'on écrit, et plus encore de celui qu'un agent a écrit pour vous.
+« Don't file pull requests with code you haven't reviewed yourself » (Simon Willison) : n'ouvrez pas une pull request sur du code que vous n'avez pas relu vous-même. Avant de demander la relecture, l'auteur a vu sa PR fonctionner et sait l'expliquer. C'est vrai du code qu'on écrit, et plus encore de celui qu'un agent a écrit pour vous.
 :::
 
 Les paires de la revue croisée dépendent du nombre d'équipes.
@@ -65,7 +65,7 @@ L'ordre compte : un **plan** demandé à l'agent en mode plan, et critiqué ; le
 L'exemple suivi est celui du thème B : pour un quart de 480 minutes avec une pause de 30 minutes, une panne de 45 minutes et un changement de série de 15 minutes, le temps requis est de 450 minutes, le temps de marche de 390 minutes, la disponibilité de 86,7 %. Les thèmes A et C ont chacun leur première story et leur sous-règle isolée, données dans le `PROJET.md` de l'équipe (voir aussi @sec-themes).
 
 ::: {.callout-warning title="Repérer un test triché"}
-Un agent à qui l'on demande de « faire passer les tests » peut y parvenir en changeant les tests. Cinq formes à reconnaître : un test supprimé, un test désactivé, une attente assouplie, un scénario retouché, une valeur aléatoire figée pour que le résultat tombe juste. Le réflexe, à chaque PR : regarder ce qui a bougé du côté des tests avant de regarder le code. Voir @sec-story-8.
+Un agent à qui l'on demande de « faire passer les tests » peut y parvenir en changeant les tests. Cinq formes à reconnaître : un test supprimé, un test désactivé, une attente assouplie, un scénario retouché, une valeur aléatoire figée pour que le résultat tombe juste. Le réflexe, à chaque PR : regarder d'abord, dans la liste des fichiers touchés, si un test ou un scénario a bougé. Voir @sec-story-8.
 :::
 
 ### Le RGPD appliqué au projet

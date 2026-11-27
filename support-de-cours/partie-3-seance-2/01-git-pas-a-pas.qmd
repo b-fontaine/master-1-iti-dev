@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-2/01-git-pas-a-pas.md · synchro: 2026-11-25 -->
+<!-- source: cours/supports/day-2/01-git-pas-a-pas.md · synchro: 2026-11-27 -->
 
 # Git pas à pas {#sec-git}
 
@@ -406,9 +406,10 @@ Vous pouvez aussi tout faire depuis le site : après un push, la page du dépôt
 
 Envoyez l'adresse de votre PR à votre binôme (`gh pr view --web` l'ouvre). Le relecteur, sur la page de la PR :
 
-1. ouvre l'onglet **Files changed** et lit le diff en entier ;
-2. peut commenter une ligne précise (bouton `+` qui apparaît au survol de la ligne) ;
-3. clique sur **Review changes**, écrit un commentaire d'ensemble, choisit **Comment** (simple remarque), **Approve** (j'approuve) ou **Request changes** (je demande des modifications), puis **Submit review**.
+1. lit le titre et la description : ce que la PR annonce ;
+2. ouvre l'onglet **Files changed** et vérifie que la **liste** des fichiers touchés correspond à cette annonce (ici, `recette.md` seul) ;
+3. peut commenter une ligne précise (bouton `+` qui apparaît au survol de la ligne) ;
+4. clique sur **Review changes**, écrit un commentaire d'ensemble, choisit **Comment** (simple remarque), **Approve** (j'approuve) ou **Request changes** (je demande des modifications), puis **Submit review**.
 
 Si des modifications sont demandées, l'auteur fait de nouveaux commits **sur la même branche** et pousse : la PR se met à jour toute seule.
 
@@ -728,9 +729,9 @@ Ce cas est fréquent le premier jour, et il rend service : l'adresse refusée n'
 
 Claude Code sait lancer toutes les commandes de ce chapitre, et il le fera sur demande : créer une branche, commiter, ouvrir une PR. Trois habitudes vous gardent aux commandes :
 
-- **Lire avant d'accepter.** Quand l'agent propose une commande git, vous savez maintenant la lire. `git add .` suivi d'un commit sans que vous ayez vu le diff mérite un refus.
+- **Lire avant d'accepter.** Quand l'agent propose une commande git, vous savez maintenant la lire. `git add .` suivi d'un commit sans que vous ayez vu quels fichiers changent (`git status`) mérite un refus.
 - **Vérifier la branche.** Avant de lui confier une tâche : `git status`. Un agent lancé sur `main` travaille sur `main`.
-- **Relire le diff, pas le résumé.** L'agent décrit ce qu'il a fait ; le diff montre ce qui a réellement changé. C'est le diff qui fait foi, et c'est lui que votre relecteur verra.
+- **Vérifier par les preuves, pas par le résumé.** L'agent décrit ce qu'il a fait ; la liste des fichiers modifiés et les tests montrent ce qui a réellement changé. Ce sont ces preuves qui font foi, et ce sont elles que votre relecteur regardera.
 
 Les commandes dangereuses (`git push --force`, `rm -rf`) seront refusées par configuration, et non par simple consigne : c'est l'objet du chapitre [-@sec-configurer-claude-code].
 
@@ -809,7 +810,7 @@ L'agent tape vite ; vous lisez ce qu'il tape. La branche, la PR relue et la prot
 - **`.gitignore`** : fichier qui liste ce que git doit ignorer.
 - **Pull request (PR)** : demande de relecture et de fusion, sur GitHub.
 - **Pousser, tirer** (*push*, *pull*) : envoyer ses commits vers le dépôt distant, récupérer ceux des autres.
-- **Relecture** (*review*) : lecture du diff d'une PR par un autre que son auteur, conclue par un commentaire, une approbation ou une demande de modifications.
+- **Relecture** (*review*) : vérification d'une PR par un autre que son auteur, par les preuves (ce qu'elle annonce, son fonctionnement, la liste des fichiers touchés), conclue par un commentaire, une approbation ou une demande de modifications.
 - **Tag** : étiquette fixe posée sur un commit (`s2-fin`, `v1.0`).
 - **Upstream** : branche distante que suit une branche locale.
 

@@ -456,7 +456,7 @@ $ git push origin s2-fin
 À lire dans l'ordre, par le relecteur **et** par l'auteur avant de demander la relecture.
 
 1. **Je comprends ce que fait cette PR, et je saurais l'expliquer.**
-2. **Elle fait une seule chose, et le diff se lit en entier.**
+2. **Elle fait ce qu'elle annonce : je l'ai vue fonctionner (scénario, tests verts, application lancée), et les fichiers touchés correspondent à l'annonce.**
 3. **Les vérifications passent : `flutter analyze`, `flutter test`.**
 4. **Aucun secret, aucune donnée réelle ou personnelle.**
 5. **Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées.**
@@ -549,7 +549,6 @@ Les autres termes (commit, branche, PR, conflit, permission, skill, hook…) son
 - **Fiche A, boutons de VS Code** : libellés anglais relevés dans la documentation de VS Code. Avec l'interface en français, ils se lisent « Accepter la modification actuelle », « Accepter la modification entrante », « Accepter les deux modifications » d'après les fichiers de traduction ; ils n'ont pas été observés à l'écran.
 - **Fiche B** : les sept règles de refus, l'expérience avant et après et le skill ont été testés avec Claude Code 2.1.325 en exécution non interactive ; `/init`, `/permissions`, `/reload-skills` et les commandes de plugin n'ont pas été exécutés. Voir les réserves du chapitre 2.
 - **Fiche C** : les commandes Flutter de l'étape 1 ont été jouées sur le dépôt-modèle le 26 novembre 2026, sous Linux seulement, avec Flutter 3.50.1 (32 tests verts, `flutter analyze` sans remarque) ; elles n'ont été essayées ni sous Windows ni sous macOS, et le clone depuis GitHub n'a pas été fait (le dépôt-modèle n'est pas encore publié). La séquence git (branche, push, commit vide, `git reset --hard origin/main`, tag) a été jouée contre un dépôt distant local. Le refus `GH006` n'a pas été observé ; son libellé complet n'est attesté que par des sources communautaires.
-- **Fiche D** : le programme fixe « cinq lignes », pas leur texte ; celui-ci est une proposition des supports, à valider par l'enseignant.
 - **Fiche E** : recopiée du `.github/pull_request_template.md` du dépôt-modèle ; son affichage à l'ouverture d'une PR sur GitHub n'a pas été observé (le dépôt-modèle n'est pas encore publié).
 - **Fiche F** : la sortie de vim (`Échap`, `:q!`) et le message exact d'un push refusé faute d'invitation acceptée n'ont pas été vérifiés sur une source officielle.
 

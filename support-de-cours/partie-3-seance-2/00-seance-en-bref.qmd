@@ -1,4 +1,4 @@
-<!-- source: cours/presentations/day-2/index.html, cours/presentations/day-2/notes.html · synchro: 2026-11-26 -->
+<!-- source: cours/presentations/day-2/index.html, cours/presentations/day-2/notes.html · synchro: 2026-11-27 -->
 
 # La séance 2 en bref {#sec-s2-en-bref}
 
@@ -92,7 +92,7 @@ Le dépôt d'équipe contient déjà une application Flutter qui démarre, rang�
 L'atelier d'initialisation enchaîne cinq étapes : cloner, installer et vérifier sur chaque poste ; lire le contexte et compléter `PROJET.md` (les stories du socle sont obligatoires ; parmi celles à choisir, trois à cinq sont retenues) ; ouvrir une PR avec le modèle du dépôt ; la faire relire, la fusionner et constater que `main` refuse un push direct ; écrire l'état courant dans `JOURNAL.md` et poser le tag `s2-fin`.
 
 ::: {.callout-tip title="Relire une PR : cinq lignes"}
-1. Je comprends ce que fait cette PR, et je saurais l'expliquer. 2. Elle fait une seule chose, et le diff se lit en entier. 3. Les vérifications passent. 4. Aucun secret, aucune donnée réelle ou personnelle. 5. Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées. Celui qui approuve est aussi responsable que celui qui ouvre.
+1. Je comprends ce que fait cette PR, et je saurais l'expliquer. 2. Elle fait ce qu'elle annonce : je l'ai vue fonctionner (scénario, tests verts, application lancée), et les fichiers touchés correspondent à l'annonce. 3. Les vérifications passent. 4. Aucun secret, aucune donnée réelle ou personnelle. 5. Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées. On relit par les preuves (ce que la PR annonce, son fonctionnement, la liste des fichiers touchés), pas le code ligne à ligne. Celui qui approuve est aussi responsable que celui qui ouvre.
 :::
 
 `PROJET.md` est un document de décision : l'agent aide à rédiger, l'équipe décide. La séance se clôt par une phrase par équipe (le thème et la première user story, sous la forme « En tant que… je veux… afin de… ») et par les consignes de fin : état courant dans `JOURNAL.md`, tag `s2-fin`, puis la suite du calendrier (@sec-projet-calendrier). Détails : @sec-demarrer-projet.

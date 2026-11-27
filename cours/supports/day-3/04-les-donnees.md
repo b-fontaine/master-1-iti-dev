@@ -534,7 +534,7 @@ Le test est vert, et il ne prouve plus rien : il n'y a plus d'orphelin dans le t
 
 Comment le repérer en relecture, sans lire le code en détail :
 
-- le diff de la PR **touche un fichier de test** alors que la demande portait sur le code ; c'est la question 5 de la checklist de revue (chapitre 1, section 5) ;
+- la liste des fichiers de la PR **contient un fichier de test** alors que la demande portait sur le code ; c'est la question 5 de la checklist de revue (chapitre 1, section 5) ;
 - dans un test de refus, la donnée « interdite » a disparu (ici, le poste n° 99), ou l'attente est passée de « lève une erreur » à « réussit » ;
 - le titre du test (« refuse un quart orphelin ») ne correspond plus à ce que fait son corps.
 
@@ -611,7 +611,7 @@ Le résultat a été contrôlé sur une base enregistrée dans un fichier : cré
 
 **La mauvaise sortie, et pourquoi la CI ne la voit pas.** La tentation, pendant le conflit, est de « tout garder en version 2 » : réunir les trois tables dans `from1To2`, supprimer `drift_schema_v2.json` (comme le suggère le message d'erreur de la section 5.4) et le regénérer. Cette résolution a été essayée : `flutter analyze` sans remarque, `flutter test` vert (39 tests), et **le contrôle de la CI passe**, puisque l'instantané regénéré est cohérent avec le code. Pourtant, une base déjà en version 2 (créée avec le code de `main`, comme celle d'un navigateur qui a ouvert la version publiée) a été ouverte avec ce code : elle est restée en version 2, **sans** la table `ordres_fabrication`. drift n'a rien à migrer, puisque la version n'a pas changé. Rien ne le signale ; l'erreur n'apparaîtra qu'à la première écriture dans cette table, chez quelqu'un d'autre.
 
-D'où la règle : **un instantané déjà fusionné dans `main` ne se supprime ni ne se regénère**. En relecture, une PR dont le diff modifie un fichier `drift_schema_vN.json` existant (et pas seulement en ajoute un nouveau) est à refuser (ligne 9 de la checklist de revue, chapitre 1, section 5).
+D'où la règle : **un instantané déjà fusionné dans `main` ne se supprime ni ne se regénère**. En relecture, une PR dont la liste des fichiers montre un `drift_schema_vN.json` existant modifié ou supprimé (et pas seulement un nouveau ajouté) est à refuser (ligne 9 de la checklist de revue, chapitre 1, section 5).
 
 **Encore mieux : ne pas en arriver là.** Quand le gardien des données sait qu'une migration est en cours, la seconde personne attend que la première PR soit fusionnée, met sa branche à jour, et fait directement la version 3. Le conflit n'a pas lieu.
 
@@ -750,7 +750,7 @@ Le livrable de fin de séance, identique pour les trois thèmes, dit « modèle 
 - **Base déjà en version 2 ouverte par le code résolu** (section 7.2) : simulée avec une base enregistrée dans un fichier, sur le bureau Linux, pas dans un navigateur.
 - **Message de `git pull origin main`** : le conflit a été obtenu avec `git pull origin main` (réglage `pull.rebase false`) dans un clone, et avec `git merge` dans la copie ; la sortie anglaise citée vient de `git merge` avec `LC_ALL=C`. GitHub, qui signale le conflit sur la page de la PR, n'a pas été utilisé.
 - **Le piège de l'agent** (section 7.1) : la modification du test a été écrite à la main pour reproduire ce que ferait un agent ; aucun agent n'a été lancé.
-- **Texte de la règle pour `CLAUDE.md`** (section 7.3) et **commentaire de la fiche** (section 8) : propositions des supports, à valider par l'enseignant.
+- **Commentaire de la fiche** (section 8) : proposition des supports, à valider par l'enseignant.
 - **Le modèle est validé « en passant par l'enseignant ou une aide »** : la forme de cette validation (photo, schéma dans la PR) est une suggestion du chapitre, pas une consigne du programme.
 
 ---

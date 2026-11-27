@@ -4,7 +4,7 @@
 
 Ce chapitre accompagne les quatre blocs RGPD de la séance : les notions (bloc 4), vos droits (bloc 5), le test en quatre questions et la qualification des données de votre thème (bloc 6), puis le début de la fiche de conformité (bloc 7). Il ne redit pas le cours de droit : celui-ci est dans le **module de conformité** (`cours/conformite-ai-act-rgpd.md`), qui fait foi. Pour chaque notion, vous trouverez ici une phrase de rappel, le renvoi précis vers le module, puis ce que cette notion veut dire **dans le dépôt de votre équipe**. Les exemples suivis portent sur le thème B (le TRS de la ligne 4) ; les thèmes A et C ont leur ligne dans chaque tableau.
 
-> **Sensibilisation, pas avis juridique : la validation revient au RSSI et au DPO.** Ce chapitre vous apprend à reconnaître les questions et à les écrire proprement dans une fiche. Il ne tranche aucune question de droit à la place du responsable de la sécurité des systèmes d'information (RSSI) ni du délégué à la protection des données (DPO). Dans la formation, le RSSI est simulé par l'enseignant ou tenu par le RSSI de l'établissement.
+> **Sensibilisation, pas avis juridique : la validation revient au RSSI et au DPO.** Ce chapitre vous apprend à reconnaître les questions et à les écrire proprement dans une fiche. Il ne tranche aucune question de droit à la place du responsable de la sécurité des systèmes d'information (RSSI) ni du délégué à la protection des données (DPO). Dans la formation, le RSSI est simulé par l'enseignant.
 
 ## Ce que vous allez retenir
 
@@ -434,7 +434,7 @@ Une validation « go sous conditions » liste des actions datées ; sans répons
 - **CSE.** L'information et la consultation des représentants du personnel pour un outil de mesure de l'activité (thème B, Code du travail, art. L. 2312-38) sont marquées « à vérifier » dans l'énoncé des thèmes (`cours/projets/themes.md`), d'où elles viennent.
 - **Durées proposées** (30 jours, trois mois, un trimestre) : ce sont des exemples des énoncés, pas des durées légales.
 - **Date de suppression du dépôt dans la formation** : aucun document du cours ne la fixe. Le module demande de supprimer « données et dépôt » à la fin de vie, alors que les `PROJET.md` prévoient un archivage du dépôt : l'équipe se renseigne auprès de l'enseignant.
-- **Exemple de fiche (8.7) et trame de courriel (5.3)** : rédigés pour ce chapitre, à valider par l'enseignant. Les gestes git de la PR de la fiche renvoient au chapitre 3 de la séance 2 et n'ont pas été rejoués pour ce chapitre.
+- **Exemple de fiche (8.7) et trame de courriel (5.3)** : rédigés pour ce chapitre. Les gestes git de la PR de la fiche renvoient au chapitre 3 de la séance 2 et n'ont pas été rejoués pour ce chapitre.
 - **Dates et calendrier** (4, 16 et 18 décembre 2026, séance 5 le vendredi 29 janvier 2027 après-midi) : repris du programme, susceptibles d'ajustement par l'enseignant.
 
 ---

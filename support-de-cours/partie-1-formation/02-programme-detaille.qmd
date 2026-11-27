@@ -1,4 +1,4 @@
-<!-- source: cours/programme-detaille.md · synchro: 2026-11-26 -->
+<!-- source: cours/programme-detaille.md · synchro: 2026-11-27 -->
 
 # Le programme détaillé {#sec-programme-detaille}
 
@@ -461,7 +461,7 @@ Ne se sacrifient jamais : contrôle d'ouverture, première user story en TDD et 
 - Dépôts de S3 avec modèle de données et fiche commencée.
 - Workflow GitHub Actions modèle (`flutter analyze`, `flutter test --coverage`, audit des dépendances pub, gitleaks épinglé, `flutter build web --release --base-href "/<dépôt>/" --no-web-resources-cdn --web-content-hash`, déploiement GitHub Pages) testé à l'avance sur un dépôt de l'organisation, avec GitHub Pages activé (à vérifier) ; aucun compte de service cloud ni démonstration de déploiement par l'enseignant.
 - Cartes de cas (10) et grille go/no-go imprimées ; checklist d'audit en 5 points ; plan des 3 tables.
-- **RSSI désigné** (enseignant ou RSSI de l'établissement, choix à faire avant S3, voir @sec-pd-conformite), **trois intervenants pour les trois tables** (second et troisième à confirmer ; à défaut, étudiants volontaires) et réponse écrite au plus tard une semaine avant S5.
+- **RSSI simulé par l'enseignant** (choix fait avant S3, voir @sec-pd-conformite), **trois intervenants pour les trois tables** (second et troisième à confirmer ; à défaut, étudiants volontaires) et réponse écrite au plus tard une semaine avant S5.
 - 2 aides en S4, dont l'une tient une table RSSI.
 
 **Légende des poids :** **Indispensable** = ne pas sacrifier ; **Important** = sauf contrainte forte ; **Pratique** = si le rythme le permet, ou en ressource ; **Moins utile** = peut sauter ou rester en lecture.
@@ -880,7 +880,7 @@ Le module de référence est le chapitre [-@sec-conformite] (sensibilisation, pa
 - **Calendrier** : début en S3 (commité en fin de séance), passage devant le RSSI en S4, **v1 en PR le vendredi 18 décembre 2026, réponse du RSSI au plus tard une semaine avant S5**, qui a lieu le vendredi 29 janvier 2027 après-midi.
 - **Portée d'un « go »** : il vaut uniquement pour le périmètre pédagogique à données fictives ; tout passage à des données réelles impose une nouvelle fiche et une nouvelle validation.
 
-**Le RSSI : choix de l'enseignant, avant S3.** Soit le RSSI est **simulé par l'enseignant** (déroulé identique, ton réaliste, no-go possible), soit il est **tenu par le RSSI de l'établissement** (invité en S4 ou répondant par écrit aux PR). Le passage de S4 ayant lieu sur **3 tables en parallèle**, il faut trois intervenants ou, à défaut, des étudiants volontaires munis de la grille. Dans tous les cas : critères go et no-go du module de conformité (@sec-conformite), réponse écrite et datée dans la PR, absence de réponse = no-go par défaut.
+**Le RSSI : simulé par l'enseignant (choix fait avant S3).** Le RSSI est **simulé par l'enseignant** (déroulé identique, ton réaliste, no-go possible), et non tenu par le RSSI de l'établissement. Le passage de S4 ayant lieu sur **3 tables en parallèle**, il faut trois intervenants ou, à défaut, des étudiants volontaires munis de la grille. Dans tous les cas : critères go et no-go du module de conformité (@sec-conformite), réponse écrite et datée dans la PR, absence de réponse = no-go par défaut.
 
 **Points d'attention pour les thèmes** (mesures incluses dans les 15 à 20 h). A : le monde est inventé, pas ses utilisateurs : identifiant de l'utilisateur (donnée personnelle) ; **mention d'information et script de suppression documenté obligatoires**, export des données de l'utilisateur en extension ; monde original, sans emprunt à une œuvre existante ni personne réelle. B : **aucun identifiant d'opérateur stocké dans les données métier** (seul le compte de connexion existe) ; contrôle des commentaires libres par une consigne affichée et une revue en audit croisé ; suivi individuel de la performance à qualifier (annexe III, point 4, à discuter ; consultation des représentants du personnel dans un contexte réel, à vérifier). C : décision d'affectation (art. 22 RGPD) ; **champ de statut `brouillon` / `publie` obligatoire** : la validation humaine effective avant publication est ce qui peut écarter la qualification de décision exclusivement automatisée (à vérifier avec le RSSI ou le DPO) ; éducation (annexe III, point 3), droit à l'explication ; « traiter comme si haut risque » est une **démarche de précaution pédagogique, pas une qualification juridique**. Le thème C demande plus de travail de conformité.
 
