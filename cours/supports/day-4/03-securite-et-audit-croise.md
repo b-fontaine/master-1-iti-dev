@@ -1,0 +1,693 @@
+# Chapitre 3 · La sécurité et l'audit croisé
+
+*Séance 4 « Qualité, CI/CD, sécurité, AI Act et validation RSSI » · Master ITI, Nantes Université, 2026-2027. Chapitre à lire avant ou après la séance. Extraits de code, commandes et sorties exécutés le 27 novembre 2026 sous Linux, sur une copie du dépôt-modèle, avec Flutter 3.50.1 (Dart 3.14.0), drift 2.35.4, git 2.53.0 et gh 2.100.0. Rien n'a été exécuté sur GitHub.*
+
+Ce chapitre accompagne deux blocs de la séance. Le bloc 7, un exposé avec démonstration, donne les réflexes de sécurité essentiels : cinq risques courants, l'import et l'export CSV, le risque d'injection de prompt, et le cycle « trouver, reproduire par un test, corriger ». Le bloc 11, un atelier, vous fait auditer le dépôt d'une équipe d'un autre thème sur cinq points, et ouvrir vos constats en issues. L'exemple suivi est le thème B (le TRS de la ligne 4) ; les équipes des thèmes A et C trouveront leurs propres points en section 10.
+
+Deux principes tiennent tout le chapitre. Vous n'avez pas à lire le code pour repérer un risque ou pour auditer un dépôt : vous regardez des **preuves** (une recherche dans le dépôt, un test rouge ou vert, une pastille de CI, l'application lancée, un rapport d'outil), comme pour la relecture de la séance 3. Et c'est l'agent qui écrit le code : vous fixez ce qu'il doit garantir, et vous vérifiez qu'il le garantit.
+
+## Ce que vous allez retenir
+
+- **Cinq risques courants**, repris de la pratique de l'OWASP Top 10 : injection SQL, validation des entrées, contrôle d'accès défaillant, secrets, dépendances vulnérables. Pour chacun, il existe un geste de vérification qui ne demande pas de lire le code.
+- **Avec drift, pas de SQL brut concaténé** : `customSelect` et `customStatement` reçoivent des variables liées, jamais du texte assemblé. On le repère par une recherche dans le dépôt, on le prouve par un test, on le corrige.
+- **Le cycle de sécurité est celui du TDD** : trouver, reproduire par un test qui échoue, corriger, et le même test passe. Le test reste dans le dépôt et empêche le retour du défaut.
+- **Une application web purement cliente ne protège aucune donnée réelle** : la garde `RequireRole` est testée, mais tout ce qui tourne dans le navigateur se contourne depuis le navigateur.
+- **Un secret qui fuit se révoque** ; le supprimer du dépôt ne suffit pas.
+- **Import CSV** (obligatoire, fait pendant le sprint) : `file_picker`, taille maximale, encodage, rejet motivé, parseur dans la couche data. **Export CSV** : une cellule qui commence par `=`, `+`, `-` ou `@` est neutralisée.
+- **Tout texte que lit l'agent peut contenir des instructions** : un dépôt d'une autre équipe, une issue reçue. Principe de précaution sur ce que l'agent a le droit de faire.
+- **L'audit croisé** se fait en anneau, entre thèmes différents, sur cinq points fixés par le programme. On ne signale que ce qui existe dans le dépôt, et chaque constat devient une issue priorisée, que l'équipe auditée corrige pendant le sprint en commençant par un test qui le reproduit.
+
+---
+
+## 1. Pourquoi ce chapitre
+
+Votre application sera publiée sur GitHub Pages (chapitre 2) : n'importe qui peut l'ouvrir, et n'importe qui peut lire votre dépôt public. Elle ne manipule que des données fictives, et c'est justement ce qui permet d'apprendre sans risque. Mais les défauts de sécurité, eux, sont réels : un agent de code en introduit sans le dire. Le chapitre 3 de la séance 1 (section 3.8) cite une étude d'éditeur selon laquelle, dans 45 % des cas, le code généré par les modèles testés introduisait une faille classée dans l'OWASP Top 10. Ce chiffre est à lire avec recul, comme tous les repères d'éditeurs ; il suffit à justifier les réflexes de ce chapitre.
+
+L'**OWASP** (Open Worldwide Application Security Project) est une fondation qui publie, entre autres, l'**OWASP Top 10** : la liste de référence des dix grandes catégories de failles des applications web. Le programme n'en garde que la **pratique** : cinq risques que vous pouvez rencontrer dans votre projet, et pour chacun un geste de vérification.
+
+L'audit croisé, lui, répond à une autre question : votre dépôt tient-il debout aux yeux de quelqu'un qui ne l'a pas écrit ? Une équipe d'un autre thème ne connaît ni vos règles métier ni vos habitudes. Si elle n'arrive pas à installer votre projet en suivant le `README`, ou si elle ne trouve pas le test qui prouve qu'un rôle est refusé, c'est un constat utile, et il arrive avant la soutenance, pas pendant.
+
+> **À retenir.** Sécurité et audit se vérifient par des preuves : une recherche, un test, une pastille, un rapport, l'application lancée. Pas par une lecture du code ligne à ligne.
+
+---
+
+## 2. Cinq risques courants
+
+Le tableau résume ; les sous-sections donnent, pour chaque risque, ce qu'il faut savoir dans votre projet. Les mots du programme sont repris tels quels quand ils fixent une règle.
+
+| Risque | En une phrase | Comment le voir sans lire le code |
+|---|---|---|
+| Injection SQL | Une saisie modifie la requête envoyée à la base | Rechercher `customSelect` et `customStatement` dans le dépôt ; un test qui envoie un fragment SQL (section 3) |
+| Validation des entrées | Une donnée hors bornes ou mal formée entre quand même | Les tests de rejet de l'import CSV, un par motif de l'énoncé |
+| Contrôle d'accès défaillant | Un rôle fait ce qui lui est interdit | Le test de refus de chaque action protégée ; l'essai dans l'application avec le mauvais rôle |
+| Secrets | Une clé ou un mot de passe se retrouve dans le dépôt ou dans le build web | Le rapport gitleaks du contrôle `securite` de la CI (chapitre 2) ; `.env` ignoré |
+| Dépendances vulnérables | Une bibliothèque utilisée a une faille connue | L'audit des dépendances pub, dans le contrôle `securite` de la CI (chapitre 2) |
+
+### 2.1 Injection SQL
+
+Une **requête SQL** est la phrase envoyée à la base de données pour lire ou écrire (`SELECT * FROM jets WHERE dd = 10` : « donne-moi les jets dont le degré de difficulté vaut 10 »). Il y a **injection SQL** quand une valeur saisie par l'utilisateur, ou lue dans un fichier, est **collée dans le texte** de la requête : si la valeur contient elle-même des mots SQL, elle change le sens de la phrase.
+
+Dans votre projet, drift écrit presque toutes les requêtes à votre place (`select`, `into`, `delete`, comme dans `JetsRepositoryDrift`) : celles-là sont sûres, la valeur voyage à part. Le risque se concentre sur deux fonctions qui acceptent du SQL écrit à la main, `customSelect` (lire) et `customStatement` (écrire). La règle du programme : **`customSelect` et `customStatement` reçoivent des variables liées, jamais du texte assemblé**. Une **variable liée** est une valeur transmise à la base à côté de la requête, à la place d'un `?` : la base la traite toujours comme une valeur, jamais comme du SQL. La section 3 rejoue le défaut et son correctif.
+
+### 2.2 Validation des entrées
+
+Toute donnée qui arrive de l'extérieur (un formulaire, un fichier CSV) est vérifiée avant d'être enregistrée : type, bornes, longueur, liste fermée de valeurs. Les contraintes de la base (chapitre 4 de la séance 3, section 2.4) sont le dernier filet, pas le premier. Dans votre projet, l'endroit où ce risque est le plus visible est l'**import CSV** (section 4.1) : l'énoncé de votre thème fixe les motifs de rejet, et chaque motif mérite un test.
+
+### 2.3 Contrôle d'accès défaillant
+
+Chaque thème a deux rôles, et certaines actions sont réservées à l'un d'eux. Le dépôt-modèle fournit la garde `RequireRole`, dans la couche `domain`, et un exemple : le cas d'usage `ViderHistorique` est réservé au meneur (`docs/ARCHITECTURE.md`, section 8). La règle du programme : **la garde `RequireRole` du domain est testée**. Chaque action protégée a son **test de refus** : le rôle non autorisé est refusé, et rien n'est modifié.
+
+La seconde moitié de la règle compte autant : **une application web purement cliente reste contournable depuis le navigateur, donc elle ne protège aucune donnée réelle**. Votre application tourne entièrement dans le navigateur du visiteur, et tout son code y est lisible. Le rôle se choisit dans un sélecteur, sans compte ni mot de passe ; `docs/ARCHITECTURE.md` le dit : « Ce n'est pas une sécurité réelle ». La garde vous apprend où placer le contrôle (dans le cas d'usage, pas dans l'écran : masquer un bouton ne protège rien) et à le prouver par un test ; elle ne transforme pas l'application en coffre-fort. C'est une raison de plus pour n'y mettre que des données fictives.
+
+### 2.4 Secrets
+
+Un **secret** est une valeur confidentielle : clé d'API, mot de passe, jeton. Les règles sont déjà posées au chapitre 8 de la séance 1 (sections 5.6 et 9) ; on n'en rappelle que deux, mot pour mot du programme :
+
+- **un secret qui fuit se révoque**, on ne se contente pas de le supprimer : l'historique git le garde, et un dépôt public a pu être copié entre-temps. **Révoquer**, c'est rendre la valeur inutilisable auprès du service qui l'a émise (puis en créer une nouvelle, rangée ailleurs que dans le dépôt) ;
+- **rien de secret dans un build web** : tout ce qui est dans un build web Flutter est public (code, ressources, constantes).
+
+Votre projet n'a besoin d'aucun secret. Le dépôt-modèle ignore `.env` (`.gitignore`) et fournit `.env.example`, sans valeur secrète. La détection automatique (gitleaks, en CI) est expliquée au chapitre 2.
+
+### 2.5 Dépendances vulnérables
+
+Votre application embarque des bibliothèques écrites par d'autres (drift, file_picker, flutter_bloc…). Une faille découverte dans l'une d'elles devient une faille de votre application. Deux garde-fous : les versions sont **verrouillées** dans `pubspec.lock`, versionné (on sait exactement ce qui est embarqué) ; et la CI complète comporte un **audit des dépendances pub**, qui signale les versions connues comme vulnérables. Le choix de l'outil et la lecture de son rapport sont au chapitre 2. Rappel du `README` du dépôt : `flutter pub upgrade` est interdit (et refusé à l'agent) ; une mise à jour de dépendance passe par une PR dédiée.
+
+> **À retenir.** Injection : variables liées. Entrées : un test par motif de rejet. Accès : un test de refus par action protégée, en sachant que le navigateur reste contournable. Secrets : aucun, et révoquer s'il fuit. Dépendances : verrouillées, auditées en CI.
+
+---
+
+## 3. La démonstration : trouver, reproduire par un test, corriger
+
+Le programme prévoit une démonstration : l'agent introduit un `customSelect` construit par concaténation, on le trouve, on écrit le test qui le reproduit, puis le correctif. Elle a été rejouée sur une copie du dépôt-modèle, avec la fonctionnalité d'exemple `jets` et sa table drift. Le code « fautif » a été écrit à la main pour imiter ce que pourrait proposer un agent (aucun agent n'a été lancé) ; les sorties sont celles obtenues.
+
+### 3.1 La situation
+
+On a demandé une fonctionnalité anodine : filtrer l'historique des jets par degré de difficulté, la valeur venant d'un champ texte. Le code proposé ajoute une fonction au repository drift (`lib/features/jets/data/jets_repository_drift.dart`) :
+
+```dart
+  /// Jets dont le degré de difficulté est celui saisi dans le filtre.
+  Future<List<Jet>> jetsDeDifficulte(String ddSaisi) async {
+    final lignes = await _base
+        .customSelect(
+          'SELECT * FROM jets WHERE dd = $ddSaisi',
+          readsFrom: {_base.jets},
+        )
+        .get();
+    return lignes.map((l) => _versEntite(_base.jets.map(l.data))).toList();
+  }
+```
+
+La forme à reconnaître : `$ddSaisi` **à l'intérieur** des guillemets de la requête. En Dart, `$nom` dans un texte entre guillemets y colle la valeur de `nom`. Ce que l'utilisateur tape devient donc un morceau de la requête.
+
+Ce que disent les contrôles habituels :
+
+```text
+$ flutter analyze
+No issues found! (ran in 1.2s)
+```
+
+L'analyse ne voit rien : le code est correct pour Dart. Les 32 tests du dépôt-modèle restent verts, puisqu'aucun ne touche cette fonction. Le défaut passerait une CI verte.
+
+### 3.2 Trouver, sans lire tout le code
+
+**Une recherche dans le dépôt.** Les deux seules fonctions à risque ont des noms précis : on les cherche.
+
+```bash
+git grep -n -A 2 -E "customSelect|customStatement" -- lib
+```
+
+```text
+lib/core/data/base_de_donnees.dart:37:      await customStatement('PRAGMA foreign_keys = ON');
+lib/core/data/base_de_donnees.dart-38-    },
+lib/core/data/base_de_donnees.dart-39-  );
+--
+lib/features/jets/data/jets_repository_drift.dart:39:        .customSelect(
+lib/features/jets/data/jets_repository_drift.dart-40-          'SELECT * FROM jets WHERE dd = $ddSaisi',
+lib/features/jets/data/jets_repository_drift.dart-41-          readsFrom: {_base.jets},
+```
+
+`git grep` cherche un texte dans les fichiers suivis par git ; `-n` affiche les numéros de ligne, `-A 2` les deux lignes qui suivent (la requête est souvent sur la ligne d'après) ; `-- lib` limite la recherche au code de l'application. Deux résultats, à lire comme une liste de contrôle :
+
+- `customStatement('PRAGMA foreign_keys = ON')` : un texte fixe, sans aucune valeur venue de l'extérieur. Il est attendu (il active les clés étrangères, chapitre 4 de la séance 3, section 6.2).
+- `'SELECT … WHERE dd = $ddSaisi'` : un `$` dans la requête, une valeur saisie. C'est le défaut.
+
+Sur GitHub, la même recherche se fait dans la barre de recherche du dépôt (`customSelect`). Un fichier qui n'est pas encore suivi par git (jamais ajouté) n'apparaît pas dans `git grep` : faites la recherche après le commit, ou sur la PR.
+
+**Une question à l'agent.** Vous pouvez aussi demander la liste à l'agent, en lui interdisant de modifier quoi que ce soit. Exemple de demande (proposition des supports, la réponse de l'agent n'a pas été observée) :
+
+```text
+Liste tous les appels à customSelect et customStatement du dossier lib/.
+Pour chacun, dis si une valeur saisie par l'utilisateur ou lue dans un fichier
+entre dans le texte de la requête autrement que par le paramètre `variables`.
+Ne modifie aucun fichier.
+```
+
+La réponse de l'agent est une piste, pas une preuve : elle se confronte à la recherche ci-dessus, puis au test.
+
+### 3.3 Reproduire par un test
+
+Avant de corriger, on écrit le test qui **montre** le défaut. Il se lit sans connaître Dart : sur une base en mémoire (chapitre 4 de la séance 3, section 6.1), on enregistre deux jets, l'un de DD 10, l'autre de DD 15 ; puis on appelle le filtre avec trois saisies. Fichier `test/features/jets/data/filtre_par_difficulte_test.dart` (extrait) :
+
+```dart
+  setUp(() async {
+    base = BaseDeDonnees(NativeDatabase.memory());
+    repository = JetsRepositoryDrift(base);
+    await repository.enregistrer(
+      Jet(valeur: 12, dd: 10, reussi: true, lanceLe: instant),
+    );
+    await repository.enregistrer(
+      Jet(valeur: 4, dd: 15, reussi: false, lanceLe: instant),
+    );
+  });
+
+  test('le filtre 10 renvoie le seul jet de DD 10', () async {
+    final jets = await repository.jetsDeDifficulte('10');
+
+    expect(jets.map((j) => j.dd), [10]);
+  });
+
+  test(
+    'un fragment SQL tapé dans le filtre ne renvoie pas tous les jets',
+    () async {
+      final jets = await repository.jetsDeDifficulte('10 OR 1 = 1');
+
+      expect(jets, isEmpty);
+    },
+  );
+
+  test(
+    'une apostrophe tapée dans le filtre ne fait pas planter la requête',
+    () async {
+      final jets = await repository.jetsDeDifficulte("10'");
+
+      expect(jets, isEmpty);
+    },
+  );
+```
+
+Le premier test est le cas normal : sans lui, les deux autres pourraient passer pour une mauvaise raison (un filtre qui ne renvoie jamais rien). Les deux suivants sont les saisies piégées. Résultat avec le code fautif :
+
+```text
+00:00 +0: le filtre 10 renvoie le seul jet de DD 10
+00:00 +1: un fragment SQL tapé dans le filtre ne renvoie pas tous les jets
+00:00 +1 -1: un fragment SQL tapé dans le filtre ne renvoie pas tous les jets [E]
+  Expected: empty
+    Actual: [
+              Jet:Jet(1, 12, 10, true, 2026-12-16 09:00:00.000Z),
+              Jet:Jet(2, 4, 15, false, 2026-12-16 09:00:00.000Z)
+            ]
+00:00 +1 -2: une apostrophe tapée dans le filtre ne fait pas planter la requête [E]
+  SqliteException(1): while preparing statement, unrecognized token: "'", SQL logic error (code 1)
+    Causing statement (at position 32): SELECT * FROM jets WHERE dd = 10'
+00:00 +1 -2: Some tests failed.
+```
+
+Deux preuves, lisibles sans le code :
+
+- avec la saisie `10 OR 1 = 1`, la requête est devenue `… WHERE dd = 10 OR 1 = 1` : « 1 = 1 » est toujours vrai, donc **tous** les jets reviennent, y compris celui de DD 15. Sur une vraie table, c'est ainsi qu'on lit ce qu'on n'avait pas le droit de lire ;
+- avec une simple apostrophe, la requête ne se construit même plus : SQLite refuse la phrase (`unrecognized token`) et affiche la requête fautive, `SELECT * FROM jets WHERE dd = 10'`. Une apostrophe se tape par accident (« l'arrêt », « d'OF »), et c'est souvent ainsi qu'on découvre le défaut.
+
+Le test est rouge : le défaut est **reproduit**. Il se commite tel quel, avant le correctif, comme tout test du TDD.
+
+### 3.4 Corriger
+
+Le correctif tient en deux lignes : la valeur sort du texte de la requête, remplacée par `?`, et part dans `variables`.
+
+```dart
+    final lignes = await _base
+        .customSelect(
+          'SELECT * FROM jets WHERE dd = ?',
+          variables: [Variable.withString(ddSaisi)],
+          readsFrom: {_base.jets},
+        )
+        .get();
+```
+
+Les mêmes tests, sans en changer une ligne :
+
+```text
+00:00 +0: le filtre 10 renvoie le seul jet de DD 10
+00:00 +1: un fragment SQL tapé dans le filtre ne renvoie pas tous les jets
+00:00 +2: une apostrophe tapée dans le filtre ne fait pas planter la requête
+00:00 +3: All tests passed!
+```
+
+Puis les commandes de vérification du `README` (« Vérifier avant une PR »), sur la copie complète :
+
+```text
+$ dart format --output=none --set-exit-if-changed .
+Formatted 47 files (0 changed) in 0.09 seconds.
+$ flutter analyze
+No issues found! (ran in 1.5s)
+$ flutter test
+00:02 +39: All tests passed!
+```
+
+(39 tests : les 32 du dépôt-modèle, les 3 de cette section et les 4 de la section 4.2.)
+
+La saisie `10 OR 1 = 1` est maintenant une **valeur** comparée à la colonne `dd`, qu'aucun jet n'a : la liste est vide. L'apostrophe aussi. Le test reste dans le dépôt : si un agent « simplifie » un jour la requête en recollant la valeur, il repassera au rouge.
+
+Deux remarques de méthode :
+
+- **La forme préférée reste la requête de drift.** Une requête écrite avec `select` et `where`, comme `historique()` dans le même fichier, ne pose pas la question : drift passe toujours les valeurs à part. `customSelect` ne se justifie que pour une requête que drift ne sait pas écrire ; c'est alors à l'agent de dire pourquoi, en relecture.
+- **La validation des entrées vient s'ajouter, pas remplacer.** Un degré de difficulté est un nombre : la saisie devrait être convertie et refusée si elle n'en est pas un, avant d'arriver au repository (section 2.2). Les variables liées protègent la base ; la validation protège la règle.
+
+### 3.5 Ce que montre la PR du correctif
+
+En relecture (chapitre 1 de la séance 3, section 4), la PR de ce correctif se vérifie par les preuves :
+
+- la liste des fichiers touchés : un fichier de test **ajouté** et le repository **modifié**, rien d'autre ;
+- aucun test existant modifié (une PR de correctif qui modifie un test existant mérite une question : chapitre 4 de la séance 3, section 7.1) ;
+- l'historique : le commit du test rouge **avant** celui du correctif ;
+- la pastille de CI verte.
+
+> **À retenir.** Trouver : `git grep -n -A 2 -E "customSelect|customStatement" -- lib`, et un `$` dans la requête est suspect. Reproduire : un test avec une saisie piégée (`10 OR 1 = 1`, une apostrophe), rouge. Corriger : `?` et `variables`, le même test devient vert et reste dans le dépôt.
+
+---
+
+## 4. Import et export CSV
+
+### 4.1 L'import CSV : obligatoire, fait pendant le sprint
+
+L'import CSV fait partie du socle commun de chaque thème : un seul fichier CSV dans le cœur du thème. Le programme le classe dans la sécurité parce qu'un fichier choisi par l'utilisateur est une entrée comme une autre, en plus gros. Ses cinq exigences, dans les mots du programme : **`file_picker`, taille maximale, encodage, rejet motivé, parseur dans la couche data**.
+
+| Exigence | Ce qu'elle veut dire | Comment on le prouve |
+|---|---|---|
+| `file_picker` | Le fichier est choisi par l'utilisateur avec cette bibliothèque, déjà déclarée dans `pubspec.yaml` | L'application lancée : un bouton ouvre la fenêtre de choix de fichier |
+| Taille maximale | Un fichier trop gros est refusé avant d'être lu en entier (200 Ko dans les trois énoncés) | Un test avec un fichier de plus de 200 Ko, refusé |
+| Encodage | Le fichier est lu dans un encodage annoncé (UTF-8 en thème C) ; un fichier illisible est refusé, pas avalé de travers | Un test avec un fichier non UTF-8, refusé |
+| Rejet motivé | Chaque ligne refusée l'est avec un **motif** de la liste de l'énoncé, et l'utilisateur voit lequel | Un test par motif : la ligne fautive, le motif attendu |
+| Parseur dans la couche data | Le code qui découpe le fichier vit dans `data/`, comme le repository ; le domaine ne voit que des entités | La liste des fichiers de la PR (chapitre 2 de la séance 3, section 6) |
+
+Pour le thème B, l'import est celui des **déclarations de production** (colonnes `poste`, `quart_debut_utc`, `numero_of`, `pieces_produites`, `pieces_rebutees`), et les motifs de rejet sont fixés par l'énoncé : `quantite_invalide`, `declaration_en_double`, `poste_inconnu`, `rebuts_superieurs_produites`, `quart_inconnu`, `colonnes_manquantes` ou fichier de plus de 200 Ko (`cours/projets/themes.md`, thème B, « Import/export »). Ces motifs sont votre liste de tests : l'humain les recopie, l'agent les fait passer.
+
+Une valeur importée n'est jamais collée dans une requête (section 3) : c'est le point où injection SQL et validation des entrées se rejoignent.
+
+Cet import n'a pas été écrit pour ce chapitre : il se fait pendant le sprint.
+
+### 4.2 L'export CSV : l'injection de formule
+
+Un fichier CSV exporté est souvent ouvert dans un tableur. Or un tableur interprète une cellule qui commence par certains caractères comme une **formule**, et une formule peut calculer, aller chercher des données ailleurs ou afficher un lien trompeur. C'est l'**injection de formule** : un texte saisi dans l'application (pour le thème B, le commentaire libre d'un arrêt) devient une formule chez la personne qui ouvre l'export. Le programme cite les cellules commençant par **`=`, `+`, `-` ou `@`**, et l'énoncé du thème B fixe la parade : la cellule est **préfixée d'une apostrophe** à l'export, ce qui la fait afficher comme du texte.
+
+La parade est une petite fonction sans dépendance, idéale pour le TDD. Rejouée sur la copie du dépôt-modèle : le test d'abord (`test/core/data/csv/neutraliser_cellule_test.dart`), qui ne compile pas tant que la fonction n'existe pas :
+
+```dart
+  test('un commentaire ordinaire ne change pas', () {
+    expect(neutraliserCellule('Bourrage convoyeur'), 'Bourrage convoyeur');
+  });
+
+  test('une formule est préfixée d’une apostrophe', () {
+    expect(neutraliserCellule('=1+1'), "'=1+1");
+  });
+
+  test('les quatre caractères dangereux sont neutralisés', () {
+    expect(
+      ['=A1', '+A1', '-A1', '@A1'].map(neutraliserCellule),
+      ["'=A1", "'+A1", "'-A1", "'@A1"],
+    );
+  });
+
+  test('une cellule vide reste vide', () {
+    expect(neutraliserCellule(''), '');
+  });
+```
+
+```text
+test/core/data/csv/neutraliser_cellule_test.dart:8:12: Error: Method not found: 'neutraliserCellule'.
+```
+
+Puis la fonction (`lib/core/data/csv/neutraliser_cellule.dart`) :
+
+```dart
+/// Préfixe d'une apostrophe toute cellule qui commence par `=`, `+`, `-` ou `@`.
+String neutraliserCellule(String cellule) {
+  const debutsDangereux = ['=', '+', '-', '@'];
+  if (debutsDangereux.any(cellule.startsWith)) {
+    return "'$cellule";
+  }
+  return cellule;
+}
+```
+
+```text
+00:00 +0: un commentaire ordinaire ne change pas
+00:00 +1: une formule est préfixée d’une apostrophe
+00:00 +2: les quatre caractères dangereux sont neutralisés
+00:00 +3: une cellule vide reste vide
+00:00 +4: All tests passed!
+```
+
+Ce qu'il reste à faire pendant le sprint, et que ce chapitre n'a pas fait : appeler cette fonction sur **chaque cellule de texte** de l'export, et le prouver par un test d'export qui contient un commentaire piégé. Une conséquence à connaître : un nombre négatif écrit comme texte (`-3`) est lui aussi préfixé ; exportez les nombres comme nombres, ou décidez-en en équipe. L'export CSV est **souhaitable**, pas obligatoire : s'il est livré, il est livré avec cette neutralisation et son test.
+
+> **À retenir.** Import : `file_picker`, 200 Ko au plus, encodage vérifié, un motif par ligne rejetée, parseur dans `data/`, un test par motif. Export : apostrophe devant `=`, `+`, `-` et `@`, une fonction et son test.
+
+---
+
+## 5. L'injection de prompt et le principe de précaution
+
+L'**injection de prompt** est expliquée au chapitre 6 de la séance 1, section 10 : tout ce que lit l'agent (page web, ticket, `README` d'un dépôt cloné, sortie d'un serveur MCP) arrive dans son contexte comme du texte, et peut contenir des instructions déguisées. Le chapitre 2 de la séance 2 (section 5) a montré qu'une règle `deny` ne couvre que ce qu'elle décrit, et qu'une règle non testée n'est pas un garde-fou. On ne le redit pas ; on regarde ce que la séance 4 ajoute.
+
+**Deux situations nouvelles cette séance.**
+
+- **Vous auditez le dépôt d'une autre équipe.** Son `CLAUDE.md`, son `.claude/settings.json`, ses hooks et ses issues sont du **contenu externe** pour vous, même si l'équipe est de bonne foi. L'audit du bloc 11 se fait par les preuves et ne demande pas d'agent. Si vous ouvrez tout de même Claude Code dans le clone de l'autre équipe : mode manuel, et lecture de `.claude/settings.json` (cherchez la rubrique `hooks`) avant d'accepter de faire confiance au dossier.
+- **Vous recevez des issues d'une autre équipe**, et votre agent pourra les lire (`gh issue view`) pendant le sprint. Le texte d'une issue est rédigé par un tiers : c'est exactement le cas « ticket » de la documentation. L'agent en tire une tâche ; il n'exécute pas ce que l'issue lui demanderait de faire au-delà du constat.
+
+**Le principe de précaution sur les capacités de l'agent.** Ce qu'une instruction cachée peut faire dépend de ce que l'agent a le droit de faire. D'où, dans le dépôt-modèle, des refus posés d'avance (`.claude/settings.json` : lecture de `.env`, `rm -rf`, push forcé, écriture dans `test/acceptance/`, `flutter pub upgrade`) ; d'où le mode manuel tant qu'on ne sait pas ce qu'on autorise ; d'où, surtout, l'absence de secret à portée : un agent détourné ne peut pas faire fuir une clé qui n'existe pas. Retirer une règle `deny` est une décision d'équipe, prise dans une PR relue.
+
+> **À retenir.** Le dépôt d'une autre équipe et les issues reçues sont du contenu externe pour votre agent. Moins l'agent a de droits, et moins il y a de secrets autour de lui, moins une injection peut nuire.
+
+---
+
+## 6. L'audit croisé : le principe
+
+### 6.1 Qui audite qui
+
+Chaque équipe audite le dépôt public d'une équipe d'un **autre thème**, en **anneau** : chaque équipe audite une équipe et est auditée par une autre. Les numéros vont par thème, comme en séance 3 (chapitre 1 de la séance 3, section 7.1) : avec 8 équipes, 01 à 03 pour le thème A, 04 à 06 pour le B, 07 et 08 pour le C ; avec 7 équipes, 01 à 03 pour le A, 04 et 05 pour le B, 06 et 07 pour le C.
+
+**Avec 8 équipes** (« X audite Y ») :
+
+| Équipe qui audite | Équipe auditée |
+|---|---|
+| 01 | 04 |
+| 04 | 07 |
+| 07 | 02 |
+| 02 | 05 |
+| 05 | 08 |
+| 08 | 03 |
+| 03 | 06 |
+| 06 | 01 |
+
+**Avec 7 équipes** :
+
+| Équipe qui audite | Équipe auditée |
+|---|---|
+| 01 | 04 |
+| 04 | 02 |
+| 02 | 06 |
+| 06 | 03 |
+| 03 | 05 |
+| 05 | 07 |
+| 07 | 01 |
+
+Dans les deux cas, aucune paire de même thème. Si l'attribution réelle des numéros s'écarte de la numérotation par thème, c'est l'annonce de l'enseignant en séance qui fait foi.
+
+### 6.2 Ce qui change depuis la revue croisée de la séance 3
+
+| | Revue croisée, séance 3 | Audit croisé, séance 4 |
+|---|---|---|
+| Qui | Des **paires** (et un trio à 7 équipes), qui se relisent l'une l'autre ; même thème toléré | Un **anneau** : on n'audite pas l'équipe qui vous audite ; toujours un autre thème |
+| Quoi | Une PR | Le dépôt entier, sur cinq points |
+| Avec quoi | La checklist de revue de PR | La checklist d'audit en 5 points (section 7) |
+| Ce qui reste | Des commentaires sur la PR | Des **issues** priorisées, qui entrent dans le backlog du sprint |
+
+L'anneau évite l'arrangement entre deux équipes qui s'auditeraient mutuellement. L'autre thème vous oblige à vous fier au `README` et aux preuves, sans connaître la règle métier.
+
+### 6.3 Ce que l'équipe qui audite peut faire
+
+Les dépôts sont publics : vous pouvez cloner, lire l'onglet *Actions*, ouvrir le site publié et ouvrir des **issues**. Vous ne pouvez ni pousser ni fusionner. La liste des contrôles exigés pour fusionner sur `main`, elle, se lit de l'extérieur, par une commande (section 7.2). Vous ne corrigez rien vous-même : le constat appartient à l'équipe auditée.
+
+> **À retenir.** En anneau, entre thèmes différents, sur le dépôt entier. On constate, on n'intervient pas.
+
+---
+
+## 7. La checklist en 5 points
+
+Le programme fixe la checklist ; chaque point est repris **mot pour mot** (en gras), puis décliné : la commande ou l'écran à regarder, ce que vous devez voir, et comment formuler un constat. La règle d'or de l'audit, elle aussi du programme : **ne signaler que ce qui existe dans le dépôt.** Pas d'hypothèse (« il pourrait y avoir… »), pas de préférence de style : un fait, observé, avec l'endroit où on l'a observé.
+
+Prévoyez un rapporteur qui note, pour chaque point, « conforme », « constat » ou « non vérifié » (et pourquoi).
+
+### 7.1 Installation à froid
+
+**« `git clone`, `flutter pub get`, `dart run build_runner build --delete-conflicting-outputs`, `flutter test`, `flutter run -d chrome` selon le `README` : l'application démarre en moins de 10 minutes. »**
+
+*Où regarder.* Le `README` de l'équipe auditée, et votre terminal. Lancez un chronomètre, puis, dans un dossier vide (pas dans votre propre dépôt) :
+
+```bash
+gh repo clone <organisation>/equipe_04
+cd equipe_04
+```
+
+puis les commandes **dans l'ordre où le `README` les donne**. Si le `README` en oublie une, n'improvisez pas tout de suite : notez-le, c'est le constat ; ensuite seulement, complétez avec la liste ci-dessus pour vérifier le reste.
+
+*Ce que vous devez voir* (tableau « Démarrer » du `README` du dépôt-modèle) : `Got dependencies!`, puis `Built with build_runner … wrote … outputs.` (31 secondes sur la copie de ce chapitre, plus d'une minute possible la première fois), puis `All tests passed!`, puis l'application ouverte dans Chrome. Arrêtez le chronomètre quand le premier écran s'affiche.
+
+*Constats typiques.* Une commande manquante ou dans le mauvais ordre dans le `README` ; un test rouge sur un clone frais ; une erreur de génération ; plus de 10 minutes. Le constat cite la commande, ce qui s'est affiché (la dernière ligne d'erreur suffit) et le temps écoulé.
+
+### 7.2 CI
+
+**« la pastille est verte sur `main` ; la CI est obligatoire pour fusionner ; l'audit des dépendances pub sans alerte non traitée ; le déploiement sur GitHub Pages fonctionne. »**
+
+La CI complète, sa protection et la publication sont expliquées au chapitre 2 ; voici seulement où regarder.
+
+*Où regarder.*
+
+- **Pastille sur `main`** : la page d'accueil du dépôt, à côté du dernier commit, ou l'onglet *Actions* filtré sur la branche `main`. Vous devez voir une coche verte sur le dernier commit.
+- **Obligatoire pour fusionner** : une lecture publique, qui ne demande aucun droit sur le dépôt audité.
+
+  ```bash
+  gh api repos/<organisation>/equipe_04/branches/main --jq '.protection.required_status_checks.contexts'
+  ```
+
+  Vous devez voir les trois contrôles exigés par le workflow fourni (chapitre 2, la CI complète) : `["analyse-et-tests","securite","site-web"]`. Une liste vide, ou un nom manquant, est un constat.
+- **Audit des dépendances** : dans l'onglet *Actions*, la dernière exécution sur `main`, l'étape osv-scanner du contrôle `securite` ; vous devez la voir verte, ou, si elle signale une alerte, trouver une issue ou une décision écrite qui la traite.
+- **GitHub Pages** : l'adresse publiée (chapitre 2), ouverte dans un navigateur ; vous devez voir l'application, pas une page d'erreur 404.
+
+*Constats typiques.* Une croix rouge sur `main` ; un des trois contrôles absent de la liste des contrôles exigés ; une alerte de dépendance sans suite ; un site publié qui ne s'ouvre pas, ou une page blanche. Si l'équipe a pris le plan B pour la publication (chapitre 2), vérifiez qu'il est documenté : ce n'est alors pas un constat.
+
+### 7.3 Secrets
+
+**« aucun secret dans le dépôt ni dans l'historique (rapport gitleaks) ni dans le bundle web publié, `.env` ignoré, `.env.example` présent. »**
+
+*Où regarder.*
+
+- **Dépôt et historique** : le rapport gitleaks de la CI, dans l'onglet *Actions*, dernière exécution sur `main`, étape gitleaks du contrôle `securite` (chapitre 2, la CI complète). Vous devez la voir verte. gitleaks y lit l'historique de `main` (et, sur une PR, les commits de la PR) : l'audit porte donc sur `main`, pas sur les autres branches. gitleaks n'est pas à installer sur votre poste pour l'audit : la CI le lance.
+- **Bundle web** : le **bundle** est l'ensemble des fichiers que GitHub Pages sert au navigateur. Le contrôle est décrit au chapitre 2 (le contrôle du bundle publié) ; l'auditeur dispose de trois gestes :
+  1. sur l'adresse publiée, l'onglet Réseau des outils de développement du navigateur (chapitre 2), pour voir les fichiers chargés ;
+  2. dans la description de la PR de publication ou dans `JOURNAL.md` de l'équipe auditée, la trace de ses propres contrôles du bundle ; une absence de trace est un constat ;
+  3. en option, construire le site sur le clone (chapitre 2, le build web) et chercher un fichier `.env` dans `build/web/`.
+- **`.env` ignoré, `.env.example` présent** : dans le clone, deux commandes.
+
+```bash
+git ls-files | grep -i env
+git check-ignore -v .env
+```
+
+Sur le dépôt-modèle :
+
+```text
+.env.example
+.gitignore:2:.env	.env
+```
+
+La première ligne dit que le seul fichier suivi dont le nom contient « env » est `.env.example` ; la seconde, que `.env` est ignoré par la règle de la ligne 2 de `.gitignore`. Un `.env` dans la première liste, ou aucune réponse à la seconde commande, est un constat.
+
+*Le cas particulier d'un secret trouvé.* Si vous voyez une vraie clé ou un vrai mot de passe, **ne le recopiez nulle part**, et surtout pas dans une issue : le dépôt est public. Prévenez l'équipe et l'enseignant à l'oral ; l'équipe **révoque** le secret (section 2.4) ; l'issue, ensuite, décrit le fichier sans la valeur.
+
+### 7.4 Rôles
+
+**« chaque cas d'usage sensible passe par la garde d'accès `RequireRole` (couche domain) ; un test vérifie le refus. »**
+
+*Où regarder.* D'abord ce qui est « sensible » : les actions que `PROJET.md` réserve à un rôle (pour le thème B, ce que fait le `responsable` et pas l'`operateur`), **parmi les cas d'usage qui existent déjà** dans le dépôt. La séance 4 ne suppose pas le CRUD terminé : une action prévue pour le sprint, pas encore écrite, n'a pas encore de garde, et ce n'est pas un constat. Puis trois preuves.
+
+- **Où la garde est posée**, dans le clone :
+
+  ```bash
+  git grep -n "RequireRole(" -- lib
+  ```
+
+  Sur le dépôt-modèle :
+
+  ```text
+  lib/core/domain/roles/require_role.dart:19:  const RequireRole(this.rolesAutorises);
+  lib/features/jets/domain/usecases/vider_historique.dart:10:  static const garde = RequireRole({Role.meneur});
+  ```
+
+  La première ligne est la définition de la garde ; chaque ligne suivante est un cas d'usage protégé, avec le rôle autorisé. Vous devez y retrouver chaque cas d'usage sensible déjà écrit, dans un dossier `domain/usecases/`.
+
+- **Les tests de refus** :
+
+  ```bash
+  flutter test --plain-name "refuse"
+  ```
+
+  `--plain-name` garde les tests dont le titre contient ce mot. Sur le dépôt-modèle, trois tests dont le nom contient « refuse », tous verts, dont `refuse au joueur de vider l’historique, sans rien effacer` et `refuse l’accès à un joueur` (le troisième, `la base refuse un jet de valeur 0`, est un test d'intégrité de la base : le filtre porte sur le nom, lisez les titres). Si l'équipe nomme ses tests autrement, demandez-lui où sont ses tests de refus.
+
+- **L'application** : choisissez le rôle non autorisé dans le sélecteur, tentez l'action ; vous devez voir un message de refus, et rien ne doit changer.
+
+*Constats typiques.* Un cas d'usage existant, réservé à un rôle par `PROJET.md`, sans garde ; une garde sans test de refus ; un bouton seulement masqué (l'action se déclenche quand même par un autre chemin).
+
+### 7.5 Fiche
+
+**« `docs/fiche_conformite.md` existe, sans nom civil ni courriel, cohérente avec ce que fait l'application (durée de conservation et fin de vie, mesures propres au thème : mention d'information et suppression en A, consigne sur les commentaires en B, statut `brouillon` / `publie` en C). »**
+
+*Où regarder.* Le fichier sur GitHub, puis l'application. La fiche est un brouillon en séance 4 (rubriques 1 à 5, classement provisoire à la rubrique 9) : on vérifie ce qui est écrit, pas ce qui manque encore.
+
+- **Existe** : `docs/fiche_conformite.md` s'ouvre.
+- **Sans courriel** : une recherche suffit.
+
+  ```bash
+  git grep -n -E "[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[a-z]{2,}" -- docs/fiche_conformite.md
+  ```
+
+  Sur le gabarit du dépôt-modèle, aucune réponse. Essayée avec une ligne de contact fictive ajoutée à la fiche, la commande l'affiche, précédée de `docs/fiche_conformite.md:21:` (le fichier et le numéro de ligne). Les noms civils, eux, ne se cherchent pas par commande : lisez l'en-tête et les rubriques 3 et 13.
+- **Cohérente** : la durée de conservation de la rubrique 5 correspond-elle à ce que l'application permet (une suppression, un export de fin de campagne, s'ils sont annoncés) ? La mesure propre au thème annoncée dans la fiche se voit-elle dans l'application ? En thème B : la consigne « aucun nom » affichée dans le formulaire de saisie d'un arrêt. Les mesures propres à chaque thème font partie du sprint : une mesure que la fiche annonce **pour le sprint** n'est pas un constat. C'en est un seulement si la fiche la dit en place et qu'on ne la trouve pas dans l'application.
+
+*Constats typiques.* Un courriel ou un nom dans la fiche ; une mesure que la fiche dit en place et qu'on ne trouve pas dans l'application ; une durée de conservation contredite par l'application. Le fond juridique de la fiche est l'affaire du passage devant le RSSI (chapitre 4), pas de l'audit.
+
+> **À retenir.** Cinq points, chacun avec son écran ou sa commande. Ne signaler que ce qui existe dans le dépôt. Un secret trouvé ne se recopie jamais : on prévient, l'équipe révoque.
+
+---
+
+## 8. Ce qui est renvoyé au sprint
+
+Le programme exclut explicitement de l'audit en séance d'autres points, qui reviennent dans le sprint. Mot pour mot : **« Renvoyés au sprint, hors des cinq points : entrées et sorties (pas de SQL brut concaténé avec drift, c'est-à-dire pas de `customSelect` ni de `customStatement` construits par concaténation ; validation des entrées), import CSV (`file_picker`, taille maximale, rejet motivé) et export CSV (neutralisation des formules), `pubspec.lock` versionné. »**
+
+Autrement dit : en séance, ne lancez pas la recherche de la section 3.2 sur le dépôt audité, et n'ouvrez pas d'issue sur l'import CSV, qui n'existe pas encore. Pendant le sprint, chaque équipe applique ces gestes **à son propre dépôt** : la recherche de `customSelect` et `customStatement`, un test par motif de rejet, la neutralisation à l'export, et `git ls-files pubspec.lock` qui doit répondre `pubspec.lock`.
+
+---
+
+## 9. Des constats aux issues
+
+### 9.1 Une issue par constat
+
+Une **issue** est une fiche de suivi d'un dépôt GitHub (onglet *Issues*) : un titre, un texte, des commentaires, un état ouvert ou fermé. Chaque constat devient une issue **dans le dépôt de l'équipe auditée**, une par constat, pour qu'il puisse être corrigé et fermé séparément.
+
+Forme proposée (**proposition des supports, à valider par l'enseignant**) :
+
+```markdown
+Titre : [audit] [essentiel] Installation à froid : `flutter test` échoue sur un clone frais
+
+**Point de la checklist** : 1 · Installation à froid
+**Ce qui a été fait** : clone frais le 16/12/2026 à 15h10, puis les commandes du
+README dans l'ordre (`flutter pub get`, `dart run build_runner build
+--delete-conflicting-outputs`, `flutter test`).
+**Ce qui a été vu** : `flutter test` s'arrête sur
+`00:03 +27 -1: Some tests failed.` (test « … » dans `test/…`).
+**Ce qui était attendu** : `All tests passed!` (README, tableau « Démarrer »).
+**Priorité proposée** : essentiel (l'installation à froid fait partie des
+cinq points ; elle conditionne la soutenance).
+Audit de l'équipe 01.
+```
+
+Le titre commence par `[audit]`, pour que l'équipe retrouve ses constats d'un coup d'œil, puis par la **priorité proposée**. On reprend le vocabulaire du backlog du bilan (bloc 12) : **essentiel** ou **souhaitable**. C'est une proposition : l'équipe auditée décide de sa priorité au bilan, et peut classer un constat en « abandonné », à condition de le dire dans l'issue. La priorité va dans le titre plutôt que dans une étiquette (*label*), parce qu'un compte extérieur à l'équipe ne peut probablement pas poser d'étiquette (non vérifié).
+
+Les extraits de sortie de cet exemple sont fictifs ; dans vos issues, ils sont copiés de votre terminal. Aucun nom civil, aucun courriel, aucun secret dans une issue : le dépôt est public.
+
+### 9.2 Ouvrir l'issue
+
+**Dans l'interface web** : onglet *Issues* du dépôt audité, bouton *New issue*, titre et texte, puis *Create* (*Submit new issue* selon l'affichage).
+
+**En ligne de commande**, avec le texte préparé dans un fichier `constat-1.md` :
+
+```bash
+gh issue create -R <organisation>/equipe_04 \
+  --title "[audit] [essentiel] Installation à froid : flutter test échoue sur un clone frais" \
+  --body-file constat-1.md
+```
+
+`-R` désigne le dépôt (`organisation/dépôt`), `--title` le titre, `--body-file` le fichier qui contient le texte (options lues dans `gh issue create --help`, gh 2.100.0). Cette commande n'a pas été exécutée pour ce chapitre : rien n'a été créé sur GitHub.
+
+### 9.3 Corriger un constat reçu, pendant le sprint
+
+Le programme est précis : **chaque équipe corrige un constat reçu, en commençant par un test qui le reproduit**, pendant le sprint (environ 3 h de « corrections d'audit » dans la charge du sprint). C'est le cycle de la section 3 :
+
+1. choisir le constat, avec l'équipe, au bilan ;
+2. écrire le test qui le reproduit, et le voir rouge (pour un constat sur le `README` ou la CI, la « preuve rouge » est la commande qui échoue sur un clone frais, notée dans l'issue) ;
+3. corriger, voir le même test vert ;
+4. ouvrir la PR en citant l'issue dans sa description (`Closes #12`, où 12 est le numéro de l'issue) : GitHub ferme l'issue à la fusion de la PR (comportement décrit par la documentation de GitHub, non essayé ici).
+
+Les constats non corrigés restent ouverts, avec leur priorité et, le cas échéant, la mention « abandonné » et sa raison. L'évaluation finale regarde un « audit croisé traité (issues priorisées, constats corrigés ou justifiés) ».
+
+> **À retenir.** Une issue par constat, dans le dépôt audité : ce qui a été fait, vu, attendu, et une priorité proposée. L'équipe auditée en corrige au moins un pendant le sprint, test d'abord.
+
+---
+
+## 10. Pour les thèmes A, B et C
+
+La partie sécurité et la checklist sont communes aux trois thèmes. Ce qui change, c'est l'énoncé : chaque thème a sa rubrique « Sécurité et données » et sa rubrique « Import/export » dans `cours/projets/themes.md`, et sa mesure propre dans la fiche.
+
+| Thème | Point de sécurité de l'énoncé | Import CSV du cœur | Mesure de la fiche à retrouver dans l'application (audit, point 5) |
+|---|---|---|---|
+| **A** · Les Marches de Cendrelune | Contrôle d'accès défaillant : un `passeur` ne modifie que la fiche dont il est `proprietaire`, test de refus y compris en passant l'identifiant d'un autre passeur au cas d'usage ; validation des entrées à l'import | Les passeurs (200 Ko au plus, motifs `voie_inconnue`, `rang_hors_bornes`, `souffle_incoherent`, `nom_en_double`, `colonnes_manquantes`) | Mention d'information visible ; suppression d'un utilisateur et de ses données |
+| **B** · TRS de la ligne 4 | Injection : neutralisation des cellules à l'export (apostrophe devant `=`, `+`, `-`, `@`) et aucune requête concaténée ; aucun secret, gitleaks en CI | Les déclarations de production (section 4.1) | Consigne « aucun nom » affichée dans le formulaire de commentaire d'arrêt |
+| **C** · Vœux de projet | Envoi de fichier non maîtrisé : 200 Ko au plus, vérifié par extension et contenu (UTF-8 texte), lu en mémoire, nom de fichier jamais utilisé comme chemin ; minimisation | Les étudiants et leurs vœux (motifs `pseudonyme_invalide`, `rang_en_double`, `sujet_inconnu`, `voeu_en_double`, `parcours_inconnu` ou `colonnes_manquantes`) | Statut `brouillon` / `publie` de la répartition |
+
+Pour l'audit, ce tableau vous sert aussi dans l'autre sens : vous auditez un autre thème, et c'est la ligne de **ce** thème que vous lisez au point 5.
+
+---
+
+## 11. Avez-vous fini ? La part « sécurité et audit » de la definition of done
+
+Repris du programme (definition of done et livrable de la séance 4) :
+
+- [ ] Le contrôle de secrets en CI est vert.
+- [ ] Chaque équipe a audité une équipe et reçu un audit.
+- [ ] L'audit reçu est sous forme d'issues dans votre dépôt (livrable : « audit reçu (issues) »).
+
+Et, pour que ces cases aient un sens, vérifiez aussi :
+
+- [ ] Vos constats sur l'équipe auditée sont ouverts, un par issue, avec ce qui a été fait, vu, attendu, et une priorité proposée ; aucun secret, nom civil ni courriel dans leur texte.
+- [ ] Votre équipe sait quel constat reçu elle corrigera pendant le sprint, en commençant par un test qui le reproduit.
+- [ ] Chaque cas d'usage déjà écrit que `PROJET.md` réserve à un rôle passe par `RequireRole`, avec un test de refus vert ; les suivants la recevront quand ils seront écrits.
+- [ ] Pour le sprint, noté dans le backlog : la recherche de `customSelect` et `customStatement`, l'import CSV et un test par motif de rejet, la neutralisation à l'export si l'export est livré.
+
+---
+
+## Glossaire
+
+- **Audit croisé** : examen du dépôt d'une équipe par une équipe d'un autre thème, sur cinq points fixés, dont les constats deviennent des issues.
+- **Bundle (web)** : ensemble des fichiers produits par `flutter build web` et servis au navigateur ; tout ce qu'il contient est public.
+- **Constat** : fait observé dans le dépôt audité, avec l'endroit où on l'a vu ; pas une hypothèse.
+- **Contrôle d'accès** : vérification qu'un utilisateur a le droit de faire une action ; dans le projet, la garde `RequireRole` du domaine.
+- **`customSelect`, `customStatement`** : fonctions de drift qui exécutent une requête SQL écrite à la main (lecture, écriture) ; elles reçoivent des variables liées, jamais du texte assemblé.
+- **gitleaks** : outil qui cherche des secrets dans un dépôt et son historique ; lancé par la CI (chapitre 2).
+- **`git grep`** : commande qui cherche un texte dans les fichiers suivis par git.
+- **Injection de formule** : texte exporté en CSV qu'un tableur interprète comme une formule ; parade : apostrophe devant `=`, `+`, `-`, `@`.
+- **Injection de prompt** : texte malveillant glissé dans ce que lit l'agent (chapitre 6 de la séance 1, section 10).
+- **Injection SQL** : valeur extérieure collée dans le texte d'une requête SQL, qui en change le sens.
+- **Issue** : fiche de suivi d'un dépôt GitHub (titre, texte, commentaires, ouverte ou fermée).
+- **OWASP Top 10** : liste de référence des dix grandes catégories de failles des applications web, publiée par la fondation OWASP.
+- **Requête SQL** : phrase envoyée à la base pour lire ou écrire des données.
+- **Révoquer (un secret)** : le rendre inutilisable auprès du service qui l'a émis ; seule réponse valable à une fuite.
+- **Secret** : valeur confidentielle (clé d'API, mot de passe, jeton).
+- **Variable liée** : valeur transmise à la base à côté de la requête, à la place d'un `?` ; la base la traite toujours comme une valeur.
+
+---
+
+## Pour aller plus loin
+
+- Séance 1 : chapitre 3, section 3.8 (étude d'éditeur sur la sécurité du code généré) ; chapitre 6, section 10 (injection de prompt, secrets, périmètre) ; chapitre 8, sections 5.6 et 9 (secrets, sécurité de la chaîne de livraison, Dependabot).
+- Séance 2 : chapitre 2, section 5 (permissions `deny`, testées) ; chapitre 3 (le dépôt-modèle, `.gitignore` et `.env.example`).
+- Séance 3 : chapitre 1, sections 4, 5 et 7 (relire par les preuves, checklist de revue, revue croisée) ; chapitre 4, sections 6 et 7.1 (base en mémoire, test modifié pour passer).
+- Séance 4 : chapitre 2 (CI complète, gitleaks, audit des dépendances, protection de `main`, GitHub Pages, contrôle du bundle) ; chapitre 4 (la fiche devant le RSSI) ; chapitre 5, fiche T (l'audit croisé à suivre au clavier).
+- Votre dépôt : `docs/ARCHITECTURE.md`, section 8 (les rôles et la garde `RequireRole`).
+- OWASP : « OWASP Top 10 » (https://owasp.org/www-project-top-ten/), « SQL Injection » et « CSV Injection » (https://owasp.org/www-community/attacks/).
+- Documentation de drift sur les requêtes écrites à la main et leurs variables (https://drift.simonbinder.eu/).
+
+---
+
+## Points non vérifiés (à signaler honnêtement)
+
+- **Vérifié sous Linux seulement**, le 27 novembre 2026, sur une copie locale du dépôt-modèle (Flutter 3.50.1, Dart 3.14.0, drift 2.35.4, git 2.53.0, gh 2.100.0). Ni Windows, ni macOS, ni la CI en ligne avec le code de ce chapitre. Les durées et nombres de tests valent pour cette copie.
+- **La démonstration n'a pas été produite par un agent.** Le `customSelect` concaténé a été écrit à la main pour imiter une proposition d'agent ; la demande de la section 3.2 n'a pas été soumise à Claude Code, sa réponse n'est pas connue.
+- **La fonction de filtre et la fonction de neutralisation** ont été écrites dans la copie pour le chapitre, puis laissées hors du dépôt-modèle. L'appel de la neutralisation dans un vrai export CSV, et le test d'export, n'ont pas été écrits.
+- **L'import CSV** n'a pas été écrit ni testé (il se fait pendant le sprint) ; le comportement de `file_picker` dans le navigateur (lecture en mémoire, taille, encodage) n'a pas été essayé.
+- **Rien n'a été exécuté sur GitHub pour ce chapitre** : ni clone d'un dépôt d'équipe, ni lecture d'un rapport gitleaks ou d'audit des dépendances, ni ouverture d'un site GitHub Pages, ni création d'issue. Les faits sur la CI complète (trois contrôles exigés, gitleaks limité à `main` et à la PR) viennent de l'essai en ligne du workflow fourni, fait le 27 novembre 2026 sur un dépôt d'essai de l'organisation (chapitre 2). La commande `gh issue create` est écrite d'après `gh issue create --help` (gh 2.100.0), sans exécution. Que le bouton de création s'appelle *Create* ou *Submit new issue*, qu'un compte extérieur à l'équipe ne puisse pas poser d'étiquette, et que `Closes #12` ferme l'issue à la fusion : d'après la connaissance générale de GitHub, non vérifié ici.
+- **La protection de `main` vue de l'extérieur** : la lecture `gh api …/branches/main --jq '.protection.required_status_checks.contexts'` a été faite sans authentification sur le dépôt d'essai de l'organisation, réponse `["analyse-et-tests","securite","site-web"]` ; elle n'a pas été refaite sur un dépôt d'équipe. La lecture détaillée des réglages de protection est refusée sans droits d'administration : le chapitre ne la propose pas.
+- **Le refus dans l'application** (section 7.4, sélecteur de rôle puis action) : décrit d'après `docs/ARCHITECTURE.md`, section 8 ; l'application n'a pas été lancée dans Chrome pour ce chapitre.
+- **gitleaks** n'est pas installé sur le poste de rédaction et n'a pas été lancé ; le contrôle du bundle web est renvoyé au chapitre 2.
+- **La forme d'issue, la priorité dans le titre et la conduite à tenir devant un secret trouvé** (prévenir à l'oral, puis issue sans la valeur) sont des propositions des supports, à valider par l'enseignant.
+- **Les liens OWASP et drift** de « Pour aller plus loin » n'ont pas été relus en ligne pour ce chapitre.
+
+---
+
+## Sources
+
+Documents du cours :
+
+- `cours/programme-detaille.md` : séance 4 (objectifs 4 et 6, blocs 7 et 11, ordre de coupe, appariements si 7 équipes, checklist d'audit croisé en 5 points, renvois au sprint, livrable, definition of done) ; section 5, « Le sprint final » (charge des corrections d'audit, backlog) ; grille d'évaluation (ligne « Qualité, sécurité et livraison »).
+- `cours/projets/themes.md` : socle commun (import CSV obligatoire, garde `RequireRole`) ; thèmes A, B et C, rubriques « Import/export » et « Sécurité et données ».
+- Supports de la séance 1 : chapitre 3 (`03-craft-depuis-l-ia.md`, section 3.8), chapitre 6 (`06-outils-developpement-agentique.md`, section 10), chapitre 8 (`08-ci-cd-devops.md`, sections 5.6 et 9). Séance 2 : chapitre 2 (`02-configurer-claude-code.md`, section 5). Séance 3 : chapitre 1 (`01-travailler-a-plusieurs.md`, sections 4, 5 et 7), chapitre 4 (`04-les-donnees.md`, sections 6 et 7).
+- Dépôt-modèle du projet (`depot-modele/`, relu le 27 novembre 2026) : `README.md`, `CLAUDE.md`, `.claude/settings.json`, `.gitignore`, `.env.example`, `docs/ARCHITECTURE.md` (section 8), `docs/fiche_conformite.md`, `docs/seance-4/ci.yml` (le workflow complet fourni : contrôles `analyse-et-tests`, `securite`, `site-web`, `publication`), `pubspec.yaml`, `lib/core/data/base_de_donnees.dart`, `lib/core/domain/roles/`, `lib/features/jets/data/jets_repository_drift.dart`, `lib/features/jets/domain/usecases/vider_historique.dart`, `test/core/domain/roles/require_role_test.dart`, `test/features/jets/data/jets_repository_drift_test.dart`.
+
+Vérifications locales (27 novembre 2026, Linux, Flutter 3.50.1), sur une copie du dépôt-modèle : état de départ vert (32 tests) ; `customSelect` concaténé ajouté, `flutter analyze` sans remarque ; `git grep` des deux fonctions ; test du filtre rouge (tous les jets renvoyés avec `10 OR 1 = 1`, `SqliteException` avec une apostrophe) ; correctif à variable liée, même test vert ; fonction `neutraliserCellule` écrite test d'abord (rouge à la compilation, puis 4 tests verts) ; `dart format` sans changement, `flutter analyze` sans remarque, `flutter test` à 39 tests verts ; `git ls-files | grep -i env`, `git check-ignore -v .env`, `git grep -n "RequireRole(" -- lib`, `flutter test --plain-name "refuse"` et la recherche de courriel dans la fiche, sorties citées.

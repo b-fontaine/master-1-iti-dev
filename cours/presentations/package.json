@@ -9,10 +9,12 @@
     "day-1": "node scripts/present.mjs day-1",
     "day-2": "node scripts/present.mjs day-2",
     "day-3": "node scripts/present.mjs day-3",
+    "day-4": "node scripts/present.mjs day-4",
     "themes": "node scripts/present.mjs themes",
     "day-1:serve": "node scripts/present.mjs day-1 --no-open",
     "day-2:serve": "node scripts/present.mjs day-2 --no-open",
     "day-3:serve": "node scripts/present.mjs day-3 --no-open",
+    "day-4:serve": "node scripts/present.mjs day-4 --no-open",
     "themes:serve": "node scripts/present.mjs themes --no-open"
   }
 }

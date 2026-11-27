@@ -54,9 +54,13 @@ book:
         - partie-5-seance-3/02-premiere-user-story.qmd
         - partie-5-seance-3/03-rgpd-applique-au-projet.qmd
         - partie-5-seance-3/04-les-donnees.qmd
-    - part: "Séance 4 · Qualité, sécurité et règlement européen sur l'IA"
+    - part: partie-6-seance-4/index.qmd
       chapters:
-        - partie-5-a-venir/seance-4.qmd
+        - partie-6-seance-4/00-seance-en-bref.qmd
+        - partie-6-seance-4/01-test-d-acceptation.qmd
+        - partie-6-seance-4/02-ci-cd-et-publication.qmd
+        - partie-6-seance-4/03-securite-et-audit-croise.qmd
+        - partie-6-seance-4/04-ai-act-et-rssi.qmd
     - part: "Séance 5 · Retouches finales et soutenance"
       chapters:
         - partie-5-a-venir/seance-5.qmd

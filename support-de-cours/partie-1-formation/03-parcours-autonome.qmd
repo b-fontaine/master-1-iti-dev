@@ -1,4 +1,4 @@
-<!-- source: nouveau · synchro: 2026-11-26 -->
+<!-- source: nouveau · synchro: 2026-11-27 -->
 
 # Suivre le parcours en autonome {#sec-parcours-autonome}
 
@@ -34,7 +34,7 @@ Les supports de chaque séance se lisent dans l'ordre du livre. Les repères ci-
 | 3. Remettre le poste en route et lancer le projet (séance 2) | Reprise du poste en dix minutes, puis git pas à pas, configuration de l'assistant et démarrage du dépôt de projet | @sec-s2-en-bref, @sec-git, @sec-configurer-claude-code, @sec-demarrer-projet |
 | 4. Choisir un thème et se cadrer | Lire les trois énoncés, choisir un thème, rédiger `PROJET.md` | @sec-themes |
 | 5. Première règle, données, RGPD (séance 3) | Reprise du projet, première règle métier en TDD et en BDD avec l'assistant, RGPD appliqué au projet et début de la fiche de conformité, modèle de données, première migration et test d'intégrité | @sec-s3, @sec-travailler-a-plusieurs, @sec-premiere-user-story, @sec-rgpd-projet, @sec-donnees, @sec-conformite |
-| 6. Qualité, sécurité, règlement européen sur l'IA (séance 4) | Intégration continue, sécurité, règlement européen sur l'IA, validation de la fiche de conformité. Le programme détaillé décrit cette séance ; ses chapitres de support sont annoncés | @sec-s4, @sec-programme-detaille, @sec-conformite |
+| 6. Qualité, sécurité, règlement européen sur l'IA (séance 4) | Test d'acceptation écrit avant le code, intégration continue complète et publication de la version web, sécurité et audit d'un autre dépôt, règlement européen sur l'IA et validation de la fiche de conformité | @sec-s4, @sec-test-acceptation, @sec-ci-publication, @sec-securite-audit, @sec-ai-act-rssi, @sec-conformite |
 | 7. Finir et présenter (séance 5) | Retouches, gel du code, démonstration | @sec-s5, @sec-programme-detaille |
 
 Gardez sous la main les fiches pratiques (@sec-fiches) et le glossaire (@sec-glossaire). Les supports de la séance 1 recommandent de lire d'abord le vocabulaire et le contexte, puis de consulter le guide Flutter et le chapitre sur les outils agentiques au moment d'installer ; le support de la séance 2 recommande de commencer par la fiche de reprise du poste.

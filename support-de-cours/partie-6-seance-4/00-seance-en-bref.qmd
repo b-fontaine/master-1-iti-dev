@@ -1,0 +1,221 @@
+<!-- source: cours/presentations/day-4/index.html, cours/presentations/day-4/notes.html · synchro: 2026-11-27 -->
+
+# La séance 4 en bref {#sec-s4}
+
+La séance 4, « Qualité, CI/CD, sécurité, AI Act et validation RSSI », a lieu douze jours après la séance 3. Le code et les données existent : une première règle verte, un modèle et ses migrations. Une autre question se pose : peut-on faire confiance à ce qu'on livre, et peut-on le mettre en usage ? La séance y apporte trois réponses complémentaires : des **garde-fous automatiques** (la CI), un **test d'acceptation écrit par un humain avant le code de l'agent**, et un **passage devant le RSSI**, qui qualifie les risques avant toute mise en usage. À la fin, chaque équipe a publié sa version web, défendu sa fiche de conformité et audité une autre équipe. Ce chapitre résume la séance et indique, pour chaque temps, où le retrouver dans le livre.
+
+## Objectifs
+
+À la fin de la séance, vous savez :
+
+1. **expliquer** pourquoi « les tests passent » ne prouve pas que « le code est correct » quand le même agent écrit le code et ses tests ;
+2. **traduire** les cas d'acceptation de votre thème en scénarios `.feature` écrits avant le code ;
+3. **expliquer une chaîne CI/CD** et ce qu'implique une publication publique : aucun secret dans un build web ;
+4. **repérer** cinq risques courants de sécurité, et le risque de prompt injection ;
+5. **vous demander d'abord** si votre projet est un système d'IA, le classer (hors champ, minimal, obligations de transparence de l'article 50, haut risque, interdit), nommer votre rôle (fournisseur ou déployeur) et défendre votre fiche devant le RSSI (go, go sous conditions, no-go) ;
+6. **auditer** le dépôt d'une autre équipe sur cinq points.
+
+Les deux premiers objectifs vont ensemble : un test d'acceptation que l'agent n'a pas écrit. Le troisième et le quatrième sont les garde-fous. Le cinquième est le moment fort de la séance. Le sixième demande de regarder le dépôt d'une autre équipe avec l'œil d'un tiers.
+
+## Déroulé {#sec-s4-deroule}
+
+La séance suit quatre temps, qui regroupent les treize blocs du programme. Elle alterne un exposé court et un atelier qui l'applique, et se termine par l'audit croisé et le bilan, qui ouvre le sprint.
+
+| Temps | Contenu | Livrable | Où le retrouver |
+|---|---|---|---|
+| 1 · Juger ce qu'on livre (blocs 1 à 4) | Contrôle d'ouverture et point d'équipe ; rôles branchés sur la garde `RequireRole`, seed réduit ; qualité avec les agents et self-grading ; test d'acceptation du clou | `flutter test` vert sur chaque poste, un test de refus par action protégée ; cas d'acceptation rouges dans une PR en brouillon, trois verrous fusionnés | @sec-test-acceptation, fiches O et P |
+| 2 · Les garde-fous automatiques (blocs 5 à 7) | La CI complète et ses quatre contrôles ; publier, c'est rendre public ; protection de `main` et GitHub Pages ; cinq risques de sécurité et la prompt injection | CI verte et obligatoire sur `main`, version web de l'équipe ouverte à son adresse | @sec-ci-publication, @sec-securite-audit, fiche Q |
+| 3 · L'AI Act et le RSSI (blocs 8 à 10) | L'AI Act en une page ; dix cartes à classer ; le passage devant le RSSI, en jeu de rôle | Rubrique 9 de la fiche provisoire (rôle et case) ; décision provisoire du RSSI | @sec-ai-act-rssi, fiches R et S |
+| 4 · L'audit et le sprint (blocs 11 à 13) | Audit croisé en 5 points ; bilan et consignes du sprint ; quiz de 8 questions | Un audit fait et un audit reçu, en issues ; périmètre du sprint décidé | @sec-securite-audit, fiches T et U |
+
+La fiche V regroupe le dépannage de toute la séance.
+
+Le programme classe **Indispensable** (à ne pas sacrifier) le test d'acceptation du clou, l'AI Act en une page, l'atelier de classification, le passage devant le RSSI, l'audit croisé, ainsi que la CI complète et la protection de `main`. Sont **Important** (à garder sauf contrainte forte) le point d'équipe, la qualité avec les agents, la CI/CD en pratique, la sécurité, le bilan et la publication sur GitHub Pages. La reprise de la séance 3 est **Indispensable** pour les rôles, **Important** pour le seed réduit et **Pratique** (si le rythme le permet) pour la suite ; la release `v0.1` est **Pratique** ; le quiz est **Moins utile** (il peut sauter ou rester en ressource). Le détail bloc par bloc est dans le chapitre [-@sec-programme-detaille].
+
+**Livrable de fin de séance (identique pour les trois thèmes).**
+
+1. Test d'acceptation du clou (fichiers `.feature`) en rouge dans une PR en brouillon.
+2. Règle `deny`, consigne `CLAUDE.md` et `CODEOWNERS` fusionnés.
+3. CI complète obligatoire sur `main` protégée ; build web publié sur GitHub Pages par l'équipe.
+4. Rôles en place.
+5. Brouillon de fiche de conformité présenté au RSSI : rubriques 1 à 5, rubrique 9 provisoire ; la rubrique 8 (article 22) est discutée devant le RSSI.
+6. Audit reçu (issues) ; release `v0.1` si `main` est verte.
+
+## Les idées clés
+
+### Repartir de l'état réel
+
+Douze jours ont passé : on repart de l'état réel, pas de l'état espéré. Chacun récupère `main`, installe, génère, lance les tests (`git pull`, `flutter pub get`, `build_runner`, `flutter test`) ; après douze jours, `build_runner` avant `flutter test` n'est pas facultatif. Le point d'équipe fait le tour des PR ouvertes, des blocages, de l'état de la CI sur `main` et de la fiche, et de ce que la tâche facultative a permis de terminer. Il sert aussi à annoncer les appariements de l'audit croisé et les tables du passage devant le RSSI (plus bas).
+
+::: {.callout-warning title="Les rôles d'abord"}
+La garde `RequireRole` est dans le dépôt-modèle depuis la séance 2 : le travail consiste à la brancher, dans la couche domain, sur chaque cas d'usage sensible qui existe déjà, avec un test de refus vu rouge avant la garde. La liste des cas sensibles se fait en équipe, à partir des droits de `PROJET.md`. Vient ensuite un seed reproductible, fictif et de taille réduite ; le seed complet peut finir dans le sprint. Les rôles ne se coupent jamais : l'audit croisé de la fin de séance les vérifie. Les équipes à jour relisent les PR ouvertes et commencent le CRUD de leur entité principale ; aucune équipe n'est censée l'avoir terminé. Voir @sec-acceptation-3 et la fiche O (annexe [-@sec-fiche-o]).
+:::
+
+### Le test d'acceptation : « Don't grade your own exam »
+
+Un agent produit plus vite qu'un humain ne relit : le facteur limitant n'est plus l'écriture, c'est la relecture. La réponse n'est pas de relire plus vite, mais mieux, par les preuves. Le piège principal a un nom, le **self-grading** : si le même agent écrit le code et ses tests, une erreur de compréhension passe dans les deux, le code calcule faux, le test attend le même faux, et tout est vert. La parade tient en trois conditions : un **test indépendant**, écrit avant le code, par une autre main, avec des valeurs recopiées de l'énoncé.
+
+::: {.callout-tip title="À retenir"}
+Des tests verts écrits par l'agent prouvent la cohérence, pas la justesse. Un geste repris de la séance 1 : quand l'agent propose une structure, demandez-lui quel patron il a utilisé et quel problème ce patron résout ici ; une réponse vague signale un patron de trop (voir @sec-design-patterns).
+:::
+
+Trois repères chiffrés, tous venus d'éditeurs d'outils d'analyse de code, se lisent avec recul. GitClear (2025, 211 millions de lignes de 2020 à 2024) observe que le code « déplacé », un indice indirect du refactoring, passe d'environ 25 % des changements à moins de 10 % ; les résultats sont corrélationnels. GitClear (2026, page de synthèse de l'éditeur seulement) donne un refactoring passé de 21 % des lignes modifiées en 2022 à 3,8 % en 2026, et une duplication de blocs en hausse de 81 % depuis 2023. CodeScene (FORGE 2026, étude dont un auteur a fondé l'éditeur) observe que, sur du code peu sain, les modèles testés cassent plus souvent le comportement en refactorant : « au moins 30 % » de risque de défaut en plus, effet non significatif pour les modèles les plus puissants. Ces chiffres ne prouvent pas que l'agent écrit du mauvais code ; ils disent que la vérification ne suit pas toute seule la vitesse de production. D'où des attendus fixés par un humain. Détails : @sec-acceptation-4.
+
+Le gardien produit recopie lui-même, sans le demander à l'agent, le tableau des cas d'acceptation de son thème en scénarios Gherkin en français, dans `test/acceptance/`, un scénario par ligne du tableau, valeurs attendues au caractère près (`'92,8 %'`, pas `'92.8%'`). Un second membre relit ligne à ligne, le tableau d'un côté, le scénario de l'autre, et c'est lui qui approuve. Le thème B a huit cas, les thèmes A et C sept chacun. Après génération par `build_runner`, `flutter test test/acceptance` donne, pour le thème B, huit cas et huit échecs. **Ce rouge est le livrable** : il prouve que les cas sont exécutés et qu'aucun code ne les satisfait encore. Il est commité sur une branche dédiée, dans une PR en brouillon qui le reste jusqu'à ce que tous les cas soient verts ; sa CI est rouge, et on ne la « répare » pas en touchant au test. Les valeurs sont recopiées du tableau, jamais calculées par l'agent. La suite du clou se fait pendant le sprint. Voir @sec-acceptation-6, @sec-acceptation-7 et la fiche P (annexe [-@sec-fiche-p]).
+
+::: {.callout-warning title="Protéger le juge : trois verrous et un geste"}
+Trois verrous, fusionnés dans une PR à part, courte : la **règle `deny`** de `.claude/settings.json` sur `test/acceptance/**`, déjà présente (on vérifie qu'elle y est, on ne la recopie pas, et on l'essaie une fois : l'agent doit être refusé, création de fichier comprise) ; la **consigne de `CLAUDE.md`**, « un test qui échoue n'est jamais corrigé en modifiant le test », qui est une demande au modèle et non une contrainte ; le fichier **`CODEOWNERS`**, qui désigne deux propriétaires pour `test/acceptance/` : le gardien produit et le second membre qui a relu les valeurs.
+
+Aucun verrou ne couvre les étapes, dans `test/steps/` : un agent pressé peut vider une étape sans toucher au scénario, et le cas reste vert. Elles ne sont protégées que par la relecture. D'où le geste du relecteur : fausser une valeur attendue sur son poste (`'92,8 %'` devient `'92,9 %'`), constater que le cas rougit, puis annuler avec `git restore test/`. Voir @sec-acceptation-9.
+:::
+
+### Les garde-fous automatiques
+
+La CI complète est fournie, inactive, dans le dépôt de l'équipe (`docs/seance-4/ci.yml`) : une PR la copie par-dessus `.github/workflows/ci.yml`, et rien d'autre ; le nom du dépôt est lu par GitHub, il n'y a rien à adapter. Elle affiche quatre contrôles sur la page d'une PR :
+
+- **`analyse-et-tests`** : les six commandes de « Vérifier avant une PR », plus la couverture des tests ;
+- **`securite`** : les dépendances vulnérables (osv-scanner) et les secrets, sur `main` et dans les commits de la PR (gitleaks) ;
+- **`site-web`** : la version web se construit (`flutter build web`) ;
+- **`publication`** : depuis `main` seulement, après les trois autres, le site part sur GitHub Pages ; sur une PR, ce contrôle est sauté (« Skipped »), ce qui est normal.
+
+Les trois premiers tournent en même temps et sont exigés pour fusionner : un build web cassé ne se fusionne pas. La publication n'est pas exigée, ce qui laisse un plan B possible. Sur le dépôt-modèle nu, la couverture est de 58,1 % (251 lignes exécutées sur 432), et aucun seuil ne fait échouer la CI. Détails : @sec-cipub-3.
+
+Les équipes n'ont pas les droits d'administration de leur dépôt : **l'enseignant active GitHub Pages et rend la CI obligatoire**. L'équipe le constate avec `gh pr checks <numéro> --required`, qui liste les trois contrôles exigés. Après la fusion dans `main`, le contrôle `publication` met le site en ligne, à l'adresse `https://<organisation>.github.io/<dépôt>/` : on l'ouvre, on vérifie que c'est bien l'application de l'équipe, puis on contrôle que le bundle publié ne contient ni secret ni donnée réelle. Si Pages ou Actions bloquent, le plan B est un build web local et une démonstration avec `flutter run -d chrome` ; la publication se termine dans le sprint et le plan B se documente. Voir @sec-cipub-4, @sec-cipub-9 et la fiche Q (annexe [-@sec-fiche-q]).
+
+::: {.callout-warning title="Publier, c'est rendre public"}
+La commande de build, celle du README du dépôt-modèle, que la CI lance, est `flutter build web --release --base-href "/<dépôt>/" --no-web-resources-cdn --web-content-hash`. `--base-href` : le site est servi sous le nom du dépôt. `--no-web-resources-cdn` : CanvasKit, le moteur de rendu, est embarqué au lieu d'être chargé depuis un serveur de Google, un tiers qu'il faudrait sinon déclarer dans la fiche de conformité. `--web-content-hash` : une empreinte dans le nom des fichiers, pour que les navigateurs prennent la nouvelle version.
+
+GitHub Pages est public, et **tout ce qui est dans un build web Flutter est public** : code, ressources, constantes. Donc données fictives uniquement, aucun secret, aucun mot de passe réel dans l'application. Une clé d'API rangée dans une constante Dart n'est pas cachée une fois le site publié. Voir @sec-cipub-5 et @sec-cipub-6.
+:::
+
+### La sécurité : cinq risques courants, et un sixième
+
+La pratique de l'OWASP Top 10, la liste de référence des grandes familles de failles web, se réduit ici à cinq risques, chacun avec une preuve qui ne demande pas de lire le code.
+
+| Risque | Le réflexe | La preuve |
+|---|---|---|
+| Injection SQL | Avec drift, `customSelect` et `customStatement` reçoivent des variables liées, jamais du texte assemblé | Une recherche dans le dépôt, un test |
+| Validation des entrées | Type, bornes, longueur, liste fermée : vérifiés avant d'enregistrer | Un test par motif de rejet |
+| Contrôle d'accès | La garde `RequireRole` est testée ; une application purement cliente reste contournable depuis le navigateur, donc elle ne protège aucune donnée réelle | Un test de refus par action |
+| Secrets | Un secret qui fuit se révoque ; rien de secret dans un build web | Le rapport gitleaks de la CI |
+| Dépendances vulnérables | Versions verrouillées dans `pubspec.lock`, auditées en CI | osv-scanner, dans la CI |
+
+Le sixième est la **prompt injection** : tout texte que lit l'agent peut contenir des instructions. La séance 4 en ajoute deux sources, le dépôt de l'équipe que vous auditez et les issues que vous recevez. Principe de précaution : moins l'agent a de droits, moins il y a de secrets autour de lui, moins une injection peut nuire. Voir @sec-audit-2 et @sec-audit-5.
+
+La démonstration du programme suit le cycle **trouver, reproduire par un test, corriger**. Trouver : une recherche (`git grep`) des deux seules fonctions à risque, `customSelect` et `customStatement` ; un `$` dans la requête, c'est une valeur saisie collée dans le texte. Reproduire : un test sur une base en mémoire ; avec la saisie `10 OR 1 = 1`, la requête rendait tous les jets, et une simple apostrophe empêche même la requête de se construire. Le test rouge se commite avant le correctif. Corriger : la valeur sort du texte, remplacée par `?`, et part dans `variables`. Le même test, inchangé, passe au vert et reste dans le dépôt : si la valeur est recollée un jour, il repasse au rouge. Détails : @sec-audit-3.
+
+::: {.callout-warning title="Un secret dans une PR"}
+Quand une PR contient un secret, le contrôle `securite` est rouge et le rapport de gitleaks masque la valeur (`--redact`), parce que le journal d'un dépôt public est public. Supprimer le fichier dans un nouveau commit ne suffit pas : le contrôle reste rouge, car le secret est toujours dans un commit précédent de la PR. Un vrai secret se **révoque** : on le rend inutilisable auprès du service qui l'a émis. Seul un vrai faux positif se déclare dans `.gitleaksignore`, une ligne par empreinte, dans une PR relue. Votre projet n'a besoin d'aucun secret : c'est la meilleure protection. Voir @sec-cipub-7.
+:::
+
+L'import et l'export CSV se font pendant le sprint. L'import est obligatoire : `file_picker`, taille maximale, encodage, rejet motivé, parseur dans la couche `data`, et un test par motif de rejet de l'énoncé (pour le thème B : `quantite_invalide`, `declaration_en_double`, `poste_inconnu`, `rebuts_superieurs_produites`, `quart_inconnu`, `colonnes_manquantes`, fichier de plus de 200 Ko). L'humain recopie les motifs, l'agent les fait passer. L'export a un piège, l'**injection de formule** : une cellule qui commence par `=`, `+`, `-` ou `@` devient une formule dans un tableur ; elle est préfixée d'une apostrophe, par une petite fonction testée, appelée sur chaque cellule de texte. Voir @sec-audit-4.
+
+### L'AI Act : d'abord l'étape 0
+
+L'AI Act, règlement (UE) 2024/1689, ne s'applique qu'aux systèmes d'IA. Avant de classer, on se demande donc si l'outil livré en est un.
+
+::: {.callout-tip title="Étape 0 : est-ce un système d'IA ?"}
+Un système d'IA est un système qui, à partir des entrées reçues, déduit comment générer des sorties (article 3, point 1). Trois questions aident : d'où vient la règle, est-elle écrite à l'avance dans l'énoncé ? Les mêmes entrées donnent-elles toujours la même sortie ? Un modèle génère-t-il, prédit-il ou recommande-t-il quelque chose à l'exécution ? Un calcul de TRS, une règle de jugement fixe, une affectation déterministe peuvent être hors champ. Mais hors champ de l'AI Act ne veut pas dire hors du droit : le RGPD s'applique toujours dès qu'il y a des données personnelles. La question porte sur l'outil livré, pas sur l'agent de code qui a servi à l'écrire.
+:::
+
+Si c'est un système d'IA, on le classe selon son usage : plus il peut nuire aux personnes, plus les obligations sont lourdes.
+
+| Case | Article | Exemples |
+|---|---|---|
+| Interdit | art. 5 | Notation sociale, manipulation subliminale nuisible, reconnaissance des émotions au travail et à l'école (sauf raisons médicales ou de sécurité ; détail à vérifier), depuis le 2 février 2025 (à vérifier) |
+| Haut risque | art. 6, annexe III | Éducation et formation, emploi et gestion des travailleurs, accès aux services essentiels, biométrie |
+| Transparence | art. 50 | Agents conversationnels, contenus générés ou manipulés : informer, marquer |
+| Minimal | | Pas d'obligation spécifique : un filtre anti-spam |
+| Hors champ | | Pas un système d'IA : pas d'AI Act, mais RGPD et confidentialité restent |
+
+C'est l'usage qui décide, ni la technique, ni la taille du code, ni la durée de vie de l'outil : un outil temporaire ne change pas de qualification. Quatre notions complètent la grille. Le **fournisseur** développe un système ou le met sur le marché sous son nom ; le **déployeur** l'utilise sous sa propre autorité ; une équipe qui met un outil à disposition de tiers peut devenir fournisseur (à vérifier). L'article 4 demande aux fournisseurs et aux déployeurs de favoriser la **maîtrise de l'IA** de leurs personnels : c'est ce qui justifie cette formation (formulation modifiée par l'omnibus, à vérifier sur EUR-Lex). L'article 86 donne à une personne affectée par une décision fondée sur un système à haut risque le **droit d'obtenir des explications** du déployeur (champ exact à vérifier). Enfin, le règlement (UE) 2026/1744 a **reporté** une partie des obligations de haut risque (dates à vérifier sur EUR-Lex) : c'est un report, pas un répit, et l'on raisonne dès maintenant avec prudence. Détails : @sec-aiact-2 et le chapitre [-@sec-conformite].
+
+L'atelier de classification applique la grille à dix cartes de cas, par équipe : pour chaque carte, l'étape 0 d'abord, puis une case, puis les données personnelles en jeu. Les cartes ambiguës (les stagiaires, les pauses) sont réservées à la mise en commun, où un désaccord est un bon signe : il montre où la règle demande un jugement. La synthèse de l'enseignant sert à corriger les cartes. Chaque équipe reporte ensuite seule, dans la rubrique 9 de sa fiche, un rôle et une case provisoires, justifiés à partir de l'étape 0 ; la rubrique 8 (décision automatisée, article 22) se discute devant le RSSI. Deux pièges : commencer par le niveau de risque au lieu de l'étape 0, et cocher deux cases dans la rubrique 9. Voir @sec-aiact-3 et la fiche R (annexe [-@sec-fiche-r]).
+
+### Le passage devant le RSSI
+
+Le réflexe professionnel : aucun applicatif ne touche des données réelles ni n'est mis à disposition d'autres personnes sans validation du RSSI. La séance en fait une répétition à taille réelle, en jeu de rôle, à trois tables en parallèle : de 10 à 12 minutes par équipe, soit 4 minutes de présentation du brouillon de fiche, 5 minutes de questions et 2 minutes de décision.
+
+::: {.callout-tip title="Trois questions, trois décisions"}
+Trois questions reviennent : **où partent les prompts ?**, **qui peut contester ?**, **que se passe-t-il à la fin de vie de l'outil ?** La décision est provisoire : **go**, **go sous conditions** ou **no-go** ; en cas de no-go, l'équipe dit quoi corriger et sous quel délai. La réponse écrite et datée du RSSI vient sur la v1 de la fiche, au plus tard une semaine avant la séance 5 ; sans réponse écrite, la décision est no-go par défaut. Un « go » ne vaut que pour le périmètre pédagogique à données fictives. Ce volet relève de la sensibilisation, pas de l'avis juridique.
+:::
+
+Avant son passage, l'équipe ouvre ses preuves dans des onglets : la fiche, la pastille verte de `main`, le contrôle de secrets, le test de refus. Personne ne lui demande de lire du code. Elle présente les rubriques 1 à 5 et 9, et dit elle-même ce qu'elle n'a pas tranché : c'est le meilleur signe qu'elle a compris. Elle note la décision et les conditions telles que le RSSI les dit. Hors passage, elle observe au moins un autre passage avec la grille go/no-go, ou avance l'audit croisé. Deux pièges : affirmer une qualification juridique sans réserve, et dire « la CI est verte » sans la montrer. Voir @sec-aiact-7, @sec-aiact-9 et la fiche S (annexe [-@sec-fiche-s]).
+
+### L'audit croisé en 5 points
+
+Le dépôt tient-il debout aux yeux de quelqu'un qui ne l'a pas écrit ? Chaque équipe audite le dépôt public d'une équipe d'un **autre thème**, sur cinq points, chacun avec la commande ou l'écran à regarder.
+
+1. **Installation à froid** : `git clone`, `flutter pub get`, `build_runner`, `flutter test`, `flutter run -d chrome`, selon le README : l'application démarre en moins de 10 minutes.
+2. **CI** : pastille verte sur `main`, CI obligatoire pour fusionner, audit des dépendances sans alerte non traitée, GitHub Pages qui fonctionne.
+3. **Secrets** : rapport gitleaks, bundle web publié, `.env` ignoré, `.env.example` présent.
+4. **Rôles** : chaque cas d'usage sensible passe par `RequireRole` (couche domain), et un test vérifie le refus.
+5. **Fiche** : `docs/fiche_conformite.md` existe, sans nom civil ni courriel, cohérente avec l'application (mention d'information et suppression en A, consigne sur les commentaires en B, statut `brouillon` / `publie` en C).
+
+::: {.callout-tip title="À retenir"}
+Ne signaler que ce qui existe dans le dépôt : un fait observé, avec l'endroit où on l'a vu, pas une opinion. On clone dans un dossier vide, on suit les commandes du README dans l'ordre où il les donne, et l'on note pour chaque point « conforme », « constat » ou « non vérifié, et pourquoi ». Chaque constat devient une issue dans le dépôt audité : ce qui a été fait, vu, attendu, et une priorité proposée. On constate, on n'intervient pas. Un secret trouvé ne se recopie nulle part : on prévient l'équipe et l'enseignant à l'oral, et l'équipe le révoque.
+:::
+
+L'audit se fait en anneau : chaque équipe audite une équipe et est auditée par une autre, et l'on n'audite jamais l'équipe qui vous audite. Les tables du passage devant le RSSI suivent la même logique ; les paires de même thème, tolérées en séance 3, sont évitées en séance 4.
+
+| Promotion | Audit croisé (X audite Y) | Tables du passage devant le RSSI |
+|---|---|---|
+| 8 équipes | 01→04→07→02→05→08→03→06→01 | Table 1 : 01, 04, 07 ; table 2 : 02, 05, 08 ; table 3 : 03, 06 |
+| 7 équipes | 01→04→02→06→03→05→07→01 | Table 1 : 01, 04, 06 ; table 2 : 02, 05 ; table 3 : 03, 07 |
+
+Un constat reçu se corrige pendant le sprint, en commençant par un test qui le reproduit. Détails : @sec-audit-6, @sec-audit-7, @sec-audit-9 et la fiche T (annexe [-@sec-fiche-t]).
+
+### Le bilan, et le sprint jusqu'à la séance 5
+
+Le livrable se vérifie avec la fiche U (annexe [-@sec-fiche-u]) avant de partir. Le bilan ouvre le sprint avec un périmètre décidé : le backlog est priorisé en trois, **essentiel**, **souhaitable** et **abandonné**, ce dernier décidé explicitement, et les issues de l'audit y entrent. L'objectif du sprint : le clou niveau 1 avec son test d'acceptation vert, les constats d'audit corrigés, la fiche finalisée avec la réponse du RSSI, pour environ 15 à 20 heures de travail d'équipe. Restent aussi dans le périmètre l'import CSV obligatoire, et le seed complet et le CRUD s'ils ne sont pas terminés. Si `main` est verte, l'équipe pose le tag `v0.1` et publie une release GitHub avec ses notes ; sinon, elle le fait dans le sprint (voir @sec-cipub-10). Le quiz de 8 questions du module de conformité sert de ressource.
+
+| Quand | Quoi |
+|---|---|
+| Deux jours après la séance 4, à 18 h | Fiche v1 en PR, « demande de validation RSSI » ; point d'étape en issue de cinq lignes (fait, reste, qui fait quoi et quand) |
+| Vacances de fin d'année | Aucun travail imposé |
+| Au plus tard une semaine avant la séance 5 | Réponse du RSSI, et gel des fonctionnalités le soir même |
+| L'avant-veille de la séance 5, à 18 h | Tag `v1.0-rc` et dossier de rendu |
+| Séance 5, l'après-midi | Soutenance |
+
+Après le gel : correctifs, documentation, préparation de la démonstration, et une répétition avant la séance 5, en équipe, chronomètre en main. Les dates exactes de la promotion sont dans le chapitre [-@sec-programme-detaille] (voir @sec-pd-travail).
+
+## Si le temps manque
+
+L'ordre de coupe du programme, du moins utile au plus utile :
+
+1. le quiz de 8 questions ;
+2. la release `v0.1` ;
+3. le seed complet : une équipe en retard l'abandonne après la release, et garde un seed réduit s'il existe ;
+4. la qualité avec les agents et la sécurité se condensent ; la CI/CD en pratique se réduit à la lecture du workflow fourni.
+
+Ne se sacrifient jamais : le test d'acceptation en rouge, la CI verte et obligatoire sur `main`, le build web construit, les rôles (garde `RequireRole`, avec le seed s'il a glissé), l'atelier de classification, le passage devant le RSSI, l'audit croisé en 5 points.
+
+Peuvent glisser dans le sprint : le seed complet, la publication sur GitHub Pages si elle a bloqué, la release `v0.1`, le quiz, la suite du clou.
+
+## Lectures conseillées
+
+- **En séance** : les fiches O à V de l'annexe [-@sec-fiches], fiche après fiche.
+- **Quand un geste coince** : la fiche V (annexe [-@sec-fiche-v]), consacrée au dépannage de la séance 4.
+- **Après la séance** : @sec-test-acceptation pour la suite du clou, @sec-ci-publication pour lire un contrôle rouge, @sec-securite-audit pour corriger les constats reçus, @sec-ai-act-rssi avant de finaliser la fiche.
+
+Ces chapitres ne redisent pas ceux des séances précédentes : ils y renvoient pour la CI (@sec-ci-cd), le TDD et le BDD (@sec-pratique-craft-flutter), les patrons d'architecture (@sec-design-patterns), la première user story (@sec-premiere-user-story), le RGPD appliqué au projet (@sec-rgpd-projet) et le fond de la conformité (@sec-conformite).
+
+## Ce que la séance vise
+
+| Objectif du programme | Où le travailler |
+|---|---|
+| 1. Expliquer pourquoi des tests verts écrits par le même agent ne prouvent pas que le code est correct | @sec-test-acceptation ; fiche P |
+| 2. Traduire les cas d'acceptation du thème en scénarios `.feature` écrits avant le code | @sec-test-acceptation ; fiche P |
+| 3. Expliquer une chaîne CI/CD et ce qu'implique une publication publique | @sec-ci-publication ; fiche Q |
+| 4. Repérer cinq risques courants de sécurité et le risque de prompt injection | @sec-securite-audit |
+| 5. Poser l'étape 0, classer le projet, nommer son rôle, présenter sa fiche au RSSI | @sec-ai-act-rssi ; @sec-conformite ; fiches R et S |
+| 6. Auditer le dépôt d'une autre équipe sur cinq points | @sec-securite-audit ; fiche T |
+
+::: {.callout-note title="État des connaissances"}
+Les chapitres de cette partie sont sourcés, et chacun signale ses points non vérifiés en fin de document. Quatre réserves valent pour l'ensemble.
+
+- **Le workflow a été essayé sur un seul dépôt d'essai.** La CI complète a été essayée le 27 novembre 2026 sur un dépôt d'essai créé depuis le dépôt-modèle, avec GitHub Pages activé : les trois contrôles exigés ont été verts en un peu plus de 2 minutes (`analyse-et-tests` en 2 min 7 s, `securite` en 6 s, `site-web` en 2 min), la publication a suivi, et le site publié s'est affiché sans aucune requête vers www.gstatic.com. Le rapport de gitleaks reproduit dans ces chapitres vient d'un faux secret fabriqué pour l'essai. Ce qu'un compte étudiant, qui n'a que le droit d'écriture, voit des réglages n'a pas été observé ; la création de la release `v0.1` n'a pas été essayée en ligne.
+- **Versions.** Les sorties ont été obtenues avec Flutter 3.50.1 et bdd_widget_test 3.1.0 ; le message de refus de la règle `deny` est celui de Claude Code 2.1.332.
+- **Les repères chiffrés viennent d'éditeurs.** Les études de GitClear et de CodeScene sont publiées par des éditeurs d'outils d'analyse de code et se lisent avec recul.
+- **Le droit est de seconde main.** Les articles de l'AI Act et les dates du calendrier viennent du chapitre [-@sec-conformite], qui en marque plusieurs « à vérifier » sur EUR-Lex ; ce volet relève de la sensibilisation, pas de l'avis juridique.
+:::

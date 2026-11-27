@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séance 4 · Qualité, CI/CD, sécurité, AI Act et validation RSSI · Master ITI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/deck.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body data-deck="day-4" data-notes="notes.html">
+<div id="stage">
+<canvas id="bg"></canvas><div id="grid"></div>
+<div id="prog"></div>
+<div id="top"><span class="l"><span class="dot"></span><b>ITI</b> // S4 · Qualité, CI/CD, sécurité, RSSI</span><span><b id="cur">1</b> / <span id="tot">1</span></span></div>
+
+<section class="slide title-slide" data-id="titre">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true">
+    <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4338F5"/><stop offset=".55" stop-color="#7B3FF2"/><stop offset="1" stop-color="#00A8C6"/></linearGradient></defs>
+    <g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g>
+    <path d="M400 230l150 55v110c0 100-65 155-150 185-85-30-150-85-150-185V285z" stroke="url(#gg)" stroke-width="6" stroke-linejoin="round" fill="#fff"/>
+    <path d="M330 410l50 50 95-110" stroke="url(#gg)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div class="label">Master ITI · Séance 4</div>
+  <h1 style="font-size:11rem">Qualité, <span class="grad">CI/CD</span>,<br>sécurité, AI Act</h1>
+  <p class="sub">Peut-on faire confiance à ce qu'on livre, et peut-on le mettre en usage ?</p>
+  <div class="meta"><span class="chip">Nantes Université</span><span class="chip">Mercredi 16 déc. 2026</span><span class="chip">Benoît Fontaine</span></div>
+</section>
+
+<section class="slide" data-id="objectifs">
+  <div class="label">À la fin de la séance, vous saurez</div>
+  <div class="check">
+    <div class="it step"><b>1</b><h3>Expliquer pourquoi «&nbsp;les tests passent&nbsp;» ne prouve pas «&nbsp;le code est correct&nbsp;» quand le même agent écrit code et tests</h3></div>
+    <div class="it step"><b>2</b><h3>Traduire les cas d'acceptation de votre thème en scénarios <code>.feature</code> écrits avant le code</h3></div>
+    <div class="it step"><b>3</b><h3>Expliquer une chaîne CI/CD et ce qu'implique une publication publique : aucun secret dans un build web</h3></div>
+    <div class="it step"><b>4</b><h3>Repérer cinq risques courants de sécurité, et le risque de prompt injection</h3></div>
+    <div class="it step"><b>5</b><h3>Demander d'abord «&nbsp;système d'IA ?&nbsp;», classer votre projet, nommer votre rôle, défendre votre fiche devant le RSSI</h3></div>
+    <div class="it step"><b>6</b><h3>Auditer le dépôt d'une autre équipe sur cinq points</h3></div>
+  </div>
+</section>
+
+<section class="slide" data-id="plan-seance">
+  <div class="label">La séance en quatre temps</div>
+  <div class="cols c4" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="num grad" style="font-size:8rem">1</span><h3 class="mt" style="font-size:4rem">Juger ce qu'on livre</h3><p class="mt" style="font-size:2.8rem">Point d'équipe, rôles, qualité avec les agents, test d'acceptation du clou.</p><p class="cap mt">blocs 1 à 4 · fiches O et P</p></div>
+    <div class="card step"><span class="num grad" style="font-size:8rem">2</span><h3 class="mt" style="font-size:4rem">Les garde-fous automatiques</h3><p class="mt" style="font-size:2.8rem">CI complète, protection de <code>main</code>, GitHub Pages, sécurité.</p><p class="cap mt">blocs 5 à 7 · fiche Q</p></div>
+    <div class="card step"><span class="num grad" style="font-size:8rem">3</span><h3 class="mt" style="font-size:4rem">L'AI Act et le RSSI</h3><p class="mt" style="font-size:2.8rem">Une page d'AI Act, dix cartes à classer, le passage devant le RSSI.</p><p class="cap mt">blocs 8 à 10 · fiches R et S</p></div>
+    <div class="card step"><span class="num grad" style="font-size:8rem">4</span><h3 class="mt" style="font-size:4rem">L'audit et le sprint</h3><p class="mt" style="font-size:2.8rem">Audit croisé en 5 points, bilan, consignes du sprint.</p><p class="cap mt">blocs 11 à 13 · fiches T et U</p></div>
+  </div>
+  <p class="cap mt2 step" style="text-align:center">trois réponses : des garde-fous automatiques, un test d'acceptation écrit par un humain avant le code, un passage devant le RSSI · dépannage : fiche V</p>
+</section>
+
+<section class="slide atelier" data-id="atelier-reprise">
+  <div class="label"><em>Atelier</em> Point d'équipe et reprise · chacun, puis en équipe</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Mettre à jour et vérifier son poste</h3><p>git pull · flutter pub get · build_runner · flutter test</p></div></div>
+      <div class="it"><b>2</b><div><h3>Point d'équipe : PR ouvertes, blocages, CI, fiche</h3><p>et ce que la tâche facultative a permis de terminer</p></div></div>
+      <div class="it"><b>3</b><div><h3>Brancher les rôles sur la garde <code>RequireRole</code></h3><p>couche domain · un test de refus par action protégée</p></div></div>
+      <div class="it"><b>4</b><div><h3>Un seed reproductible et fictif, de taille réduite</h3><p>le seed complet peut finir dans le sprint</p></div></div>
+      <div class="it opt"><b>5</b><div><h3>Équipe à jour ? Relire les PR ouvertes, commencer le CRUD</h3><p>aucune équipe n'est censée l'avoir terminé</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p><code>flutter test</code> est vert sur <strong>chaque poste</strong>, et chaque action protégée a son <strong>test de refus</strong>, vert.</p></div>
+      <div class="rule"><b>Les rôles d'abord</b><p>L'audit croisé de la fin de séance les vérifie.</p></div>
+      <div class="rule info"><b>Fiches</b><p><strong>O</strong> · Point d'équipe et reprise (rôles, seed) ; <strong>V</strong> · Dépannage. Chapitre 1.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="annonces">
+  <div class="label">Qui audite qui · qui passe à quelle table</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem;align-items:start">
+    <div class="step">
+      <h3 style="font-size:4.4rem">Audit croisé · X audite Y</h3>
+      <p class="cap mt">8 équipes</p>
+      <p class="chain" style="margin-top:1rem">01<i>→</i>04<i>→</i>07<i>→</i>02<i>→</i>05<i>→</i>08<i>→</i>03<i>→</i>06<i>→</i>01</p>
+      <p class="cap mt">7 équipes</p>
+      <p class="chain" style="margin-top:1rem">01<i>→</i>04<i>→</i>02<i>→</i>06<i>→</i>03<i>→</i>05<i>→</i>07<i>→</i>01</p>
+      <p class="mt" style="font-size:3rem">Toujours un <strong>autre thème</strong> ; on n'audite pas l'équipe qui vous audite.</p>
+    </div>
+    <div class="step">
+      <h3 style="font-size:4.4rem">Passage devant le RSSI</h3>
+      <p class="cap mt">8 équipes · 3-3-2</p>
+      <div class="tables" style="margin-top:1.4rem"><div class="tbl"><small>table 1</small><b>01 04 07</b></div><div class="tbl"><small>table 2</small><b>02 05 08</b></div><div class="tbl"><small>table 3</small><b>03 06</b></div></div>
+      <p class="cap mt">7 équipes · 3-2-2</p>
+      <div class="tables" style="margin-top:1.4rem"><div class="tbl"><small>table 1</small><b>01 04 06</b></div><div class="tbl"><small>table 2</small><b>02 05</b></div><div class="tbl"><small>table 3</small><b>03 07</b></div></div>
+    </div>
+  </div>
+  <p class="cap mt2 step" style="text-align:center">les paires de même thème, tolérées en séance 3, sont évitées en séance 4</p>
+</section>
+
+<section class="slide divider" data-id="div-acceptation">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><rect x="260" y="240" width="280" height="330" rx="22" stroke="url(#gg)" stroke-width="6"/><path d="M310 320h180M310 390h180M310 460h110" stroke="url(#gg)" stroke-width="6" stroke-linecap="round"/></svg>
+  <div class="big grad">01</div>
+  <h2>Le test<br>d'acceptation</h2>
+</section>
+
+<section class="slide" data-id="self-grading">
+  <div class="label">Qualité avec les agents · «&nbsp;Don't grade your own exam&nbsp;»</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><h3 style="font-size:4.4rem">La relecture devient le goulot</h3><p class="mt" style="font-size:3rem">L'agent écrit plus vite qu'on ne relit. On ne relit pas plus vite : on relit <strong>mieux</strong>, par les preuves.</p></div>
+    <div class="card bad step"><h3 style="font-size:4.4rem">Le self-grading</h3><p class="mt" style="font-size:3rem">Le même agent écrit le code et ses tests : une erreur de compréhension passe dans les deux, et <strong>tout est vert</strong>.</p></div>
+    <div class="card good step"><h3 style="font-size:4.4rem">Le test indépendant</h3><p class="mt" style="font-size:3rem">Écrit <strong>avant</strong> le code, par <strong>une autre main</strong>, avec des valeurs <strong>recopiées de l'énoncé</strong>.</p></div>
+  </div>
+  <h3 class="mt2 step" style="font-size:4.6rem;text-align:center">Des tests verts écrits par l'agent prouvent la <span class="grad">cohérence</span>, pas la justesse.</h3>
+  <p class="cap mt step" style="text-align:center">à poser à l'agent : «&nbsp;Quel patron as-tu utilisé, et quel problème ce patron résout-il ici ?&nbsp;» · une réponse vague signale un patron de trop</p>
+</section>
+
+<section class="slide" data-id="reperes">
+  <div class="label">Des repères chiffrés · études d'éditeurs, à lire avec recul</div>
+  <div class="cols c3 cards-sm" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">GitClear · 2025</span><p class="mt">211 millions de lignes, 2020-2024 : le code «&nbsp;déplacé&nbsp;» passe d'environ <strong>25 %</strong> des changements à <strong>moins de 10 %</strong>.</p><p class="cap">éditeur · résultats corrélationnels</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">GitClear · 2026</span><p class="mt">Refactoring : de <strong>21 %</strong> des lignes modifiées en 2022 à <strong>3,8 %</strong> en 2026 ; duplication de blocs : <strong>+81 %</strong> depuis 2023.</p><p class="cap">page de synthèse de l'éditeur seulement</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">CodeScene · FORGE 2026</span><p class="mt">Sur du code peu sain, les modèles testés cassent plus souvent le comportement en refactorant : «&nbsp;au moins 30 %&nbsp;» de risque de défaut en plus.</p><p class="cap">un auteur fonde l'éditeur · non significatif pour les modèles les plus puissants</p></div>
+  </div>
+  <h3 class="mt2 step" style="font-size:4.6rem;text-align:center">La vérification ne suit pas <span class="neg">toute seule</span> la vitesse de production.</h3>
+</section>
+
+<section class="slide" data-id="rouge-attendu">
+  <div class="label">Thème B · du tableau de l'énoncé au rouge</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="grow step"><div class="term sm"><div class="bar"><i></i><i></i><i></i><span>test/acceptance/calculer_le_trs.feature · cas 2 sur 8</span></div><pre><span class="d"># language: fr</span>
+<span class="c">Scénario:</span> cas 2 · un arrêt planifié et deux arrêts non planifiés
+  <span class="y">Soit</span> un quart de {480} minutes
+  <span class="y">Et</span> un arrêt planifié {'pause'} de {30} minutes
+  <span class="y">Et</span> un arrêt non planifié {'panne'} de {45} minutes
+  <span class="y">Et</span> un arrêt non planifié {'changement_serie'} de {15} minutes
+  <span class="y">Et</span> une déclaration avec un cycle de {60} secondes, {330} pièces produites dont {33} rebutées
+  <span class="y">Quand</span> je calcule le TRS
+  <span class="y">Alors</span> le temps requis est de {450} minutes
+  <span class="y">Et</span> le temps de marche est de {390} minutes
+  <span class="y">Et</span> la disponibilité affichée est {'86,7 %'}
+  <span class="y">Et</span> la performance affichée est {'84,6 %'}
+  <span class="y">Et</span> la qualité affichée est {'90,0 %'}
+  <span class="y">Et</span> le TRS affiché est {'66,0 %'}</pre></div></div>
+    <div style="flex:0 0 60rem" class="step">
+      <div class="term sm"><div class="bar"><i></i><i></i><i></i><span>flutter test test/acceptance</span></div><pre>UnimplementedError
+...
+<span class="r">00:00 +0 -8: Some tests failed.</span></pre></div>
+      <div class="card good mt"><h3 style="font-size:4rem">Ce rouge est le livrable</h3><p class="mt" style="font-size:2.8rem">Huit cas, huit échecs : les cas sont exécutés, et aucun code ne les satisfait encore.</p></div>
+      <p class="cap mt">un scénario par ligne du tableau · valeurs au caractère près · thèmes A et C : 7 cas chacun, dans themes.md</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="verrous">
+  <div class="label">Protéger le juge · trois verrous et un geste</div>
+  <div class="cols c3 cards-sm" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">.claude/settings.json</span><h3 class="mt">Règle <code>deny</code> : déjà là</h3><p class="mt"><code>Edit(/test/acceptance/**)</code>. Essayée : l'agent est refusé, création de fichier comprise.</p><p class="cap">on vérifie, on ne recopie pas</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">CLAUDE.md</span><h3 class="mt">Une consigne</h3><p class="mt">«&nbsp;Un test qui échoue n'est jamais corrigé en modifiant le test.&nbsp;»</p><p class="cap">une demande au modèle, pas une contrainte</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">.github/CODEOWNERS</span><h3 class="mt">Deux propriétaires</h3><p class="mt"><code>/test/acceptance/</code> : le gardien produit et le second membre qui a relu les valeurs.</p><p class="cap">modèle : docs/seance-4/CODEOWNERS.modele</p></div>
+  </div>
+  <div class="card warn mt2 step"><h3 style="font-size:4.2rem">Les étapes de <code>test/steps/</code> ne sont protégées que par la relecture</h3><p class="mt" style="font-size:3rem">Le geste : fausser une valeur attendue (<code>'92,8 %'</code> devient <code>'92,9 %'</code>), le cas doit <span class="neg">rougir</span>. Puis <code>git restore test/</code>.</p></div>
+</section>
+
+<section class="slide atelier" data-id="atelier-acceptation">
+  <div class="label"><em>Atelier</em> Test d'acceptation du clou · le gardien produit, relu par un second membre</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Recopier le tableau de l'énoncé en <code>.feature</code></h3><p>test/acceptance/ · un scénario par ligne · # language: fr</p></div></div>
+      <div class="it"><b>2</b><div><h3>Un second membre relit ligne à ligne</h3><p>chaque valeur au caractère près : '92,8 %', pas '92.8%'</p></div></div>
+      <div class="it"><b>3</b><div><h3><code>build_runner</code>, puis <code>flutter test test/acceptance</code></h3><p>un squelette abîmé se répare avant de commiter</p></div></div>
+      <div class="it"><b>4</b><div><h3>Commit rouge, branche dédiée, PR en brouillon</h3><p>elle le reste jusqu'à ce que tous les cas soient verts</p></div></div>
+      <div class="it"><b>5</b><div><h3>PR des verrous, fusionnée</h3><p>deny vérifiée · consigne CLAUDE.md · CODEOWNERS</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Les cas sont <strong>rouges</strong>, dans une PR en brouillon, et les trois verrous sont <strong>fusionnés</strong>.</p></div>
+      <div class="rule"><b>Jamais par l'agent</b><p>Les valeurs sont recopiées du tableau, jamais calculées par l'agent.</p></div>
+      <div class="rule info"><b>Fiche P</b><p>Test d'acceptation du clou. Chapitre 1. La suite du clou se fait pendant le sprint.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-garde-fous">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="290" cy="400" r="46" stroke="url(#gg)" stroke-width="6"/><circle cx="510" cy="400" r="46" stroke="url(#gg)" stroke-width="6"/><path d="M336 400h128" stroke="url(#gg)" stroke-width="6"/><path d="M265 400l18 18 32-36M485 400l18 18 32-36" stroke="url(#gg)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <div class="big grad">02</div>
+  <h2>Les garde-fous<br>automatiques</h2>
+</section>
+
+<section class="slide" data-id="ci-chaine">
+  <div class="label">La CI complète · quatre contrôles, les trois premiers en même temps</div>
+  <div class="cols c4 cards-sm" style="flex:0 0 auto;gap:2.6rem">
+    <div class="card step"><span class="chip n" style="align-self:flex-start">exigé</span><h3 class="mt mono" style="font-size:3.2rem">analyse-et-tests</h3><p class="mt">Les six commandes de «&nbsp;Vérifier avant une PR&nbsp;», et la couverture des tests.</p><p class="cap">observé : 2 min 7 s</p></div>
+    <div class="card step"><span class="chip n" style="align-self:flex-start">exigé</span><h3 class="mt mono" style="font-size:3.2rem">securite</h3><p class="mt">Dépendances vulnérables (osv-scanner), secrets sur <code>main</code> et dans la PR (gitleaks).</p><p class="cap">observé : 6 s</p></div>
+    <div class="card step"><span class="chip n" style="align-self:flex-start">exigé</span><h3 class="mt mono" style="font-size:3.2rem">site-web</h3><p class="mt">La version web se construit : <code>flutter build web</code>.</p><p class="cap">observé : 2 min</p></div>
+    <div class="card step"><span class="chip" style="align-self:flex-start">sur une PR : sauté</span><h3 class="mt mono" style="font-size:3.2rem">publication</h3><p class="mt">Depuis <code>main</code>, le site est publié sur GitHub Pages, après les trois autres.</p><p class="cap">non exigé : plan B possible</p></div>
+  </div>
+  <div class="term sm mt2 step"><div class="bar"><i></i><i></i><i></i><span>une PR, rien à adapter : le nom du dépôt est lu par GitHub</span></div><pre>cp docs/seance-4/ci.yml .github/workflows/ci.yml
+<span class="g">Couverture des tests : 58.1 % (251 lignes exécutées sur 432)</span>   <span class="d"># dépôt-modèle nu, aucun seuil</span></pre></div>
+</section>
+
+<section class="slide" data-id="ci-public">
+  <div class="label">Publier, c'est rendre public</div>
+  <div class="row grow" style="gap:5rem;align-items:flex-start">
+    <div class="grow">
+      <div class="term step"><div class="bar"><i></i><i></i><i></i><span>commande du README du dépôt-modèle</span></div><pre>flutter build web --release \
+  --base-href <span class="y">"/&lt;dépôt&gt;/"</span> \
+  <span class="c">--no-web-resources-cdn</span> \
+  --web-content-hash</pre></div>
+      <div class="cols c3 cards-sm mt" style="flex:0 0 auto;gap:2.4rem">
+        <div class="card step"><h3 class="mono" style="font-size:2.8rem">--base-href</h3><p class="mt">Le site est servi sous le nom du dépôt.</p></div>
+        <div class="card step"><h3 class="mono" style="font-size:2.8rem">--no-web-resources-cdn</h3><p class="mt">CanvasKit embarqué, pas chargé chez Google : pas de tiers à déclarer.</p></div>
+        <div class="card step"><h3 class="mono" style="font-size:2.8rem">--web-content-hash</h3><p class="mt">Une empreinte dans les noms : la nouvelle version est prise.</p></div>
+      </div>
+    </div>
+    <div style="flex:0 0 58rem" class="step">
+      <div class="card bad"><h3 style="font-size:4.6rem">Tout ce qui est dans un build web Flutter est <span class="neg">public</span></h3><p class="mt" style="font-size:3rem">Code, ressources, constantes. GitHub Pages est public.</p><p class="mt" style="font-size:3rem"><strong>Données fictives uniquement, aucun secret, aucun mot de passe réel.</strong></p></div>
+      <p class="cap mt">essai sur un dépôt créé depuis le dépôt-modèle : l'écran «&nbsp;Jets de dé&nbsp;» s'affiche, aucune requête vers www.gstatic.com</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide atelier" data-id="atelier-ci">
+  <div class="label"><em>Atelier</em> CI complète, protection de main, GitHub Pages · en équipe</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Une PR qui active la CI complète</h3><p>cp docs/seance-4/ci.yml .github/workflows/ci.yml</p></div></div>
+      <div class="it"><b>2</b><div><h3>Lire les contrôles de la PR, jusqu'au vert</h3><p>trois verts · publication sautée (Skipped) : normal sur une PR</p></div></div>
+      <div class="it"><b>3</b><div><h3>L'enseignant active Pages et rend la CI obligatoire</h3><p>gh pr checks &lt;numéro&gt; --required : trois contrôles</p></div></div>
+      <div class="it"><b>4</b><div><h3>Fusion dans main, puis ouvrir l'adresse publiée</h3><p>https://&lt;organisation&gt;.github.io/&lt;dépôt&gt;/</p></div></div>
+      <div class="it"><b>5</b><div><h3>Contrôler le bundle publié</h3><p>ni secret ni donnée réelle</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>La CI est <strong>verte et obligatoire</strong> sur <code>main</code>, et la version web de l'équipe s'ouvre à son adresse.</p></div>
+      <div class="rule"><b>Plan B</b><p>Pages ou Actions bloquent : build web local et <code>flutter run -d chrome</code> ; publication finie dans le sprint, plan B documenté.</p></div>
+      <div class="rule info"><b>Fiche Q</b><p>CI complète, protection de <code>main</code> et GitHub Pages. Chapitre 2.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="cinq-risques">
+  <div class="label">Sécurité · cinq risques courants, et un sixième</div>
+  <div class="cols c3 cards-sm" style="flex:0 0 auto;gap:2.6rem">
+    <div class="card step"><h3>Injection SQL</h3><p class="mt">Avec drift, <code>customSelect</code> et <code>customStatement</code> reçoivent des variables liées, jamais du texte assemblé.</p><p class="cap">une recherche dans le dépôt, un test</p></div>
+    <div class="card step"><h3>Validation des entrées</h3><p class="mt">Type, bornes, longueur, liste fermée : vérifiés avant d'enregistrer.</p><p class="cap">un test par motif de rejet</p></div>
+    <div class="card step"><h3>Contrôle d'accès</h3><p class="mt">La garde <code>RequireRole</code> est testée ; une application purement cliente reste contournable depuis le navigateur.</p><p class="cap">un test de refus par action</p></div>
+    <div class="card step"><h3>Secrets</h3><p class="mt">Un secret qui fuit se <strong>révoque</strong> ; rien de secret dans un build web.</p><p class="cap">le rapport gitleaks de la CI</p></div>
+    <div class="card step"><h3>Dépendances vulnérables</h3><p class="mt">Versions verrouillées dans <code>pubspec.lock</code>, auditées en CI.</p><p class="cap">osv-scanner, dans la CI</p></div>
+    <div class="card warn step"><h3>Prompt injection</h3><p class="mt">Tout texte que lit l'agent peut contenir des instructions : le dépôt audité, une issue reçue.</p><p class="cap">moins de droits, moins de secrets</p></div>
+  </div>
+</section>
+
+<section class="slide" data-id="demo-injection">
+  <div class="label">Démonstration · trouver, reproduire par un test, corriger</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:2.6rem;align-items:start">
+    <div class="step"><span class="chip i">1 · trouver</span><div class="term xs mt"><div class="bar"><i></i><i></i><i></i><span>git grep</span></div><pre>git grep -n -A 2 -E \
+  "customSelect|customStatement" -- lib
+<span class="d">...</span>
+.customSelect(
+  <span class="r">'SELECT * FROM jets WHERE dd = $ddSaisi'</span>,</pre></div></div>
+    <div class="step"><span class="chip r">2 · reproduire</span><div class="term xs mt"><div class="bar"><i></i><i></i><i></i><span>flutter test</span></div><pre>une apostrophe tapée dans le filtre
+<span class="r">unrecognized token: "'"</span>
+SELECT * FROM jets WHERE dd = 10'
+<span class="r">00:00 +1 -2: Some tests failed.</span></pre></div></div>
+    <div class="step"><span class="chip n">3 · corriger</span><div class="term xs mt"><div class="bar"><i></i><i></i><i></i><span>le même test, inchangé</span></div><pre>'SELECT * FROM jets WHERE dd = <span class="g">?</span>',
+variables: [Variable.withString(ddSaisi)],
+<span class="d">...</span>
+<span class="g">00:00 +3: All tests passed!</span></pre></div></div>
+  </div>
+  <p class="cap mt2 step" style="text-align:center">avec la saisie 10 OR 1 = 1, la requête rendait tous les jets · le test reste dans le dépôt : si la valeur est recollée un jour, il repasse au rouge</p>
+</section>
+
+<section class="slide" data-id="secrets">
+  <div class="label">Un secret dans une PR · essai réel du contrôle securite</div>
+  <div class="row grow" style="gap:5rem;align-items:flex-start">
+    <div class="grow step"><div class="term sm"><div class="bar"><i></i><i></i><i></i><span>gitleaks lit main et les commits de la PR · faux secret de l'essai</span></div><pre>Finding:     api_key = "REDACTED"
+Secret:      REDACTED
+RuleID:      generic-api-key
+File:        essai/config-essai.txt
+Line:        1
+<span class="d">...</span>
+INF 3 commits scanned.
+<span class="r">WRN leaks found: 1</span>
+<span class="r">Error: Process completed with exit code 1.</span></pre></div>
+      <p class="cap mt">--redact masque la valeur : le journal d'un dépôt public est public</p></div>
+    <div style="flex:0 0 62rem" class="cards-sm">
+      <div class="card bad step"><h3>Supprimer le fichier ne suffit pas</h3><p class="mt">Observé : le contrôle reste rouge, le secret est dans le commit précédent.</p></div>
+      <div class="card good step" style="margin-top:2.4rem"><h3>Un vrai secret se révoque</h3><p class="mt">Le rendre inutilisable auprès du service qui l'a émis.</p></div>
+      <div class="card warn step" style="margin-top:2.4rem"><h3>Un vrai faux positif seulement</h3><p class="mt">Il se déclare dans <code>.gitleaksignore</code>, une ligne par empreinte, dans une PR relue.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="csv">
+  <div class="label">Import et export CSV · faits pendant le sprint</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:4rem;align-items:start">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Import · obligatoire</span><div class="chips mt"><span class="chip">file_picker</span><span class="chip">taille maximale</span><span class="chip">encodage</span><span class="chip">rejet motivé</span><span class="chip">parseur dans data/</span></div><p class="mt" style="font-size:2.8rem">Thème B : <code>quantite_invalide</code>, <code>declaration_en_double</code>, <code>poste_inconnu</code>, <code>rebuts_superieurs_produites</code>, <code>quart_inconnu</code>, <code>colonnes_manquantes</code>, fichier de plus de 200 Ko.</p><p class="cap mt">un test par motif de rejet</p></div>
+    <div class="card step"><span class="chip r" style="align-self:flex-start">Export · injection de formule</span><p class="mt" style="font-size:3rem">Une cellule qui commence par <code>=</code>, <code>+</code>, <code>-</code> ou <code>@</code> devient une formule dans un tableur. Elle est préfixée d'une apostrophe.</p><div class="term xs mt"><pre>neutraliserCellule('=1+1')   <span class="d">// donne</span>  <span class="g">"'=1+1"</span></pre></div><p class="cap mt">une fonction, son test, appelée sur chaque cellule de texte</p></div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-aiact">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><path d="M400 260v300M290 320h220M290 320l-60 120h120zM510 320l-60 120h120z" stroke="url(#gg)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/><path d="M330 560h140" stroke="url(#gg)" stroke-width="8" stroke-linecap="round"/></svg>
+  <div class="big grad">03</div>
+  <h2>L'AI Act<br>et le RSSI</h2>
+</section>
+
+<section class="slide" data-id="etape-0">
+  <div class="label">AI Act · règlement (UE) 2024/1689 · étape 0</div>
+  <h2 style="font-size:7.6rem">Est-ce un <span class="grad">système d'IA</span> ?</h2>
+  <p class="cap mt">art. 3, point 1 : un système qui, à partir des entrées reçues, déduit comment générer des sorties</p>
+  <div class="row mt" style="gap:5rem;align-items:flex-start">
+    <div class="check grow">
+      <div class="it step"><b>1</b><h3>D'où vient la règle ? Écrite à l'avance dans l'énoncé ?</h3></div>
+      <div class="it step"><b>2</b><h3>Les mêmes entrées donnent-elles toujours la même sortie ?</h3></div>
+      <div class="it step"><b>3</b><h3>Un modèle génère, prédit ou recommande-t-il, à l'exécution ?</h3></div>
+    </div>
+    <div class="side step" style="flex:0 0 62rem">
+      <div class="card"><p style="font-size:2.9rem">Un calcul de TRS, une règle de jugement fixe, une affectation déterministe <strong>peuvent être hors champ</strong>.</p></div>
+      <div class="card warn"><p style="font-size:2.9rem">Hors champ de l'AI Act ne veut pas dire hors du droit : <strong>le RGPD s'applique toujours</strong>.</p></div>
+      <p class="cap">la question porte sur l'outil livré, pas sur l'agent qui l'a écrit</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="niveaux">
+  <div class="label">Une approche par les risques · c'est l'usage qui décide</div>
+  <div class="levels">
+    <div class="lvl x step"><b>Interdit<small>art. 5</small></b><span>Notation sociale, manipulation subliminale nuisible, reconnaissance des émotions au travail et à l'école (sauf raisons médicales ou de sécurité ; détail à vérifier), depuis le 2 février 2025 (à vérifier)</span></div>
+    <div class="lvl h step"><b>Haut risque<small>art. 6, annexe III</small></b><span>Éducation et formation, emploi et gestion des travailleurs, accès aux services essentiels, biométrie</span></div>
+    <div class="lvl t step"><b>Transparence<small>art. 50</small></b><span>Agents conversationnels, contenus générés ou manipulés : informer, marquer</span></div>
+    <div class="lvl m step"><b>Minimal</b><span>Pas d'obligation spécifique : un filtre anti-spam</span></div>
+    <div class="lvl o step"><b>Hors champ</b><span>Pas un système d'IA : pas d'AI Act, mais RGPD et confidentialité restent</span></div>
+  </div>
+  <p class="cap mt step" style="text-align:center">le fait que l'outil soit temporaire ne change pas la qualification : l'usage décide</p>
+</section>
+
+<section class="slide" data-id="roles-calendrier">
+  <div class="label">Rôle, maîtrise de l'IA, explication, calendrier</div>
+  <div class="cols c2 cards-sm" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">art. 3</span><h3 class="mt">Fournisseur ou déployeur</h3><p class="mt"><strong>Fournisseur</strong> : développe un système, ou le met sur le marché sous son nom. <strong>Déployeur</strong> : l'utilise sous sa propre autorité. Une équipe qui met un outil à disposition de tiers peut devenir fournisseur (à vérifier).</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">art. 4</span><h3 class="mt">La maîtrise de l'IA</h3><p class="mt">Fournisseurs et déployeurs prennent des mesures pour favoriser la maîtrise de l'IA de leurs personnels. Elle justifie cette formation.</p><p class="cap">formulation modifiée par l'omnibus, à vérifier sur EUR-Lex</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">art. 86</span><h3 class="mt">Le droit à l'explication</h3><p class="mt">Une personne affectée par une décision fondée sur un système à haut risque peut obtenir des explications du déployeur.</p><p class="cap">champ exact à vérifier</p></div>
+    <div class="card warn step"><span class="chip v" style="align-self:flex-start">règlement (UE) 2026/1744</span><h3 class="mt">Un report, pas un répit</h3><p class="mt">Une partie des obligations de haut risque est reportée. On raisonne dès maintenant avec prudence.</p><p class="cap">dates à vérifier sur EUR-Lex</p></div>
+  </div>
+</section>
+
+<section class="slide atelier" data-id="atelier-classification">
+  <div class="label"><em>Atelier</em> Classification · dix cartes de cas, par équipe</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Pour chaque carte : étape 0 d'abord</h3><p>est-ce un système d'IA ?</p></div></div>
+      <div class="it"><b>2</b><div><h3>Puis une case, et les données personnelles en jeu</h3><p>hors champ · minimal · transparence (art. 50) · haut risque · interdit</p></div></div>
+      <div class="it"><b>3</b><div><h3>Mise en commun</h3><p>les désaccords et les cartes ambiguës (stagiaires, pauses) se discutent ici</p></div></div>
+      <div class="it"><b>4</b><div><h3>Synthèse de l'enseignant</h3><p>elle sert à corriger les cartes</p></div></div>
+      <div class="it"><b>5</b><div><h3>Le classement provisoire de votre projet</h3><p>rubrique 9 : rôle et case · pendant l'observation du passage devant le RSSI</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Chaque carte a sa case ; la <strong>rubrique 9</strong> de votre fiche porte un rôle et une case provisoires, justifiés à partir de l'étape 0.</p></div>
+      <div class="rule"><b>Rubrique 8</b><p>La décision automatisée (art. 22) se discute devant le RSSI.</p></div>
+      <div class="rule info"><b>Fiche R</b><p>Atelier de classification (AI Act). Chapitre 4.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="rssi-passage">
+  <div class="label">Passage devant le RSSI · jeu de rôle, 10 à 12 min par équipe</div>
+  <div class="phases step">
+    <div class="ph"><b>4 min</b><span>présentation de la fiche</span></div>
+    <div class="ph q"><b>5 min</b><span>questions du RSSI</span></div>
+    <div class="ph d"><b>2 min</b><span>décision</span></div>
+  </div>
+  <div class="row mt2" style="gap:5rem;align-items:flex-start">
+    <div class="grow" style="display:grid;gap:2.6rem">
+      <p class="ask step">Où partent les prompts ?</p>
+      <p class="ask step">Qui peut contester ?</p>
+      <p class="ask step">Que se passe-t-il à la fin de vie de l'outil ?</p>
+    </div>
+    <div class="side step" style="flex:0 0 56rem">
+      <div class="chips bigchip" style="flex-direction:column;align-items:flex-start"><span class="chip n">go</span><span class="chip v">go sous conditions</span><span class="chip r">no-go</span></div>
+      <p class="cap">décision provisoire · réponse écrite et datée sur la v1, au plus tard une semaine avant la séance 5 · sensibilisation, pas avis juridique</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide atelier" data-id="atelier-rssi">
+  <div class="label"><em>Atelier</em> Passage devant le RSSI · trois tables en parallèle</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Préparer les preuves, onglets ouverts</h3><p>fiche · CI verte · contrôle de secrets · test de refus</p></div></div>
+      <div class="it"><b>2</b><div><h3>Présenter le brouillon de fiche</h3><p>rubriques 1 à 5 et 9 · dire ce que vous n'avez pas tranché</p></div></div>
+      <div class="it"><b>3</b><div><h3>Répondre aux questions du RSSI</h3><p>prompts · contestation · fin de vie</p></div></div>
+      <div class="it"><b>4</b><div><h3>Noter la décision provisoire</h3><p>go · go sous conditions · no-go</p></div></div>
+      <div class="it"><b>5</b><div><h3>Hors passage : observer avec la grille go/no-go</h3><p>au moins un autre passage, ou avancer l'audit croisé</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Chaque équipe est passée, a posé la question «&nbsp;système d'IA ?&nbsp;», proposé un classement et un rôle.</p></div>
+      <div class="rule plain"><b>Tables</b><p class="mono">8 · 01 04 07 · 02 05 08 · 03 06<br>7 · 01 04 06 · 02 05 · 03 07</p></div>
+      <div class="rule info"><b>Fiche S</b><p>Passage devant le RSSI. Chapitre 4.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-audit">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="370" cy="370" r="110" stroke="url(#gg)" stroke-width="8"/><path d="M450 450l110 110" stroke="url(#gg)" stroke-width="14" stroke-linecap="round"/></svg>
+  <div class="big grad">04</div>
+  <h2>L'audit croisé<br>et le sprint</h2>
+</section>
+
+<section class="slide" data-id="audit-checklist">
+  <div class="label">Audit croisé · cinq points · ne signaler que ce qui existe dans le dépôt</div>
+  <div class="todo">
+    <div class="it step"><b>1</b><div><h3>Installation à froid</h3><p>clone, pub get, build_runner, flutter test, flutter run -d chrome selon le README : démarrée en moins de 10 minutes</p></div></div>
+    <div class="it step"><b>2</b><div><h3>CI</h3><p>pastille verte sur main · obligatoire pour fusionner · audit des dépendances sans alerte non traitée · Pages fonctionne</p></div></div>
+    <div class="it step"><b>3</b><div><h3>Secrets</h3><p>rapport gitleaks · bundle web publié · .env ignoré · .env.example présent</p></div></div>
+    <div class="it step"><b>4</b><div><h3>Rôles</h3><p>chaque cas d'usage sensible passe par RequireRole (couche domain) ; un test vérifie le refus</p></div></div>
+    <div class="it step"><b>5</b><div><h3>Fiche</h3><p>docs/fiche_conformite.md existe, sans nom civil ni courriel, cohérente avec l'application : mention d'information et suppression en A, consigne sur les commentaires en B, statut brouillon / publie en C</p></div></div>
+  </div>
+</section>
+
+<section class="slide atelier" data-id="atelier-audit">
+  <div class="label"><em>Atelier</em> Audit croisé en 5 points · le dépôt public d'une équipe d'un autre thème</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Cloner dans un dossier vide, chronomètre lancé</h3><p>les commandes du README, dans l'ordre où il les donne</p></div></div>
+      <div class="it"><b>2</b><div><h3>Les cinq points, un par un</h3><p>conforme · constat · non vérifié, et pourquoi</p></div></div>
+      <div class="it"><b>3</b><div><h3>Une issue par constat, dans le dépôt audité</h3><p>ce qui a été fait, vu, attendu · une priorité proposée</p></div></div>
+      <div class="it"><b>4</b><div><h3>Un secret trouvé ? Ne le recopier nulle part</h3><p>prévenir l'équipe et l'enseignant à l'oral · l'équipe révoque</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Chaque équipe a audité une équipe et <strong>reçu un audit</strong>, en issues.</p></div>
+      <div class="rule plain"><b>Qui audite qui</b><p class="mono">8 · 01→04→07→02→05→08→03→06→01<br>7 · 01→04→02→06→03→05→07→01</p></div>
+      <div class="rule info"><b>Fiche T</b><p>Audit croisé en 5 points. Chapitre 3. Un constat reçu se corrige dans le sprint, test d'abord.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="livrable">
+  <div class="label">Livrable de fin de séance · le même pour les trois thèmes</div>
+  <div class="row" style="gap:4rem;align-items:flex-start">
+    <div class="check grow">
+      <div class="it step"><b>1</b><h3>Test d'acceptation du clou (<code>.feature</code>) en rouge dans une PR brouillon</h3></div>
+      <div class="it step"><b>2</b><h3>Règle <code>deny</code>, consigne <code>CLAUDE.md</code> et <code>CODEOWNERS</code> fusionnés</h3></div>
+      <div class="it step"><b>3</b><h3>CI complète obligatoire sur <code>main</code> protégée ; build web publié sur GitHub Pages par l'équipe</h3></div>
+      <div class="it step"><b>4</b><h3>Rôles en place</h3></div>
+      <div class="it step"><b>5</b><h3>Brouillon de fiche présenté au RSSI : rubriques 1 à 5, rubrique 9 provisoire ; la rubrique 8 (art. 22) est discutée devant le RSSI</h3></div>
+      <div class="it step"><b>6</b><h3>Audit reçu (issues) ; release <code>v0.1</code> si <code>main</code> est verte</h3></div>
+    </div>
+    <div class="side step" style="flex:0 0 46rem">
+      <div class="rule info"><b>Fiche U</b><p>Bilan, consignes du sprint et livrable : à vérifier avant de partir.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="sprint">
+  <div class="label">Bilan · ouvrir le sprint avec un périmètre décidé</div>
+  <div class="cols c3 cards-sm" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Backlog</span><h3 class="mt">Essentiel, souhaitable, abandonné</h3><p class="mt">Issues de l'audit comprises. L'équipe décide explicitement de ce qu'elle abandonne.</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Objectif</span><h3 class="mt">Finir, corriger, faire valider</h3><p class="mt">Le clou niveau 1 avec son test d'acceptation vert, les constats d'audit, la fiche et la réponse du RSSI.</p><p class="cap">environ 15 à 20 h d'équipe</p></div>
+    <div class="card step"><span class="chip v" style="align-self:flex-start">Si main est verte</span><h3 class="mt">Tag <code>v0.1</code> et release</h3><p class="mt">Une release GitHub avec ses notes. Sinon, dans le sprint.</p></div>
+  </div>
+  <p class="cap mt2 step" style="text-align:center">import CSV obligatoire · seed complet et CRUD s'ils ne sont pas terminés · quiz de 8 questions du module : en ressource</p>
+</section>
+
+<section class="slide" data-id="consignes-fin">
+  <div class="label">Le sprint · jusqu'à la séance 5</div>
+  <div class="rail">
+    <div class="node now step"><b>Ven. 18 déc. 18h</b><span>Fiche v1 en PR, «&nbsp;demande de validation RSSI&nbsp;» ; point d'étape en issue de 5 lignes</span></div>
+    <div class="node step"><b>19 déc. au 3 janv.</b><span>Vacances, inclus : aucun travail imposé</span></div>
+    <div class="node step"><b>S5 moins une semaine</b><span>Au plus tard : réponse du RSSI, gel des fonctionnalités au soir</span></div>
+    <div class="node step"><b>Avant-veille, 18h</b><span>Tag <code>v1.0-rc</code> et dossier de rendu</span></div>
+    <div class="node step"><b>Ven. 29 janv. 2027</b><span>Séance 5, l'après-midi</span></div>
+  </div>
+  <p class="cap mt2 step" style="text-align:center">après le gel : correctifs, documentation, préparation de la démonstration · une répétition avant la séance 5, en équipe, chronomètre en main</p>
+</section>
+
+</div>
+<div id="help">← → naviguer · F plein écran · N notes · O vue d'ensemble</div>
+<script src="../shared/deck.js"></script>
+</body>
+</html>
