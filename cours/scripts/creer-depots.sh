@@ -7,6 +7,8 @@
 #   equipes.csv : un membre par ligne, "numero_equipe,login_github" (ex. 01,monlogin)
 #   themes.csv  : une équipe par ligne, "numero_equipe,theme" (ex. 01,A ; thème A, B ou C)
 #   Aucune ligne d'en-tête. Séparateur virgule ou point-virgule (export d'Excel).
+#   Les deux fichiers s'obtiennent avec gabarit-equipes.xlsx (même dossier) :
+#   enregistrer en CSV ses onglets export-equipes et export-themes.
 #
 # Prérequis : bash 4 ou plus et GNU sed ; `gh` authentifié sur l'organisation,
 # avec le droit d'y créer des dépôts ; `git` avec une identité (user.name,
@@ -20,7 +22,7 @@
 set -euo pipefail
 
 if [ $# -ne 4 ]; then
-  sed -n '2,19p' "$0" >&2
+  sed -n '2,21p' "$0" >&2
   exit 2
 fi
 ORG="$1"; MODELE="$2"; EQUIPES="$3"; THEMES="$4"
