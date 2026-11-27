@@ -1,0 +1,68 @@
+/* ---- séance 5 : consignes d'atelier, salles, grille sur 20, temps d'un passage, échelle de 0 à 4 ---- */
+code{font-family:var(--mono);font-size:.9em;color:var(--indigo);background:rgba(67,56,245,.08);padding:.08em .32em;border-radius:.6rem;white-space:nowrap}
+
+/* consignes d'atelier : restent affichées pendant le travail (reprises de la séance 4) */
+.atelier{padding-top:9rem}
+.atelier .label{margin-bottom:2.6rem}
+.atelier .label em{font-style:normal;background:var(--coral);color:#fff;padding:.4rem 1.6rem;border-radius:99rem;letter-spacing:.14em}
+.todo{display:grid;gap:1.6rem;align-content:start}
+.it{display:grid;grid-template-columns:6.4rem 1fr;gap:2.4rem;align-items:center;background:var(--glass);border-radius:2rem;padding:1.7rem 3rem;box-shadow:0 1rem 3rem rgba(40,50,120,.08)}
+.it>b{font:700 5.6rem/1 var(--display);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;text-align:center}
+.it h3{font-size:3.5rem}
+.it p{font:500 2.4rem/1.35 var(--mono);font-variant-ligatures:none;color:var(--ink-3);margin-top:.5rem}
+.it.opt{opacity:.82}.it.opt>b{background:none;color:var(--ink-3);-webkit-text-fill-color:currentColor}
+.side{flex:0 0 54rem;display:grid;gap:2.4rem;align-content:start}
+.done{border:.4rem dashed #7CC83A;border-radius:2.4rem;padding:2.6rem 3rem;background:rgba(232,246,214,.72)}
+.done>b,.rule>b{display:block;font:700 2.1rem var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.done>b{color:#3C8000}
+.done p,.rule p{font-size:2.9rem;line-height:1.3;color:var(--ink);margin-top:1rem}
+.rule{border-radius:2.4rem;padding:2.6rem 3rem;background:rgba(255,228,234,.75);border:.3rem solid #F6B3C0}
+.rule>b{color:#C21F42}
+.rule.info{background:rgba(221,246,251,.8);border-color:#A5E0EC}.rule.info>b{color:#007C93}
+.rule.plain{background:var(--glass);border-color:var(--line)}.rule.plain>b{color:var(--indigo)}
+
+.check{display:grid;gap:1.5rem}
+.check .it{grid-template-columns:5rem 1fr;padding:1.6rem 2.8rem}
+.check .it>b{font-size:4.4rem}
+.check .it h3{font-size:3.3rem;font-weight:600}
+
+/* cartes compactes */
+.cards-sm .card{padding:3.2rem 3.4rem}
+.cards-sm h3{font-size:3.6rem}
+.cards-sm p{font-size:2.7rem;line-height:1.3}
+.cards-sm .cap{margin-top:auto;padding-top:1.4rem}
+
+/* salles de soutenance, conversion de la médiane des pairs */
+.tables{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.tables.two{grid-template-columns:1fr 1fr}
+.tbl{background:var(--glass);border-radius:2rem;padding:2.2rem 2rem;text-align:center;box-shadow:0 1rem 3rem rgba(40,50,120,.08)}
+.tbl small{display:block;font:700 2rem var(--mono);color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase}
+.tbl b{display:block;font:700 4.4rem var(--mono);margin-top:.8rem}
+.line{flex-direction:row;align-items:center;gap:3rem}
+.line .chip{flex:0 0 31rem;justify-content:center}
+
+/* la grille sur 20 : le nombre est un nombre de points */
+.pts .it{padding:1.5rem 3rem}
+
+/* les temps d'un passage : partie commune, puis questions individuelles */
+.temps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.ph{border-radius:2.2rem;padding:2.6rem 3rem;color:#fff;background:var(--grad)}
+.ph small{display:block;font:700 2rem var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.ph b{display:block;font:700 4.2rem/1.05 var(--display);letter-spacing:-.02em;margin-top:1rem}
+.ph span{display:block;font:500 2.5rem/1.3 var(--body);margin-top:1.2rem}
+.ph.q{background:linear-gradient(120deg,#7B3FF2,#B14FE0)}.ph.d{background:linear-gradient(120deg,#00A8C6,#4F8CFF)}
+.ph.i{background:var(--glass);color:var(--ink);border:.4rem dashed var(--indigo)}
+.ph.i small{color:var(--indigo);opacity:1}
+
+/* échelle de compréhension orale, de 0 à 4 */
+.levels{display:grid;gap:1.4rem}
+.lvl{display:grid;grid-template-columns:8rem 1fr;align-items:center;gap:3rem;border-radius:2rem;padding:1.9rem 3.2rem;background:var(--glass);box-shadow:0 1rem 3rem rgba(40,50,120,.08);border-left:1.2rem solid var(--line)}
+.lvl b{font:700 7rem/1 var(--display);text-align:center}
+.lvl span{font-size:3.1rem;line-height:1.3;color:var(--ink-2)}
+.lvl.n0{border-left-color:var(--coral)}.lvl.n1{border-left-color:var(--amber)}.lvl.n2{border-left-color:var(--violet)}.lvl.n3{border-left-color:var(--cyan)}.lvl.n4{border-left-color:var(--lime)}
+
+/* sujets du retour d'expérience */
+.ask{font:700 5.4rem/1.15 var(--display);letter-spacing:-.02em;color:var(--ink)}
+.ask::before{content:"« ";color:var(--cyan)}.ask::after{content:" »";color:var(--cyan)}
+
+@media (max-aspect-ratio:5/4){.side{flex:0 0 auto}.tables,.tables.two{grid-template-columns:1fr}.temps{grid-template-columns:1fr}.lvl{grid-template-columns:1fr}.line{flex-direction:column;align-items:flex-start}.line .chip{flex:0 0 auto}}

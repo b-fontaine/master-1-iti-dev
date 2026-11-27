@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séance 5 · Retouches et soutenance · Master ITI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/deck.css">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body data-deck="day-5" data-notes="notes.html">
+<div id="stage">
+<canvas id="bg"></canvas><div id="grid"></div>
+<div id="prog"></div>
+<div id="top"><span class="l"><span class="dot"></span><b>ITI</b> // S5 · Retouches et soutenance</span><span><b id="cur">1</b> / <span id="tot">1</span></span></div>
+
+<section class="slide title-slide" data-id="titre">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true">
+    <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4338F5"/><stop offset=".55" stop-color="#7B3FF2"/><stop offset="1" stop-color="#00A8C6"/></linearGradient></defs>
+    <g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g>
+    <path d="M300 580V250h240l-55 85 55 85H300" stroke="url(#gg)" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" fill="#fff"/>
+  </svg>
+  <div class="label">Master ITI · Séance 5</div>
+  <h1 style="font-size:13rem">Retouches<br>et <span class="grad">soutenance</span></h1>
+  <p class="sub" style="text-wrap:balance">Figer ce qui sera évalué, puis montrer ce que l'équipe et chacun comprennent, preuves à l'appui.</p>
+  <div class="meta"><span class="chip">Nantes Université</span><span class="chip">Vendredi 29 janv. 2027</span><span class="chip">Benoît Fontaine</span></div>
+</section>
+
+<section class="slide" data-id="objectifs">
+  <div class="label">À la fin de la séance, vous saurez</div>
+  <div class="check">
+    <div class="it step"><b>1</b><h3>Geler un périmètre et livrer une version stable, <code>v1.0</code>, en assumant ce qui est laissé de côté</h3></div>
+    <div class="it step"><b>2</b><h3>Présenter une démonstration en direct, chronométrée et robuste, avec un plan de secours</h3></div>
+    <div class="it step"><b>3</b><h3>Expliquer les choix de votre équipe (données, qualité, conformité) avec l'historique git et la fiche</h3></div>
+    <div class="it step"><b>4</b><h3>Répondre à des questions individuelles sur une PR de votre équipe et sur la compréhension du projet</h3></div>
+    <div class="it step"><b>5</b><h3>Porter un regard critique sur votre usage de l'IA et sur les limites de votre outil, chiffres à l'appui</h3></div>
+  </div>
+</section>
+
+<section class="slide" data-id="plan-seance">
+  <div class="label">La séance en quatre temps</div>
+  <div class="cols c4" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="num grad" style="font-size:8rem">1</span><h3 class="mt" style="font-size:4rem">Geler</h3><p class="mt" style="font-size:2.8rem">Briefing, retouches bloquantes, gel du code et tag <code>v1.0</code>.</p><p class="cap mt">blocs 1 à 3 · fiche X</p></div>
+    <div class="card step"><span class="num grad" style="font-size:8rem">2</span><h3 class="mt" style="font-size:4rem">Répéter</h3><p class="mt" style="font-size:2.8rem">Répétition technique dans votre salle ; les évaluateurs se calibrent en parallèle.</p><p class="cap mt">bloc 4 · fiche Y</p></div>
+    <div class="card step"><span class="num grad" style="font-size:8rem">3</span><h3 class="mt" style="font-size:4rem">Soutenir</h3><p class="mt" style="font-size:2.8rem">Le passage de chaque équipe, puis deux questions par étudiant.</p><p class="cap mt">bloc 5 · fiches Y et Z</p></div>
+    <div class="card step"><span class="num grad" style="font-size:8rem">4</span><h3 class="mt" style="font-size:4rem">Conclure</h3><p class="mt" style="font-size:2.8rem">Fiches des pairs, retour d'expérience collectif, clôture.</p><p class="cap mt">blocs 6 à 8 · fiche Z</p></div>
+  </div>
+  <p class="cap mt2 step" style="text-align:center">avant la séance (fiche W) : <code>v1.0-rc</code> et dossier de rendu déposés l'avant-veille à 18h, mercredi 27 janvier 2027 · PR tirées au sort communiquées la veille avant 9h, jeudi 28 janvier 2027</p>
+</section>
+
+<section class="slide" data-id="briefing">
+  <div class="label">Briefing · où vous passez, dans quel ordre, selon quels critères</div>
+  <div class="cols c2" style="flex:0 0 auto;gap:5rem;align-items:start">
+    <div class="step">
+      <h3 style="font-size:4.4rem">Deux salles en parallèle</h3>
+      <p class="cap mt">8 équipes · 4 équipes par salle</p>
+      <div class="tables two" style="margin-top:1.4rem"><div class="tbl"><small>salle 1</small><b>01 03 05 07</b></div><div class="tbl"><small>salle 2</small><b>02 04 06 08</b></div></div>
+      <p class="mt" style="font-size:3rem">Vous restez dans la salle de vos quatre équipes : vous formez le <strong>public</strong>, et vous aurez à remplir une <strong>fiche d'évaluation par les pairs</strong>.</p>
+    </div>
+    <div class="cards-sm" style="display:grid;gap:2.4rem">
+      <div class="card line step"><span class="chip i">Ordre de passage</span><p>Tiré au sort à l'avance.</p></div>
+      <div class="card line step"><span class="chip i">Format</span><p>Une partie commune, puis deux questions par étudiant.</p></div>
+      <div class="card line step"><span class="chip i">Critères</span><p>La grille sur 20 : 14 points collectifs et 6 individuels.</p></div>
+    </div>
+  </div>
+  <p class="cap mt2 step" style="text-align:center">dans chaque salle : un évaluateur, et un second évaluateur ou un observateur qui chronomètre et note les écarts</p>
+</section>
+
+<section class="slide" data-id="grille">
+  <div class="label">Les critères · la grille sur 20 · 14 points collectifs, 6 individuels</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo pts grow">
+      <div class="it step"><b>3</b><div><h3>Fonctionnalité</h3><p>démonstration live · socle obligatoire · cas d'acceptation verts</p></div></div>
+      <div class="it step"><b>2</b><div><h3>Process git et équipe</h3><p>PR relues · TDD visible · deux cas erreur-agent documentés</p></div></div>
+      <div class="it step"><b>2</b><div><h3>Harnais et tests</h3><p>CLAUDE.md à jour · permissions · aucun test supprimé ou assoupli</p></div></div>
+      <div class="it step"><b>3</b><div><h3>Données et conformité</h3><p>1 point données · 2 points conformité, réponse du RSSI datée</p></div></div>
+      <div class="it step"><b>3</b><div><h3>Qualité, sécurité et livraison</h3><p>CI verte sur le tag · audit traité · README à froid · aucun secret</p></div></div>
+      <div class="it step"><b>1</b><div><h3>Soutenance</h3><p>clarté · respect du temps · plan de secours · mesures compilées</p></div></div>
+    </div>
+    <div class="side">
+      <div class="rule plain step"><b>Individuel · 4 points</b><p><strong>Compréhension orale</strong> : deux questions posées à chaque étudiant, notées de 0 à 4.</p></div>
+      <div class="rule plain step"><b>Individuel · 2 points</b><p><strong>Contribution vérifiée</strong> : 1 point, lecture de 3 PR tirées au sort ; 1 point, évaluation par les pairs.</p></div>
+      <div class="done step"><b>Total · 20 points</b><p>14 collectifs et 6 individuels.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-geler">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><path d="M250 300h190l120 100-120 100H250z" stroke="url(#gg)" stroke-width="6" stroke-linejoin="round"/><circle cx="320" cy="400" r="24" stroke="url(#gg)" stroke-width="6"/></svg>
+  <div class="big grad">01</div>
+  <h2>Geler<br>et livrer</h2>
+</section>
+
+<section class="slide atelier" data-id="atelier-retouches">
+  <div class="label"><em>Atelier</em> Retouches bloquantes · en équipe</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Correctifs de bugs bloquants</h3><p>par une PR relue, contrôles verts : main est protégée</p></div></div>
+      <div class="it"><b>2</b><div><h3>Documentation</h3><p>README · CLAUDE.md · docs/ARCHITECTURE.md · JOURNAL.md</p></div></div>
+      <div class="it"><b>3</b><div><h3>Mise à jour de la fiche de conformité</h3><p>13 rubriques · dont la réponse du RSSI, datée</p></div></div>
+      <div class="it"><b>4</b><div><h3>Finition</h3><p>sans rien ajouter à ce que fait l'application</p></div></div>
+      <div class="it"><b>5</b><div><h3>Dernier passage de la CI</h3><p>pastille verte sur le dernier commit de main</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Les correctifs bloquants sont <strong>fusionnés</strong> et la CI est <strong>verte</strong> sur <code>main</code>.</p></div>
+      <div class="rule"><b>Aucune nouvelle fonctionnalité</b><p>Seuls les correctifs bloquants sont autorisés avant le tag final <code>v1.0</code>.</p></div>
+      <div class="rule info"><b>Fiche X</b><p>Retouches bloquantes, gel et <code>v1.0</code>. Chapitre 1 · Geler et livrer.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide atelier" data-id="atelier-gel">
+  <div class="label"><em>Atelier</em> Gel du code et tag v1.0 · en équipe, sur un seul poste</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>Se placer sur <code>main</code>, à jour</h3><p>git switch main · git pull</p></div></div>
+      <div class="it"><b>2</b><div><h3>Vérifier : copie propre, pastille verte du dernier commit</h3><p>git status : «&nbsp;rien à valider, la copie de travail est propre&nbsp;»</p></div></div>
+      <div class="it"><b>3</b><div><h3>Poser le tag</h3><p>git tag v1.0 · n'affiche rien quand il réussit</p></div></div>
+      <div class="it"><b>4</b><div><h3>Vérifier, avant de pousser</h3><p>git fetch · git rev-parse v1.0 origin/main · deux lignes identiques</p></div></div>
+      <div class="it"><b>5</b><div><h3>Pousser le tag</h3><p>git push origin v1.0 · réponse : * [new tag] v1.0 -&gt; v1.0</p></div></div>
+      <div class="it"><b>6</b><div><h3>Prouver, sur le dépôt distant</h3><p>git ls-remote origin main refs/tags/v1.0 · le même identifiant</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p><code>v1.0</code> est sur le dernier commit de <code>main</code>, CI verte, <strong>avant le premier passage</strong>.</p></div>
+      <div class="rule"><b>On ne pousse plus</b><p>À partir de là, le tag fige ce qui sera évalué.</p></div>
+      <div class="rule plain"><b>Avant, après</b><p>On vérifie avant de pousser, on prouve après : le même identifiant sur les deux lignes.</p></div>
+      <div class="rule info"><b>Fiche X</b><p>Retouches bloquantes, gel et <code>v1.0</code>. Chapitre 1 · Geler et livrer.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider" data-id="div-soutenance">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><rect x="240" y="270" width="320" height="210" rx="20" stroke="url(#gg)" stroke-width="6"/><path d="M372 330l82 45-82 45z" stroke="url(#gg)" stroke-width="6" stroke-linejoin="round"/><path d="M400 480v60M330 540h140" stroke="url(#gg)" stroke-width="6" stroke-linecap="round"/></svg>
+  <div class="big grad">02</div>
+  <h2>La soutenance<br>d'équipe</h2>
+</section>
+
+<section class="slide atelier" data-id="atelier-repetition">
+  <div class="label"><em>Atelier</em> Répétition technique · chaque équipe, dans sa salle</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="todo grow">
+      <div class="it"><b>1</b><div><h3>L'affichage</h3><p>votre démonstration, sur le vidéoprojecteur de votre salle</p></div></div>
+      <div class="it"><b>2</b><div><h3>Le jeu de données de secours</h3><p>fictif, comme toutes vos données</p></div></div>
+      <div class="it"><b>3</b><div><h3>Le plan B enregistré</h3><p>la démonstration enregistrée du plan de secours</p></div></div>
+      <div class="it opt"><b>4</b><div><h3>Si le temps manque</h3><p>pendant le passage de l'équipe précédente</p></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Affichage, jeu de données de secours et plan B enregistré sont <strong>vérifiés dans votre salle</strong>.</p></div>
+      <div class="rule plain"><b>En parallèle</b><p>Les évaluateurs se calibrent : l'échelle de 0 à 4, appliquée à deux exemples de réponses.</p></div>
+      <div class="rule plain"><b>Dans chaque salle</b><p>Une machine de secours.</p></div>
+      <div class="rule info"><b>Fiche Y</b><p>Répétition et soutenance d'équipe. Chapitre 2 · La soutenance d'équipe.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="passage">
+  <div class="label">Un passage · une partie commune, puis deux questions par étudiant</div>
+  <div class="temps step">
+    <div class="ph"><small>partie commune</small><b>Démonstration en direct</b><span>sur un scénario choisi par l'équipe</span></div>
+    <div class="ph q"><small>partie commune</small><b>«&nbsp;Sous le capot&nbsp;»</b><span>harnais, une décision sur les données, un moment de l'historique git, mesures temps estimé et réel</span></div>
+    <div class="ph d"><small>partie commune</small><b>Point de conformité</b><span>fiche, avis du RSSI, limites d'usage</span></div>
+    <div class="ph i"><small>individuel</small><b>Deux questions par étudiant</b><span>la même trame pour tous</span></div>
+  </div>
+  <div class="card step" style="margin-top:4rem;padding:3rem 4rem"><span class="chip v" style="align-self:flex-start">budget indicatif · un ordre de grandeur, à ajuster</span><h3 style="font-size:3.9rem;margin-top:2.4rem">«&nbsp;une partie commune d'une dizaine de minutes + quatre minutes de questions par étudiant + une transition de quatre minutes&nbsp;»</h3><p style="font-size:3rem;margin-top:2rem">De l'ordre de 30 minutes pour une équipe de 4 et 34 minutes pour une équipe de 5.</p></div>
+  <p class="cap step" style="text-align:center;margin-top:3rem">une contrainte d'organisation : ni un déroulé de parole ni un minutage de la séance</p>
+</section>
+
+<section class="slide" data-id="plan-secours">
+  <div class="label">Démonstration en direct · avec plan de secours</div>
+  <div class="cols c3 cards-sm" style="flex:0 0 auto;gap:3rem">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">plan de secours</span><h3 class="mt">Une démonstration enregistrée</h3><p class="cap">le plan B enregistré</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">plan de secours</span><h3 class="mt">Un jeu de données de secours</h3><p class="cap">données fictives uniquement</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">dans chaque salle</span><h3 class="mt">Une machine de secours</h3><p class="cap">une par salle</p></div>
+  </div>
+  <h3 class="mt2 step" style="font-size:4.8rem;text-align:center">À utiliser <span class="grad">seulement en cas de panne</span>.</h3>
+  <div class="card bad mt step"><h3 style="font-size:4.2rem">«&nbsp;Une démonstration enregistrée sans plan B live est <span class="neg">pénalisée</span>.&nbsp;»</h3><p class="mt" style="font-size:3rem">L'enregistrement ne remplace pas la démonstration en direct.</p></div>
+</section>
+
+<section class="slide divider" data-id="div-oral">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><path d="M250 280h300v190H410l-80 70v-70h-80z" stroke="url(#gg)" stroke-width="6" stroke-linejoin="round"/><path d="M310 345h180M310 405h110" stroke="url(#gg)" stroke-width="6" stroke-linecap="round"/></svg>
+  <div class="big grad">03</div>
+  <h2>L'oral individuel<br>et la note</h2>
+</section>
+
+<section class="slide" data-id="deux-questions">
+  <div class="label">Questions individuelles · deux par étudiant, la même trame pour tous</div>
+  <div class="cols c2 cards-sm" style="flex:0 0 auto;gap:4rem">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Question 1 · la plus longue</span><h3 class="mt">Une PR tirée au sort parmi celles que vous avez ouvertes ou approuvées</h3><p class="mt">Au moins 20 lignes modifiées hors fichiers générés ; à défaut, votre plus grosse PR. Communiquée la veille avant 9h : <strong>jeudi 28 janvier 2027</strong>.</p><p class="cap">préparée à l'avance · porte l'essentiel de la note</p></div>
+    <div class="card step"><span class="chip c" style="align-self:flex-start">Question 2 · brève</span><h3 class="mt">Une question de compréhension, sur le vif</h3><p class="mt">Par exemple : nommer un patron d'architecture présent dans le code de l'équipe et dire quel problème il résout.</p><p class="cap">ou : une règle du thème · un cas d'erreur d'agent · la fiche de conformité · les droits d'une personne concernée</p></div>
+  </div>
+  <h3 class="mt2 step" style="font-size:4.4rem;text-align:center">Chaque question est notée de <span class="grad">0 à 4</span> ; la note est la moyenne des deux questions, arrondie au demi-point.</h3>
+</section>
+
+<section class="slide" data-id="echelle">
+  <div class="label">L'échelle de compréhension orale · de 0 à 4 · texte du programme</div>
+  <div class="levels">
+    <div class="lvl n0 step"><b>0</b><span>Ne reconnaît pas la PR ou le projet, aucune explication.</span></div>
+    <div class="lvl n1 step"><b>1</b><span>Lit à voix haute sans dire pourquoi.</span></div>
+    <div class="lvl n2 step"><b>2</b><span>Explique ce que fait la PR et pourquoi, mais ne sait pas prévoir les conséquences d'un changement.</span></div>
+    <div class="lvl n3 step"><b>3</b><span>Explique, prévoit les conséquences d'une modification («&nbsp;que se passe-t-il si je supprime cette ligne&nbsp;?&nbsp;») et repère un risque.</span></div>
+    <div class="lvl n4 step"><b>4</b><span>En plus, propose un test ou une alternative argumentée, relie le travail aux règles du thème, aux données ou à la conformité, et nomme une limite. L'explication est faite <strong>en langage clair</strong>, comme à un chef de projet.</span></div>
+  </div>
+</section>
+
+<section class="slide" data-id="agent-ecrit">
+  <div class="label">Règles d'usage de l'IA · règle 2 · responsabilité</div>
+  <h2 style="font-size:8.6rem">«&nbsp;C'est l'agent qui l'a écrit&nbsp;» <span class="neg">n'est pas une réponse recevable.</span></h2>
+  <p class="sub step" style="max-width:150rem">L'étudiant qui ouvre ou approuve une PR en est responsable et doit pouvoir l'expliquer.</p>
+  <div class="cols c2 cards-sm mt2" style="flex:0 0 auto;gap:4rem">
+    <div class="card good step"><h3>L'usage de l'IA est autorisé et encouragé</h3><p class="mt">C'est l'objet de la formation. Un usage franc n'est jamais sanctionné.</p></div>
+    <div class="card bad step"><h3>Ce qui est sanctionné</h3><p class="mt">Un usage caché, ou des cas d'erreur inventés.</p></div>
+  </div>
+</section>
+
+<section class="slide atelier" data-id="atelier-pairs">
+  <div class="label"><em>Atelier</em> Le public et la fiche d'évaluation par les pairs</div>
+  <div class="row grow" style="gap:4rem;align-items:flex-start">
+    <div class="grow">
+      <div class="todo">
+        <div class="it"><b>1</b><div><h3>Rester dans la salle de vos quatre équipes</h3><p>vous formez le public des autres passages</p></div></div>
+        <div class="it"><b>2</b><div><h3>Noter les autres membres de votre équipe, de 0 à 2</h3><p>sur trois questions fixes : elles sont sur la fiche distribuée</p></div></div>
+        <div class="it"><b>3</b><div><h3>Ce que devient votre fiche</h3><p>par évaluateur, la somme des trois notes (0 à 6) · puis la médiane</p></div></div>
+      </div>
+      <p class="cap" style="margin-top:3rem">la médiane des sommes, convertie en points · 1 point de la note</p>
+      <div class="tables" style="margin-top:1.4rem"><div class="tbl"><small>médiane de 0 à 2</small><b>0 point</b></div><div class="tbl"><small>médiane de 3 à 4</small><b>0,5 point</b></div><div class="tbl"><small>médiane de 5 à 6</small><b>1 point</b></div></div>
+    </div>
+    <div class="side">
+      <div class="done"><b>Fini quand</b><p>Chaque étudiant a rempli sa <strong>fiche d'évaluation par les pairs</strong>.</p></div>
+      <div class="rule"><b>Confidentielles</b><p>Les fiches restent confidentielles.</p></div>
+      <div class="rule plain"><b>Quand la remplir</b><p>L'enseignant vous dit quand.</p></div>
+      <div class="rule info"><b>Fiche Z</b><p>Oral individuel, fiche des pairs et livrable. Chapitre 3 · L'oral individuel et la note.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="jamais">
+  <div class="label">Si la séance prend du retard · ce qui ne se sacrifie jamais</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:3rem">
+    <div class="card good step"><span class="num grad" style="font-size:8rem">1</span><h3 class="mt" style="font-size:4.4rem">Le gel et le tag <code>v1.0</code></h3><p class="cap mt">posé avant le premier passage</p></div>
+    <div class="card good step"><span class="num grad" style="font-size:8rem">2</span><h3 class="mt" style="font-size:4.4rem">Les soutenances, avec leurs deux questions individuelles</h3><p class="cap mt">dans les deux salles</p></div>
+    <div class="card good step"><span class="num grad" style="font-size:8rem">3</span><h3 class="mt" style="font-size:4.4rem">Les fiches d'évaluation par les pairs</h3><p class="cap mt">1 point de la note</p></div>
+  </div>
+  <h3 class="mt2 step" style="font-size:4.4rem;text-align:center">Si les passages d'une salle prennent du retard, on raccourcit la <span class="neg">plénière</span> avant de toucher à un passage.</h3>
+</section>
+
+<section class="slide" data-id="retour-experience">
+  <div class="label">Retour d'expérience collectif · en plénière</div>
+  <div style="display:grid;gap:4rem">
+    <p class="ask step">Ce qui a marché, ce qui a échoué, ce que je ferais autrement</p>
+    <p class="ask step">L'IA, les limites, la conformité</p>
+    <p class="ask step">Ce que je dirais à une équipe de développement</p>
+  </div>
+  <p class="cap mt2 step">prendre du recul sur l'ensemble de la formation · peut être remplacé par le questionnaire en ligne</p>
+</section>
+
+<section class="slide" data-id="cloture">
+  <div class="label">Clôture · consignes pour la suite</div>
+  <div class="cols c3" style="flex:0 0 auto;gap:4rem">
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Aujourd'hui</span><h3 class="mt">Livrable de fin de séance</h3><p class="mt" style="font-size:3rem">Tag <code>v1.0</code>, dossier de rendu à jour et soutenance passée.</p><p class="cap mt">à vérifier avec la fiche Z</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">En ligne</span><h3 class="mt">Questionnaire de fin de formation</h3><p class="mt" style="font-size:3rem">Il recueille aussi le retour d'expérience, si la plénière a été remplacée.</p><p class="cap mt">questionnaire en ligne</p></div>
+    <div class="card step"><span class="chip i" style="align-self:flex-start">Après la séance</span><h3 class="mt">Les notes</h3><p class="mt" style="font-size:3rem">Elles vous sont communiquées après la séance.</p><p class="cap mt">grille sur 20 · 14 collectifs et 6 individuels</p></div>
+  </div>
+  <p class="cap mt2 step" style="text-align:center">absent le jour de la soutenance : interrogé dans les 15 jours, avec la même trame</p>
+</section>
+
+<section class="slide divider" data-id="fin">
+  <svg class="ringart" viewBox="0 0 800 800" fill="none" aria-hidden="true"><g class="spin2"><circle cx="400" cy="400" r="300" stroke="url(#gg)" stroke-width="3" stroke-dasharray="3 16"/><circle cx="400" cy="100" r="14" fill="url(#gg)"/></g><circle cx="400" cy="400" r="200" stroke="url(#gg)" stroke-width="3" opacity=".5"/></svg>
+  <div class="label">Master ITI · fin de la formation</div>
+  <h2 style="font-size:15rem"><span class="grad">Merci.</span></h2>
+  <div class="chips step mt2 bigchip"><span class="chip n">tag v1.0</span><span class="chip n">dossier de rendu à jour</span><span class="chip n">soutenance passée</span></div>
+</section>
+
+</div>
+<div id="help">← → naviguer · F plein écran · N notes · O vue d'ensemble</div>
+<script src="../shared/deck.js"></script>
+</body>
+</html>
