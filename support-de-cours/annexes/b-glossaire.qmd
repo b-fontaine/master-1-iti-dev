@@ -1,4 +1,4 @@
-<!-- source: README.md, glossaires des chapitres, cours/supports/day-3/01-travailler-a-plusieurs.md, cours/supports/day-3/02-premiere-user-story.md, cours/supports/day-3/03-rgpd-applique-au-projet.md, cours/supports/day-3/04-les-donnees.md, cours/supports/day-3/05-fiches-de-seance.md, cours/supports/day-4/01-test-d-acceptation.md, cours/supports/day-4/02-ci-cd-et-publication.md, cours/supports/day-4/03-securite-et-audit-croise.md, cours/supports/day-4/04-ai-act-et-rssi.md, cours/supports/day-4/05-fiches-de-seance.md · synchro: 2026-11-27 -->
+<!-- source: README.md, glossaires des chapitres, cours/supports/day-3/01-travailler-a-plusieurs.md, cours/supports/day-3/02-premiere-user-story.md, cours/supports/day-3/03-rgpd-applique-au-projet.md, cours/supports/day-3/04-les-donnees.md, cours/supports/day-3/05-fiches-de-seance.md, cours/supports/day-4/01-test-d-acceptation.md, cours/supports/day-4/02-ci-cd-et-publication.md, cours/supports/day-4/03-securite-et-audit-croise.md, cours/supports/day-4/04-ai-act-et-rssi.md, cours/supports/day-4/05-fiches-de-seance.md, cours/supports/day-5/01-geler-et-livrer.md, cours/supports/day-5/02-la-soutenance-d-equipe.md, cours/supports/day-5/03-l-oral-individuel-et-la-note.md, cours/supports/day-5/04-fiches-de-seance.md · synchro: 2026-11-27 -->
 
 # Glossaire {#sec-glossaire}
 
@@ -124,6 +124,9 @@ Branche courte
 Brownfield / greenfield
 :   projet existant, avec son code ancien (brownfield, « friche ») ; projet neuf (greenfield, « terrain vierge »). (voir @sec-craft-ia)
 
+Budget indicatif
+:   ordre de grandeur du temps prévu par équipe pour dimensionner les salles et le jury ; ce n'est pas un minutage. (voir @sec-soutenance-equipe)
+
 Build
 :   opération qui transforme le code source en livrable exécutable. (voir @sec-ci-cd)
 
@@ -144,6 +147,12 @@ Cache
 
 Cache de prompt
 :   relecture à tarif réduit du début inchangé des requêtes. (voir @sec-outils-agentiques)
+
+Calibrage
+:   courte séance où les évaluateurs appliquent l'échelle aux mêmes exemples de réponses, pour noter de la même façon. (voir @sec-oral-individuel)
+
+Candidat à la version finale (*release candidate*, `-rc`)
+:   version que l'on pense pouvoir livrer telle quelle, déposée pour être vérifiée avant la version finale ; ici, le tag `v1.0-rc`, que les évaluateurs lisent la veille de la séance 5. (voir @sec-geler-livrer)
 
 CanvasKit
 :   le moteur de rendu de Flutter dans le navigateur ; embarqué grâce à `--no-web-resources-cdn`. (voir @sec-ci-publication)
@@ -220,11 +229,17 @@ Commit
 Commit de fusion (*merge commit*)
 :   commit à deux parents, créé quand on réunit deux lignes qui ont toutes deux avancé. (voir @sec-git)
 
+Commit tagué
+:   le commit que désigne un tag. C'est sur lui que se lit la pastille de CI, puisque la CI ne tourne pas à l'envoi d'un tag. (voir @sec-geler-livrer)
+
 Compaction
 :   résumé de la conversation pour libérer du contexte. (voir @sec-outils-agentiques)
 
 Compilation
 :   traduction du code en un programme exécutable par la machine ; une erreur de compilation empêche tout test. (voir @sec-pratique-craft-flutter)
+
+Compilation des mesures
+:   rassemblement, en un seul tableau, des temps estimés, des temps réels et des retouches notés dans les PR. (voir @sec-soutenance-equipe)
 
 Conflit
 :   situation où deux branches ont modifié la même ligne ; git demande de choisir. (voir @sec-git)
@@ -247,6 +262,9 @@ Contexte (fenêtre de)
 Contrainte
 :   règle appliquée par l'outil, indépendamment du modèle (permission, hook, outils d'un sous-agent) ; en base de données, règle vérifiée par la base à chaque écriture (valeur obligatoire, unicité, condition, clé étrangère). (voir @sec-configurer-claude-code et @sec-donnees)
 
+Contribution vérifiée
+:   critère individuel de la grille (2 points) : lecture de trois PR tirées au sort, et évaluation par les pairs. (voir @sec-oral-individuel)
+
 Contrôle (*check*)
 :   un job du workflow, tel qu'il apparaît sur la page d'une PR, avec sa pastille. (voir @sec-ci-publication)
 
@@ -258,6 +276,9 @@ Contrôle d'ouverture
 
 Contrôle exigé (*required status check*)
 :   contrôle de CI qui doit être vert pour que la protection de `main` autorise la fusion ; ici, `analyse-et-tests`, `securite` et `site-web`. (voir @sec-ci-publication et @sec-fiches)
+
+Correctif bloquant
+:   correction sans laquelle la version ne peut pas être livrée ou montrée. Le programme n'en donne pas de définition ; celle-ci est une proposition. Avec la documentation, la mise à jour de la fiche de conformité et la finition, c'est tout ce que le bloc 2 de la séance 5 autorise avant `v1.0`. Entre `v1.0-rc` et le début de la séance, le programme ne dit pas ce qui est permis. (voir @sec-geler-livrer)
 
 Corrélation / causalité
 :   deux phénomènes évoluent ensemble / l'un provoque l'autre. (voir @sec-craft-ia)
@@ -291,6 +312,9 @@ Décision provisoire
 
 Definition of done
 :   la liste de ce qui doit être vrai pour dire « c'est fini ». (voir @sec-fiches)
+
+Démonstration enregistrée
+:   vidéo du scénario de démonstration, préparée à l'avance et utilisée seulement en cas de panne ; le programme l'appelle aussi « plan B enregistré ». (voir @sec-soutenance-equipe)
 
 Dependabot
 :   service GitHub qui propose des mises à jour de dépendances. (voir @sec-ci-cd)
@@ -343,6 +367,9 @@ Donnée sensible
 DORA
 :   programme de recherche (désormais rattaché à Google Cloud) sur la performance de livraison logicielle, source de cinq indicateurs. (voir @sec-histoire-craft)
 
+Dossier de rendu
+:   les sept pièces évaluées, que l'équipe livre avec le tag : dépôt à jour, `README` d'installation, `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/fiche_conformite.md` avec la réponse du RSSI, `JOURNAL.md`, et les PR avec leurs sections de suivi. (voir @sec-geler-livrer)
+
 DPO
 :   délégué à la protection des données ; il qualifie les questions de données personnelles. (voir @sec-rgpd-projet)
 
@@ -354,6 +381,9 @@ drift
 
 Droit à l'explication
 :   droit d'une personne affectée par une décision fondée sur un système à haut risque d'obtenir des explications du déployeur (AI Act, art. 86). (voir @sec-ai-act-rssi)
+
+Échelle de compréhension orale
+:   les cinq niveaux, de 0 à 4, sur lesquels chaque question individuelle est notée. (voir @sec-oral-individuel)
 
 Edge AI (IA embarquée)
 :   exécution d'un modèle d'IA sur l'appareil de l'utilisateur. (voir @sec-edge-ai)
@@ -397,6 +427,12 @@ Essai contrôlé randomisé (RCT)
 Étape de scénario (*step*)
 :   fonction Dart qui exécute une phrase d'un scénario ; une par fichier, dans `test/steps/`. (voir @sec-premiere-user-story)
 
+Étiquette `erreur-agent`
+:   étiquette GitHub posée sur une PR qui documente une erreur de l'agent repérée par l'équipe ; elle sert à retrouver ces cas. (voir @sec-demarrer-projet et @sec-soutenance-equipe)
+
+Évaluation par les pairs
+:   note donnée à chaque étudiant par les autres membres de son équipe, sur trois questions fixes ; les fiches restent confidentielles. (voir @sec-oral-individuel)
+
 Example Mapping
 :   atelier où l'on s'accorde sur des exemples concrets avant de coder. (voir @sec-pratique-craft-flutter)
 
@@ -406,8 +442,14 @@ Fast-forward (avance rapide)
 Faux positif
 :   alerte sur quelque chose qui n'est pas un problème réel. (voir @sec-ci-publication)
 
+Fiche d'évaluation par les pairs
+:   fiche confidentielle sur laquelle chaque étudiant note les autres membres de son équipe ; elle compte pour 1 point. (voir @sec-fiches)
+
 Fiche de conformité
 :   document de la formation, à 13 rubriques, dans `docs/fiche_conformite.md` ; version pédagogique et allégée d'un registre, pas le registre officiel. (voir @sec-rgpd-projet)
+
+Fiche de notation pré-remplie
+:   feuille de l'évaluateur, une par étudiant : équipe, étudiant, PR tirée au sort, échelle de 0 à 4 pour les deux questions. (voir @sec-oral-individuel)
 
 Fichier `.feature`
 :   scénarios de comportement rédigés en phrases (Soit, Quand, Alors). (voir @sec-demarrer-projet)
@@ -433,6 +475,9 @@ Fonctionnalité (*feature*)
 Fork
 :   copie d'un dépôt par un tiers. (voir @sec-ci-cd)
 
+Format dégradé
+:   soutenances dans une seule salle, avec un seul évaluateur, quand le second évaluateur est absent ; même barème, temps réduit ; il est signalé aux étudiants. (voir @sec-soutenance-equipe)
+
 Fournisseur
 :   celui qui développe un système d'IA ou le met sur le marché sous son nom (art. 3). (voir @sec-ai-act-rssi)
 
@@ -449,10 +494,10 @@ Gardien produit
 :   membre de l'équipe qui tient `PROJET.md`, les cas d'acceptation et la fiche de conformité. (voir @sec-test-acceptation)
 
 Gel des fonctionnalités
-:   moment, au plus tard une semaine avant la séance 5, après lequel on ne fait plus que des correctifs, de la documentation et la préparation de la démonstration. (voir @sec-fiches)
+:   moment, au plus tard une semaine avant la séance 5, après lequel on ne fait plus que des correctifs, de la documentation et la préparation de la démonstration. (voir @sec-fiches et @sec-geler-livrer)
 
 Gel du code (*code freeze*)
-:   période pendant laquelle on s'interdit toute modification. (voir @sec-configurer-claude-code)
+:   période pendant laquelle on s'interdit toute modification ; dans la formation, moment de la séance 5 où le tag `v1.0` est posé (« à partir de là, on ne pousse plus »), à distinguer du gel des fonctionnalités. (voir @sec-configurer-claude-code et @sec-geler-livrer)
 
 Gherkin
 :   langage des scénarios (`Given/When/Then`, en français `Soit/Quand/Alors`). (voir @sec-pratique-craft-flutter)
@@ -490,6 +535,9 @@ Grille go/no-go
 Hallucination
 :   contenu généré faux ou sans fondement, présenté comme plausible. (voir @sec-histoire-ia)
 
+Harmonisation
+:   mise en accord des notes entre les évaluateurs des deux salles, après les passages (second calibrage). (voir @sec-oral-individuel)
+
 Harnais (*harness*)
 :   tout ce qui entoure le modèle dans un agent (outils, règles, contexte, permissions, contrôles). (voir @sec-histoire-ia)
 
@@ -498,6 +546,9 @@ Haut risque
 
 HEAD
 :   votre position actuelle dans l'historique, en général le dernier commit de la branche courante. (voir @sec-git)
+
+HEAD détachée
+:   état d'un dépôt local placé sur un commit précis (par exemple un tag) et non sur une branche. Normal pour relire, à éviter pour travailler. (voir @sec-geler-livrer)
 
 Hiver de l'IA
 :   période de recul des financements et de l'intérêt après des promesses non tenues. (voir @sec-histoire-ia)
@@ -550,6 +601,9 @@ ISO 8601
 Issue
 :   fiche de suivi d'un dépôt GitHub (titre, texte, commentaires, ouverte ou fermée). (voir @sec-securite-audit)
 
+Jeu de données de secours
+:   de quoi remettre l'application dans un état connu et rejouer le scénario de démonstration. (voir @sec-soutenance-equipe)
+
 JSON
 :   format de données textuel strict, utilisé par les fichiers de réglages. (voir @sec-configurer-claude-code)
 
@@ -568,6 +622,9 @@ Lint
 Livrable
 :   ce que l'équipe doit avoir fusionné ou montré à la fin de la séance. (voir @sec-fiches)
 
+Livrable minimum viable
+:   ce que l'énoncé de chaque thème demande au minimum quand l'équipe a tout réduit. (voir @sec-geler-livrer)
+
 Livraison continue (CD)
 :   le logiciel est toujours prêt à être publié. (voir @sec-ci-cd)
 
@@ -577,6 +634,9 @@ LLM (grand modèle de langage)
 LLM / SLM
 :   grand modèle de langage / petit modèle de langage. (voir @sec-edge-ai)
 
+Machine de secours
+:   poste disponible dans chaque salle pour remplacer un poste en panne. (voir @sec-soutenance-equipe)
+
 Maîtrise de l'IA
 :   obligation, pour les fournisseurs et déployeurs, de favoriser la capacité de leurs personnels à utiliser l'IA (art. 4). (voir @sec-ai-act-rssi)
 
@@ -585,6 +645,9 @@ Marketplace
 
 MCP (*Model Context Protocol*)
 :   standard ouvert de branchement d'un agent sur des outils externes ; un serveur MCP en est une réalisation. (voir @sec-configurer-claude-code)
+
+Médiane
+:   valeur du milieu d'une série de nombres rangés par ordre croissant ; elle ne bouge pas quand une seule valeur extrême change. (voir @sec-oral-individuel)
 
 Méthode
 :   action attachée à une valeur ou à une classe. (voir @sec-pratique-craft-flutter)
@@ -631,6 +694,9 @@ Null / null safety
 Obligations de transparence
 :   obligations de l'art. 50 pour les agents conversationnels et les contenus générés : informer, marquer, signaler. (voir @sec-ai-act-rssi)
 
+Observateur
+:   personne qui, à côté de l'évaluateur, chronomètre le passage et note les écarts. (voir @sec-soutenance-equipe)
+
 Omnibus numérique sur l'IA
 :   texte modificatif de l'AI Act, le règlement (UE) 2026/1744, qui a reporté une partie des obligations de haut risque. (voir @sec-ai-act-rssi)
 
@@ -652,6 +718,12 @@ Paramètre d'étape
 Paramètres (poids)
 :   nombres internes d'un modèle, ajustés à l'entraînement. (voir @sec-edge-ai)
 
+Partie commune
+:   les trois temps que l'équipe présente ensemble avant les questions individuelles : démonstration en direct, « sous le capot », point de conformité. (voir @sec-soutenance-equipe)
+
+Pastille
+:   la coche verte ou la croix rouge que GitHub affiche à côté d'un commit ; elle résume l'état des contrôles de la CI sur ce commit. (voir @sec-fiches)
+
 PATH
 :   liste des dossiers où le système cherche les commandes. (voir @sec-guide-flutter)
 
@@ -670,8 +742,14 @@ Pipeline
 Pipeline de déploiement
 :   chaîne automatisée qui mène un changement du dépôt à la production. (voir @sec-histoire-craft)
 
-Plan B
-:   build web local et démonstration avec `flutter run -d chrome` quand Pages ou Actions posent problème, publication terminée dans le sprint. (voir @sec-fiches)
+Plafonnement
+:   limite de 10 sur 14 appliquée aux notes collectives d'un étudiant dont la contribution est jugée nulle. (voir @sec-oral-individuel)
+
+Plan B de publication (séance 4)
+:   build web local et démonstration avec `flutter run -d chrome` quand GitHub Pages ou Actions posent problème, publication terminée dans le sprint ; à ne pas confondre avec le plan de secours de la démonstration. (voir @sec-fiches et @sec-soutenance-equipe)
+
+Plan de secours de la démonstration
+:   ce qui prend le relais de la démonstration en direct en cas de panne, et seulement dans ce cas : la démonstration enregistrée (le « plan B enregistré » du programme) et le jeu de données de secours ; à ne pas confondre avec le plan B de publication. (voir @sec-soutenance-equipe)
 
 Plugin (Claude Code)
 :   paquet installable regroupant skills, sous-agents, hooks et serveurs MCP. (voir @sec-configurer-claude-code)
@@ -730,6 +808,9 @@ Release / tag
 Relecture (*review*)
 :   vérification d'une PR par un autre que son auteur, par les preuves (ce qu'elle annonce, son fonctionnement, la liste des fichiers touchés), conclue par un commentaire, une approbation ou une demande de modifications. (voir @sec-git)
 
+Répétition technique
+:   vérification, dans la salle, de l'affichage, du jeu de données de secours et de l'enregistrement (bloc 4 de la séance 5). (voir @sec-soutenance-equipe)
+
 Repository
 :   pièce qui range et relit les données pour le domaine. (voir @sec-premiere-user-story)
 
@@ -760,8 +841,14 @@ Rollback
 RSSI
 :   responsable de la sécurité des systèmes d'information. (voir @sec-conformite)
 
+Rubrique 13
+:   dernière rubrique de la fiche de conformité, la validation du RSSI : elle reçoit sa réponse écrite, avec sa date, sa décision (go, go sous conditions, no-go) et ses conditions. (voir @sec-ai-act-rssi et @sec-geler-livrer)
+
 Runner
 :   machine qui exécute un job. (voir @sec-ci-cd)
+
+Scénario de démonstration
+:   suite d'actions faites à l'écran, dans un ordre et avec des données décidés à l'avance. (voir @sec-soutenance-equipe)
 
 Schéma
 :   description de la base (tables, colonnes, contraintes). (voir @sec-donnees)
@@ -796,6 +883,9 @@ SOLID
 Sous-agent
 :   assistant secondaire au contexte isolé, qui renvoie un résumé. (voir @sec-configurer-claude-code)
 
+« Sous le capot »
+:   deuxième temps de la partie commune : le harnais, une décision sur les données, un moment de l'historique git, les mesures. (voir @sec-soutenance-equipe)
+
 Sous-règle isolée
 :   une partie de la règle métier du thème, assez petite pour une première story (pour B : la disponibilité). (voir @sec-premiere-user-story)
 
@@ -829,6 +919,9 @@ Tâche facultative
 Tag
 :   étiquette fixe posée sur un commit (`s2-fin`, `v1.0`). (voir @sec-git)
 
+Tag léger
+:   tag qui n'est qu'un nom posé sur un commit, sans date ni auteur propres ; c'est celui que crée `git tag <nom>`. (voir @sec-geler-livrer)
+
 TDD (Test-Driven Development)
 :   cycle rouge (test qui échoue), vert (code minimal), refactor (nettoyage). (voir @sec-histoire-craft)
 
@@ -840,6 +933,9 @@ Temps requis, temps de marche
 
 Test
 :   petit programme qui vérifie qu'un morceau de code fait ce qui est attendu. (voir @sec-histoire-craft)
+
+Test à froid
+:   installation rejouée depuis un clone neuf, dans un dossier vide, en ne suivant que le `README`. (voir @sec-geler-livrer)
 
 Test (unitaire)
 :   petit programme qui vérifie un comportement précis et répond « réussi » ou « échoué ». (voir @sec-pratique-craft-flutter)
@@ -855,6 +951,12 @@ Test unitaire, de widget, d'intégration
 
 Token
 :   morceau de texte (mot, syllabe, ponctuation) qui sert d'unité au modèle, à la facturation et à la mémoire. (voir @sec-histoire-ia)
+
+Trailer
+:   ligne ajoutée à la fin du message d'un commit, par exemple `Co-Authored-By`. (voir @sec-oral-individuel)
+
+Trame
+:   le canevas commun des deux questions individuelles, identique pour tous les étudiants. (voir @sec-oral-individuel)
 
 Transfert
 :   envoi de données vers un tiers, en particulier hors de l'Union européenne (chapitre V du RGPD). (voir @sec-rgpd-projet)

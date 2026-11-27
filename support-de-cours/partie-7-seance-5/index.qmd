@@ -1,0 +1,7 @@
+<!-- source: nouveau · synchro: 2026-11-27 -->
+
+# Séance 5 · Retouches et soutenance {.unnumbered}
+
+Cette partie réunit les supports de la séance 5, la dernière : après un sprint d'un peu plus de six semaines, l'équipe arrête ce qu'elle livre, le fige, puis le présente. Elle commence par un résumé de la séance (@sec-s5), suivi de trois chapitres : geler et livrer, du tag `v1.0-rc` au tag `v1.0`, avec le dossier de rendu (@sec-geler-livrer) ; la soutenance d'équipe, avec la démonstration en direct, le passage « sous le capot » et le point de conformité (@sec-soutenance-equipe) ; l'oral individuel et la note, avec les deux questions posées à chacun, l'échelle de compréhension et la grille sur 20 (@sec-oral-individuel). Les fiches à garder sous les yeux, de W à Z, les dernières, sont rassemblées dans l'annexe [-@sec-fiches].
+
+Chaque chapitre contient un résumé, un glossaire, des sources et une liste des points non vérifiés. Les sorties de commandes ont été obtenues sur une copie du dépôt-modèle, avec un dépôt distant local ; ce qui relève de l'organisation de la soutenance et de la notation est repris du programme détaillé (@sec-programme-detaille), qui fait foi : ce que les chapitres ajoutent y est signalé comme une proposition.

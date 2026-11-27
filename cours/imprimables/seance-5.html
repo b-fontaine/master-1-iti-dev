@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séance 5 · Documents à imprimer</title>
+<!--
+  Documents à imprimer de la séance 5 (soutenance : blocs 4, 5 et 6 du programme).
+  Tout le contenu vient d'une seule source, qui fait foi :
+    - cours/programme-detaille.md : séance 5 et « Format de la soutenance » (matériel, deux salles,
+      budget indicatif par équipe, affectation aux salles, variante à 7 équipes, format dégradé),
+      et section 7 « Évaluation » (grille sur 20, échelle de compréhension orale de 0 à 4,
+      repères pour la notation, questions individuelles).
+  Si cette source change, cette page est à mettre à jour.
+  Deux points sont laissés en blanc parce que le programme ne les écrit pas : les trois questions
+  de la fiche d'évaluation par les pairs (à écrire avant d'imprimer) et l'ordre de passage (tiré au sort).
+  Aucun nom d'étudiant dans ce fichier : les fiches se pré-remplissent à la main, ou sur une copie
+  de ce fichier gardée hors du dépôt.
+  Impression : ouvrir ce fichier dans un navigateur, puis Imprimer (format A4, marges par
+  défaut, sans en-têtes ni pieds de page). Chaque document commence sur une nouvelle page.
+-->
+<style>
+  :root { --encre: #111; --gris: #555; --trait: #888; --fond: #f2f2f2; }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--encre); background: #fff;
+         font: 11pt/1.35 "Helvetica Neue", Arial, "Liberation Sans", sans-serif; }
+  h1 { font-size: 16pt; margin: 0 0 2mm; }
+  h2 { font-size: 12pt; margin: 3.5mm 0 1.5mm; }
+  p { margin: 0 0 2mm; }
+  .source { color: var(--gris); font-size: 8.5pt; }
+  .feuille { padding: 11mm 12mm; max-width: 210mm; margin: 0 auto; break-after: page; }
+  .feuille:last-child { break-after: auto; }
+  .mode-emploi { background: var(--fond); border: 1px solid var(--trait); padding: 4mm 5mm; margin-bottom: 6mm; }
+  .mode-emploi li { margin-bottom: 1mm; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid var(--trait); padding: 1.5mm 2mm; vertical-align: top; text-align: left; }
+  th { background: var(--fond); font-size: 9.5pt; }
+  .case { display: inline-block; width: 3.5mm; height: 3.5mm; border: 1px solid var(--encre);
+          vertical-align: -0.5mm; margin-right: 1.5mm; }
+  .ligne { border-bottom: 1px solid var(--trait); height: 6.5mm; }
+  .champs { display: flex; flex-wrap: wrap; gap: 2mm 8mm; margin: 2mm 0 3mm; }
+  .champs span { white-space: nowrap; }
+  .trou { display: inline-block; min-width: 22mm; border-bottom: 1px solid var(--encre); }
+  .trou.long { min-width: 70mm; }
+  .trou.court { min-width: 12mm; }
+  .note { font-size: 9.5pt; color: var(--gris); }
+
+  /* Fiche de notation : deux fiches par page, trait de coupe au milieu. */
+  .demi { height: 132mm; padding-bottom: 5mm; }
+  .demi + .demi { border-top: 1px dashed var(--trait); padding-top: 6mm; }
+  .notes td { font-size: 10pt; }
+  .notes td.question { width: 62mm; }
+  .notes td.points { white-space: nowrap; width: 52mm; font-size: 11pt; }
+  .notes td.libre { height: 21mm; }
+  .points .case { margin-left: 2.5mm; margin-right: 1mm; }
+  .points .case:first-child { margin-left: 0; }
+  .echelle td:first-child { width: 12mm; text-align: center; font-size: 15pt; font-weight: 600; }
+  .echelle td { font-size: 11pt; padding: 2.5mm 3mm; }
+  .grille td { font-size: 9pt; padding: 1.3mm 2mm; }
+  .grille td:nth-child(1) { width: 34mm; font-size: 10pt; }
+  .grille td:nth-child(2) { width: 12mm; text-align: center; font-size: 11pt; }
+  .grille td:nth-child(4) { width: 20mm; }
+  .pairs td { height: 12mm; font-size: 11pt; }
+  .pairs td.points { white-space: nowrap; width: 34mm; }
+  .chrono td { height: 9.5mm; font-size: 10pt; }
+  .chrono { table-layout: fixed; }
+  .chrono td.ordre { font-size: 9pt; }
+  .passage td { height: 15mm; }
+  .passage td:first-child { width: 22mm; }
+  .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    .mode-emploi { display: none; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @media screen {
+    body { background: #ddd; }
+    .feuille { background: #fff; margin: 6mm auto; box-shadow: 0 0 3mm rgba(0, 0, 0, .25); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ 1. Fiches de notation par étudiant -->
+<section class="feuille">
+  <div class="mode-emploi">
+    <h1>Séance 5 · Documents à imprimer</h1>
+    <p>Cette page réunit les documents papier de la soutenance (blocs 4, 5 et 6). Ce cadre gris ne s'imprime pas.</p>
+    <ul>
+      <li><strong>Fiche de notation par étudiant</strong> (page 1, deux fiches par page, à couper au milieu) : une par étudiant, à pré-remplir (salle, équipe, étudiant, PR tirée au sort) avant la séance. Pour l'évaluateur.</li>
+      <li><strong>Échelle de compréhension orale</strong> (page 2) : une par évaluateur et par observateur ; sert au calibrage du bloc 4.</li>
+      <li><strong>Grille de notation de l'équipe</strong> (page 3) : une par équipe. Pour l'évaluateur.</li>
+      <li><strong>Fiche d'observation</strong> (page 4) : une par passage. Pour l'observateur, qui chronomètre et note les écarts.</li>
+      <li><strong>Fiche d'évaluation par les pairs</strong> (page 5) : une par étudiant. <strong>Écrire les trois questions avant d'imprimer</strong> : le programme les annonce sans les donner. La fiche ne porte pas le nom de celui qui la remplit : le programme dit seulement que les fiches restent confidentielles ; ajouter le champ si le recueil le demande.</li>
+      <li><strong>Ordre de passage par salle</strong> (page 6 pour 8 équipes, page 7 pour 7 équipes, page 8 pour le format dégradé à une salle) : à afficher, une fois l'ordre tiré au sort.</li>
+    </ul>
+    <p class="note">Aucun nom d'étudiant n'est écrit dans ce fichier. Les fiches remplies sont des documents d'évaluation : elles ne se déposent dans aucun dépôt.</p>
+  </div>
+
+  <div class="demi">
+    <h1>Fiche de notation · compréhension orale</h1>
+    <div class="champs">
+      <span>Salle <span class="trou court"></span></span>
+      <span>Équipe n° <span class="trou court"></span></span>
+      <span>Étudiant <span class="trou long"></span></span>
+    </div>
+    <div class="champs">
+      <span>PR tirée au sort : n° <span class="trou court"></span></span>
+      <span>Titre <span class="trou long"></span></span>
+    </div>
+    <table class="notes">
+      <thead><tr><th>Question</th><th>Note sur l'échelle de 0 à 4</th><th>Ce que l'étudiant a dit</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="question"><strong>Question 1</strong> (la plus longue) : la PR tirée au sort, communiquée la veille.</td>
+          <td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2<span class="case"></span>3<span class="case"></span>4</td>
+          <td class="libre"></td>
+        </tr>
+        <tr>
+          <td class="question"><strong>Question 2</strong> (brève) : compréhension sur le vif.<br><span class="note">Sujet : <span class="case"></span>règle du thème <span class="case"></span>cas d'erreur d'agent <span class="case"></span>fiche de conformité <span class="case"></span>droits d'une personne concernée <span class="case"></span>patron d'architecture <span class="case"></span>autre</span></td>
+          <td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2<span class="case"></span>3<span class="case"></span>4</td>
+          <td class="libre"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="champs" style="margin-top:3mm">
+      <span><strong>Moyenne des deux questions, arrondie au demi-point :</strong> <span class="trou court"></span> / 4</span>
+      <span><span class="case"></span>Format dégradé</span>
+      <span>Évaluateur <span class="trou"></span></span>
+    </div>
+    <p class="source">Programme, section 7 : échelle de compréhension orale et questions individuelles. « C'est l'agent qui l'a écrit » n'est pas une réponse recevable.</p>
+  </div>
+
+  <div class="demi">
+    <h1>Fiche de notation · compréhension orale</h1>
+    <div class="champs">
+      <span>Salle <span class="trou court"></span></span>
+      <span>Équipe n° <span class="trou court"></span></span>
+      <span>Étudiant <span class="trou long"></span></span>
+    </div>
+    <div class="champs">
+      <span>PR tirée au sort : n° <span class="trou court"></span></span>
+      <span>Titre <span class="trou long"></span></span>
+    </div>
+    <table class="notes">
+      <thead><tr><th>Question</th><th>Note sur l'échelle de 0 à 4</th><th>Ce que l'étudiant a dit</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="question"><strong>Question 1</strong> (la plus longue) : la PR tirée au sort, communiquée la veille.</td>
+          <td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2<span class="case"></span>3<span class="case"></span>4</td>
+          <td class="libre"></td>
+        </tr>
+        <tr>
+          <td class="question"><strong>Question 2</strong> (brève) : compréhension sur le vif.<br><span class="note">Sujet : <span class="case"></span>règle du thème <span class="case"></span>cas d'erreur d'agent <span class="case"></span>fiche de conformité <span class="case"></span>droits d'une personne concernée <span class="case"></span>patron d'architecture <span class="case"></span>autre</span></td>
+          <td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2<span class="case"></span>3<span class="case"></span>4</td>
+          <td class="libre"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="champs" style="margin-top:3mm">
+      <span><strong>Moyenne des deux questions, arrondie au demi-point :</strong> <span class="trou court"></span> / 4</span>
+      <span><span class="case"></span>Format dégradé</span>
+      <span>Évaluateur <span class="trou"></span></span>
+    </div>
+    <p class="source">Programme, section 7 : échelle de compréhension orale et questions individuelles. « C'est l'agent qui l'a écrit » n'est pas une réponse recevable.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 2. Échelle de compréhension orale -->
+<section class="feuille">
+  <h1>Échelle de compréhension orale · de 0 à 4</h1>
+  <p>Chaque question est notée de 0 à 4, la note est la moyenne des deux questions arrondie au demi-point. La question 1, préparée à l'avance sur une PR communiquée 24 h avant, porte l'essentiel de la note ; la question 2 vérifie la compréhension sur le vif (elle peut porter sur une règle du thème, un cas d'erreur d'agent, la fiche de conformité ou les droits d'une personne concernée).</p>
+  <table class="echelle" style="margin-top:3mm">
+    <thead><tr><th>Note</th><th>Ce que fait l'étudiant</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>Ne reconnaît pas la PR ou le projet, aucune explication.</td></tr>
+      <tr><td>1</td><td>Lit à voix haute sans dire pourquoi.</td></tr>
+      <tr><td>2</td><td>Explique ce que fait la PR et pourquoi, mais ne sait pas prévoir les conséquences d'un changement.</td></tr>
+      <tr><td>3</td><td>Explique, prévoit les conséquences d'une modification (« que se passe-t-il si je supprime cette ligne ? ») et repère un risque.</td></tr>
+      <tr><td>4</td><td>En plus, propose un test ou une alternative argumentée, relie le travail aux règles du thème, aux données ou à la conformité, et nomme une limite. L'explication est faite <strong>en langage clair</strong>, comme à un chef de projet.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Les deux questions, la même trame pour tous</h2>
+  <p><strong>Question 1 (la plus longue)</strong> : une PR tirée au sort parmi celles que l'étudiant a ouvertes ou approuvées, dont la taille atteint le seuil de 20 lignes modifiées hors fichiers générés (à défaut, sa plus grosse PR), communiquée 24 h avant (la veille de la séance 5 avant 9h).</p>
+  <p><strong>Question 2 (brève)</strong> : une question de compréhension, par exemple nommer un patron d'architecture présent dans le code de l'équipe et dire quel problème il résout.</p>
+  <p><strong>Absent</strong> : l'équipe passe normalement ; l'étudiant absent le jour de la soutenance est interrogé dans les 15 jours avec la même trame.</p>
+
+  <h2>Calibrage des évaluateurs (bloc 4)</h2>
+  <p>Avant les passages : l'échelle appliquée à deux exemples de réponses, les fiches de notation pré-remplies, le rôle de l'observateur. Après les passages (bloc 6) : les évaluateurs harmonisent leurs notes entre eux.</p>
+  <div class="ligne"></div><div class="ligne"></div><div class="ligne"></div>
+  <p class="source" style="margin-top:3mm">Programme, section 7 « Évaluation » (échelle, format de la soutenance) et séance 5, blocs 4 et 6. Texte de l'échelle repris mot pour mot.</p>
+</section>
+
+<!-- ============================================================ 3. Grille de notation de l'équipe -->
+<section class="feuille">
+  <h1>Grille de notation · équipe</h1>
+  <div class="champs">
+    <span>Salle <span class="trou court"></span></span>
+    <span>Équipe n° <span class="trou court"></span></span>
+    <span>Thème <span class="trou court"></span></span>
+    <span>Évaluateur <span class="trou"></span></span>
+  </div>
+  <table class="grille">
+    <thead><tr><th>Critère</th><th>Points</th><th>Ce qu'on regarde</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Fonctionnalité</strong></td><td>3</td><td>Le produit fonctionne en démonstration live et couvre le socle obligatoire ; le clou niveau 1 est noté sur la réussite des cas d'acceptation publiés dans l'énoncé du thème (cas verts sur cas totaux), pas sur l'appréciation ; les user stories annoncées sont livrées.</td><td></td></tr>
+      <tr><td><strong>Process git et équipe</strong></td><td>2</td><td>Commits petits et lisibles, PR relues, issues, branches courtes, pas de push direct, traçabilité des décisions ; TDD visible (commit de test avant le code) ; deux cas d'erreur d'agent documentés dans les PR (étiquette <code>erreur-agent</code>), contrôlés en soutenance.</td><td></td></tr>
+      <tr><td><strong>Harnais et tests</strong></td><td>2</td><td><code>CLAUDE.md</code> utile et à jour, permissions (dont <code>test/acceptance/**</code> protégé), hooks, tests pertinents (unitaires, intégrité, scénarios BDD, acceptation), aucun test supprimé ou assoupli.</td><td></td></tr>
+      <tr><td><strong>Données et conformité</strong></td><td>3</td><td><strong>1 point données</strong> : modèle cohérent, contraintes, migrations rejouables, seed fictif reproductible, tests d'intégrité. <strong>2 points conformité</strong> : fiche de conformité complète et honnête (13 rubriques), justification du niveau de risque AI Act, mesures réellement présentes dans l'application (accès par rôle testé, mesures propres au thème, durée de conservation), le rôle AI Act (fournisseur ou déployeur) et la case de classement justifiés, réponse du RSSI datée et suites données aux conditions, limites d'usage écrites.</td><td></td></tr>
+      <tr><td><strong>Qualité, sécurité et livraison</strong></td><td>3</td><td>CI verte sur le tag, audit croisé traité (issues priorisées, constats corrigés ou justifiés), <code>README</code> testé à froid en moins de 10 minutes, aucun secret (contrôle en CI), build web publié sur GitHub Pages (ou plan B documenté), tests dédiés sur l'import CSV (obligatoire) et sur l'export CSV s'il est livré.</td><td></td></tr>
+      <tr><td><strong>Soutenance</strong></td><td>1</td><td>Clarté, respect du temps, démonstration maîtrisée, plan de secours, compilation des mesures (temps estimé, réel, retouches).</td><td></td></tr>
+      <tr><td><strong>Total collectif</strong></td><td>14</td><td>3 + 2 + 2 + 3 + 3 + 1 = 14. Les 4 points de compréhension orale sont sur les fiches par étudiant ; les 2 points de contribution vérifiée (lecture de 3 PR tirées au sort, évaluation par les pairs) sont établis à part.</td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="champs" style="margin-top:3mm">
+    <span>Bonus du clou niveau 2 (plafonné à 1 point) : <span class="trou court"></span></span>
+    <span><strong>Note collective finale = min(14, collectif + bonus) :</strong> <span class="trou court"></span> / 14</span>
+  </div>
+  <p class="note">Si la contribution d'un étudiant est jugée nulle (aucune PR ouverte ou approuvée de façon substantielle, évaluation des pairs concordante), ses notes collectives sont plafonnées à 10 sur 14 : min(10, note collective finale). Un projet qui met des données réelles dans le dépôt ou dans un prompt perd les points de conformité correspondants. Une démonstration enregistrée sans plan B live est pénalisée.</p>
+  <h2>Remarques</h2>
+  <div class="ligne"></div><div class="ligne"></div><div class="ligne"></div>
+  <p class="source" style="margin-top:3mm">Programme, section 7 « Évaluation » : grille sur 20 (texte du programme) et repères pour la notation (condensés) ; format de la soutenance pour la démonstration enregistrée.</p>
+</section>
+
+<!-- ============================================================ 4. Fiche d'observation -->
+<section class="feuille">
+  <h1>Fiche d'observation · un passage</h1>
+  <div class="champs">
+    <span>Salle <span class="trou court"></span></span>
+    <span>Équipe n° <span class="trou court"></span></span>
+    <span>Passage n° <span class="trou court"></span></span>
+    <span>Observateur <span class="trou"></span></span>
+  </div>
+  <p>L'observateur chronomètre et note les écarts. Les durées sont des <strong>ordres de grandeur à ajuster</strong>, pas un minutage : de l'ordre de 30 minutes pour une équipe de 4 et de 34 minutes pour une équipe de 5.</p>
+  <table class="chrono">
+    <colgroup><col style="width:62mm"><col style="width:30mm"><col style="width:19mm"><col style="width:19mm"><col></colgroup>
+    <thead><tr><th>Moment du passage</th><th>Ordre de grandeur</th><th>Début</th><th>Fin</th><th>Écart, remarque</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Partie commune</strong> : démonstration en direct</td><td rowspan="3" class="ordre">une dizaine de minutes pour les trois</td><td></td><td></td><td></td></tr>
+      <tr><td>Partie commune : « sous le capot » (harnais, une décision sur les données, un moment de l'historique git, mesures temps estimé et réel)</td><td></td><td></td><td></td></tr>
+      <tr><td>Partie commune : point de conformité (fiche, avis du RSSI, limites d'usage)</td><td></td><td></td><td></td></tr>
+      <tr><td><strong>Questions</strong> : étudiant 1</td><td class="ordre">quatre minutes</td><td></td><td></td><td></td></tr>
+      <tr><td>Questions : étudiant 2</td><td class="ordre">quatre minutes</td><td></td><td></td><td></td></tr>
+      <tr><td>Questions : étudiant 3</td><td class="ordre">quatre minutes</td><td></td><td></td><td></td></tr>
+      <tr><td>Questions : étudiant 4</td><td class="ordre">quatre minutes</td><td></td><td></td><td></td></tr>
+      <tr><td>Questions : étudiant 5 (équipe de 5)</td><td class="ordre">quatre minutes</td><td></td><td></td><td></td></tr>
+      <tr><td><strong>Transition</strong> vers l'équipe suivante</td><td class="ordre">quatre minutes</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <h2>Démonstration</h2>
+  <div class="champs">
+    <span><span class="case"></span>en direct</span>
+    <span><span class="case"></span>démonstration enregistrée (plan de secours)</span>
+    <span><span class="case"></span>jeu de données de secours</span>
+    <span><span class="case"></span>machine de secours</span>
+  </div>
+  <h2>Écarts notés</h2>
+  <div class="ligne"></div><div class="ligne"></div><div class="ligne"></div><div class="ligne"></div><div class="ligne"></div>
+  <p class="note" style="margin-top:3mm">Format dégradé (une salle, un seul évaluateur) : de l'ordre de 20 minutes par équipe, trois minutes de questions par étudiant ; il n'y a alors pas d'observateur.</p>
+  <p class="source">Programme, « Format de la soutenance » : rôle de l'observateur, budget indicatif par équipe, plan de secours.</p>
+</section>
+
+<!-- ============================================================ 5. Fiche d'évaluation par les pairs -->
+<section class="feuille">
+  <h1>Fiche d'évaluation par les pairs</h1>
+  <div class="champs">
+    <span>Équipe n° <span class="trou court"></span></span>
+  </div>
+  <p>Notez <strong>les autres membres de votre équipe</strong>, pas vous-même, de 0 à 2 sur chacune des trois questions. <strong>Cette fiche reste confidentielle.</strong></p>
+
+  <h2>Les trois questions</h2>
+  <p>Question 1 : <span class="trou" style="min-width:150mm"></span></p>
+  <p>Question 2 : <span class="trou" style="min-width:150mm"></span></p>
+  <p>Question 3 : <span class="trou" style="min-width:150mm"></span></p>
+
+  <h2>Vos notes</h2>
+  <table class="pairs">
+    <thead><tr><th>Coéquipier</th><th>Question 1</th><th>Question 2</th><th>Question 3</th></tr></thead>
+    <tbody>
+      <tr><td></td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td></tr>
+      <tr><td></td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td></tr>
+      <tr><td></td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td></tr>
+      <tr><td></td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td><td class="points"><span class="case"></span>0<span class="case"></span>1<span class="case"></span>2</td></tr>
+    </tbody>
+  </table>
+  <p class="note" style="margin-top:2mm">Une ligne par coéquipier : deux lignes pour une équipe de 3, trois pour une équipe de 4, quatre pour une équipe de 5.</p>
+
+  <h2>Ce que devient votre fiche</h2>
+  <p>L'évaluation par les pairs compte pour 1 point de la « contribution vérifiée » (2 points individuels). Pour chaque étudiant noté, on calcule la somme des trois notes donnée par chaque évaluateur (0 à 6 ; l'évaluateur est ici le coéquipier qui note), puis la médiane de ces sommes sur les évaluateurs, convertie ainsi : 0 point si la médiane vaut 0 à 2, 0,5 point si elle vaut 3 à 4, 1 point si elle vaut 5 à 6.</p>
+  <p class="source">Programme, section 7 « Évaluation », repères pour la notation.</p>
+</section>
+
+<!-- ============================================================ 6. Ordre de passage, 8 équipes -->
+<section class="feuille">
+  <h1>Séance 5 · ordre de passage · 8 équipes, deux salles</h1>
+  <p>Deux salles en parallèle, quatre équipes par salle. Les étudiants restent dans la salle de leurs quatre équipes : ils forment le public. Les fiches d'évaluation par les pairs se remplissent au moment que l'enseignant indique. L'ordre de passage est tiré au sort à l'avance.</p>
+  <div class="deux">
+    <div>
+      <h2>Salle 1 : équipes 01, 03, 05, 07</h2>
+      <table class="passage">
+        <thead><tr><th>Passage</th><th>Équipe</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td></td></tr>
+          <tr><td>2</td><td></td></tr>
+          <tr><td>3</td><td></td></tr>
+          <tr><td>4</td><td></td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:3mm">Évaluateur : <span class="trou"></span></p>
+      <p>Second évaluateur ou observateur : <span class="trou"></span></p>
+    </div>
+    <div>
+      <h2>Salle 2 : équipes 02, 04, 06, 08</h2>
+      <table class="passage">
+        <thead><tr><th>Passage</th><th>Équipe</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td></td></tr>
+          <tr><td>2</td><td></td></tr>
+          <tr><td>3</td><td></td></tr>
+          <tr><td>4</td><td></td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:3mm">Évaluateur : <span class="trou"></span></p>
+      <p>Second évaluateur ou observateur : <span class="trou"></span></p>
+    </div>
+  </div>
+  <p style="margin-top:5mm"><strong>Budget indicatif par équipe</strong> (organisation, à ajuster) : de l'ordre de 30 minutes pour une équipe de 4 et 34 minutes pour une équipe de 5, selon la formule « une partie commune d'une dizaine de minutes + quatre minutes de questions par étudiant + une transition de quatre minutes ». Une pause entre deux séries de passages, au moment le moins gênant.</p>
+  <p>Le tag <code>v1.0</code> est posé avant le premier passage. Une machine de secours par salle. Si les passages d'une salle prennent du retard, on raccourcit la plénière avant de toucher à un passage.</p>
+  <p class="source" style="margin-top:3mm">Programme, séance 5 : « Format de la soutenance », blocs 1, 3 et 5.</p>
+</section>
+
+<!-- ============================================================ 7. Ordre de passage, 7 équipes -->
+<section class="feuille">
+  <h1>Séance 5 · ordre de passage · 7 équipes, deux salles</h1>
+  <p>Variante à 7 équipes (4 équipes de 5 et 3 de 4). Affectation indicative, à ajuster selon les effectifs réels : équipes de 5 : 01, 03, 05 et 07 ; équipes de 4 : 02, 04 et 06. Même formule de budget.</p>
+  <div class="deux">
+    <div>
+      <h2>Salle 1 : 02, 04, 06 puis 01</h2>
+      <table class="passage">
+        <thead><tr><th>Passage</th><th>Équipe</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td></td></tr>
+          <tr><td>2</td><td></td></tr>
+          <tr><td>3</td><td></td></tr>
+          <tr><td>4</td><td></td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:2mm">Quatre équipes (4, 4, 4, 5 étudiants). C'est la salle la plus chargée : elle tient sans marge, il ne faut pas laisser les passages déborder.</p>
+      <p style="margin-top:3mm">Évaluateur : <span class="trou"></span></p>
+      <p>Second évaluateur ou observateur : <span class="trou"></span></p>
+    </div>
+    <div>
+      <h2>Salle 2 : 03, 05 et 07</h2>
+      <table class="passage">
+        <thead><tr><th>Passage</th><th>Équipe</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td></td></tr>
+          <tr><td>2</td><td></td></tr>
+          <tr><td>3</td><td></td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:2mm">Trois équipes (5, 5, 5 étudiants). Elle garde une marge qui absorbe les dépassements et sert au calibrage final des notes.</p>
+      <p style="margin-top:3mm">Évaluateur : <span class="trou"></span></p>
+      <p>Second évaluateur ou observateur : <span class="trou"></span></p>
+    </div>
+  </div>
+  <p style="margin-top:5mm">Si les passages de la salle 1 prennent du retard, la plénière de fin de séance est raccourcie d'autant.</p>
+  <p class="source" style="margin-top:3mm">Programme, séance 5 : « Variante 7 équipes ».</p>
+</section>
+
+<!-- ============================================================ 8. Ordre de passage, format dégradé -->
+<section class="feuille">
+  <h1>Séance 5 · ordre de passage · format dégradé, une salle</h1>
+  <p><strong>Si le second évaluateur est absent</strong> : une salle, un seul évaluateur, sans observateur. Budget réduit, de l'ordre de <strong>20 minutes par équipe</strong> (démonstration brève, « sous le capot » et conformité très courts, trois minutes de questions par étudiant). La plénière est remplacée par un retour d'expérience écrit (questionnaire en ligne).</p>
+  <table class="passage" style="margin-top:3mm">
+    <thead><tr><th>Passage</th><th>Équipe</th><th>Passage</th><th>Équipe</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td></td><td style="width:22mm">5</td><td></td></tr>
+      <tr><td>2</td><td></td><td>6</td><td></td></tr>
+      <tr><td>3</td><td></td><td>7</td><td></td></tr>
+      <tr><td>4</td><td></td><td>8</td><td></td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:4mm">Ce format est <strong>dégradé</strong> : la compréhension orale (4 points) est alors évaluée sur une durée plus courte par étudiant (question 1 brève, question 2 très brève) par un seul évaluateur, sans observateur. Le barème ne change pas ; le format est signalé aux étudiants (dossier de notes et note d'oral marqués « format dégradé »), et les notes extrêmes sont relues à partir des fiches pré-remplies.</p>
+  <p class="source" style="margin-top:3mm">Programme, séance 5 : « Format dégradé si le second évaluateur est absent ».</p>
+</section>
+
+</body>
+</html>
