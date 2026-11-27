@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-1/07-edge-ai-flutter.md · synchro: 2026-11-25 -->
+<!-- source: cours/supports/day-1/07-edge-ai-flutter.md · synchro: 2026-11-27 -->
 
 # Edge AI et Flutter {#sec-edge-ai}
 

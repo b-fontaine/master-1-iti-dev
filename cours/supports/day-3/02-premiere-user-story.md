@@ -483,6 +483,19 @@ Les nouvelles pièces sont enregistrées dans `lib/core/di/injection.dart`, et n
 
 L'écran de la story est **Pratique** en séance 3 : c'est le premier élément de l'ordre de coupe, et il peut glisser au sprint. Le Cubit et son test, eux, restent. La copie de vérification s'est arrêtée là : pas de page, donc rien de changé dans `lib/app.dart`. Si votre équipe a le temps, la page se range dans `presentation/`, importe `package:material_ui/material_ui.dart` (jamais `package:flutter/material.dart`), lit l'état du Cubit comme le fait `jets_page.dart`, et a son test d'écran.
 
+### 6.5 Les patrons que vous venez d'utiliser
+
+Sans le dire, cette story met en œuvre quatre patrons d'architecture présentés en séance 1 (chapitre 9, section 6). Les nommer sert à en parler vite, avec votre équipe comme avec l'agent.
+
+| Patron | Où il est dans la story | À relire (séance 1, chapitre 9) |
+|---|---|---|
+| **Repository** | `QuartsRepository` : le cas d'usage demande des quarts et des arrêts sans savoir où ils sont rangés | Section 6.1 |
+| **Ports et adaptateurs** | L'interface du `domain` est le port ; `QuartsRepositoryMemoire` est un adaptateur, l'implémentation drift en sera un autre | Section 6.4 |
+| **Injection de dépendances** | `injection.dart` donne au cas d'usage son repository et au Cubit son cas d'usage ; dans les tests, `MockQuartsRepository` prend la place du vrai | Section 6.2 |
+| **BLoC** (ici sa variante simple, le Cubit) | `DisponibiliteCubit` produit des états (`DisponibiliteChargement`, `DisponibilitePrete`, `DisponibiliteErreur`) que l'écran lira | Section 6.3 |
+
+Aucun de ces patrons n'est là pour lui-même : chacun répond à un besoin de la story (changer de stockage sans toucher à la règle, tester sans base). C'est la question à poser à l'agent quand il propose une structure de plus : « quel patron as-tu utilisé, et quel problème résout-il ici ? » (séance 1, chapitre 9, section 8).
+
 > **À retenir.** Interface dans `domain`, implémentation en mémoire dans `data`, enregistrement dans `injection.dart` sous le type de l'interface. C'est ce qui permettra de passer à la base sans toucher à la règle.
 
 ---

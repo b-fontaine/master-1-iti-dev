@@ -487,4 +487,4 @@ Consultées le 6 octobre 2026. Les pages de ce domaine changent vite.
 - [S12] CNIL, « IA : comment être en conformité avec le RGPD ? » : https://www.cnil.fr/fr/ia-comment-etre-en-conformite-avec-le-rgpd
 - [S13] Flutter, IA : https://docs.flutter.dev/ai
 - [S14] Profil de conférencier (programme de conférence) : https://www.wearedevelopers.com/@sasha-denisov
-- Supports locaux : `cours/presentations/day-1/index.html` et `notes.html` (diapositive « Edge AI ») ; `cours/programme-detaille.md` (S1, bloc 7).
+- Supports locaux : `cours/presentations/day-1/index.html` et `notes.html` (diapositive « Edge AI ») ; `cours/programme-detaille.md` (S1, bloc 8).
