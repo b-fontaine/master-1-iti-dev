@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-3/02-premiere-user-story.md · synchro: 2026-11-26 -->
+<!-- source: cours/supports/day-3/02-premiere-user-story.md · synchro: 2026-11-27 -->
 
 # La première user story, en TDD et en BDD avec l'agent {#sec-premiere-user-story}
 
@@ -485,6 +485,19 @@ Les nouvelles pièces sont enregistrées dans `lib/core/di/injection.dart`, et n
 ### Et l'écran ? {#sec-story-6-4}
 
 L'écran de la story est **Pratique** en séance 3 : c'est le premier élément de l'ordre de coupe, et il peut glisser au sprint. Le Cubit et son test, eux, restent. La copie de vérification s'est arrêtée là : pas de page, donc rien de changé dans `lib/app.dart`. Si votre équipe a le temps, la page se range dans `presentation/`, importe `package:material_ui/material_ui.dart` (jamais `package:flutter/material.dart`), lit l'état du Cubit comme le fait `jets_page.dart`, et a son test d'écran.
+
+### Les patrons que vous venez d'utiliser {#sec-story-6-5}
+
+Sans le dire, cette story met en œuvre quatre patrons d'architecture présentés dans le chapitre [-@sec-design-patterns] (section « Patrons d'architecture : ceux du projet Flutter »). Les nommer sert à en parler vite, avec votre équipe comme avec l'agent.
+
+| Patron | Où il est dans la story | À relire |
+|---|---|---|
+| **Repository** | `QuartsRepository` : le cas d'usage demande des quarts et des arrêts sans savoir où ils sont rangés | Chapitre [-@sec-design-patterns], section « Repository » |
+| **Ports et adaptateurs** | L'interface du `domain` est le port ; `QuartsRepositoryMemoire` est un adaptateur, l'implémentation drift en sera un autre | Section [-@sec-dp-ports] |
+| **Injection de dépendances** | `injection.dart` donne au cas d'usage son repository et au Cubit son cas d'usage ; dans les tests, `MockQuartsRepository` prend la place du vrai | Section [-@sec-dp-injection] |
+| **BLoC** (ici sa variante simple, le Cubit) | `DisponibiliteCubit` produit des états (`DisponibiliteChargement`, `DisponibilitePrete`, `DisponibiliteErreur`) que l'écran lira | Chapitre [-@sec-design-patterns], section « BLoC » |
+
+Aucun de ces patrons n'est là pour lui-même : chacun répond à un besoin de la story (changer de stockage sans toucher à la règle, tester sans base). C'est la question à poser à l'agent quand il propose une structure de plus : « quel patron as-tu utilisé, et quel problème résout-il ici ? » (chapitre [-@sec-design-patterns], section « Patrons et agents de code »).
 
 ::: {.callout-tip title="À retenir"}
 Interface dans `domain`, implémentation en mémoire dans `data`, enregistrement dans `injection.dart` sous le type de l'interface. C'est ce qui permettra de passer à la base sans toucher à la règle.
