@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Séance 4 · Documents à imprimer</title>
+<!--
+  Documents à imprimer de la séance 4 (blocs 9, 10 et 11 du programme).
+  Tout le contenu vient de deux sources, qui font foi :
+    - cours/conformite-ai-act-rgpd.md : sections 6.2 (critères go et no-go, portée d'un go),
+      8.1 (dix cartes de cas, corrigé indicatif) et 8.2 (déroulé d'un passage) ;
+    - cours/programme-detaille.md, séance 4 : tables du passage devant le RSSI et anneaux
+      d'audit, à 8 et à 7 équipes.
+  Si l'une de ces sources change, cette page est à mettre à jour.
+  Impression : ouvrir ce fichier dans un navigateur, puis Imprimer (format A4, marges par
+  défaut, sans en-têtes ni pieds de page). Chaque document commence sur une nouvelle page.
+-->
+<style>
+  :root { --encre: #111; --gris: #555; --trait: #888; --fond: #f2f2f2; }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--encre); background: #fff;
+         font: 11pt/1.35 "Helvetica Neue", Arial, "Liberation Sans", sans-serif; }
+  h1 { font-size: 16pt; margin: 0 0 2mm; }
+  h2 { font-size: 12pt; margin: 3.5mm 0 1.5mm; }
+  p { margin: 0 0 2mm; }
+  .source { color: var(--gris); font-size: 8.5pt; }
+  .feuille { padding: 11mm 12mm; max-width: 210mm; margin: 0 auto; break-after: page; }
+  .feuille:last-child { break-after: auto; }
+  .paysage { max-width: 297mm; page: paysage; }
+  .mode-emploi { background: var(--fond); border: 1px solid var(--trait); padding: 4mm 5mm; margin-bottom: 6mm; }
+  .mode-emploi li { margin-bottom: 1mm; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid var(--trait); padding: 1.5mm 2mm; vertical-align: top; text-align: left; }
+  th { background: var(--fond); font-size: 9.5pt; }
+  .case { display: inline-block; width: 3.5mm; height: 3.5mm; border: 1px solid var(--encre);
+          vertical-align: -0.5mm; margin-right: 1.5mm; }
+  .ligne { border-bottom: 1px solid var(--trait); height: 6.5mm; }
+  .champs { display: flex; flex-wrap: wrap; gap: 2mm 8mm; margin: 2mm 0 4mm; }
+  .champs span { white-space: nowrap; }
+  .trou { display: inline-block; min-width: 22mm; border-bottom: 1px solid var(--encre); }
+  .note { font-size: 9.5pt; color: var(--gris); }
+
+  /* Cartes à découper : deux colonnes, cinq rangées, traits de coupe en pointillés. */
+  .cartes { display: grid; grid-template-columns: 1fr 1fr; }
+  .carte { border: 1px dashed var(--trait); height: 46mm; padding: 5mm 6mm; margin: -0.5px;
+           display: flex; flex-direction: column; break-inside: avoid; }
+  .carte .numero { font-size: 9pt; color: var(--gris); letter-spacing: .08em; text-transform: uppercase; }
+  .carte .cas { font-size: 15pt; line-height: 1.25; font-weight: 600; margin: auto 0; }
+  .carte .marque { font-size: 8.5pt; color: var(--gris); }
+
+  .classement td { height: 11.5mm; }
+  .classement td:first-child { text-align: center; width: 8mm; }
+  .classement td:nth-child(2) { width: 62mm; font-size: 10pt; }
+  .grille td { font-size: 10pt; padding: 1.3mm 2mm; }
+  .grille td:first-child { width: 80mm; }
+  .grille td.vu { white-space: nowrap; font-size: 9pt; width: 60mm; }
+  .grille td.constat { white-space: nowrap; font-size: 9pt; width: 28mm; }
+  .decision { display: flex; gap: 10mm; font-size: 12pt; font-weight: 600; margin: 2mm 0 3mm; }
+  .tables td { height: 16mm; }
+  .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+  .anneau { font-size: 12pt; letter-spacing: .02em; }
+
+  @page { size: A4; margin: 0; }
+  @page paysage { size: A4 landscape; margin: 0; }
+  @media print {
+    .mode-emploi { display: none; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @media screen {
+    body { background: #ddd; }
+    .feuille { background: #fff; margin: 6mm auto; box-shadow: 0 0 3mm rgba(0, 0, 0, .25); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ 1. Les dix cartes -->
+<section class="feuille">
+  <div class="mode-emploi">
+    <h1>Séance 4 · Documents à imprimer</h1>
+    <p>Cette page réunit les documents papier des blocs 9, 10 et 11. Ce cadre gris ne s'imprime pas.</p>
+    <ul>
+      <li><strong>Cartes de cas</strong> (page 1) : un jeu par équipe, à découper sur les pointillés.</li>
+      <li><strong>Feuille de classement</strong> (page 2, en paysage) : une par équipe.</li>
+      <li><strong>Grille go/no-go</strong> (page 3) : une par passage observé, pour les équipes qui observent et pour la personne qui tient la table.</li>
+      <li><strong>Plan des tables et anneau d'audit</strong> (page 4 pour 8 équipes, page 5 pour 7 équipes) : à afficher.</li>
+      <li><strong>Corrigé indicatif</strong> (page 6) : pour l'enseignant, à ne pas distribuer avant la synthèse.</li>
+    </ul>
+    <p class="note">La checklist d'audit en 5 points n'est pas reprise ici : c'est la fiche T des supports de la séance.</p>
+  </div>
+
+  <div class="cartes">
+    <div class="carte"><span class="numero">Carte 1</span><span class="cas">Un chatbot qui répond sur la cantine</span></div>
+    <div class="carte"><span class="numero">Carte 2</span><span class="cas">Un outil qui trie des CV</span></div>
+    <div class="carte"><span class="numero">Carte 3</span><span class="cas">Un tableau de TRS par poste</span></div>
+    <div class="carte"><span class="numero">Carte 4</span><span class="cas">Un outil qui note les copies</span></div>
+    <div class="carte"><span class="numero">Carte 5</span><span class="cas">Un générateur d'images pour un flyer</span></div>
+    <div class="carte"><span class="numero">Carte 6</span><span class="cas">Une application qui répartit des stagiaires</span><span class="marque">Carte ambiguë : à garder pour la mise en commun</span></div>
+    <div class="carte"><span class="numero">Carte 7</span><span class="cas">Une détection d'émotions des opérateurs par caméra</span></div>
+    <div class="carte"><span class="numero">Carte 8</span><span class="cas">Un script qui résume des comptes rendus de réunion contenant des noms</span></div>
+    <div class="carte"><span class="numero">Carte 9</span><span class="cas">Un filtre anti-spam</span></div>
+    <div class="carte"><span class="numero">Carte 10</span><span class="cas">Une application de suivi du temps de pause des salariés</span><span class="marque">Carte ambiguë : à garder pour la mise en commun</span></div>
+  </div>
+</section>
+
+<!-- ============================================================ 2. Feuille de classement -->
+<section class="feuille paysage">
+  <h1>Atelier de classification · feuille de l'équipe</h1>
+  <div class="champs">
+    <span>Équipe n° <span class="trou"></span></span>
+    <span>Thème <span class="trou"></span></span>
+  </div>
+  <p>Environ 2 minutes par carte. Les cases possibles : <strong>hors champ</strong>, <strong>minimal</strong>, <strong>obligations de transparence (art. 50)</strong>, <strong>haut risque</strong>, <strong>interdit</strong>. Pendant la synthèse, corrigez d'une autre couleur, sans effacer votre première réponse.</p>
+  <table class="classement">
+    <thead>
+      <tr>
+        <th>N°</th><th>Carte</th>
+        <th>1. Est-ce un système d'IA ? (étape 0)</th>
+        <th>2. Quel usage, sur qui ?</th>
+        <th>3. Quelle case ?</th>
+        <th>4. Données personnelles en jeu ?</th>
+        <th>5. Ce qui ferait changer la case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Un chatbot qui répond sur la cantine</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>2</td><td>Un outil qui trie des CV</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>3</td><td>Un tableau de TRS par poste</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>4</td><td>Un outil qui note les copies</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>5</td><td>Un générateur d'images pour un flyer</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>6</td><td>Une application qui répartit des stagiaires</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>7</td><td>Une détection d'émotions des opérateurs par caméra</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>8</td><td>Un script qui résume des comptes rendus de réunion contenant des noms</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>9</td><td>Un filtre anti-spam</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>10</td><td>Une application de suivi du temps de pause des salariés</td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <p class="source">Cartes et démarche : module de conformité, section 8.1. La cinquième colonne prépare le classement de votre propre projet. Sensibilisation, pas avis juridique.</p>
+</section>
+
+<!-- ============================================================ 3. Grille go/no-go -->
+<section class="feuille">
+  <h1>Passage devant le RSSI · grille go/no-go</h1>
+  <div class="champs">
+    <span>Table n° <span class="trou"></span></span>
+    <span>Équipe qui présente n° <span class="trou"></span></span>
+    <span>Thème <span class="trou"></span></span>
+    <span>Équipe qui observe n° <span class="trou"></span></span>
+  </div>
+  <p><strong>Un passage : 10 à 12 minutes.</strong> Environ 4 minutes de présentation de la fiche, 5 minutes de questions, 2 minutes de décision. Le RSSI regarde la fiche, le dépôt (aucun secret, aucune donnée réelle), la CI verte, l'analyse des données.</p>
+  <p><strong>Les trois questions du RSSI :</strong> « Où partent les prompts ? » · « Qui peut contester ? » · « Que se passe-t-il le jour de la fin de vie ? »</p>
+
+  <h2>Critères go</h2>
+  <table class="grille">
+    <thead><tr><th>Critère</th><th>Ce que j'ai vu</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Données fictives ou justifiées</td><td class="vu"><span class="case"></span>preuve montrée <span class="case"></span>réponse orale <span class="case"></span>rien</td><td></td></tr>
+      <tr><td>Finalité unique</td><td class="vu"><span class="case"></span>preuve montrée <span class="case"></span>réponse orale <span class="case"></span>rien</td><td></td></tr>
+      <tr><td>Durée et suppression définies</td><td class="vu"><span class="case"></span>preuve montrée <span class="case"></span>réponse orale <span class="case"></span>rien</td><td></td></tr>
+      <tr><td>Pas de donnée personnelle dans les prompts</td><td class="vu"><span class="case"></span>preuve montrée <span class="case"></span>réponse orale <span class="case"></span>rien</td><td></td></tr>
+      <tr><td>Rôle AI Act et classement qualifiés et argumentés</td><td class="vu"><span class="case"></span>preuve montrée <span class="case"></span>réponse orale <span class="case"></span>rien</td><td></td></tr>
+      <tr><td>Accès par rôle testé</td><td class="vu"><span class="case"></span>preuve montrée <span class="case"></span>réponse orale <span class="case"></span>rien</td><td></td></tr>
+      <tr><td>Limites d'usage écrites</td><td class="vu"><span class="case"></span>preuve montrée <span class="case"></span>réponse orale <span class="case"></span>rien</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Critères no-go</h2>
+  <table class="grille">
+    <thead><tr><th>Critère</th><th>Constaté ?</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Données réelles sans cadre</td><td class="constat"><span class="case"></span>oui <span class="case"></span>non</td><td></td></tr>
+      <tr><td>Secret dans le dépôt</td><td class="constat"><span class="case"></span>oui <span class="case"></span>non</td><td></td></tr>
+      <tr><td>Décision automatisée sans humain sur des personnes</td><td class="constat"><span class="case"></span>oui <span class="case"></span>non</td><td></td></tr>
+      <tr><td>Finalité floue</td><td class="constat"><span class="case"></span>oui <span class="case"></span>non</td><td></td></tr>
+      <tr><td>Hébergement non identifié</td><td class="constat"><span class="case"></span>oui <span class="case"></span>non</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Décision provisoire</h2>
+  <div class="decision">
+    <span><span class="case"></span>Go</span>
+    <span><span class="case"></span>Go sous conditions</span>
+    <span><span class="case"></span>No-go</span>
+  </div>
+  <p>Conditions (actions datées), ou ce qu'il faut corriger et sous quel délai :</p>
+  <div class="ligne"></div><div class="ligne"></div><div class="ligne"></div>
+  <p class="note" style="margin-top:3mm">Un « go » vaut uniquement pour le périmètre pédagogique à données fictives : tout passage à des données réelles impose une nouvelle fiche et une nouvelle validation. Une validation « go sous conditions » doit lister des actions datées. Sans réponse, la décision est no-go par défaut.</p>
+  <p class="source">Critères, questions et déroulé : module de conformité, sections 6.2 et 8.2. Sensibilisation, pas avis juridique.</p>
+</section>
+
+<!-- ============================================================ 4. Plan des tables, 8 équipes -->
+<section class="feuille">
+  <h1>Séance 4 · tables et audit croisé · 8 équipes</h1>
+  <p>Équipes numérotées par thème : A de 01 à 03, B de 04 à 06, C en 07 et 08.</p>
+
+  <h2>Passage devant le RSSI : trois tables en parallèle (3-3-2)</h2>
+  <table class="tables">
+    <thead><tr><th>Table</th><th>Équipes</th><th>Qui tient la table</th><th>Ordre de passage</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Table 1</strong></td><td>01, 04, 07</td><td></td><td></td></tr>
+      <tr><td><strong>Table 2</strong></td><td>02, 05, 08</td><td></td><td></td></tr>
+      <tr><td><strong>Table 3</strong></td><td>03, 06</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <p class="note" style="margin-top:2mm">Au plus 3 passages de 12 minutes par table, soit 36 minutes, plus 4 minutes de rotation et de consignes : un bloc de 40 minutes. Les équipes qui ne passent pas observent au moins un autre passage avec la grille go/no-go, ou avancent l'audit croisé.</p>
+
+  <h2>Audit croisé : qui audite qui</h2>
+  <p>Chaque équipe audite le dépôt d'une équipe d'un autre thème, et est auditée par une autre.</p>
+  <p class="anneau">01 → 04 &nbsp;·&nbsp; 04 → 07 &nbsp;·&nbsp; 07 → 02 &nbsp;·&nbsp; 02 → 05 &nbsp;·&nbsp; 05 → 08 &nbsp;·&nbsp; 08 → 03 &nbsp;·&nbsp; 03 → 06 &nbsp;·&nbsp; 06 → 01</p>
+  <table style="margin-top:3mm">
+    <thead><tr><th>Équipe</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th></tr></thead>
+    <tbody>
+      <tr><td>audite</td><td>04</td><td>05</td><td>06</td><td>07</td><td>08</td><td>01</td><td>02</td><td>03</td></tr>
+      <tr><td>est auditée par</td><td>06</td><td>07</td><td>08</td><td>01</td><td>02</td><td>03</td><td>04</td><td>05</td></tr>
+    </tbody>
+  </table>
+  <p class="source" style="margin-top:3mm">Tables et anneau : programme, séance 4, blocs 10 et 11.</p>
+</section>
+
+<!-- ============================================================ 5. Plan des tables, 7 équipes -->
+<section class="feuille">
+  <h1>Séance 4 · tables et audit croisé · 7 équipes</h1>
+  <p>Équipes numérotées par thème : A de 01 à 03, B en 04 et 05, C en 06 et 07.</p>
+
+  <h2>Passage devant le RSSI : trois tables en parallèle (3-2-2)</h2>
+  <table class="tables">
+    <thead><tr><th>Table</th><th>Équipes</th><th>Qui tient la table</th><th>Ordre de passage</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Table 1</strong></td><td>01, 04, 06</td><td></td><td></td></tr>
+      <tr><td><strong>Table 2</strong></td><td>02, 05</td><td></td><td></td></tr>
+      <tr><td><strong>Table 3</strong></td><td>03, 07</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <p class="note" style="margin-top:2mm">Au plus 3 passages de 12 minutes par table, soit 36 minutes, plus 4 minutes de rotation et de consignes : un bloc de 40 minutes. Les équipes qui ne passent pas observent au moins un autre passage avec la grille go/no-go, ou avancent l'audit croisé.</p>
+
+  <h2>Audit croisé : qui audite qui</h2>
+  <p>Chaque équipe audite le dépôt d'une équipe d'un autre thème, et est auditée par une autre.</p>
+  <p class="anneau">01 → 04 &nbsp;·&nbsp; 04 → 02 &nbsp;·&nbsp; 02 → 06 &nbsp;·&nbsp; 06 → 03 &nbsp;·&nbsp; 03 → 05 &nbsp;·&nbsp; 05 → 07 &nbsp;·&nbsp; 07 → 01</p>
+  <table style="margin-top:3mm">
+    <thead><tr><th>Équipe</th><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th></tr></thead>
+    <tbody>
+      <tr><td>audite</td><td>04</td><td>06</td><td>05</td><td>02</td><td>07</td><td>03</td><td>01</td></tr>
+      <tr><td>est auditée par</td><td>07</td><td>04</td><td>06</td><td>01</td><td>03</td><td>02</td><td>05</td></tr>
+    </tbody>
+  </table>
+  <p class="source" style="margin-top:3mm">Tables et anneau : programme, séance 4, « Appariements si 7 équipes ».</p>
+</section>
+
+<!-- ============================================================ 6. Corrigé indicatif -->
+<section class="feuille">
+  <h1>Atelier de classification · corrigé indicatif</h1>
+  <p><strong>Pour l'enseignant : à ne pas distribuer avant la synthèse.</strong> Les cartes 6 et 10 sont réservées à la discussion de la mise en commun.</p>
+  <table>
+    <thead><tr><th>N°</th><th>Carte</th><th>Corrigé indicatif</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Un chatbot qui répond sur la cantine</td><td>Obligations de transparence (art. 50)</td></tr>
+      <tr><td>2</td><td>Un outil qui trie des CV</td><td>Haut risque (emploi)</td></tr>
+      <tr><td>3</td><td>Un tableau de TRS par poste</td><td>Hors champ (calcul, pas un système d'IA), RGPD si des opérateurs sont nommés</td></tr>
+      <tr><td>4</td><td>Un outil qui note les copies</td><td>Haut risque (éducation)</td></tr>
+      <tr><td>5</td><td>Un générateur d'images pour un flyer</td><td>Obligations de transparence selon le cas</td></tr>
+      <tr><td>6</td><td>Une application qui répartit des stagiaires</td><td>À discuter (hors champ si algorithme déterministe, sinon éducation ou emploi selon le cas)</td></tr>
+      <tr><td>7</td><td>Une détection d'émotions des opérateurs par caméra</td><td>Interdit (art. 5) (à vérifier pour les exceptions)</td></tr>
+      <tr><td>8</td><td>Un script qui résume des comptes rendus de réunion contenant des noms</td><td>Minimal pour l'AI Act, mais RGPD et confidentialité à traiter</td></tr>
+      <tr><td>9</td><td>Un filtre anti-spam</td><td>Minimal (c'est bien de l'IA, sans obligation spécifique)</td></tr>
+      <tr><td>10</td><td>Une application de suivi du temps de pause des salariés</td><td>À discuter, probable haut risque (suivi des travailleurs)</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:4mm">Déroulé de l'atelier : 20 minutes par équipe pour classer (environ 2 minutes par carte), 12 minutes de mise en commun, 8 minutes de synthèse qui servent à corriger les cartes. Chaque équipe reporte ensuite seule, dans la rubrique 9 de sa fiche, un classement provisoire de son projet ; la rubrique 8 (art. 22) est discutée devant le RSSI.</p>
+  <p class="source">Corrigé et déroulé : module de conformité, section 8.1. Sensibilisation, pas avis juridique.</p>
+</section>
+
+</body>
+</html>
