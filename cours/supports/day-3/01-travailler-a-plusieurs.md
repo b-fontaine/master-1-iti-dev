@@ -7,9 +7,9 @@ En séance 2, vous avez appris les gestes de git dans un dépôt d'essai, puis f
 ## Ce que vous allez retenir
 
 - La séance s'ouvre sur un **contrôle**, pas sur une remise en route : `git pull`, `flutter pub get`, `build_runner`, `flutter test`, lecture de l'état courant de `JOURNAL.md`. Les équipes qui n'ont pas terminé l'initialisation de la séance 2 la terminent à ce moment-là.
-- Une **petite PR** fait une seule chose et se lit en entier ; une **branche courte** vit quelques heures, pas plusieurs jours. Les deux réduisent les conflits et rendent la relecture possible.
-- Simon Willison : « Don't file pull requests with code you haven't reviewed yourself ». Le premier relecteur d'une PR, c'est son auteur.
-- **Relire**, c'est lire le diff en entier avec une checklist ; **commenter**, c'est poser une question précise, dire si elle bloque la fusion, et parler du code, jamais de la personne.
+- Une **petite PR** annonce une seule chose : elle se démontre et se vérifie facilement. Une **branche courte** vit quelques heures, pas plusieurs jours : elle entre rarement en conflit.
+- Simon Willison : « Don't file pull requests with code you haven't reviewed yourself ». Avant de demander la relecture, l'auteur a vu sa PR fonctionner et sait l'expliquer.
+- **Relire**, c'est vérifier par les preuves, avec une checklist : lire ce que la PR annonce, la voir fonctionner, vérifier que la liste des fichiers touchés correspond à l'annonce, sans juger le code ligne à ligne ; **commenter**, c'est poser une question précise, dire si elle bloque la fusion, et parler du code, jamais de la personne.
 - Dans un dépôt dont `main` est protégée, on ne résout pas un conflit sur `main` : on **ramène `main` dans sa branche** (`git pull origin main`), on résout, on pousse, et la PR se débloque.
 - La **revue croisée** se fait par paires d'équipes fixées par le programme. L'équipe jumelée **commente** ; l'**approbation** qui permet la fusion vient d'un coéquipier de l'auteur.
 
@@ -114,7 +114,7 @@ Si le temps le permet, l'enseignant propose un quiz éclair de cinq questions su
 
 ### 3.1 Pourquoi petit
 
-Une PR est une **demande de relecture**. Sa taille décide de la qualité de cette relecture : un diff de vingt lignes se lit, se comprend et se discute ; un diff de deux mille lignes se fait approuver sans être lu, parce que personne n'a le temps ni le courage de le lire. La deuxième ligne de la checklist de la séance 2 (« elle fait une seule chose, et le diff se lit en entier ») n'est pas une préférence de style : c'est la condition pour que les autres lignes aient un sens.
+Une PR est une **demande de relecture**. Ce qu'elle annonce décide de la qualité de cette relecture : une PR qui annonce une seule chose se démontre par un scénario et des tests verts, et sa liste de fichiers se vérifie d'un coup d'œil, parce que chaque fichier s'explique par l'annonce ; une PR qui mêle trois sujets ne se démontre plus, sa liste de fichiers ne correspond à aucune annonce précise, et elle se fait approuver sans être vérifiée. La deuxième ligne de la checklist de la séance 2 (« elle fait ce qu'elle annonce : je l'ai vue fonctionner (scénario, tests verts, application lancée), et les fichiers touchés correspondent à l'annonce ») n'a de sens que pour une annonce simple : ce n'est pas une préférence de style, c'est la condition pour que les autres lignes aient un sens.
 
 Avec un agent, la tentation est forte : il produit en une minute ce qu'un humain écrirait en une journée, et il ne s'arrête pas de lui-même au bord de la tâche demandée. Le programme range les « PR énormes » parmi les signes du *vibe coding sans comprendre*, à côté de l'étudiant incapable d'expliquer sa PR. La parade est simple et vous appartient : **demander peu à la fois**, et refuser ce qui déborde.
 
@@ -135,7 +135,7 @@ Pour l'équipe 05 (thème B), la séance produit naturellement plusieurs PR ind�
 | 3 | `modele-donnees-v2` | Tables du thème, première migration, test d'intégrité | 4 |
 | 4 | `journal-s3` | État courant de fin de séance dans `JOURNAL.md`, règle de données dans `CLAUDE.md` | 5, fiche M |
 
-Deux remarques. Une PR peut contenir **plusieurs commits** : la PR 1 en aura au moins deux, le test qui échoue puis le code qui le fait passer, et c'est voulu (règle du jeu n° 3 : le commit de test précède le code dans l'historique). « Petite » parle du sujet, pas du nombre de commits. Et si la story elle-même est trop grosse pour une PR lisible, c'est un signal que la story est mal découpée : revenez à `PROJET.md`, pas à une PR géante.
+Deux remarques. Une PR peut contenir **plusieurs commits** : la PR 1 en aura au moins deux, le test qui échoue puis le code qui le fait passer, et c'est voulu (règle du jeu n° 3 : le commit de test précède le code dans l'historique). « Petite » parle du sujet, pas du nombre de commits. Et si la story elle-même est trop grosse pour une PR qui se démontre simplement, c'est un signal que la story est mal découpée : revenez à `PROJET.md`, pas à une PR géante.
 
 ### 3.3 Une branche vit quelques heures
 
@@ -153,13 +153,13 @@ Simon Willison, que le programme cite pour cette séance :
 
 > « Don't file pull requests with code you haven't reviewed yourself »
 
-Autrement dit : n'ouvrez pas de PR avec du code que vous n'avez pas relu vous-même. Avec un agent, la phrase prend tout son sens : si vous ouvrez la PR sans avoir lu ce que l'agent a écrit, vous demandez à un coéquipier de faire à votre place une relecture que vous n'avez pas faite. C'est aussi la première case du modèle de PR : « Je peux expliquer chaque modification. »
+Autrement dit : n'ouvrez pas de PR avec du code que vous n'avez pas relu vous-même. Avec un agent, la phrase prend tout son sens : avant de demander la relecture, vous avez vu votre PR fonctionner et vous savez l'expliquer. Si vous l'ouvrez sans cela, vous demandez à un coéquipier de vérifier à votre place ce que vous n'avez pas vérifié. C'est aussi la première case du modèle de PR : « Je peux expliquer chaque modification. »
 
 Concrètement, avant `gh pr create --web` :
 
 1. `git status` : rien d'inattendu, aucun fichier que vous ne connaissez pas ;
-2. `git diff main` : le diff de toute la branche, lu **en entier**, comme le lira votre relecteur ;
-3. les six commandes de vérification du `README.md` (« Vérifier avant une PR »), dans l'ordre : `flutter pub get --enforce-lockfile`, `dart run build_runner build --delete-conflicting-outputs`, `dart run drift_dev make-migrations` (qui ne doit rien changer), `dart format --output=none --set-exit-if-changed .`, `flutter analyze`, `flutter test` ; résultat regardé, pas supposé ;
+2. `git diff --stat main` : la liste des fichiers touchés par toute la branche ; chacun doit s'expliquer par ce que la PR annoncera, comme le vérifiera votre relecteur ;
+3. les six commandes de vérification du `README.md` (« Vérifier avant une PR »), dans l'ordre : `flutter pub get --enforce-lockfile`, `dart run build_runner build --delete-conflicting-outputs`, `dart run drift_dev make-migrations` (qui ne doit rien changer), `dart format --output=none --set-exit-if-changed .`, `flutter analyze`, `flutter test` ; résultat regardé, pas supposé ; et, si la PR touche un écran, l'application lancée ;
 4. la checklist de la section 5, passée sur votre propre PR ;
 5. le modèle de PR rempli honnêtement, y compris « ce que l'agent a proposé, ce que j'ai refusé » et le suivi des temps (fiche E du chapitre 4 de la séance 2).
 
@@ -171,16 +171,16 @@ Concrètement, avant `gh pr create --web` :
 
 ### 4.1 Ce qu'on regarde, et dans quel ordre
 
-Relire n'est pas tout lire au même niveau. Un ordre qui marche, du plus général au plus précis :
+Relire, c'est vérifier **par les preuves** : ce que la PR annonce, la preuve qu'elle fonctionne, la liste des fichiers touchés. Le relecteur ne juge pas le code ligne à ligne. Un ordre qui marche, du plus général au plus précis :
 
 1. **La description.** Le modèle est-il rempli ? Le résumé dit-il ce que fait la PR et pourquoi ? La rubrique « ce que l'agent a proposé, ce que j'ai refusé » contient-elle autre chose que des cases vides ? Une PR sans description est renvoyée à son auteur avant d'aller plus loin.
 2. **La pastille de CI.** Verte, rouge ou en cours. Elle ne bloque pas encore la fusion (elle le fera en séance 4), mais une pastille rouge se regarde avant tout le reste.
-3. **La liste des fichiers modifiés** (onglet « Files changed »). Avant de lire une ligne, regardez **quels** fichiers changent. Un fichier de test supprimé, un fichier sous `test/acceptance/` ou `drift_schemas/` modifié, `pubspec.yaml` ou `pubspec.lock` touchés sans que la PR le dise : chacun de ces signaux mérite une question, quel que soit le reste.
-4. **Les tests, avant le code.** Ils disent ce que la PR prétend faire. Pour la première user story du thème B, le scénario `.feature` doit reprendre les valeurs de `PROJET.md` (quart de 480 minutes, pause de 30, panne de 45, changement de série de 15 : temps requis 450 minutes, temps de marche 390 minutes, disponibilité affichée 86,7 %). Si le test attend autre chose, il ne vérifie pas la règle demandée.
-5. **Le code, couche par couche.** Vous n'avez pas à savoir l'écrire ; vous savez où chaque chose doit aller (chapitre 3 de la séance 2, section 3). Un calcul dans un écran, une requête de base dans `domain/`, un Cubit qui reçoit un repository au lieu d'un cas d'usage : ce sont des écarts aux règles de `CLAUDE.md`, visibles sans lire le détail.
+3. **La liste des fichiers modifiés** (onglet « Files changed »). Regardez **quels** fichiers changent, et si la liste correspond à ce que la description annonce. Un fichier de test supprimé, un fichier sous `test/acceptance/` ou `drift_schemas/` modifié, `pubspec.yaml` ou `pubspec.lock` touchés sans que la PR le dise : chacun de ces signaux mérite une question, quel que soit le reste.
+4. **Le scénario et les tests : la PR fonctionne-t-elle ?** Le scénario `.feature`, écrit en français, dit ce que la PR prétend faire, et les tests verts (pastille de CI, ou résultat collé par l'auteur) disent qu'elle le fait. Pour la première user story du thème B, le scénario `.feature` doit reprendre les valeurs de `PROJET.md` (quart de 480 minutes, pause de 30, panne de 45, changement de série de 15 : temps requis 450 minutes, temps de marche 390 minutes, disponibilité affichée 86,7 %). Si le scénario attend autre chose, il ne vérifie pas la règle demandée.
+5. **La place de chaque fichier.** Vous n'avez pas à savoir écrire le code, ni à le lire ligne à ligne : le chemin de chaque fichier dit dans quelle couche il se trouve, et vous savez où chaque chose doit aller (chapitre 3 de la séance 2, section 3). Un écran modifié dans une PR qui n'annonçait que la règle, un fichier de `data/` dans une PR qui ne devait toucher que `domain/` : ce sont des écarts à l'annonce ou aux règles de `CLAUDE.md`, visibles sans lire le détail.
 6. **L'historique des commits.** Le commit du test vient-il avant celui du code ? C'est ce que l'historique doit montrer, et c'est pour cela que le projet n'autorise que le merge commit.
 
-Pour aller plus loin, le relecteur peut récupérer la branche de la PR sur son poste et lancer les tests lui-même : `gh pr checkout <numéro>` crée la branche locale correspondante, puis `flutter test`. Ce n'est pas obligatoire quand la CI est verte, mais c'est la seule façon de **voir** le comportement d'une PR qui touche un écran.
+Pour **voir** fonctionner une PR qui touche un écran, le relecteur récupère sa branche sur son poste : `gh pr checkout <numéro>` crée la branche locale correspondante ; puis `dart run build_runner build --delete-conflicting-outputs` (les fichiers générés ne sont pas versionnés), `flutter test`, et l'application lancée (`flutter run -d chrome`). Pour une PR sans écran, la pastille de CI verte et le scénario lu suffisent.
 
 ### 4.2 Comment commenter
 
@@ -188,7 +188,7 @@ Un commentaire de relecture vise à améliorer le code et à faire comprendre, p
 
 - **Parler du code, pas de la personne.** « Ce test n'utilise pas les valeurs du critère d'acceptation » plutôt que « tu n'as pas lu `PROJET.md` ».
 - **Poser une question plutôt que donner un ordre**, quand vous n'êtes pas sûr. Une question laisse à l'auteur la possibilité d'avoir une bonne raison que vous ne connaissez pas ; elle l'oblige aussi à formuler cette raison, ce qui est précisément l'exercice demandé (règle du jeu n° 2 : chacun explique sa PR).
-- **Être précis.** Commentez la ligne concernée (bouton `+` au survol de la ligne, chapitre 1 de la séance 2, section 6.4), citez la règle ou le critère, proposez ce qui serait mieux.
+- **Être précis.** Citez la règle, le critère ou le fichier concerné, proposez ce qui serait mieux. Un commentaire peut viser une ligne précise (bouton `+` au survol de la ligne, chapitre 1 de la séance 2, section 6.4), par exemple une valeur du scénario.
 - **Dire si le commentaire bloque la fusion.** L'auteur doit savoir ce qu'il doit corriger avant la fusion et ce qu'il peut laisser pour plus tard. Les supports proposent de préfixer chaque commentaire par l'un de trois mots : **[bloquant]**, **[question]**, **[suggestion]**. Une question peut devenir bloquante si la réponse révèle un problème.
 
 Exemples sur la première user story du thème B :
@@ -198,11 +198,11 @@ Exemples sur la première user story du thème B :
 | « C'est faux. » | « [bloquant] Le scénario attend une disponibilité de 86 %, le critère de `PROJET.md` dit 86,7 %. Le test a-t-il été arrondi pour passer ? » |
 | « Pourquoi t'as mis ça là ?? » | « [question] Le calcul du temps requis est dans le Cubit. `CLAUDE.md` le voudrait dans un cas d'usage de `domain/` : y a-t-il une raison ? » |
 | « Renomme. » | « [suggestion] `calc` pourrait s'appeler `calculerDisponibilite`, comme le veut la convention des noms en français de `docs/ARCHITECTURE.md`. Non bloquant. » |
-| « LGTM » (*looks good to me*) sans autre mot, sur une PR de 400 lignes | Un commentaire d'ensemble qui dit ce que vous avez vérifié : « Lu le scénario et les tests, valeurs conformes à `PROJET.md` ; code non relu en détail dans `data/`. » |
+| « LGTM » (*looks good to me*) sans autre mot, sur une PR de 400 lignes | Un commentaire d'ensemble qui dit ce que vous avez vérifié : « Scénario lu, valeurs conformes à `PROJET.md` ; tests verts (CI) ; fichiers touchés conformes à l'annonce ; application non lancée. » |
 
-Le dernier exemple compte plus qu'il n'y paraît. Dire **ce que vous n'avez pas relu** est honnête et utile : l'auteur sait où demander un second regard.
+Le dernier exemple compte plus qu'il n'y paraît. Dire **ce que vous n'avez pas vérifié** est honnête et utile : l'auteur sait où demander un second regard.
 
-Et si vous ne comprenez pas une partie du code, dites-le : « je ne comprends pas ce que fait cette fonction » est un commentaire légitime. Si le relecteur ne comprend pas, soit le code est obscur, soit l'auteur a quelque chose à expliquer ; dans les deux cas, la PR n'est pas prête.
+Et si vous ne comprenez pas ce que fait la PR, ou pourquoi un fichier figure dans la liste, dites-le : « je ne comprends pas pourquoi ce fichier change » est un commentaire légitime. Si le relecteur ne comprend pas, soit la PR est mal décrite, soit l'auteur a quelque chose à expliquer ; dans les deux cas, la PR n'est pas prête.
 
 ### 4.3 Conclure la relecture
 
@@ -222,7 +222,7 @@ Approuver engage : celui qui approuve doit pouvoir expliquer la PR aussi bien qu
 - Un commentaire porte sur le code. Il n'est pas un jugement sur vous, et vous n'êtes pas tenu d'être d'accord : expliquez pourquoi, et si le désaccord persiste, l'équipe tranche, et la décision va dans « Décisions de l'équipe » de `PROJET.md` ou dans `JOURNAL.md`.
 - Si un commentaire révèle une erreur de l'agent que vous n'aviez pas vue, c'est une information : notez-la dans la rubrique « refusé » de la PR et ajoutez l'étiquette `erreur-agent`. L'équipe doit en documenter au moins deux sur le projet.
 
-> **À retenir.** Lire dans l'ordre : description, CI, fichiers, tests, code, historique. Commenter en question, sur la ligne, en disant si c'est bloquant. Approuver, c'est signer.
+> **À retenir.** Relire par les preuves, dans l'ordre : description, CI, liste des fichiers, scénario et tests, place des fichiers, historique. Commenter en question, précisément, en disant si c'est bloquant. Approuver, c'est signer.
 
 ---
 
@@ -233,7 +233,7 @@ Cette checklist reprend les cinq lignes de la séance 2 (fiche D du chapitre 4 d
 **Pour toute PR**
 
 1. **Je comprends ce que fait cette PR, et je saurais l'expliquer.**
-2. **Elle fait une seule chose, et le diff se lit en entier.**
+2. **Elle fait ce qu'elle annonce : je l'ai vue fonctionner (scénario, tests verts, application lancée), et les fichiers touchés correspondent à l'annonce.**
 3. **Les vérifications passent : `flutter analyze`, `flutter test`** (pastille de CI verte, ou résultat collé par l'auteur).
 4. **Aucun secret, aucune donnée réelle ou personnelle**, ni nom civil ni courriel, y compris dans la fiche de conformité et dans `JOURNAL.md`.
 5. **Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées.**
@@ -558,8 +558,8 @@ Le chapitre 2 de la séance 2 a réglé l'agent : mode manuel, permissions, refu
 - **Équipe jumelée** : équipe désignée par le programme pour relire les PR de la vôtre pendant la revue croisée.
 - **`git pull origin main`** : récupère la branche `main` du dépôt distant et la fusionne dans la branche courante.
 - **Mettre sa branche à jour** : y ramener les derniers changements de `main`, pour résoudre un conflit ou vérifier que tout marche encore ensemble.
-- **Petite PR** : PR qui fait une seule chose et dont le diff se lit en entier.
-- **Relecture (*review*)** : lecture du diff d'une PR par un autre que son auteur, conclue par un commentaire, une approbation ou une demande de modifications.
+- **Petite PR** : PR qui annonce une seule chose, et qui se démontre et se vérifie donc facilement.
+- **Relecture (*review*)** : vérification d'une PR par un autre que son auteur, par les preuves (ce qu'elle annonce, son fonctionnement, la liste des fichiers touchés), conclue par un commentaire, une approbation ou une demande de modifications.
 - **Revue croisée** : relecture de la PR d'une équipe par une autre équipe.
 - **Trio circulaire** : groupe de trois équipes où chacune relit la suivante (07 relit 01, 01 relit 04, 04 relit 07), utilisé quand le nombre d'équipes est impair.
 
@@ -577,14 +577,13 @@ Le chapitre 2 de la séance 2 a réglé l'agent : mode manuel, permissions, refu
 
 ## Points non vérifiés (à signaler honnêtement)
 
-- **Tout ce qui passe par GitHub n'a pas été exécuté** : affichage du conflit sur la page de la PR, bouton *Resolve conflicts*, commentaires de ligne, choix *Comment*, *Approve* et *Request changes*, fusion, disparition du message de conflit après le push. Le comportement de GitHub a été **simulé** : un dépôt `--bare` local tenait lieu de dépôt distant, les fusions de PR ont été jouées par `git merge --no-ff` dans un clone séparé, et `git merge-tree` a confirmé que la branche du membre 2 entrait en conflit avec `main` avant la résolution et plus après. Les numéros de PR (#7, #8), les noms de commit de fusion et les adresses `https://github.com/<organisation>/equipe_05` ont été écrits à la main sur le modèle de GitHub.
+- **Presque rien de ce qui passe par GitHub n'a été exécuté** : seul l'essai du script de création des dépôts (27 novembre 2026, une équipe d'essai à un seul membre) a eu lieu en ligne, et il n'a couvert ni la relecture ni la résolution d'un conflit. Restent non vérifiés l'affichage du conflit sur la page de la PR, le bouton *Resolve conflicts*, les commentaires de ligne, les choix *Comment*, *Approve* et *Request changes*, l'approbation par un coéquipier, la fusion suivie de la suppression de la branche, la disparition du message de conflit après le push. Le comportement de GitHub a été **simulé** : un dépôt `--bare` local tenait lieu de dépôt distant, les fusions de PR ont été jouées par `git merge --no-ff` dans un clone séparé, et `git merge-tree` a confirmé que la branche du membre 2 entrait en conflit avec `main` avant la résolution et plus après. Les numéros de PR (#7, #8), les noms de commit de fusion et les adresses `https://github.com/<organisation>/equipe_05` ont été écrits à la main sur le modèle de GitHub.
 - **Séquence git rejouée** (sections 6.3 à 6.6) : git 2.53.0, `LC_ALL=C`, `pull.rebase false`, le 26 novembre 2026. Les sorties sont celles obtenues, adresses réécrites ; les lignes du graphe de `git log` et de `git diff` ont été débarrassées de leurs espaces de fin. L'arrivée du tag `s2-fin` avec un simple `git pull` (2.2) a été vérifiée de la même façon. Les messages de git en français n'ont pas été relevés.
 - **Contrôle d'ouverture** (2.1) : `flutter pub get`, `flutter test` sans puis avec `build_runner` ont été lancés sur une copie du dépôt-modèle, sous Linux, avec Flutter 3.50.1. Le compte « +20 -4 » vaut pour le dépôt-modèle ; il sera différent sur un dépôt d'équipe qui a déjà ajouté des tests. Non essayé sous Windows ni macOS.
-- **Droits de l'équipe jumelée** : l'absence d'accès en écriture découle du script de création des dépôts (`cours/scripts/creer-depots.sh`, qui n'ajoute que les membres de l'équipe, avec la permission `push`) ; ce script n'a pas encore été essayé en réel sur l'organisation. Que tout compte GitHub puisse commenter et laisser une relecture sur une PR d'un dépôt public, et qu'une approbation d'un compte sans accès en écriture ne compte pas pour la règle « 1 approbation requise », vient de la pratique courante de GitHub et n'a pas été revérifié dans sa documentation pour ce chapitre. Le programme lui-même note une « variante à vérifier ».
+- **Droits de l'équipe jumelée** : l'absence d'accès en écriture découle du script de création des dépôts (`cours/scripts/creer-depots.sh`, qui n'ajoute que les membres de l'équipe, avec la permission `push`) ; ce script a été lancé en réel le 27 novembre 2026 pour une seule équipe d'essai, avec un seul membre qui était administrateur de l'organisation : l'essai n'a donc pas vérifié l'accès d'un compte extérieur à l'équipe. Que tout compte GitHub puisse commenter et laisser une relecture sur une PR d'un dépôt public, et qu'une approbation d'un compte sans accès en écriture ne compte pas pour la règle « 1 approbation requise », vient de la pratique courante de GitHub et n'a pas été revérifié dans sa documentation pour ce chapitre. Le programme lui-même note une « variante à vérifier ».
 - **Approbation après un nouveau commit** : le script de protection ne demande pas l'invalidation des approbations anciennes quand un commit est poussé ; une approbation donnée avant la résolution d'un conflit resterait donc valable. Comportement par défaut de GitHub non vérifié ; dans le doute, demandez une nouvelle relecture après une résolution qui touche du code.
 - **`gh pr checkout` et `gh pr review --approve`** : options relues dans l'aide de gh 2.100.0, non exécutées contre GitHub.
 - **Exemples illustratifs** : les entrées de `JOURNAL.md`, les commentaires de relecture et le découpage en quatre PR de la section 3.2 sont rédigés pour ce chapitre. Les noms de branches sont des exemples.
-- **Convention [bloquant] / [question] / [suggestion]** et **lignes 6 à 10 de la checklist** : propositions des supports, à valider par l'enseignant. Le programme fixe le contenu de la relecture (« quoi regarder, comment commenter, checklist »), pas ce texte.
 - **Paires de revue croisée** : reprises du programme. Elles supposent la numérotation par thème de la séance 2 ; si l'attribution réelle s'en écarte, c'est l'annonce de l'enseignant en séance qui fait foi.
 - **Libellés français de VS Code** (*Accepter les deux modifications*) : repris du chapitre 1 de la séance 2, qui les a relevés dans les fichiers de traduction, non observés dans une interface.
 

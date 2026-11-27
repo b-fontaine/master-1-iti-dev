@@ -1,4 +1,4 @@
-<!-- source: cours/projets/themes.md, cours/presentations/themes/ · synchro: 2026-11-26 -->
+<!-- source: cours/projets/themes.md, cours/presentations/themes/ · synchro: 2026-11-27 -->
 
 # Les trois thèmes du projet {#sec-themes}
 
@@ -80,7 +80,7 @@ Chaque thème contient une rubrique « Conformité (RGPD et AI Act) ». Le déta
 - **Calendrier** : début de la fiche en S3 (livrable de fin de séance), v1 déposée en PR **dans les deux jours qui suivent la S4**, réponse du RSSI **au plus tard une semaine avant S5**, mise à jour avant la soutenance.
 - **Portée d'un « go »** : un « go » du RSSI vaut uniquement pour le périmètre pédagogique à données fictives ; tout passage à des données réelles impose une nouvelle fiche et une nouvelle validation.
 
-Le RSSI est soit **simulé par l'enseignant**, soit **tenu par le RSSI de l'établissement** (invité en S4). Le **passage devant le RSSI** se fait en S4 sur **3 tables en parallèle**, **10 à 12 min par équipe** (environ 4 min de présentation, 5 de questions, 2 de décision provisoire), avec un jeu de rôle intégré à ce dispositif. Par exemple, avec 8 équipes réparties en 3, 3 et 2 par table, cela représente 3 passages successifs de 12 min au plus par table, soit 36 min, plus 4 min de rotation et de consignes : bloc de 40 min en S4. En S4, le brouillon de fiche est présenté et discuté ; la v1 déposée dans les deux jours qui suivent est ensuite validée ou refusée avec des demandes de correction, la réponse écrite arrivant pendant le sprint. Il s'agit de **sensibilisation, pas d'avis juridique** : la validation revient au RSSI et au DPO.
+Le RSSI est **simulé par l'enseignant**. Le **passage devant le RSSI** se fait en S4 sur **3 tables en parallèle**, **10 à 12 min par équipe** (environ 4 min de présentation, 5 de questions, 2 de décision provisoire), avec un jeu de rôle intégré à ce dispositif. Par exemple, avec 8 équipes réparties en 3, 3 et 2 par table, cela représente 3 passages successifs de 12 min au plus par table, soit 36 min, plus 4 min de rotation et de consignes : bloc de 40 min en S4. En S4, le brouillon de fiche est présenté et discuté ; la v1 déposée dans les deux jours qui suivent est ensuite validée ou refusée avec des demandes de correction, la réponse écrite arrivant pendant le sprint. Il s'agit de **sensibilisation, pas d'avis juridique** : la validation revient au RSSI et au DPO.
 
 ## Trame des séances {#sec-themes-trame}
 

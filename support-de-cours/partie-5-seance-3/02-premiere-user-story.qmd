@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-3/02-premiere-user-story.md · synchro: 2026-11-26 -->
+<!-- source: cours/supports/day-3/02-premiere-user-story.md · synchro: 2026-11-27 -->
 
 # La première user story, en TDD et en BDD avec l'agent {#sec-premiere-user-story}
 
@@ -16,7 +16,7 @@ Ce chapitre accompagne le bloc 3 de la séance 3 (voir @sec-s3), le premier atel
 - Avant que quiconque écrive, on demande à l'agent un **plan** et on le **critique** : quels fichiers, dans quelle couche, dans quel ordre, quels tests, et ce qu'il ne doit pas toucher.
 - En séance 3, pas de base de données pour la story : un **repository en mémoire** (un faux stockage) implémente l'interface déclarée dans `domain`, et il est enregistré dans `get_it` comme les autres pièces. Le Cubit est testé avec `bloc_test` ; l'écran est facultatif.
 - Une sous-règle de domaine se vérifie avec des **étapes qui appellent le cas d'usage sans monter d'écran**. C'est vérifié : avec `bdd_widget_test` 3.1.0, le scénario passe sans qu'aucun widget soit affiché.
-- Un test désactivé par `skip: true` laisse `flutter test` afficher `All tests passed!`. La triche ne se voit pas dans la couleur du résultat : elle se voit **dans le diff**.
+- Un test désactivé par `skip: true` laisse `flutter test` afficher `All tests passed!`. La triche ne se voit pas dans la couleur du résultat : elle se voit dans la **liste des fichiers touchés** (un test ou un scénario modifié alors que la PR annonçait du code) et dans le `~` de la sortie de `flutter test`.
 - Les fichiers générés ne sont pas versionnés : sur un clone frais, `dart run build_runner build --delete-conflicting-outputs` vient **avant** `flutter test`.
 :::
 
@@ -34,7 +34,7 @@ L'ordre de travail est le suivant :
 4. les tests unitaires (rouges) ;
 5. le code minimal : `domain`, `data`, `presentation` ;
 6. les étapes du scénario (vert) ;
-7. le diff relu, puis la PR avec le modèle.
+7. la triche cherchée par l'auteur, puis la PR avec le modèle.
 
 Le plan vient en premier : il se demande et se critique avant le scénario, et rien n'est écrit tant qu'il n'est pas approuvé. Ensuite, à chaque pièce, le test est commité rouge avant que le code le fasse passer.
 
@@ -600,7 +600,7 @@ Le dojo de la séance 1 a donné les signes de triche à chercher dans un diff (
 +    expect(resultat.affichee, '93,7 %');
 ```
 
-Cette fois, `flutter test` reste rouge (`+52 -1: Some tests failed.`) : le **scénario** attend toujours 86,7 %. Le `.feature` sert de second garde-fou, à condition que l'agent ne le modifie pas lui aussi. C'est pourquoi un `.feature` touché dans une PR de code se lit ligne à ligne.
+Cette fois, `flutter test` reste rouge (`+52 -1: Some tests failed.`) : le **scénario** attend toujours 86,7 %. Le `.feature` sert de second garde-fou, à condition que l'agent ne le modifie pas lui aussi. C'est pourquoi un `.feature` qui figure dans la liste des fichiers touchés d'une PR de code est une question à poser à l'auteur ; écrit en français, il se lit sans savoir programmer.
 
 ### Les gestes, dans le diff {#sec-story-8-2}
 
@@ -628,7 +628,7 @@ Chaque thème a en plus son piège propre, décrit dans le chapitre [-@sec-theme
 Si vous trouvez l'un de ces signes : refusez la modification, demandez à l'agent d'expliquer, et notez-le dans la PR (« Proposé et refusé ») et, si c'est une erreur qui risque de revenir, dans `CLAUDE.md`.
 
 ::: {.callout-tip title="À retenir"}
-`All tests passed!` ne prouve pas qu'aucun test n'a été désactivé. Le diff des fichiers de `test/` se lit à chaque PR, en entier.
+`All tests passed!` ne prouve pas qu'aucun test n'a été désactivé. À chaque PR, l'auteur cherche les signes de triche avant de demander la relecture ; le relecteur regarde si un fichier de `test/` figure dans la liste des fichiers touchés, et si oui, demande pourquoi.
 :::
 
 ## La PR, et le clone frais {#sec-story-9}
@@ -748,7 +748,7 @@ Thème A : le total et le passage. Thème C : l'ordre de traitement par rang. M�
 - [ ] Les tests unitaires de la règle, du cas d'usage et du Cubit (`bloc_test`, `mocktail`) existent et ont été vus rouges, puis verts ; dans l'historique, chaque commit de test précède le commit de code qui le fait passer.
 - [ ] La règle et le cas d'usage sont dans `domain`, l'interface du repository aussi ; l'implémentation en mémoire est dans `data` ; le Cubit ne reçoit que des cas d'usage ; tout est enregistré dans `injection.dart`.
 - [ ] Les étapes du scénario sont complétées dans `test/steps/` et le scénario est vert.
-- [ ] Le diff a été relu : aucun test ni scénario supprimé, désactivé ou assoupli, aucune valeur en dur dans `lib/`.
+- [ ] Les signes de triche ont été cherchés avant la PR : aucun test ni scénario supprimé, désactivé ou assoupli, aucune valeur en dur dans `lib/`.
 - [ ] Les commandes de « Vérifier avant une PR » sont vertes, sortie à l'appui.
 - [ ] La PR est ouverte avec le modèle, relue par un coéquipier, puis fusionnée.
 
@@ -784,7 +784,7 @@ Thème A : le total et le passage. Thème C : l'ordre de traitement par rang. M�
 
 ::: {.callout-note title="Points non vérifiés"}
 
-- **Vérification sous Linux seulement**, avec Flutter 3.50.1 et les versions verrouillées du dépôt-modèle (`bdd_widget_test` 3.1.0). Ni Windows ni macOS ; la CI n'a pas tourné en ligne.
+- **Vérification sous Linux seulement**, avec Flutter 3.50.1 et les versions verrouillées du dépôt-modèle (`bdd_widget_test` 3.1.0). Ni Windows ni macOS. La CI du dépôt-modèle a tourné en ligne le 27 novembre 2026 (verte, environ 3 minutes), mais pas avec le code de cette story.
 - **Le travail avec l'agent n'a pas été rejoué.** Le code de la story a été écrit pour la vérification en suivant l'ordre décrit, puis exécuté ; la demande de plan (section [-@sec-story-3-1]), la critique du plan et la description de PR sont **rédigés pour ce chapitre**. L'historique de la section [-@sec-story-9-1], lui, a été réellement obtenu, mais en commitant à la main les fichiers de la story pièce par pièce, pas en pilotant un agent. Ce que Claude Code proposerait réellement en mode plan n'a pas été observé.
 - **Les deux expériences de triche** (section [-@sec-story-8-1]) ont été jouées à la main sur la copie, pas produites par un agent ; elles illustrent ce que l'on voit, pas la fréquence de ces comportements.
 - **Écriture sans accolades** : l'essai a été fait pour le thème B seulement (étapes générées avec les valeurs dans leur nom, guillemets droits non reconnus comme paramètres). Les scénarios des thèmes A et C (voir @sec-themes), avec accolades, ont été passés à `build_runner` (étapes créées), mais leurs étapes n'ont pas été écrites ni leur règle codée.
@@ -792,7 +792,7 @@ Thème A : le total et le passage. Thème C : l'ordre de traitement par rang. M�
 - **Écran de la story** : non écrit (Pratique en séance 3) ; la section [-@sec-story-6-4] décrit ce qu'il faudrait faire d'après `docs/ARCHITECTURE.md`, sans l'avoir exécuté.
 - **Passage du repository en mémoire à drift** (section [-@sec-story-6-2]) : décrit d'après le modèle du chapitre [-@sec-donnees], non écrit ni exécuté.
 - **Clone frais** (section [-@sec-story-9-4]) : obtenu par un clone local du dépôt-modèle, sans GitHub ; le compte `+20 -4` est celui du squelette sans la story.
-- **Rien n'a été exécuté sur GitHub** : ni PR, ni relecture, ni CI en ligne.
+- **Aucune PR de cette story n'a été ouverte ni relue sur GitHub** : seul l'essai du script de création des dépôts (27 novembre 2026) s'est fait en ligne, sans le code de la story.
 - **Valeurs** : les valeurs de la story sont celles de `PROJET-B.md` et du chapitre [-@sec-themes] ; le choix du 6 octobre 2026 à 04:00Z comme début du quart du scénario est arbitraire (l'énoncé ne fixe que la durée pour le cas 2).
 
 :::

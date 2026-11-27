@@ -1,4 +1,4 @@
-<!-- source: README.md, glossaires des chapitres, cours/supports/day-3/01-travailler-a-plusieurs.md, cours/supports/day-3/02-premiere-user-story.md, cours/supports/day-3/03-rgpd-applique-au-projet.md, cours/supports/day-3/04-les-donnees.md, cours/supports/day-3/05-fiches-de-seance.md · synchro: 2026-11-26 -->
+<!-- source: README.md, glossaires des chapitres, cours/supports/day-3/01-travailler-a-plusieurs.md, cours/supports/day-3/02-premiere-user-story.md, cours/supports/day-3/03-rgpd-applique-au-projet.md, cours/supports/day-3/04-les-donnees.md, cours/supports/day-3/05-fiches-de-seance.md · synchro: 2026-11-27 -->
 
 # Glossaire {#sec-glossaire}
 
@@ -536,7 +536,7 @@ Permission
 :   règle `allow`, `ask` ou `deny` qui décide de ce que l'agent peut faire. (voir @sec-configurer-claude-code)
 
 Petite PR
-:   PR qui fait une seule chose et dont le diff se lit en entier. (voir @sec-travailler-a-plusieurs)
+:   PR qui annonce une seule chose, et qui se démontre et se vérifie donc facilement. (voir @sec-travailler-a-plusieurs)
 
 Pipeline
 :   chaîne d'étapes parcourue par une modification. (voir @sec-ci-cd)
@@ -596,7 +596,7 @@ Release / tag
 :   version publiée / étiquette posée sur un commit. (voir @sec-ci-cd)
 
 Relecture (*review*)
-:   lecture du diff d'une PR par un autre que son auteur, conclue par un commentaire, une approbation ou une demande de modifications. (voir @sec-git)
+:   vérification d'une PR par un autre que son auteur, par les preuves (ce qu'elle annonce, son fonctionnement, la liste des fichiers touchés), conclue par un commentaire, une approbation ou une demande de modifications. (voir @sec-git)
 
 Repository
 :   pièce qui range et relit les données pour le domaine. (voir @sec-premiere-user-story)

@@ -484,15 +484,19 @@ flowchart LR
 
 ### 10.1 Relire avec la checklist en cinq lignes
 
-Le relecteur est un **coéquipier autre que l'auteur**. Il ouvre la PR sur GitHub, onglet « Files changed », et se pose cinq questions dans l'ordre :
+Le relecteur est un **coéquipier autre que l'auteur**. Il ouvre la PR sur GitHub et se pose cinq questions dans l'ordre :
 
 1. Je comprends ce que fait cette PR, et je saurais l'expliquer.
-2. Elle fait une seule chose, et le diff se lit en entier.
+2. Elle fait ce qu'elle annonce : je l'ai vue fonctionner (scénario, tests verts, application lancée), et les fichiers touchés correspondent à l'annonce.
 3. Les vérifications passent : `flutter analyze`, `flutter test`.
 4. Aucun secret, aucune donnée réelle ou personnelle.
 5. Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées.
 
-Le programme fixe le nombre de lignes de cette checklist, pas leur texte : celui-ci est une **proposition des supports**, reprise sur la fiche D du chapitre 4. Pour cette première PR, qui ne touche qu'un fichier Markdown, la ligne 3 se réduit à « la pastille de CI est verte » et la ligne 5 à « rien d'autre que `PROJET.md` n'a changé ».
+Le programme fixe le nombre de lignes de cette checklist ; leur texte est repris sur la fiche D du chapitre 4.
+
+La ligne 2 dit comment on relit : **par les preuves**. Le relecteur ne juge pas le code ligne à ligne ; il lit ce que la PR annonce (titre et description), la voit fonctionner (scénario `.feature`, tests verts, application lancée) et regarde la **liste** des fichiers touchés, dans l'onglet « Files changed », pour vérifier qu'elle correspond à l'annonce. Il peut toujours commenter une ligne précise, mais ce n'est pas le cœur de la relecture.
+
+Pour cette première PR, qui ne touche qu'un fichier Markdown, la ligne 2 se réduit à « `PROJET.md` contient ce que la description annonce, et c'est le seul fichier de la liste », la ligne 3 à « la pastille de CI est verte », et la ligne 5 est alors acquise : aucun test n'a pu changer.
 
 Pour donner son avis : bouton « Review changes », un commentaire, puis l'un des trois choix **Comment** (une remarque), **Approve** (j'approuve) ou **Request changes** (à corriger), et « Submit review ». Si quelque chose est à corriger, l'auteur ajoute un commit sur la même branche et le pousse : la PR se met à jour toute seule.
 
@@ -531,13 +535,17 @@ git commit --allow-empty -m "Test : push direct sur main"
 git push
 ```
 
-L'option `--allow-empty` crée un commit qui ne modifie aucun fichier : il ne sert qu'au test. Le refus attendu commence ainsi :
+L'option `--allow-empty` crée un commit qui ne modifie aucun fichier : il ne sert qu'au test. Le refus attendu est celui-ci (sortie de git en anglais ; `<organisation>` et `NN` sont remplacés par ceux de votre dépôt) :
 
 ```text
 remote: error: GH006: Protected branch update failed for refs/heads/main.
+remote:
+remote: - Changes must be made through a pull request.
+ ! [remote rejected] main -> main (protected branch hook declined)
+error: failed to push some refs to 'https://github.com/<organisation>/equipe_NN.git'
 ```
 
-Les lignes suivantes précisent la raison (les modifications doivent passer par une pull request) et la commande se termine par un rejet. **Si le push passe**, la protection n'est pas active : prévenez l'enseignant tout de suite.
+La raison tient sur la troisième ligne : les modifications doivent passer par une pull request. **Si le push passe**, la protection n'est pas active : prévenez l'enseignant tout de suite.
 
 Il reste à effacer le commit de test, qui existe encore sur votre poste :
 
@@ -699,15 +707,14 @@ Elles valent pour toute la durée du projet. Vous avez déjà pratiqué les quat
 
 ## Points non vérifiés (à signaler honnêtement)
 
-- **Dépôt-modèle vérifié sous Linux seulement.** Les extraits des sections 3 à 9 (arborescence simplifiée, `CLAUDE.md`, scénario `.feature`, test de BLoC, `PROJET.md` du thème B, modèle de PR) sont recopiés du dépôt-modèle ; `docs/ARCHITECTURE.md` y est résumé. Les commandes de mise en route et de vérification y ont été exécutées le 26 novembre 2026 sous Linux avec Flutter 3.50.1 : 32 tests verts, `flutter analyze` sans remarque, build web ouvert dans Chrome. Elles n'ont été essayées **ni sous Windows ni sous macOS**. Le dépôt-modèle n'est pas encore publié sur GitHub et sa CI n'a jamais tourné en ligne.
+- **Dépôt-modèle vérifié sous Linux seulement.** Les extraits des sections 3 à 9 (arborescence simplifiée, `CLAUDE.md`, scénario `.feature`, test de BLoC, `PROJET.md` du thème B, modèle de PR) sont recopiés du dépôt-modèle ; `docs/ARCHITECTURE.md` y est résumé. Les commandes de mise en route et de vérification y ont été exécutées le 26 novembre 2026 sous Linux avec Flutter 3.50.1 : 32 tests verts, `flutter analyze` sans remarque, build web ouvert dans Chrome. Elles n'ont été essayées **ni sous Windows ni sous macOS**. Le dépôt-modèle est publié depuis le 27 novembre 2026 dans l'organisation de la formation comme dépôt modèle ; sa CI y a tourné en ligne pour la première fois : verte du premier coup, environ 3 minutes.
 - **Exemples illustratifs** : la description de PR (9.2) et le journal (11.1) sont rédigés pour ce chapitre.
-- **Message de refus du push direct** : la première ligne (`GH006: Protected branch update failed`) figure dans la documentation de GitHub pour un cas voisin ; la suite du message pour un push direct n'est attestée que par des sources communautaires. Le test n'a pas été fait sur un dépôt réel.
-- **Tout ce qui passe par GitHub en ligne** (clone d'un dépôt d'équipe, `gh pr create --web`, relecture, boutons de fusion, envoi du tag vers GitHub) n'a pas été exécuté : commandes relues dans l'aide de `gh` 2.100.0 et dans la documentation de GitHub. Le fait que `--fill` saute le modèle de PR est déduit du code source de `gh`, pas de son manuel.
+- **Message de refus du push direct** : relevé le 27 novembre 2026 sur un dépôt d'équipe d'essai (section 10.4), avec git en anglais ; la traduction française de git n'a pas été relevée. La fusion d'une PR sans approbation a aussi été refusée ce jour-là (« At least 1 approving review is required by reviewers with write access. »), la PR étant marquée en attente de relecture.
+- **Ce qui passe par GitHub en ligne et n'a pas été exécuté** : le clone d'un dépôt d'équipe par un étudiant, `gh pr create --web`, l'affichage du modèle de PR dans le formulaire web, la relecture et les boutons de fusion de l'interface web, l'envoi du tag vers GitHub. Le dépôt créé par le script contient bien `.github/pull_request_template.md`. Les commandes ont été relues dans l'aide de `gh` 2.100.0 et dans la documentation de GitHub. Le fait que `--fill` saute le modèle de PR est déduit du code source de `gh`, pas de son manuel.
 - **Séquence git locale** (branche, commit, `git push -u`, `git commit --allow-empty`, `git reset --hard origin/main`, `git tag`, `git push origin s2-fin`) : jouée avec git 2.53.0 dans un dépôt jetable relié à un dépôt distant local, sans GitHub.
 - **Pannes de la section 7.2** : causes probables tirées de l'expérience courante, non reproduites ; le code d'erreur 403 pour une invitation non acceptée est donné à titre indicatif.
-- **Checklist de PR** : texte proposé par les supports, à valider par l'enseignant.
 - **Dates et calendrier** : les dates des 4, 16 et 18 décembre, des vacances et de la soutenance, le vendredi 29 janvier 2027 après-midi, sont reprises du programme et susceptibles d'ajustement par l'enseignant.
-- **Création des dépôts pendant la séance** : le script du programme (section 13) n'a pas été exécuté pour ce chapitre ; le délai entre le formulaire et la réception de l'invitation n'est pas mesuré.
+- **Création des dépôts pendant la séance** : le script du programme (section 13) a été lancé en réel le 27 novembre 2026 pour une seule équipe d'essai (numéro 99, un seul membre), à partir des deux fichiers du gabarit de saisie ; un second lancement de la même commande n'a rien refait ni rien changé. Le compte de l'essai étant administrateur de l'organisation, aucune invitation n'a été créée : la réception et l'acceptation d'une invitation par un étudiant, et le délai entre le formulaire et l'invitation, ne sont toujours pas vérifiés ni mesurés. Le comportement du script avec 8 équipes (durée, limites de l'API) n'a pas été observé.
 
 ---
 

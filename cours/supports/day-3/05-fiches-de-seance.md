@@ -19,8 +19,8 @@ Ce chapitre ne contient presque pas d'explications : il rassemble ce que vous ga
 
 - Les lignes qui commencent par `$` se tapent dans le terminal, **sans** le `$`. Les mots entre chevrons (`<branche>`) sont à remplacer, chevrons compris.
 - Sur un poste qui vient de cloner ou de tirer un `.feature` ou une table : `dart run build_runner build --delete-conflicting-outputs` **avant** `flutter test`. Les fichiers générés ne sont pas versionnés.
-- Une branche par tâche, depuis un `main` à jour ; une PR fait une seule chose ; c'est un **coéquipier** de l'auteur, autre que lui, qui approuve.
-- `All tests passed!` ne prouve rien si un test a été désactivé ou assoupli : le diff des fichiers de `test/` se lit en entier.
+- Une branche par tâche, depuis un `main` à jour ; une PR annonce une seule chose ; c'est un **coéquipier** de l'auteur, autre que lui, qui approuve.
+- `All tests passed!` ne prouve rien si un test a été désactivé ou assoupli : avant la PR, l'auteur cherche les signes de triche (fiche H, étape 8) ; en relecture, un fichier de `test/` dans la liste des fichiers touchés appelle une question.
 - Une seule migration à la fois, annoncée au gardien des données. Un instantané de `drift_schemas/` déjà fusionné ne se supprime ni ne se regénère.
 - Aucun nom civil, aucun courriel, aucune donnée réelle : ni dans le dépôt, ni dans la fiche de conformité, ni dans un prompt.
 
@@ -132,7 +132,7 @@ L'écran est facultatif (Pratique) : il peut glisser au sprint.
 
 **Étape 7 · Enregistrer les pièces dans l'annuaire**, `lib/core/di/injection.dart`, et nulle part ailleurs : le repository sous le type de son **interface** avec `registerLazySingleton`, le cas d'usage et le Cubit avec `registerFactory`. Le scénario passe au vert ; commitez.
 
-**Étape 8 · Relire le diff avant tout le monde.**
+**Étape 8 · Chercher la triche avant tout le monde.**
 
 ```bash
 $ git diff --stat main
@@ -167,7 +167,7 @@ $ flutter test
 **Pour toute PR**
 
 1. **Je comprends ce que fait cette PR, et je saurais l'expliquer.**
-2. **Elle fait une seule chose, et le diff se lit en entier.**
+2. **Elle fait ce qu'elle annonce : je l'ai vue fonctionner (scénario, tests verts, application lancée), et les fichiers touchés correspondent à l'annonce.**
 3. **Les vérifications passent : `flutter analyze`, `flutter test`** (pastille de CI verte, ou résultat collé par l'auteur).
 4. **Aucun secret, aucune donnée réelle ou personnelle**, ni nom civil ni courriel, y compris dans la fiche de conformité et dans `JOURNAL.md`.
 5. **Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées.**
@@ -189,7 +189,7 @@ $ flutter test
 
 Une ligne ne passe pas ? On ne fusionne pas : le coéquipier relecteur choisit « Request changes » et dit laquelle ; l'équipe jumelée le dit en commentaire.
 
-**Ordre de lecture** : description, pastille de CI, liste des fichiers modifiés (« Files changed »), tests, code couche par couche, historique des commits. **Commenter** : sur la ligne, à propos du code et non de la personne, en question quand vous n'êtes pas sûr, préfixé par **[bloquant]**, **[question]** ou **[suggestion]**. Dites aussi ce que vous n'avez **pas** relu. **Conclure** (« Review changes ») : *Comment* pour tout relecteur et toujours pour l'équipe jumelée ; *Request changes* ou *Approve* pour un coéquipier de l'auteur, autre que lui.
+**Relire par les preuves**, dans l'ordre : description (ce que la PR annonce), pastille de CI, liste des fichiers modifiés (« Files changed ») comparée à l'annonce, scénario et tests, place de chaque fichier dans les couches, historique des commits. Pas de lecture du code ligne à ligne. **Commenter** : précisément, à propos du code et non de la personne, en question quand vous n'êtes pas sûr, préfixé par **[bloquant]**, **[question]** ou **[suggestion]**. Dites aussi ce que vous n'avez **pas** vérifié. **Conclure** (« Review changes ») : *Comment* pour tout relecteur et toujours pour l'équipe jumelée ; *Request changes* ou *Approve* pour un coéquipier de l'auteur, autre que lui.
 
 *Explications : chapitre 1, sections 4 et 5.*
 
@@ -370,12 +370,13 @@ Avec 8 équipes, quatre paires ; avec 7 équipes, deux paires et un trio circula
 4. **L'auteur répond à chaque commentaire** : par un nouveau commit sur la même branche, poussé, ou par une explication.
 5. **Les rôles s'inversent** (dans le trio : l'équipe suivante).
 
-Pour lancer les tests de la PR sur son poste (facultatif si la CI est verte) :
+Pour voir la PR fonctionner sur son poste (facultatif si la CI est verte et que la PR ne touche pas d'écran) :
 
 ```bash
 $ gh pr checkout <numéro>
 $ dart run build_runner build --delete-conflicting-outputs
 $ flutter test
+$ flutter run -d chrome
 ```
 
 **Ce que l'équipe jumelée ne fait pas** : pousser un commit sur la branche, fusionner, approuver à la place de l'équipe, corriger elle-même ce qu'elle a trouvé. Elle n'a pas d'accès en écriture au dépôt.
@@ -503,12 +504,10 @@ Les autres termes (PR, conflit, scénario, étape, cas d'usage, Cubit, migration
 ## Points non vérifiés (à signaler honnêtement)
 
 - **Les fiches n'ont pas été rejouées en tant que telles.** Elles condensent les chapitres 1 à 4, dont les commandes ont été exécutées sous Linux seulement, avec Flutter 3.50.1, sur une copie du dépôt-modèle (voir les points non vérifiés de chaque chapitre). Ni Windows ni macOS.
-- **Rien n'a été exécuté sur GitHub** : `git push -u`, `gh pr create --web`, `gh pr checkout`, les relectures, l'approbation et la fusion sont décrits d'après la documentation, le programme et les supports de la séance 2.
+- **Presque rien n'a été exécuté sur GitHub** : seul l'essai du script de création des dépôts (27 novembre 2026) s'est fait en ligne. `gh pr create --web`, `gh pr checkout`, les relectures, l'approbation par un coéquipier et la fusion avec suppression de la branche sont décrits d'après la documentation, le programme et les supports de la séance 2.
 - **Fiche H** : le travail avec l'agent (plan, critique) n'a pas été rejoué ; le nom de branche est un exemple. L'ordre des commits (test, puis code, pièce par pièce) suit l'historique obtenu au chapitre 2, section 9.1. Les commandes `git push -u origin <branche>` et `gh pr create --web` viennent de la fiche C de la séance 2.
-- **Fiche I** : les lignes 6 à 10 et la convention [bloquant], [question], [suggestion] sont des propositions des supports, à valider par l'enseignant.
 - **Fiche K** : l'étape 7 suit le chapitre 4, section 5.3, étape 6 (« Commiter, puis vérifier comme la CI ») : le `git status --porcelain` n'est vide que si tout est commité. La résolution en version 3 a été jouée avec des branches locales, pas sur GitHub.
-- **Fiche L** : l'absence d'accès en écriture de l'équipe jumelée découle du script de création des dépôts, pas encore essayé en réel ; le programme lui-même note une « variante à vérifier ».
-- **Fiche M** : le texte de la règle pour `CLAUDE.md` est une proposition des supports, à valider par l'enseignant.
+- **Fiche L** : l'absence d'accès en écriture de l'équipe jumelée découle du script de création des dépôts, lancé en réel le 27 novembre 2026 pour une seule équipe d'essai sans que l'accès d'un compte extérieur à l'équipe soit vérifié ; le programme lui-même note une « variante à vérifier ».
 - **Fiche N** : les messages cités viennent des chapitres 1, 2 et 4 (sorties anglaises, `LC_ALL=C` pour git) ; ceux qui n'y figurent pas (mots-clés non reconnus sans `# language: fr`, étape sans fichier) sont décrits par leur effet, pas par un message relevé.
 
 ---

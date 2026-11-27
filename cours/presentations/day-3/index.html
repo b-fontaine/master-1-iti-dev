@@ -78,9 +78,9 @@
 <section class="slide" data-id="git-equipe">
   <div class="label">Git en équipe · quatre habitudes</div>
   <div class="cols c2" style="flex:0 0 auto;gap:4rem">
-    <div class="card step"><h3 style="font-size:4.6rem">Petites PR</h3><p class="mt">Une PR fait une seule chose. Son diff se lit en entier.</p></div>
+    <div class="card step"><h3 style="font-size:4.6rem">Petites PR</h3><p class="mt">Une PR annonce une seule chose : elle se démontre et se vérifie facilement.</p></div>
     <div class="card step"><h3 style="font-size:4.6rem">Branches courtes</h3><p class="mt">Fusionnée vite : moins elle s'écarte de <code>main</code>, moins elle entre en conflit.</p></div>
-    <div class="card step"><h3 style="font-size:4.6rem">Une relecture qui regarde</h3><p class="mt">Quoi regarder, comment commenter : la checklist de revue.</p></div>
+    <div class="card step"><h3 style="font-size:4.6rem">Une relecture par les preuves</h3><p class="mt">Ce qu'elle annonce, la voir fonctionner, la liste des fichiers : la checklist de revue.</p></div>
     <div class="card good step"><h3 style="font-size:4.6rem">Le conflit est <span class="pos">normal</span></h3><p class="mt">Deux branches touchent le même fichier. On choisit, on efface les marqueurs, on commite.</p></div>
   </div>
   <p class="cap mt step" style="text-align:center">démonstration courte : deux branches, le même fichier, un conflit, sa résolution · pas à pas : séance 2, chapitre 1</p>
@@ -90,7 +90,7 @@
   <div class="label">La règle de l'auteur · Simon Willison</div>
   <p class="quote" lang="en">Don't file pull requests with code you haven't reviewed yourself</p>
   <p class="mt2 step" style="font-size:4.4rem">Ne proposez pas de PR avec du code que <strong>vous n'avez pas relu vous-même</strong>.</p>
-  <p class="cap mt step">«&nbsp;c'est l'agent qui l'a écrit&nbsp;» n'est pas une réponse recevable</p>
+  <p class="cap mt step">avant de demander la relecture : l'avoir vue fonctionner, savoir l'expliquer · «&nbsp;c'est l'agent qui l'a écrit&nbsp;» n'est pas une réponse recevable</p>
 </section>
 
 <section class="slide" data-id="paires">
@@ -151,7 +151,7 @@
   <div class="chips mt2 bigchip">
     <span class="chip r step">test supprimé</span><span class="chip r step">test désactivé</span><span class="chip r step">test assoupli</span><span class="chip r step">scénario retouché</span><span class="chip r step">hasard en dur</span>
   </div>
-  <p class="cap mt2 step">à chaque PR : regarder ce qui a bougé dans test/ avant ce qui a bougé dans lib/</p>
+  <p class="cap mt2 step">à chaque PR : dans la liste des fichiers touchés, regarder d'abord si test/ a bougé</p>
 </section>
 
 <section class="slide atelier" data-id="atelier-story">
@@ -290,7 +290,7 @@
     <div class="todo grow">
       <div class="it"><b>1</b><div><h3>Choisir au moins une PR de l'équipe jumelée</h3><p>voir la slide des paires</p></div></div>
       <div class="it"><b>2</b><div><h3>L'auteur explique sa PR à voix haute</h3><p>ce qu'elle fait · ce que l'agent a proposé · ce qu'il a refusé</p></div></div>
-      <div class="it"><b>3</b><div><h3>Relire avec la checklist, commenter sur GitHub</h3><p>commentaires précis, sur la ligne concernée</p></div></div>
+      <div class="it"><b>3</b><div><h3>Relire avec la checklist, commenter sur GitHub</h3><p>par les preuves · commentaires précis, écrits sur la PR</p></div></div>
       <div class="it"><b>4</b><div><h3>Un coéquipier de l'auteur approuve, puis fusion</h3><p>l'équipe jumelée commente, elle n'approuve pas</p></div></div>
     </div>
     <div class="side">

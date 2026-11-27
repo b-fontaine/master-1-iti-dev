@@ -398,9 +398,10 @@ Vous pouvez aussi tout faire depuis le site : après un push, la page du dépôt
 
 Envoyez l'adresse de votre PR à votre binôme (`gh pr view --web` l'ouvre). Le relecteur, sur la page de la PR :
 
-1. ouvre l'onglet **Files changed** et lit le diff en entier ;
-2. peut commenter une ligne précise (bouton `+` qui apparaît au survol de la ligne) ;
-3. clique sur **Review changes**, écrit un commentaire d'ensemble, choisit **Comment** (simple remarque), **Approve** (j'approuve) ou **Request changes** (je demande des modifications), puis **Submit review**.
+1. lit le titre et la description : ce que la PR annonce ;
+2. ouvre l'onglet **Files changed** et vérifie que la **liste** des fichiers touchés correspond à cette annonce (ici, `recette.md` seul) ;
+3. peut commenter une ligne précise (bouton `+` qui apparaît au survol de la ligne) ;
+4. clique sur **Review changes**, écrit un commentaire d'ensemble, choisit **Comment** (simple remarque), **Approve** (j'approuve) ou **Request changes** (je demande des modifications), puis **Submit review**.
 
 Si des modifications sont demandées, l'auteur fait de nouveaux commits **sur la même branche** et pousse : la PR se met à jour toute seule.
 
@@ -716,9 +717,9 @@ Ce cas est fréquent le premier jour, et il rend service : l'adresse refusée n'
 
 Claude Code sait lancer toutes les commandes de ce chapitre, et il le fera sur demande : créer une branche, commiter, ouvrir une PR. Trois habitudes vous gardent aux commandes :
 
-- **Lire avant d'accepter.** Quand l'agent propose une commande git, vous savez maintenant la lire. `git add .` suivi d'un commit sans que vous ayez vu le diff mérite un refus.
+- **Lire avant d'accepter.** Quand l'agent propose une commande git, vous savez maintenant la lire. `git add .` suivi d'un commit sans que vous ayez vu quels fichiers changent (`git status`) mérite un refus.
 - **Vérifier la branche.** Avant de lui confier une tâche : `git status`. Un agent lancé sur `main` travaille sur `main`.
-- **Relire le diff, pas le résumé.** L'agent décrit ce qu'il a fait ; le diff montre ce qui a réellement changé. C'est le diff qui fait foi, et c'est lui que votre relecteur verra.
+- **Vérifier par les preuves, pas par le résumé.** L'agent décrit ce qu'il a fait ; la liste des fichiers modifiés et les tests montrent ce qui a réellement changé. Ce sont ces preuves qui font foi, et ce sont elles que votre relecteur regardera.
 
 Les commandes dangereuses (`git push --force`, `rm -rf`) seront refusées par configuration, et non par simple consigne : c'est l'objet du chapitre 2.
 
@@ -797,7 +798,7 @@ Contrairement à une branche, un tag ne bouge plus. Les tags ne partent pas avec
 - **`.gitignore`** : fichier qui liste ce que git doit ignorer.
 - **Pull request (PR)** : demande de relecture et de fusion, sur GitHub.
 - **Pousser, tirer** (*push*, *pull*) : envoyer ses commits vers le dépôt distant, récupérer ceux des autres.
-- **Relecture** (*review*) : lecture du diff d'une PR par un autre que son auteur, conclue par un commentaire, une approbation ou une demande de modifications.
+- **Relecture** (*review*) : vérification d'une PR par un autre que son auteur, par les preuves (ce qu'elle annonce, son fonctionnement, la liste des fichiers touchés), conclue par un commentaire, une approbation ou une demande de modifications.
 - **Tag** : étiquette fixe posée sur un commit (`s2-fin`, `v1.0`).
 - **Upstream** : branche distante que suit une branche locale.
 
@@ -815,9 +816,9 @@ Contrairement à une branche, un tag ne bouge plus. Les tags ne partent pas avec
 
 ## Points non vérifiés (à signaler honnêtement)
 
-- **Tout ce qui se passe sur GitHub en ligne n'a pas été exécuté** pour ce chapitre : `gh repo create`, `gh pr create`, `gh pr merge`, les écrans de relecture et de fusion. Les options de `gh` ont été relues dans l'aide de gh 2.100.0 et les libellés d'interface dans la documentation de GitHub. Les sorties de `git push` et `git pull` ont été obtenues avec un dépôt distant local (un dossier), puis leurs adresses réécrites à la main sous la forme GitHub.
+- **Presque rien de ce qui se passe sur GitHub en ligne n'a été exécuté** pour ce chapitre : `gh repo create`, `gh pr create`, `gh pr merge`, les écrans de relecture et de fusion. Seul l'essai du script de création des dépôts, le 27 novembre 2026, s'est fait en ligne, et il ne couvre aucune de ces commandes ni de ces écrans. Les options de `gh` ont été relues dans l'aide de gh 2.100.0 et les libellés d'interface dans la documentation de GitHub. Les sorties de `git push` et `git pull` ont été obtenues avec un dépôt distant local (un dossier), puis leurs adresses réécrites à la main sous la forme GitHub.
 - **Fait que `--fill` n'utilise pas le modèle de PR** : déduit de la lecture du code source de `gh`, non confirmé par le manuel ni par un essai.
-- **Message exact du push refusé sur une branche protégée** : la première ligne (`GH006: Protected branch update failed`) figure dans la documentation de GitHub pour un cas voisin ; la suite du message pour un push direct n'est attestée que par des sources communautaires.
+- **Message du push refusé sur une branche protégée** : relevé le 27 novembre 2026 sur un dépôt d'équipe d'essai, avec git en anglais (sortie complète au chapitre 3, section 10.4). La traduction française de git n'a pas été relevée.
 - **Libellés français de VS Code** : relevés dans les fichiers de traduction du pack de langue officiel (dépôt `microsoft/vscode-loc`), non observés dans une interface en fonctionnement ; ils peuvent différer selon la version. Les titres français des trois volets de l'éditeur de fusion n'ont pas été trouvés.
 - **Sortie de vim** (`Échap`, `:wq`, `:q!`) : usage courant, non relu sur une source officielle. L'éditeur ouvert par défaut dépend du système et de l'installation de git (sous Windows, l'installateur de Git for Windows propose un choix : non vérifié).
 - **Message du push bloqué pour adresse exposée** (code GH007) et commande de correction `git commit --amend --reset-author --no-edit` : le réglage est confirmé par la documentation de GitHub, le texte du message ne l'est pas, et la commande n'a pas été essayée contre GitHub.

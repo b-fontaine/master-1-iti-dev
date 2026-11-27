@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-2/04-fiches-de-seance.md, cours/supports/day-3/05-fiches-de-seance.md · synchro: 2026-11-26 -->
+<!-- source: cours/supports/day-2/04-fiches-de-seance.md, cours/supports/day-3/05-fiches-de-seance.md · synchro: 2026-11-27 -->
 
 # Fiches pratiques {#sec-fiches}
 
@@ -37,8 +37,8 @@ Cette annexe ne contient presque pas d'explications : elle rassemble ce que l'on
 - Avant de demander de l'aide : `git status`. Il dit où vous êtes et, souvent, quoi faire.
 - Rien de personnel ni de réel dans ces dépôts : ils sont publics.
 - Séance 3 : sur un poste qui vient de cloner ou de tirer un `.feature` ou une table, `dart run build_runner build --delete-conflicting-outputs` **avant** `flutter test`. Les fichiers générés ne sont pas versionnés.
-- Séance 3 : une branche par tâche, depuis un `main` à jour ; une PR fait une seule chose ; c'est un **coéquipier** de l'auteur, autre que lui, qui approuve.
-- Séance 3 : `All tests passed!` ne prouve rien si un test a été désactivé ou assoupli : le diff des fichiers de `test/` se lit en entier.
+- Séance 3 : une branche par tâche, depuis un `main` à jour ; une PR annonce une seule chose ; c'est un **coéquipier** de l'auteur, autre que lui, qui approuve.
+- Séance 3 : `All tests passed!` ne prouve rien si un test a été désactivé ou assoupli : avant la PR, l'auteur cherche les signes de triche (fiche H, étape 8) ; en relecture, un fichier de `test/` dans la liste des fichiers touchés appelle une question.
 - Séance 3 : une seule migration à la fois, annoncée au gardien des données. Un instantané de `drift_schemas/` déjà fusionné ne se supprime ni ne se regénère.
 - Séance 3 : aucun nom civil, aucun courriel, aucune donnée réelle : ni dans le dépôt, ni dans la fiche de conformité, ni dans un prompt.
 
@@ -473,7 +473,7 @@ $ git push origin s2-fin
 À lire dans l'ordre, par le relecteur **et** par l'auteur avant de demander la relecture.
 
 1. **Je comprends ce que fait cette PR, et je saurais l'expliquer.**
-2. **Elle fait une seule chose, et le diff se lit en entier.**
+2. **Elle fait ce qu'elle annonce : je l'ai vue fonctionner (scénario, tests verts, application lancée), et les fichiers touchés correspondent à l'annonce.**
 3. **Les vérifications passent : `flutter analyze`, `flutter test`.**
 4. **Aucun secret, aucune donnée réelle ou personnelle.**
 5. **Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées.**
@@ -638,7 +638,7 @@ L'écran est facultatif (Pratique) : il peut glisser au sprint.
 
 **Étape 7 · Enregistrer les pièces dans l'annuaire**, `lib/core/di/injection.dart`, et nulle part ailleurs : le repository sous le type de son **interface** avec `registerLazySingleton`, le cas d'usage et le Cubit avec `registerFactory`. Le scénario passe au vert ; commitez.
 
-**Étape 8 · Relire le diff avant tout le monde.**
+**Étape 8 · Chercher la triche avant tout le monde.**
 
 ```bash
 $ git diff --stat main
@@ -672,7 +672,7 @@ $ flutter test
 **Pour toute PR**
 
 1. **Je comprends ce que fait cette PR, et je saurais l'expliquer.**
-2. **Elle fait une seule chose, et le diff se lit en entier.**
+2. **Elle fait ce qu'elle annonce : je l'ai vue fonctionner (scénario, tests verts, application lancée), et les fichiers touchés correspondent à l'annonce.**
 3. **Les vérifications passent : `flutter analyze`, `flutter test`** (pastille de CI verte, ou résultat collé par l'auteur).
 4. **Aucun secret, aucune donnée réelle ou personnelle**, ni nom civil ni courriel, y compris dans la fiche de conformité et dans `JOURNAL.md`.
 5. **Aucun test supprimé ni affaibli, et les règles de `CLAUDE.md` sont respectées.**
@@ -694,7 +694,7 @@ $ flutter test
 
 Une ligne ne passe pas ? On ne fusionne pas : le coéquipier relecteur choisit « Request changes » et dit laquelle ; l'équipe jumelée le dit en commentaire.
 
-**Ordre de lecture** : description, pastille de CI, liste des fichiers modifiés (« Files changed »), tests, code couche par couche, historique des commits. **Commenter** : sur la ligne, à propos du code et non de la personne, en question quand vous n'êtes pas sûr, préfixé par **[bloquant]**, **[question]** ou **[suggestion]**. Dites aussi ce que vous n'avez **pas** relu. **Conclure** (« Review changes ») : *Comment* pour tout relecteur et toujours pour l'équipe jumelée ; *Request changes* ou *Approve* pour un coéquipier de l'auteur, autre que lui.
+**Relire par les preuves**, dans l'ordre : description (ce que la PR annonce), pastille de CI, liste des fichiers modifiés (« Files changed ») comparée à l'annonce, scénario et tests, place de chaque fichier dans les couches, historique des commits. Pas de lecture du code ligne à ligne. **Commenter** : précisément, à propos du code et non de la personne, en question quand vous n'êtes pas sûr, préfixé par **[bloquant]**, **[question]** ou **[suggestion]**. Dites aussi ce que vous n'avez **pas** vérifié. **Conclure** (« Review changes ») : *Comment* pour tout relecteur et toujours pour l'équipe jumelée ; *Request changes* ou *Approve* pour un coéquipier de l'auteur, autre que lui.
 
 *Explications : sections [-@sec-equipe-4] et [-@sec-equipe-5].*
 
@@ -872,12 +872,13 @@ Avec 8 équipes, quatre paires ; avec 7 équipes, deux paires et un trio circula
 4. **L'auteur répond à chaque commentaire** : par un nouveau commit sur la même branche, poussé, ou par une explication.
 5. **Les rôles s'inversent** (dans le trio : l'équipe suivante).
 
-Pour lancer les tests de la PR sur son poste (facultatif si la CI est verte) :
+Pour voir la PR fonctionner sur son poste (facultatif si la CI est verte et que la PR ne touche pas d'écran) :
 
 ```bash
 $ gh pr checkout <numéro>
 $ dart run build_runner build --delete-conflicting-outputs
 $ flutter test
+$ flutter run -d chrome
 ```
 
 **Ce que l'équipe jumelée ne fait pas** : pousser un commit sur la branche, fusionner, approuver à la place de l'équipe, corriger elle-même ce qu'elle a trouvé. Elle n'a pas d'accès en écriture au dépôt.
@@ -1007,24 +1008,21 @@ Les autres termes (commit, branche, PR, conflit, permission, skill, hook…) son
 ## Points non vérifiés (à signaler honnêtement)
 
 - **Fiche 0** : commandes de contrôle reprises du programme (séance 2, bloc 1) ; le projet d'exemple de la séance 1 n'a pas été relancé pour cette fiche (ni avec Flutter 3.47.6, ni après passage à 3.50), et la façon de mettre à jour Claude Code dépend du mode d'installation.
-- **Fiche A, étapes 1 à 3 et 5** : jouées en entier dans un dépôt jetable (git 2.53.0). **Étape 4** : `git push -u` joué contre un dépôt distant local ; les commandes `gh repo create`, `gh pr create --web`, `gh pr merge` n'ont **pas** été exécutées (rien n'a été créé sur GitHub) ; leurs options ont été relues dans l'aide de gh 2.100.0. Les libellés des boutons de GitHub viennent de sa documentation.
+- **Fiche A, étapes 1 à 3 et 5** : jouées en entier dans un dépôt jetable (git 2.53.0). **Étape 4** : `git push -u` joué contre un dépôt distant local ; les commandes `gh repo create` (dépôt d'essai personnel), `gh pr create --web` et `gh pr merge` n'ont **pas** été exécutées en ligne ; leurs options ont été relues dans l'aide de gh 2.100.0. Les libellés des boutons de GitHub viennent de sa documentation.
 - **Fiche A, relecture par le binôme** : sur un dépôt public, la possibilité pour un compte non collaborateur de laisser une relecture « Approve » n'a pas été testée ; si elle échoue, le propriétaire ajoute son binôme comme collaborateur (Settings, Collaborators, Add people).
 - **Fiche A, boutons de VS Code** : libellés anglais relevés dans la documentation de VS Code. Avec l'interface en français, ils se lisent « Accepter la modification actuelle », « Accepter la modification entrante », « Accepter les deux modifications » d'après les fichiers de traduction ; ils n'ont pas été observés à l'écran.
 - **Fiche B** : les sept règles de refus, l'expérience avant et après et le skill ont été testés avec Claude Code 2.1.325 en exécution non interactive ; `/init`, `/permissions`, `/reload-skills` et les commandes de plugin n'ont pas été exécutés. Voir les réserves de la section [-@sec-cc-non-verifies].
-- **Fiche C** : les commandes Flutter de l'étape 1 ont été jouées sur le dépôt-modèle le 26 novembre 2026, sous Linux seulement, avec Flutter 3.50.1 (32 tests verts, `flutter analyze` sans remarque) ; elles n'ont été essayées ni sous Windows ni sous macOS, et le clone depuis GitHub n'a pas été fait (le dépôt-modèle n'est pas encore publié). La séquence git (branche, push, commit vide, `git reset --hard origin/main`, tag) a été jouée contre un dépôt distant local. Le refus `GH006` n'a pas été observé ; son libellé complet n'est attesté que par des sources communautaires.
-- **Fiche D** : le programme fixe « cinq lignes », pas leur texte ; celui-ci est une proposition des supports, à valider par l'enseignant.
-- **Fiche E** : recopiée du `.github/pull_request_template.md` du dépôt-modèle ; son affichage à l'ouverture d'une PR sur GitHub n'a pas été observé (le dépôt-modèle n'est pas encore publié).
+- **Fiche C** : les commandes Flutter de l'étape 1 ont été jouées sur le dépôt-modèle le 26 novembre 2026, sous Linux seulement, avec Flutter 3.50.1 (32 tests verts, `flutter analyze` sans remarque) ; elles n'ont été essayées ni sous Windows ni sous macOS, et le clone d'un dépôt d'équipe depuis GitHub n'a été fait que par le compte de l'essai, sous Linux (le dépôt-modèle est publié depuis le 27 novembre 2026). La séquence git (branche, push, commit vide, `git reset --hard origin/main`, tag) a été jouée contre un dépôt distant local. Le refus `GH006` a été observé le 27 novembre 2026 sur un dépôt d'équipe d'essai (sortie complète à la section [-@sec-projet-verifier-protection]).
+- **Fiche E** : recopiée du `.github/pull_request_template.md` du dépôt-modèle ; le fichier est bien présent dans le dépôt créé par le script, mais son affichage dans le formulaire web à l'ouverture d'une PR n'a pas été observé.
 - **Fiche F** : la sortie de vim (`Échap`, `:q!`) et le message exact d'un push refusé faute d'invitation acceptée n'ont pas été vérifiés sur une source officielle.
 
 **Fiches G à N (séance 3)**
 
 - **Les fiches n'ont pas été rejouées en tant que telles.** Elles condensent les chapitres de la séance 3 (@sec-travailler-a-plusieurs, @sec-premiere-user-story, @sec-rgpd-projet et @sec-donnees), dont les commandes ont été exécutées sous Linux seulement, avec Flutter 3.50.1, sur une copie du dépôt-modèle (voir les points non vérifiés de chaque chapitre). Ni Windows ni macOS.
-- **Rien n'a été exécuté sur GitHub** : `git push -u`, `gh pr create --web`, `gh pr checkout`, les relectures, l'approbation et la fusion sont décrits d'après la documentation, le programme et les fiches de la séance 2.
+- **Presque rien n'a été exécuté sur GitHub** : seul l'essai du script de création des dépôts (27 novembre 2026) s'est fait en ligne. `gh pr create --web`, `gh pr checkout`, les relectures, l'approbation par un coéquipier et la fusion avec suppression de la branche sont décrits d'après la documentation, le programme et les fiches de la séance 2.
 - **Fiche H** : le travail avec l'agent (plan, critique) n'a pas été rejoué ; le nom de branche est un exemple. L'ordre des commits (test, puis code, pièce par pièce) suit l'historique obtenu à la section [-@sec-story-9-1]. Les commandes `git push -u origin <branche>` et `gh pr create --web` viennent de la fiche C.
-- **Fiche I** : les lignes 6 à 10 et la convention [bloquant], [question], [suggestion] sont des propositions des supports, à valider par l'enseignant.
 - **Fiche K** : l'étape 7 suit la section [-@sec-donnees-5-3], étape 6 (« Commiter, puis vérifier comme la CI ») : le `git status --porcelain` n'est vide que si tout est commité. La résolution en version 3 a été jouée avec des branches locales, pas sur GitHub.
-- **Fiche L** : l'absence d'accès en écriture de l'équipe jumelée découle du script de création des dépôts, pas encore essayé en réel ; le programme lui-même note une « variante à vérifier ».
-- **Fiche M** : le texte de la règle pour `CLAUDE.md` est une proposition des supports, à valider par l'enseignant.
+- **Fiche L** : l'absence d'accès en écriture de l'équipe jumelée découle du script de création des dépôts, lancé en réel le 27 novembre 2026 pour une seule équipe d'essai sans que l'accès d'un compte extérieur à l'équipe soit vérifié ; le programme lui-même note une « variante à vérifier ».
 - **Fiche N** : les messages cités viennent des chapitres de la séance 3 sur le travail à plusieurs, la première user story et les données (sorties anglaises, `LC_ALL=C` pour git) ; ceux qui n'y figurent pas (mots-clés non reconnus sans `# language: fr`, étape sans fichier) sont décrits par leur effet, pas par un message relevé.
 
 

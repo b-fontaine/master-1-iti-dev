@@ -46,15 +46,15 @@
 <h3>À dire</h3><p>Mercredi, vous avez appris git seul ou en binôme, dans un dépôt d'essai. Aujourd'hui, quatre ou cinq personnes et autant d'agents écrivent dans le même dépôt : il faut des habitudes communes.</p></section>
 
 <section class="s" id="git-equipe"><header><span class="n"></span><h2>Git en équipe : quatre habitudes</h2><span class="t">5 min, démonstration comprise</span></header>
-<div class="shows">Petites PR · branches courtes · une relecture qui regarde · le conflit est normal · démonstration d'un conflit</div>
-<h3>À dire</h3><p>Une petite PR se relit en entier ; une grosse se survole. Une branche qui reste courte s'écarte peu de <code>main</code> et entre rarement en conflit. Relire, c'est regarder le diff avec une checklist et commenter précisément, sur la ligne. Et quand le conflit arrive, ce n'est ni une erreur ni une faute : deux personnes ont touché le même endroit, git vous demande de choisir.</p>
+<div class="shows">Petites PR · branches courtes · une relecture par les preuves · le conflit est normal · démonstration d'un conflit</div>
+<h3>À dire</h3><p>Une petite PR annonce une seule chose : elle se démontre et se vérifie vite ; une grosse ne se vérifie plus, elle se survole. Une branche qui reste courte s'écarte peu de <code>main</code> et entre rarement en conflit. Relire, c'est vérifier par les preuves, avec une checklist : lire ce que la PR annonce, la voir fonctionner, vérifier que la liste des fichiers touchés correspond à l'annonce ; pas juger le code ligne à ligne. Et commenter précisément. Et quand le conflit arrive, ce n'est ni une erreur ni une faute : deux personnes ont touché le même endroit, git vous demande de choisir.</p>
 <p>Démonstration courte, en direct : deux branches qui modifient le même fichier, la fusion de la seconde déclenche le conflit, on le résout.</p>
 <h3 class="w">À savoir</h3><ul><li>Le conflit pas à pas a été fait mercredi (séance 2, chapitre 1, section 7) : ne pas le refaire, le montrer dans un dépôt d'équipe dont <code>main</code> est protégée, donc via deux PR (chapitre 1 de la séance 3).</li><li>Préparer la démonstration à froid dans un dépôt jetable, pour ne pas dépendre du réseau.</li><li>Le bloc 2 est Important, pas Indispensable : s'il faut gagner du temps, réduire la démonstration, pas l'annonce des paires.</li></ul>
 <h3 class="q">Question à poser</h3><p>«&nbsp;Qui a déjà eu un conflit depuis mercredi ? Qu'avez-vous fait ?&nbsp;»</p></section>
 
 <section class="s" id="willison"><header><span class="n"></span><h2>La règle de l'auteur : Simon Willison</h2><span class="t">1 min</span></header>
-<div class="shows">«&nbsp;Don't file pull requests with code you haven't reviewed yourself&nbsp;» · traduction · «&nbsp;c'est l'agent qui l'a écrit&nbsp;» n'est pas une réponse recevable</div>
-<h3>À dire</h3><p>Avant la relecture par un autre, il y a la vôtre. Une PR ouverte avec du code que vous n'avez pas lu vous-même fait faire votre travail au relecteur. Avec un agent, c'est d'autant plus tentant : il produit vite, beaucoup, et proprement en apparence. Vous êtes l'auteur de ce que vous proposez.</p>
+<div class="shows">«&nbsp;Don't file pull requests with code you haven't reviewed yourself&nbsp;» · traduction · l'avoir vue fonctionner, savoir l'expliquer · «&nbsp;c'est l'agent qui l'a écrit&nbsp;» n'est pas une réponse recevable</div>
+<h3>À dire</h3><p>Avant la relecture par un autre, il y a la vôtre. Avant de demander la relecture, vous avez vu votre PR fonctionner et vous savez l'expliquer ; sinon, vous faites faire votre travail au relecteur. Avec un agent, c'est d'autant plus tentant : il produit vite, beaucoup, et proprement en apparence. Vous êtes l'auteur de ce que vous proposez.</p>
 <h3 class="w">À savoir</h3><p>Citation telle qu'au programme (bloc 2). La page source n'a pas été relue pour ce diaporama : ne pas lui attribuer davantage à l'oral. Elle était donnée en lecture à la fin de la séance 2.</p></section>
 
 <section class="s" id="paires"><header><span class="n"></span><h2>Revue croisée : qui relit qui</h2><span class="t">2 min</span></header>
@@ -74,7 +74,7 @@
 
 <section class="s" id="triche"><header><span class="n"></span><h2>Repérer un test «&nbsp;triché&nbsp;»</h2><span class="t">2 min</span></header>
 <div class="shows">Test supprimé · désactivé · assoupli · scénario retouché · hasard en dur</div>
-<h3>À dire</h3><p>Un agent à qui l'on demande «&nbsp;fais passer les tests&nbsp;» peut y arriver en changeant les tests. Cinq formes à reconnaître : un test supprimé, un test désactivé, une attente assouplie, un scénario retouché, ou une valeur aléatoire figée pour que le résultat tombe juste. Le réflexe : dans le diff de la PR, regarder d'abord ce qui a bougé du côté des tests.</p>
+<h3>À dire</h3><p>Un agent à qui l'on demande «&nbsp;fais passer les tests&nbsp;» peut y arriver en changeant les tests. Cinq formes à reconnaître : un test supprimé, un test désactivé, une attente assouplie, un scénario retouché, ou une valeur aléatoire figée pour que le résultat tombe juste. Le réflexe : dans la liste des fichiers touchés de la PR, regarder d'abord si un test ou un scénario a bougé.</p>
 <h3 class="q">Question à poser</h3><p>«&nbsp;Si l'agent remplace "86,7 %" par "87 %" dans le scénario, qu'est-ce qui a changé : le code ou la règle ?&nbsp;»</p>
 <h3 class="w">À savoir</h3><p>Le programme cite «&nbsp;test ou scénario supprimé, désactivé, assoupli, hasard en dur&nbsp;». C'est l'intention du bloc 3 : vivre le TDD avec un agent et apprendre à repérer un test triché.</p></section>
 
@@ -139,7 +139,7 @@
 <div class="shows">Quatre étapes : une PR de l'équipe jumelée, l'auteur explique, relire et commenter, un coéquipier approuve · fiches L et I</div>
 <h3>À dire</h3><p>Chaque équipe relit au moins une PR de son équipe jumelée, par des commentaires sur GitHub, auteur présent : l'auteur explique sa PR à voix haute. L'approbation qui débloque la fusion vient d'un coéquipier de l'auteur, pas de l'équipe jumelée.</p>
 <h3 class="w">À savoir</h3><ul><li>Les équipes jumelées n'ont pas d'accès en écriture au dépôt de l'autre : le programme note cette variante «&nbsp;à vérifier&nbsp;». Vérifier avant la séance qu'un compte sans droit d'écriture peut bien commenter une PR du dépôt public.</li><li>Le bloc peut commencer dès que des PR sont ouvertes : inutile d'attendre la fin des autres ateliers.</li><li>La definition of done demande aussi que chaque étudiant ait ouvert une PR et relu celle d'un autre.</li></ul>
-<h3 class="w">Pièges</h3><ul><li>«&nbsp;LGTM&nbsp;» sans lecture : demander au relecteur ce qu'il a regardé.</li><li>Un commentaire vague («&nbsp;c'est bizarre&nbsp;») : demander une ligne et une proposition.</li></ul></section>
+<h3 class="w">Pièges</h3><ul><li>«&nbsp;LGTM&nbsp;» sans vérification : demander au relecteur ce qu'il a vérifié (scénario, tests verts, liste des fichiers).</li><li>Un commentaire vague («&nbsp;c'est bizarre&nbsp;») : demander une ligne et une proposition.</li></ul></section>
 
 <section class="s" id="livrable"><header><span class="n"></span><h2>Livrable de fin de séance et definition of done</h2><span class="t">3 min</span></header>
 <div class="shows">Première règle verte, modèle et migrations fusionnés, début de la fiche commité · quatre critères · fiche M</div>
