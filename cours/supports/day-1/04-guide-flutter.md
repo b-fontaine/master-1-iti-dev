@@ -109,7 +109,7 @@ Cette commande inspecte votre poste et affiche une liste de contrôles. Voici ce
 
 Comment lire cette sortie : une coche verte `[✓]` signifie « prêt », un point d'exclamation `[!]` signifie « fonctionne mais avec un avertissement », une croix rouge `[✗]` signifie « manquant ».
 
-**Pour ce cours, une seule ligne est indispensable : `Chrome - develop for the web`.** La chaîne Android peut rester en rouge, de même que Visual Studio (Windows) ou Xcode (macOS) : ces éléments ne servent que pour compiler des applications natives, que nous ne ferons pas. Ne perdez pas une heure à les corriger (programme détaillé, bloc 6).
+**Pour ce cours, une seule ligne est indispensable : `Chrome - develop for the web`.** La chaîne Android peut rester en rouge, de même que Visual Studio (Windows) ou Xcode (macOS) : ces éléments ne servent que pour compiler des applications natives, que nous ne ferons pas. Ne perdez pas une heure à les corriger (programme détaillé, bloc 7).
 
 Si Chrome est installé mais non détecté, la variable d'environnement `CHROME_EXECUTABLE` permet d'indiquer son emplacement. Ce point est courant dans la communauté mais **non revérifié** sur la documentation lors de la rédaction.
 
@@ -924,6 +924,6 @@ Histoire (sources de presse et secondaires) :
 Documents du cours (chemins locaux) :
 
 - `cours/presentations/day-1/index.html` et `notes.html` (notions de code, TDD, projet Flutter, intégration continue)
-- `cours/programme-detaille.md` (S1, blocs 5 et 6)
+- `cours/programme-detaille.md` (S1, blocs 5 et 7)
 
 Vérification par exécution (poste de rédaction, Ubuntu 24.04, 6 octobre 2026) : Flutter 3.47.6 (stable), Dart 3.13.5, DevTools 2.60.0. Les exemples de code des sections 3, 5 à 9 ont été compilés, analysés (`flutter analyze`, `dart analyze`) et exécutés (`dart run`, `flutter test`, 7 tests verts). Les messages d'erreur des sections 3.6, 6.3 et 11.2 sont des sorties réelles, abrégées.

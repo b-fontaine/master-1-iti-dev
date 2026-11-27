@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-1/04-guide-flutter.md · synchro: 2026-11-26 -->
+<!-- source: cours/supports/day-1/04-guide-flutter.md · synchro: 2026-11-27 -->
 
 # Guide Flutter {#sec-guide-flutter}
 
