@@ -504,10 +504,10 @@ Les autres termes (PR, conflit, scénario, étape, cas d'usage, Cubit, migration
 ## Points non vérifiés (à signaler honnêtement)
 
 - **Les fiches n'ont pas été rejouées en tant que telles.** Elles condensent les chapitres 1 à 4, dont les commandes ont été exécutées sous Linux seulement, avec Flutter 3.50.1, sur une copie du dépôt-modèle (voir les points non vérifiés de chaque chapitre). Ni Windows ni macOS.
-- **Rien n'a été exécuté sur GitHub** : `git push -u`, `gh pr create --web`, `gh pr checkout`, les relectures, l'approbation et la fusion sont décrits d'après la documentation, le programme et les supports de la séance 2.
+- **Presque rien n'a été exécuté sur GitHub** : seul l'essai du script de création des dépôts (27 novembre 2026) s'est fait en ligne. `gh pr create --web`, `gh pr checkout`, les relectures, l'approbation par un coéquipier et la fusion avec suppression de la branche sont décrits d'après la documentation, le programme et les supports de la séance 2.
 - **Fiche H** : le travail avec l'agent (plan, critique) n'a pas été rejoué ; le nom de branche est un exemple. L'ordre des commits (test, puis code, pièce par pièce) suit l'historique obtenu au chapitre 2, section 9.1. Les commandes `git push -u origin <branche>` et `gh pr create --web` viennent de la fiche C de la séance 2.
 - **Fiche K** : l'étape 7 suit le chapitre 4, section 5.3, étape 6 (« Commiter, puis vérifier comme la CI ») : le `git status --porcelain` n'est vide que si tout est commité. La résolution en version 3 a été jouée avec des branches locales, pas sur GitHub.
-- **Fiche L** : l'absence d'accès en écriture de l'équipe jumelée découle du script de création des dépôts, pas encore essayé en réel ; le programme lui-même note une « variante à vérifier ».
+- **Fiche L** : l'absence d'accès en écriture de l'équipe jumelée découle du script de création des dépôts, lancé en réel le 27 novembre 2026 pour une seule équipe d'essai sans que l'accès d'un compte extérieur à l'équipe soit vérifié ; le programme lui-même note une « variante à vérifier ».
 - **Fiche N** : les messages cités viennent des chapitres 1, 2 et 4 (sorties anglaises, `LC_ALL=C` pour git) ; ceux qui n'y figurent pas (mots-clés non reconnus sans `# language: fr`, étape sans fichier) sont décrits par leur effet, pas par un message relevé.
 
 ---

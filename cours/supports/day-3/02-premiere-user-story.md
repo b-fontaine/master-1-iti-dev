@@ -785,7 +785,7 @@ Les scénarios de `themes.md` pour A et C ont la même écriture que celui du th
 
 ## Points non vérifiés (à signaler honnêtement)
 
-- **Vérification sous Linux seulement**, avec Flutter 3.50.1 et les versions verrouillées du dépôt-modèle (`bdd_widget_test` 3.1.0). Ni Windows ni macOS ; la CI n'a pas tourné en ligne.
+- **Vérification sous Linux seulement**, avec Flutter 3.50.1 et les versions verrouillées du dépôt-modèle (`bdd_widget_test` 3.1.0). Ni Windows ni macOS. La CI du dépôt-modèle a tourné en ligne le 27 novembre 2026 (verte, environ 3 minutes), mais pas avec le code de cette story.
 - **Le travail avec l'agent n'a pas été rejoué.** Le code de la story a été écrit pour la vérification en suivant l'ordre décrit, puis exécuté ; la demande de plan (section 3.1), la critique du plan et la description de PR sont **rédigés pour ce chapitre**. L'historique de la section 9.1, lui, a été réellement obtenu, mais en commitant à la main les fichiers de la story pièce par pièce, pas en pilotant un agent. Ce que Claude Code proposerait réellement en mode plan n'a pas été observé.
 - **Les deux expériences de triche** (section 8.1) ont été jouées à la main sur la copie, pas produites par un agent ; elles illustrent ce que l'on voit, pas la fréquence de ces comportements.
 - **Écriture sans accolades** : l'essai a été fait pour le thème B seulement (étapes générées avec les valeurs dans leur nom, guillemets droits non reconnus comme paramètres). Les scénarios des thèmes A et C, avec accolades, ont été passés à `build_runner` (étapes créées), mais leurs étapes n'ont pas été écrites ni leur règle codée.
@@ -793,7 +793,7 @@ Les scénarios de `themes.md` pour A et C ont la même écriture que celui du th
 - **Écran de la story** : non écrit (Pratique en séance 3) ; la section 6.4 décrit ce qu'il faudrait faire d'après `docs/ARCHITECTURE.md`, sans l'avoir exécuté.
 - **Passage du repository en mémoire à drift** (section 6.2) : décrit d'après le modèle du chapitre 4, non écrit ni exécuté.
 - **Clone frais** (section 9.4) : obtenu par un clone local du dépôt-modèle, sans GitHub ; le compte `+20 -4` est celui du squelette sans la story.
-- **Rien n'a été exécuté sur GitHub** : ni PR, ni relecture, ni CI en ligne.
+- **Aucune PR de cette story n'a été ouverte ni relue sur GitHub** : seul l'essai du script de création des dépôts (27 novembre 2026) s'est fait en ligne, sans le code de la story.
 - **Valeurs** : les valeurs de la story sont celles de `PROJET-B.md` et de `themes.md` ; le choix du 6 octobre 2026 à 04:00Z comme début du quart du scénario est arbitraire (l'énoncé ne fixe que la durée pour le cas 2).
 
 ---

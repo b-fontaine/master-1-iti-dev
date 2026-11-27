@@ -750,7 +750,7 @@ Le livrable de fin de séance, identique pour les trois thèmes, dit « modèle 
 
 :::: {.callout-note title="Points non vérifiés"}
 
-- **Vérifié sous Linux seulement**, sur une copie locale du dépôt-modèle (Flutter 3.50.1, drift 2.35.4, drift_dev 2.35.3, git 2.53.0), le 26 novembre 2026. Ni Windows, ni macOS, ni la CI en ligne (le dépôt-modèle n'est pas encore publié). Les durées et nombres de fichiers affichés par `build_runner` varient d'une exécution à l'autre.
+- **Vérifié sous Linux seulement**, sur une copie locale du dépôt-modèle (Flutter 3.50.1, drift 2.35.4, drift_dev 2.35.3, git 2.53.0), le 26 novembre 2026. Ni Windows, ni macOS, ni la CI en ligne avec le code de ce chapitre (la CI du dépôt-modèle seul a tourné en ligne le 27 novembre 2026, verte). Les durées et nombres de fichiers affichés par `build_runner` varient d'une exécution à l'autre.
 - **Version 2 jouée en gardant `jets`.** Le retrait de la fonctionnalité d'exemple, décrit dans `docs/ARCHITECTURE.md`, n'a pas été rejoué pour ce chapitre ; l'ajout de `await m.deleteTable('jets');` est repris de ce fichier.
 - **Tables `arrets`, `ordres_fabrication` complète et `declarations_production`** : dessinées dans le schéma de la section [-@sec-donnees-3-2] d'après l'énoncé, non implémentées. Une table `ordres_fabrication` réduite (sans `quantite_lancee`) a servi à l'expérience des deux branches. La contrainte sur la liste des catégories d'arrêt n'a pas été écrite ni testée.
 - **Schéma `mermaid`** (section [-@sec-donnees-3-2]) : syntaxe `erDiagram` relue, rendu non vérifié au moment de la rédaction.
