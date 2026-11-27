@@ -1,0 +1,172 @@
+# Intégration continue complète (séance 4).
+#
+# Ce fichier est fourni inactif. Pour l'activer, copiez-le par-dessus
+# .github/workflows/ci.yml, dans une PR :
+#
+#   cp docs/seance-4/ci.yml .github/workflows/ci.yml
+#
+# Rien n'est à adapter : le nom du dépôt est lu par GitHub.
+#
+# Quatre contrôles, visibles un par un sur la page d'une PR. Les trois premiers
+# tournent en même temps :
+#   analyse-et-tests  les commandes de « Vérifier avant une PR » du README, plus la couverture
+#   securite          dépendances vulnérables (osv-scanner) et secrets dans l'historique (gitleaks)
+#   site-web          la version web se construit
+#   publication       la version web est publiée sur GitHub Pages (seulement depuis main,
+#                     et seulement si les trois autres sont verts)
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Par défaut, les contrôles ne peuvent que lire le dépôt.
+permissions:
+  contents: read
+
+# Une commande qui échoue au milieu d'un tube (a | b) fait échouer l'étape.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  analyse-et-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v7
+
+      - name: Installer Flutter 3.50.1
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.50.1
+          cache: true
+
+      - name: Installer les dépendances
+        run: flutter pub get --enforce-lockfile
+
+      - name: Générer le code
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      # Échoue si une table drift a changé sans nouvelle version de schéma,
+      # ou si un fichier produit par make-migrations n'a pas été commité.
+      - name: Vérifier les instantanés du schéma de la base
+        run: |
+          dart run drift_dev make-migrations
+          git status --short -- drift_schemas lib/core/data test/core/data/migrations
+          test -z "$(git status --porcelain -- drift_schemas lib/core/data test/core/data/migrations)"
+
+      - name: Vérifier la mise en forme
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyser
+        run: flutter analyze
+
+      - name: Tester et mesurer la couverture
+        run: flutter test --coverage
+
+      # La couverture est la part des lignes exécutées par au moins un test, parmi les
+      # fichiers que les tests chargent (un fichier qu'aucun test ne charge n'est pas compté).
+      # Elle s'affiche dans le résumé du contrôle ; aucun seuil ne fait échouer la CI.
+      - name: Afficher la couverture
+        run: |
+          awk -F: '/^LF:/ { total += $2 } /^LH:/ { couvertes += $2 }
+            END { printf "Couverture des tests : %.1f %% (%d lignes exécutées sur %d)\n",
+                  (total ? couvertes * 100 / total : 0), couvertes, total }' \
+            coverage/lcov.info | tee -a "$GITHUB_STEP_SUMMARY"
+
+  securite:
+    runs-on: ubuntu-latest
+    steps:
+      # fetch-depth: 0 récupère tout l'historique : un secret supprimé du dernier
+      # commit reste lisible dans les commits précédents.
+      - name: Récupérer le dépôt et tout son historique
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # Compare les versions de pubspec.lock à la base publique de vulnérabilités OSV.
+      # L'outil est téléchargé à une version précise. Son empreinte (SHA256) est écrite
+      # ici : si le fichier téléchargé n'est pas exactement celui-là, l'étape échoue.
+      # Changer de version, c'est changer VERSION et SHA256 ensemble.
+      - name: Chercher des dépendances vulnérables (osv-scanner)
+        env:
+          VERSION: 2.7.1
+          SHA256: fb7dab19a8bd9bbe5c3189f09d4b7ee1820c9553a23bac202648a56efd2f6ee8
+        run: |
+          outil="$RUNNER_TEMP/osv-scanner"
+          curl -sSfL -o "$outil" "https://github.com/google/osv-scanner/releases/download/v${VERSION}/osv-scanner_linux_amd64"
+          echo "$SHA256  $outil" | sha256sum --check -
+          chmod +x "$outil"
+          "$outil" scan --lockfile=pubspec.lock
+
+      # Cherche des secrets (clés, jetons, mots de passe) dans tous les commits de main
+      # et, sur une PR, dans ceux de la PR. Les autres branches ne sont pas lues : elles
+      # le seront quand elles feront l'objet d'une PR.
+      # --redact masque la valeur trouvée dans le journal, qui est public.
+      - name: Chercher des secrets dans l'historique (gitleaks)
+        env:
+          VERSION: 8.30.1
+          SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          archive="$RUNNER_TEMP/gitleaks.tar.gz"
+          curl -sSfL -o "$archive" "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz"
+          echo "$SHA256  $archive" | sha256sum --check -
+          tar -xzf "$archive" -C "$RUNNER_TEMP" gitleaks
+          "$RUNNER_TEMP/gitleaks" git --redact --verbose --log-opts="--full-history HEAD" .
+
+  site-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v7
+
+      - name: Installer Flutter 3.50.1
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.50.1
+          cache: true
+
+      - name: Installer les dépendances
+        run: flutter pub get --enforce-lockfile
+
+      - name: Générer le code
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      # Le site est servi sous le nom du dépôt (https://<organisation>.github.io/<dépôt>/),
+      # d'où --base-href. --no-web-resources-cdn embarque le moteur de rendu au lieu
+      # de le charger chez Google. Tout ce qui est dans build/web/ sera public.
+      - name: Construire la version web
+        run: >
+          flutter build web --release
+          --base-href "/${{ github.event.repository.name }}/"
+          --no-web-resources-cdn
+          --web-content-hash
+
+      - name: Préparer le site pour GitHub Pages
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: build/web
+
+  publication:
+    # Seule la branche main publie : une PR construit le site sans le mettre en ligne.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [analyse-et-tests, securite, site-web]
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    # Deux publications ne se chevauchent pas ; celle qui est en cours se termine.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Publier sur GitHub Pages
+        id: deploiement
+        uses: actions/deploy-pages@v5
