@@ -25,6 +25,12 @@ tasks:
     cmds:
       - npm run day-3 -- {{.CLI_ARGS}}
 
+  day-4:
+    desc: Lance la séance 4 (diaporama + notes synchronisées)
+    dir: cours/presentations
+    cmds:
+      - npm run day-4 -- {{.CLI_ARGS}}
+
   themes:
     desc: Lance la présentation des trois projets (diaporama + notes synchronisées)
     dir: cours/presentations
@@ -32,9 +38,10 @@ tasks:
       - npm run themes -- {{.CLI_ARGS}}
 
   depots:test:
-    desc: Teste le script de création des dépôts d'équipe (faux GitHub local, rien n'est créé en ligne)
+    desc: Teste les scripts de création et de préparation des dépôts d'équipe (faux GitHub local, rien n'est créé en ligne)
     cmds:
       - bash cours/scripts/test-creer-depots.sh
+      - bash cours/scripts/test-preparer-seance-4.sh
 
   book:
     desc: Compile le support de cours (PDF et EPUB) dans support-de-cours/_book/

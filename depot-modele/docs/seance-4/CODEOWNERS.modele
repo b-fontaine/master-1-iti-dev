@@ -1,0 +1,14 @@
+# Propriétaires du code (séance 4).
+#
+# Ce fichier est un modèle inactif. Pour l'activer, copiez-le sous le nom
+# .github/CODEOWNERS, dans une PR, après avoir remplacé les identifiants :
+#
+#   cp docs/seance-4/CODEOWNERS.modele .github/CODEOWNERS
+#
+# Chaque ligne associe un dossier aux personnes dont la relecture est demandée
+# quand une PR le modifie. Un propriétaire s'écrit avec son identifiant GitHub
+# précédé de @, et doit avoir le droit d'écriture sur le dépôt.
+#
+# Les cas d'acceptation appartiennent au gardien produit et à un second membre :
+# remplacez les deux identifiants ci-dessous par les leurs.
+/test/acceptance/ @identifiant-du-gardien-produit @identifiant-du-second-membre

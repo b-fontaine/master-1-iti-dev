@@ -55,7 +55,7 @@ bash support-de-cours/scripts/version-suivante.sh --notes  # commits qui la comp
 4. Ajouter la ligne correspondante à la table ci-dessous.
 5. Lancer `task book:check`.
 
-### Remplacer la page « à paraître » d'une séance K (3, 4 ou 5)
+### Remplacer la page « à paraître » d'une séance K (5)
 
 Des chapitres existants (par exemple `@sec-s3`, `@sec-s4`, `@sec-s5`) renvoient à ces pages : on garde donc l'identifiant `#sec-sK` sur le chapitre « La séance en bref » de la nouvelle partie, et les renvois continuent de fonctionner (vérifier d'abord avec `grep -rn "sec-sK" support-de-cours/*/*.qmd`).
 
@@ -75,7 +75,7 @@ Tout fichier de `cours/` qui nourrit le livre figure ici. Le chemin source est c
 | Source | Chapitre (fichier · identifiant) |
 |---|---|
 | `README.md` (racine) | `partie-1-formation/01-programme.qmd` · `#sec-programme` ; glossaire repris dans `annexes/b-glossaire.qmd` · `#sec-glossaire` |
-| `cours/programme-detaille.md` | `partie-1-formation/02-programme-detaille.qmd` · `#sec-programme-detaille` ; séances à venir : `partie-5-a-venir/seance-4.qmd` · `#sec-s4`, `seance-5.qmd` · `#sec-s5` |
+| `cours/programme-detaille.md` | `partie-1-formation/02-programme-detaille.qmd` · `#sec-programme-detaille` ; séance à venir : `partie-5-a-venir/seance-5.qmd` · `#sec-s5` |
 | `cours/presentations/day-1/index.html`, `cours/presentations/day-1/notes.html` | `partie-2-seance-1/00-seance-en-bref.qmd` · `#sec-s1-en-bref` |
 | `cours/supports/day-1/01-histoire-detaillee-du-craft.md` | `partie-2-seance-1/01-histoire-du-craft.qmd` · `#sec-histoire-craft` |
 | `cours/supports/day-1/02-histoire-de-l-ia.md` | `partie-2-seance-1/02-histoire-de-l-ia.qmd` · `#sec-histoire-ia` |
@@ -97,6 +97,12 @@ Tout fichier de `cours/` qui nourrit le livre figure ici. Le chemin source est c
 | `cours/supports/day-3/03-rgpd-applique-au-projet.md` | `partie-5-seance-3/03-rgpd-applique-au-projet.qmd` · `#sec-rgpd-projet` |
 | `cours/supports/day-3/04-les-donnees.md` | `partie-5-seance-3/04-les-donnees.qmd` · `#sec-donnees` |
 | `cours/supports/day-3/05-fiches-de-seance.md` | `annexes/a-fiches-pratiques.qmd` · `#sec-fiches` (fiches G à N) |
+| `cours/presentations/day-4/index.html`, `cours/presentations/day-4/notes.html` | `partie-6-seance-4/00-seance-en-bref.qmd` · `#sec-s4` |
+| `cours/supports/day-4/01-test-d-acceptation.md` | `partie-6-seance-4/01-test-d-acceptation.qmd` · `#sec-test-acceptation` |
+| `cours/supports/day-4/02-ci-cd-et-publication.md` | `partie-6-seance-4/02-ci-cd-et-publication.qmd` · `#sec-ci-publication` |
+| `cours/supports/day-4/03-securite-et-audit-croise.md` | `partie-6-seance-4/03-securite-et-audit-croise.qmd` · `#sec-securite-audit` |
+| `cours/supports/day-4/04-ai-act-et-rssi.md` | `partie-6-seance-4/04-ai-act-et-rssi.qmd` · `#sec-ai-act-rssi` |
+| `cours/supports/day-4/05-fiches-de-seance.md` | `annexes/a-fiches-pratiques.qmd` · `#sec-fiches` (fiches O à V) |
 | `cours/projets/themes.md`, `cours/presentations/themes/index.html`, `cours/presentations/themes/notes.html` | `partie-4-projet/01-themes.qmd` · `#sec-themes` |
 | `cours/conformite-ai-act-rgpd.md` | `partie-4-projet/02-conformite.qmd` · `#sec-conformite` |
 | _(texte original, sans source)_ | `index.qmd` (avant-propos), `partie-1-formation/03-parcours-autonome.qmd` · `#sec-parcours-autonome`, pages d'ouverture de partie |

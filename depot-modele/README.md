@@ -49,6 +49,8 @@ C'est la liste de référence, citée par `CLAUDE.md` et `docs/ARCHITECTURE.md`.
 5. `flutter analyze`
 6. `flutter test`
 
+En séance 4, la CI complète remplace ce fichier : `docs/seance-4/ci.yml`, fourni inactif, se copie par-dessus `.github/workflows/ci.yml` (`cp docs/seance-4/ci.yml .github/workflows/ci.yml`, dans une PR). Elle garde ces six commandes, mesure en plus la couverture des tests (`flutter test --coverage`), cherche les dépendances vulnérables et les secrets dans l'historique, construit la version web et la publie sur GitHub Pages depuis `main`.
+
 Bon à savoir :
 
 - Les fichiers générés par `build_runner` (`*.g.dart`, tests tirés des `.feature`) ne sont pas versionnés : relancez `build_runner` après chaque clone et après chaque modification d'un `.feature` ou d'une table.
@@ -66,6 +68,7 @@ Bon à savoir :
 ├── PROJET.md                     vision et user stories du thème
 ├── JOURNAL.md                    état courant du projet et décisions
 ├── docs/fiche_conformite.md      fiche de conformité (séances 3 et 4)
+├── docs/seance-4/                fichiers fournis pour la séance 4 : CI complète, modèle de CODEOWNERS
 ├── .github/
 │   ├── workflows/ci.yml          CI : analyse et tests à chaque PR
 │   └── pull_request_template.md  modèle de description de PR

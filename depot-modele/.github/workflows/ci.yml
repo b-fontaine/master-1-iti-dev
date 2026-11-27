@@ -1,5 +1,6 @@
 # Intégration continue minimale : analyse et tests à chaque PR et à chaque fusion dans main.
-# Le workflow complet (couverture, audit, gitleaks, build web, GitHub Pages) arrive en séance 4.
+# Le workflow complet (couverture, dépendances, secrets, build web, GitHub Pages) est fourni
+# dans docs/seance-4/ci.yml : il remplace ce fichier en séance 4.
 name: CI
 
 on:

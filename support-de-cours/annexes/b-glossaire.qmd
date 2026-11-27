@@ -1,4 +1,4 @@
-<!-- source: README.md, glossaires des chapitres, cours/supports/day-3/01-travailler-a-plusieurs.md, cours/supports/day-3/02-premiere-user-story.md, cours/supports/day-3/03-rgpd-applique-au-projet.md, cours/supports/day-3/04-les-donnees.md, cours/supports/day-3/05-fiches-de-seance.md · synchro: 2026-11-27 -->
+<!-- source: README.md, glossaires des chapitres, cours/supports/day-3/01-travailler-a-plusieurs.md, cours/supports/day-3/02-premiere-user-story.md, cours/supports/day-3/03-rgpd-applique-au-projet.md, cours/supports/day-3/04-les-donnees.md, cours/supports/day-3/05-fiches-de-seance.md, cours/supports/day-4/01-test-d-acceptation.md, cours/supports/day-4/02-ci-cd-et-publication.md, cours/supports/day-4/03-securite-et-audit-croise.md, cours/supports/day-4/04-ai-act-et-rssi.md, cours/supports/day-4/05-fiches-de-seance.md · synchro: 2026-11-27 -->
 
 # Glossaire {#sec-glossaire}
 
@@ -25,6 +25,9 @@ AGENTS.md
 Agile
 :   famille de méthodes de travail par cycles courts, avec retours fréquents du client, formalisée par le Manifeste de 2001. (voir @sec-histoire-craft)
 
+AI Act
+:   règlement (UE) 2024/1689, règlement européen sur l'intelligence artificielle ; il classe les usages de l'IA par niveau de risque. (voir @sec-ai-act-rssi)
+
 Alias de type (`typedef`)
 :   surnom donné à un type existant (ici `Position`). (voir @sec-pratique-craft-flutter)
 
@@ -33,6 +36,12 @@ Alignement
 
 Analyse statique (lint)
 :   lecture du code sans l'exécuter pour y détecter erreurs et écarts de style (`flutter analyze`). (voir @sec-guide-flutter)
+
+Anneau
+:   organisation de l'audit croisé où chaque équipe audite la suivante et est auditée par une autre, sans réciprocité. (voir @sec-fiches)
+
+Annexe III
+:   liste des usages à haut risque de l'AI Act, dont l'éducation et la formation (point 3) et l'emploi et la gestion des travailleurs (point 4). (voir @sec-ai-act-rssi)
 
 API REST
 :   moyen pour un programme de répondre à des requêtes envoyées par le réseau (ici le serveur Rust du dépôt). (voir @sec-pratique-craft-flutter)
@@ -53,13 +62,16 @@ Arbre de widgets
 :   l'emboîtement des widgets, du parent à ses enfants. (voir @sec-guide-flutter)
 
 Artefact
-:   fichier produit par un pipeline (site, rapport, paquet). (voir @sec-ci-cd)
+:   fichier produit par un pipeline (site, rapport, paquet) ; sur GitHub, fichier produit par un contrôle et conservé avec son exécution, par exemple le site construit (`github-pages`). (voir @sec-ci-cd et @sec-ci-publication)
 
 Async / await / Future
 :   mécanisme pour attendre un résultat qui prend du temps (serveur, fichier) sans figer l'application. (voir @sec-guide-flutter)
 
 Attention
 :   mécanisme qui permet au modèle de se concentrer sur les parties pertinentes du texte à chaque étape. (voir @sec-histoire-ia)
+
+Audit croisé
+:   examen du dépôt d'une équipe par une équipe d'un autre thème, sur cinq points fixés, dont les constats deviennent des issues. (voir @sec-securite-audit)
 
 Augmented coding
 :   usage de l'IA en gardant les exigences de qualité du code écrit à la main (Kent Beck, 2025). (voir @sec-craft-ia)
@@ -115,11 +127,17 @@ Brownfield / greenfield
 Build
 :   opération qui transforme le code source en livrable exécutable. (voir @sec-ci-cd)
 
+Build web
+:   la version de l'application produite par `flutter build web`, dans `build/web/`. (voir @sec-ci-publication)
+
 `build_runner`
 :   outil Dart qui génère du code à partir d'autres fichiers (scénarios, base). (voir @sec-demarrer-projet)
 
 BuildContext
 :   l'emplacement d'un widget dans l'arbre, utilisé pour accéder au thème, naviguer, retrouver un Cubit. (voir @sec-guide-flutter)
+
+Bundle (web)
+:   ensemble des fichiers produits par `flutter build web` que GitHub Pages sert au navigateur ; tout ce qu'il contient est public. (voir @sec-ci-publication et @sec-securite-audit)
 
 Cache
 :   copie conservée d'éléments téléchargés pour accélérer les exécutions suivantes. (voir @sec-ci-cd)
@@ -127,8 +145,17 @@ Cache
 Cache de prompt
 :   relecture à tarif réduit du début inchangé des requêtes. (voir @sec-outils-agentiques)
 
+CanvasKit
+:   le moteur de rendu de Flutter dans le navigateur ; embarqué grâce à `--no-web-resources-cdn`. (voir @sec-ci-publication)
+
 Cardinalité
 :   nombre de lignes d'une table qui peuvent être reliées à une ligne d'une autre (« un et un seul », « zéro ou plusieurs »). (voir @sec-donnees)
+
+Carte de source (*source map*, `.map`)
+:   fichier qui relie un code transformé à son code d'origine. (voir @sec-ci-publication)
+
+Cas d'acceptation
+:   ligne du tableau de l'énoncé qui fixe une entrée et la sortie attendue du clou. (voir @sec-test-acceptation)
 
 Cas d'usage (*use case*)
 :   une action de l'utilisateur, écrite dans `domain` (ici, consulter la disponibilité d'un quart). (voir @sec-premiere-user-story)
@@ -163,6 +190,9 @@ Clean Architecture
 Cloner
 :   copier sur son poste un dépôt distant, avec tout son historique. (voir @sec-git)
 
+Clou
+:   la règle métier centrale de chaque thème, une fonction pure de la couche `domain` (`jugerTraversee`, `calculerTrs`, `repartir`). (voir @sec-test-acceptation)
+
 Cloud
 :   serveurs distants hébergés par un fournisseur. (voir @sec-edge-ai)
 
@@ -170,10 +200,13 @@ CNIL
 :   autorité de contrôle française pour la protection des données ; reçoit les réclamations. (voir @sec-rgpd-projet)
 
 Code de sortie
-:   nombre renvoyé par une commande quand elle se termine ; 0 signifie « tout va bien ». (voir @sec-configurer-claude-code)
+:   nombre renvoyé par une commande quand elle se termine ; 0 signifie « tout va bien », autre chose signifie « échoué ». (voir @sec-configurer-claude-code et @sec-ci-publication)
 
 Code source
 :   texte des instructions d'un logiciel. (voir @sec-histoire-craft)
+
+`CODEOWNERS`
+:   fichier d'un dépôt GitHub qui désigne les propriétaires de certains chemins ; GitHub demande leur relecture quand une PR touche ces chemins. (voir @sec-test-acceptation)
 
 Collaborateur
 :   compte GitHub autorisé à écrire dans un dépôt. (voir @sec-demarrer-projet)
@@ -199,6 +232,9 @@ Conflit
 Consigne
 :   texte lu par le modèle (prompt, `CLAUDE.md`, skill) ; une demande, pas une garantie. (voir @sec-configurer-claude-code)
 
+Constat
+:   fait observé dans le dépôt audité, avec l'endroit où on l'a vu ; pas une hypothèse. (voir @sec-securite-audit)
+
 Context rot
 :   dégradation de la précision quand le contexte devient très long. (voir @sec-histoire-ia)
 
@@ -211,8 +247,17 @@ Contexte (fenêtre de)
 Contrainte
 :   règle appliquée par l'outil, indépendamment du modèle (permission, hook, outils d'un sous-agent) ; en base de données, règle vérifiée par la base à chaque écriture (valeur obligatoire, unicité, condition, clé étrangère). (voir @sec-configurer-claude-code et @sec-donnees)
 
+Contrôle (*check*)
+:   un job du workflow, tel qu'il apparaît sur la page d'une PR, avec sa pastille. (voir @sec-ci-publication)
+
+Contrôle d'accès
+:   vérification qu'un utilisateur a le droit de faire une action ; dans le projet, la garde `RequireRole` du domaine. (voir @sec-securite-audit)
+
 Contrôle d'ouverture
 :   courte vérification, en début de séance, que le dépôt démarre sur chaque poste et que l'équipe sait où elle en est. (voir @sec-travailler-a-plusieurs)
+
+Contrôle exigé (*required status check*)
+:   contrôle de CI qui doit être vert pour que la protection de `main` autorise la fusion ; ici, `analyse-et-tests`, `securite` et `site-web`. (voir @sec-ci-publication et @sec-fiches)
 
 Corrélation / causalité
 :   deux phénomènes évoluent ensemble / l'un provoque l'autre. (voir @sec-craft-ia)
@@ -221,7 +266,7 @@ Couche
 :   famille de fichiers ayant le même rôle (`presentation`, `domain`, `data`). (voir @sec-demarrer-projet)
 
 Couverture
-:   part des lignes exécutées par les tests. (voir @sec-ci-cd)
+:   part des lignes exécutées par au moins un test, parmi les fichiers que les tests chargent. (voir @sec-ci-cd et @sec-ci-publication)
 
 Craft (software craftsmanship)
 :   mouvement et posture professionnelle qui font de la qualité technique et de la responsabilité une valeur, au-delà du simple « ça marche ». (voir @sec-histoire-craft)
@@ -232,8 +277,17 @@ Critère d'acceptation
 Cubit
 :   la variante simple de BLoC : des fonctions qui publient un nouvel état (`emit`). (voir @sec-guide-flutter)
 
+`customSelect`, `customStatement`
+:   fonctions de drift qui exécutent une requête SQL écrite à la main (lecture, écriture) ; elles reçoivent des variables liées, jamais du texte assemblé. (voir @sec-securite-audit)
+
 Dart
 :   le langage de programmation de Flutter. (voir @sec-guide-flutter)
+
+Décision automatisée
+:   décision fondée exclusivement sur un traitement automatisé, produisant des effets juridiques ou affectant une personne de manière significative ; encadrée par l'art. 22 du RGPD. (voir @sec-ai-act-rssi)
+
+Décision provisoire
+:   décision du RSSI en séance 4 (go, go sous conditions, no-go), qui précède sa réponse écrite sur la v1 de la fiche. (voir @sec-ai-act-rssi)
 
 Definition of done
 :   la liste de ce qui doit être vrai pour dire « c'est fini ». (voir @sec-fiches)
@@ -246,6 +300,9 @@ Dépendance
 
 Déploiement continu
 :   chaque modification validée est publiée automatiquement. (voir @sec-ci-cd)
+
+Déployeur
+:   celui qui utilise un système d'IA sous sa propre autorité (art. 3). (voir @sec-ai-act-rssi)
 
 Dépôt
 :   dossier suivi par git, qui contient le code et son historique. (voir @sec-craft-ia)
@@ -295,6 +352,9 @@ drift
 `drift_dev make-migrations`
 :   outil de drift qui écrit l'instantané de chaque version du schéma, le fichier d'étapes et les tests de migration. (voir @sec-donnees)
 
+Droit à l'explication
+:   droit d'une personne affectée par une décision fondée sur un système à haut risque d'obtenir des explications du déployeur (AI Act, art. 86). (voir @sec-ai-act-rssi)
+
 Edge AI (IA embarquée)
 :   exécution d'un modèle d'IA sur l'appareil de l'utilisateur. (voir @sec-edge-ai)
 
@@ -307,6 +367,9 @@ Embedding (plongement)
 Émergence
 :   comportement d'ensemble complexe produit par des règles locales simples. (voir @sec-pratique-craft-flutter)
 
+Empreinte (SHA-256)
+:   suite de caractères calculée à partir du contenu d'un fichier ; elle change si un seul octet change. Dans un rapport gitleaks, `Fingerprint` est l'identifiant d'une découverte. (voir @sec-ci-publication)
+
 Enregistrement (*record*)
 :   valeur composée de plusieurs éléments, avec ou sans noms, comparable directement (fonctionnalité de Dart 3). (voir @sec-pratique-craft-flutter)
 
@@ -317,7 +380,7 @@ Entité
 :   liste fermée de valeurs possibles. (voir @sec-pratique-craft-flutter)
 
 Environnement
-:   lieu d'exécution du logiciel (test, production). (voir @sec-ci-cd)
+:   lieu d'exécution du logiciel (test, production) ; sur GitHub, cible de déploiement avec ses propres règles, comme `github-pages`, où seule `main` peut publier. (voir @sec-ci-cd et @sec-ci-publication)
 
 Équipe jumelée
 :   équipe désignée par le programme pour relire les PR de la vôtre pendant la revue croisée. (voir @sec-travailler-a-plusieurs)
@@ -328,6 +391,9 @@ Essai contrôlé randomisé (RCT)
 Étape (step) et **Job**
 :   instruction et groupe d'instructions d'un workflow. (voir @sec-ci-cd)
 
+Étape 0
+:   question préalable à tout classement : l'outil est-il un système d'IA au sens de l'art. 3, point 1 ? (voir @sec-ai-act-rssi)
+
 Étape de scénario (*step*)
 :   fonction Dart qui exécute une phrase d'un scénario ; une par fichier, dans `test/steps/`. (voir @sec-premiere-user-story)
 
@@ -336,6 +402,9 @@ Example Mapping
 
 Fast-forward (avance rapide)
 :   fusion sans nouveau commit, quand la branche qui reçoit n'a pas bougé. (voir @sec-git)
+
+Faux positif
+:   alerte sur quelque chose qui n'est pas un problème réel. (voir @sec-ci-publication)
 
 Fiche de conformité
 :   document de la formation, à 13 rubriques, dans `docs/fiche_conformite.md` ; version pédagogique et allégée d'un registre, pas le registre officiel. (voir @sec-rgpd-projet)
@@ -364,6 +433,9 @@ Fonctionnalité (*feature*)
 Fork
 :   copie d'un dépôt par un tiers. (voir @sec-ci-cd)
 
+Fournisseur
+:   celui qui développe un système d'IA ou le met sur le marché sous son nom (art. 3). (voir @sec-ai-act-rssi)
+
 Fusion (*merge*)
 :   réunion du travail d'une branche dans une autre. (voir @sec-git)
 
@@ -373,11 +445,20 @@ Garde-fou
 Gardien
 :   membre de l'équipe qui veille sur un domaine (produit, données, harnais, conformité, démonstration). (voir @sec-demarrer-projet)
 
+Gardien produit
+:   membre de l'équipe qui tient `PROJET.md`, les cas d'acceptation et la fiche de conformité. (voir @sec-test-acceptation)
+
+Gel des fonctionnalités
+:   moment, au plus tard une semaine avant la séance 5, après lequel on ne fait plus que des correctifs, de la documentation et la préparation de la démonstration. (voir @sec-fiches)
+
 Gel du code (*code freeze*)
 :   période pendant laquelle on s'interdit toute modification. (voir @sec-configurer-claude-code)
 
 Gherkin
 :   langage des scénarios (`Given/When/Then`, en français `Soit/Quand/Alors`). (voir @sec-pratique-craft-flutter)
+
+`git grep`
+:   commande qui cherche un texte dans les fichiers suivis par git. (voir @sec-securite-audit)
 
 `git pull origin main`
 :   récupère la branche `main` du dépôt distant et la fusionne dans la branche courante. (voir @sec-travailler-a-plusieurs)
@@ -386,19 +467,34 @@ Git, dépôt
 :   outil de gestion de l'historique et de partage du travail ; espace de stockage d'un projet. (voir @sec-git)
 
 GitHub Pages
-:   hébergement de sites statiques par GitHub. (voir @sec-ci-cd)
+:   hébergement de sites statiques par GitHub ; public. (voir @sec-ci-cd et @sec-ci-publication)
 
 `.gitignore`
 :   fichier qui liste ce que git doit ignorer. (voir @sec-git)
 
+gitleaks
+:   outil qui cherche des secrets dans un dépôt et son historique ; lancé par la CI, il lit ici tous les commits de `main` et ceux de la PR. (voir @sec-ci-publication et @sec-securite-audit)
+
+Go sous conditions
+:   accord du RSSI assorti d'actions datées à réaliser. (voir @sec-ai-act-rssi)
+
+Goulot d'étranglement
+:   étape la plus lente d'une chaîne, qui fixe le rythme de toute la chaîne ; ici, la relecture humaine. (voir @sec-test-acceptation)
+
 GPU (processeur graphique)
 :   processeur très efficace pour les calculs massivement parallèles de l'apprentissage. (voir @sec-histoire-ia)
+
+Grille go/no-go
+:   les critères go et no-go du module de conformité (section [-@sec-conf-validation]), avec lesquels le RSSI décide et les observateurs suivent un passage. (voir @sec-ai-act-rssi et @sec-fiches)
 
 Hallucination
 :   contenu généré faux ou sans fondement, présenté comme plausible. (voir @sec-histoire-ia)
 
 Harnais (*harness*)
 :   tout ce qui entoure le modèle dans un agent (outils, règles, contexte, permissions, contrôles). (voir @sec-histoire-ia)
+
+Haut risque
+:   niveau de l'AI Act pour les usages listés aux annexes I et III, soumis à des exigences lourdes (gestion des risques, qualité des données, documentation, supervision humaine). (voir @sec-ai-act-rssi)
 
 HEAD
 :   votre position actuelle dans l'historique, en général le dernier commit de la branche courante. (voir @sec-git)
@@ -408,6 +504,9 @@ Hiver de l'IA
 
 Hook
 :   script que l'outil déclenche automatiquement à un moment précis (par exemple avant une édition). (voir @sec-pratique-craft-flutter)
+
+Hors champ
+:   se dit d'un outil qui n'est pas un système d'IA ; l'AI Act ne s'applique pas, le RGPD si. (voir @sec-ai-act-rssi)
 
 Hot reload (rechargement à chaud)
 :   mise à jour instantanée de l'application en cours, sans perdre son état. (voir @sec-guide-flutter)
@@ -421,8 +520,14 @@ Inférence
 Injection de dépendances
 :   fournir à une pièce de code ce dont elle a besoin au lieu de la laisser le fabriquer, pour pouvoir le remplacer en test. (voir @sec-demarrer-projet)
 
+Injection de formule
+:   texte exporté en CSV qu'un tableur interprète comme une formule ; parade : apostrophe devant `=`, `+`, `-`, `@`. (voir @sec-securite-audit)
+
 Injection de prompt
 :   texte malveillant glissé dans le contenu lu par l'agent. (voir @sec-outils-agentiques)
+
+Injection SQL
+:   valeur extérieure collée dans le texte d'une requête SQL, qui en change le sens. (voir @sec-securite-audit)
 
 Insertion orpheline
 :   tentative d'enregistrer une ligne dont la clé étrangère pointe vers une ligne qui n'existe pas. (voir @sec-fiches)
@@ -438,6 +543,12 @@ Interface (contrat)
 
 Invite de commande (`$`)
 :   le signe affiché par le terminal avant votre saisie ; il ne se tape pas. (voir @sec-fiches)
+
+ISO 8601
+:   format normalisé d'écriture des dates et heures, par exemple `2026-10-06T06:00:00+02:00` (date, heure, décalage par rapport à UTC). (voir @sec-test-acceptation)
+
+Issue
+:   fiche de suivi d'un dépôt GitHub (titre, texte, commentaires, ouverte ou fermée). (voir @sec-securite-audit)
 
 JSON
 :   format de données textuel strict, utilisé par les fichiers de réglages. (voir @sec-configurer-claude-code)
@@ -455,7 +566,7 @@ Lint
 :   analyse automatique du code sans l'exécuter. (voir @sec-ci-cd)
 
 Livrable
-:   ce que l'équipe doit avoir fusionné à la fin de la séance. (voir @sec-fiches)
+:   ce que l'équipe doit avoir fusionné ou montré à la fin de la séance. (voir @sec-fiches)
 
 Livraison continue (CD)
 :   le logiciel est toujours prêt à être publié. (voir @sec-ci-cd)
@@ -465,6 +576,9 @@ LLM (grand modèle de langage)
 
 LLM / SLM
 :   grand modèle de langage / petit modèle de langage. (voir @sec-edge-ai)
+
+Maîtrise de l'IA
+:   obligation, pour les fournisseurs et déployeurs, de favoriser la capacité de leurs personnels à utiliser l'IA (art. 4). (voir @sec-ai-act-rssi)
 
 Marketplace
 :   catalogue de plugins. (voir @sec-configurer-claude-code)
@@ -505,14 +619,26 @@ Modèle de PR
 Mutation testing
 :   introduire de petites erreurs dans le code pour vérifier que les tests les détectent. (voir @sec-craft-ia)
 
+No-go
+:   refus du RSSI ; c'est aussi la décision par défaut en l'absence de réponse. (voir @sec-ai-act-rssi)
+
 NPU
 :   processeur dédié aux calculs d'IA. (voir @sec-edge-ai)
 
 Null / null safety
 :   absence de valeur / garantie du langage qui interdit d'utiliser une valeur nulle sans le prévoir (`String?`). (voir @sec-guide-flutter)
 
+Obligations de transparence
+:   obligations de l'art. 50 pour les agents conversationnels et les contenus générés : informer, marquer, signaler. (voir @sec-ai-act-rssi)
+
+Omnibus numérique sur l'IA
+:   texte modificatif de l'AI Act, le règlement (UE) 2026/1744, qui a reporté une partie des obligations de haut risque. (voir @sec-ai-act-rssi)
+
+OSV, osv-scanner
+:   base publique de vulnérabilités connues, et outil qui compare `pubspec.lock` à cette base. (voir @sec-ci-publication)
+
 OWASP Top 10
-:   liste de référence des dix grandes catégories de failles de sécurité des applications web. (voir @sec-craft-ia)
+:   liste de référence des dix grandes catégories de failles de sécurité des applications web, publiée par la fondation OWASP. (voir @sec-craft-ia et @sec-securite-audit)
 
 Pair / mob programming
 :   travail à deux (pair) ou à tout un groupe (mob) sur le même code. (voir @sec-histoire-craft)
@@ -544,6 +670,9 @@ Pipeline
 Pipeline de déploiement
 :   chaîne automatisée qui mène un changement du dépôt à la production. (voir @sec-histoire-craft)
 
+Plan B
+:   build web local et démonstration avec `flutter run -d chrome` quand Pages ou Actions posent problème, publication terminée dans le sprint. (voir @sec-fiches)
+
 Plugin (Claude Code)
 :   paquet installable regroupant skills, sous-agents, hooks et serveurs MCP. (voir @sec-configurer-claude-code)
 
@@ -555,6 +684,9 @@ Porte qualité
 
 Pousser, tirer (*push*, *pull*)
 :   envoyer ses commits vers le dépôt distant, récupérer ceux des autres. (voir @sec-git)
+
+PR en brouillon (*draft*)
+:   PR ouverte pour être vue, mais qui ne peut pas être fusionnée tant qu'elle n'est pas déclarée prête (*Ready for review*). (voir @sec-test-acceptation)
 
 PRAGMA
 :   commande de réglage propre à SQLite (par exemple `PRAGMA foreign_keys = ON`). (voir @sec-donnees)
@@ -593,7 +725,7 @@ Régression
 :   fonctionnalité qui marchait et qui cesse de marcher après une modification. (voir @sec-craft-ia)
 
 Release / tag
-:   version publiée / étiquette posée sur un commit. (voir @sec-ci-cd)
+:   version publiée / étiquette posée sur un commit ; sur GitHub, une release est un tag accompagné de notes de version. (voir @sec-ci-cd et @sec-ci-publication)
 
 Relecture (*review*)
 :   vérification d'une PR par un autre que son auteur, par les preuves (ce qu'elle annonce, son fonctionnement, la liste des fichiers touchés), conclue par un commentaire, une approbation ou une demande de modifications. (voir @sec-git)
@@ -604,8 +736,14 @@ Repository
 Repository en mémoire (*fake*)
 :   implémentation d'un repository qui garde les données dans des variables, sans base ; utilisée en séance 3. (voir @sec-premiere-user-story)
 
+Requête SQL
+:   phrase envoyée à la base pour lire ou écrire des données. (voir @sec-securite-audit)
+
 Rétropropagation
 :   méthode qui répartit l'erreur de sortie sur les réglages de chaque couche pour les corriger. (voir @sec-histoire-ia)
+
+Révoquer (un secret)
+:   le rendre inutilisable auprès du service qui l'a émis ; seule réponse valable à une fuite. (voir @sec-ci-publication et @sec-securite-audit)
 
 Revue croisée
 :   relecture de la PR d'une équipe par une autre équipe. (voir @sec-travailler-a-plusieurs)
@@ -638,10 +776,13 @@ SDK
 :   paquet contenant le cadre, le langage et les outils. (voir @sec-guide-flutter)
 
 Secret
-:   valeur confidentielle (clé, mot de passe). (voir @sec-ci-cd)
+:   valeur confidentielle (clé d'API, mot de passe, jeton). (voir @sec-ci-cd et @sec-securite-audit)
 
-Self-grading
-:   situation où le même agent écrit le code et les tests qui le jugent. (voir @sec-pratique-craft-flutter)
+Seed
+:   jeu de données de démonstration chargé dans une base vide ; **reproductible** s'il est généré à graine fixe. (voir @sec-test-acceptation)
+
+Self-grading (auto-notation)
+:   situation où le même agent écrit le code et les tests qui le jugent. (voir @sec-pratique-craft-flutter et @sec-test-acceptation)
 
 setState
 :   instruction qui signale à Flutter qu'un état a changé et qu'il faut redessiner. (voir @sec-guide-flutter)
@@ -667,11 +808,17 @@ Spec-driven development
 SQLite
 :   base de données relationnelle contenue dans un seul fichier, sans serveur. (voir @sec-donnees)
 
+Squelette d'étape
+:   fichier d'étape créé par `build_runner`, qui échoue volontairement (`UnimplementedError`) tant qu'il n'est pas complété. (voir @sec-test-acceptation)
+
 StatefulWidget / StatelessWidget
 :   widget avec / sans état. (voir @sec-guide-flutter)
 
 `stepByStep`
 :   fonction générée par `make-migrations` qui reçoit une étape par version (`from1To2`, `from2To3`…). (voir @sec-donnees)
+
+Système d'IA
+:   système qui, à partir des entrées reçues, déduit comment générer des sorties telles que des prédictions, contenus, recommandations ou décisions (art. 3, point 1). (voir @sec-ai-act-rssi)
 
 Système expert
 :   programme à base de règles « si... alors... » codant le savoir d'un spécialiste. (voir @sec-histoire-ia)
@@ -696,6 +843,12 @@ Test
 
 Test (unitaire)
 :   petit programme qui vérifie un comportement précis et répond « réussi » ou « échoué ». (voir @sec-pratique-craft-flutter)
+
+Test d'acceptation indépendant
+:   test écrit avant le code, par une autre main que celle qui code, avec des valeurs recopiées de l'énoncé. (voir @sec-test-acceptation)
+
+Test de refus
+:   test qui vérifie qu'un rôle non autorisé est refusé par la garde `RequireRole`, et que rien n'est modifié. (voir @sec-test-acceptation)
 
 Test unitaire, de widget, d'intégration
 :   test d'une fonction, d'un widget, d'un parcours complet. (voir @sec-guide-flutter)
@@ -723,6 +876,12 @@ Upstream
 
 User story
 :   besoin exprimé du point de vue de l'utilisateur, « En tant que… je veux… afin de… ». (voir @sec-demarrer-projet)
+
+Valeur faussée
+:   valeur attendue changée exprès, sur son poste, pour vérifier qu'un test la contrôle vraiment ; on annule ensuite. (voir @sec-test-acceptation et @sec-fiches)
+
+Variable liée
+:   valeur transmise à la base à côté de la requête, à la place d'un `?` ; la base la traite toujours comme une valeur. (voir @sec-securite-audit)
 
 Versionnage sémantique
 :   convention `MAJEUR.MINEUR.CORRECTIF`. (voir @sec-ci-cd)

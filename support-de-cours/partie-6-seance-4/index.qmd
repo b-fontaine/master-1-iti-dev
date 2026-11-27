@@ -1,0 +1,7 @@
+<!-- source: nouveau · synchro: 2026-11-27 -->
+
+# Séance 4 · Qualité, sécurité et règlement européen sur l'IA {.unnumbered}
+
+Cette partie réunit les supports de la séance 4, qui a lieu douze jours après la séance 3 : le code et les données existent, la question devient de savoir si l'on peut faire confiance à ce qu'on livre, et si l'on peut le mettre en usage. Elle commence par un résumé de la séance (@sec-s4), suivi de quatre chapitres : le test d'acceptation écrit avant le code de l'agent (@sec-test-acceptation), la CI complète et la publication sur GitHub Pages (@sec-ci-publication), la sécurité et l'audit croisé entre équipes (@sec-securite-audit), puis l'AI Act et le passage devant le RSSI (@sec-ai-act-rssi). Les fiches à garder sous les yeux pendant les ateliers, de O à V, sont rassemblées dans l'annexe [-@sec-fiches].
+
+Chaque chapitre contient un résumé, un glossaire, des sources et une liste des points non vérifiés. Les extraits de code et les sorties de commandes ont été obtenus sur une copie du dépôt-modèle ou sur un dépôt d'essai créé à partir de lui ; les noms d'outils, les versions, les fonctionnalités et les textes juridiques évoluent vite : revérifiez-les sur la documentation officielle avant de vous y fier.

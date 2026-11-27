@@ -1,0 +1,875 @@
+<!-- source: cours/supports/day-4/02-ci-cd-et-publication.md · synchro: 2026-11-27 -->
+
+# La CI complète et la publication sur GitHub Pages {#sec-ci-publication}
+
+::: {.callout-note title="État des connaissances"}
+Le workflow complet a été essayé en ligne le 27 novembre 2026 sur un dépôt d'essai créé depuis le dépôt-modèle : les sorties GitHub citées viennent de cet essai. Les commandes locales (tests avec couverture, build web, contrôle du bundle) ont été rejouées le 27 novembre 2026 sous Linux avec Flutter 3.50.1 (Dart 3.14.0), sur une copie du dépôt-modèle.
+:::
+
+Ce chapitre accompagne les blocs 5 et 6 de la séance, et la release `v0.1` du bloc 12. Depuis la séance 2, votre dépôt a une CI minimale : un seul contrôle, qui analyse et teste chaque PR, sans rien bloquer. En séance 4, vous la remplacez par la **CI complète** fournie dans le dépôt-modèle : quatre contrôles, dont trois deviennent **obligatoires** pour fusionner dans `main`, et un qui **publie** votre application sur le web. Le chapitre lit ce workflow morceau par morceau, dit qui fait quoi (votre équipe, l'enseignant), montre ce que vous devez voir à chaque étape, et comment lire un contrôle rouge sans lire de code. L'exemple suivi est le dépôt `equipe_04`, du thème B ; la section [-@sec-cipub-11] dit ce qui change pour les thèmes A et C.
+
+::: {.callout-tip title="Ce que vous allez retenir"}
+
+- La CI complète est **fournie** : `docs/seance-4/ci.yml`. Vous l'activez par une PR qui la copie par-dessus `.github/workflows/ci.yml`. Rien n'est à adapter.
+- Elle compte **quatre contrôles** : `analyse-et-tests` (les six commandes de « Vérifier avant une PR », plus la couverture), `securite` (dépendances vulnérables, et secrets dans l'historique de `main` et de la PR), `site-web` (la version web se construit), `publication` (la version web part sur GitHub Pages, depuis `main` seulement). Les trois premiers tournent en même temps ; `publication` attend les trois.
+- Sur une PR, vous devez voir trois contrôles verts et `publication` **sauté** : une PR construit le site sans le mettre en ligne.
+- Vous n'avez pas les droits d'administration du dépôt : **l'enseignant active GitHub Pages et rend la CI obligatoire**. Vous, vous le **constatez** : la publication passe au vert, et `gh pr checks <numéro> --required` liste les trois contrôles exigés (`analyse-et-tests`, `securite`, `site-web`) ; une PR dont l'un d'eux est rouge ne peut plus être fusionnée.
+- **Tout ce qui est dans un build web Flutter est public** (code, ressources, constantes). Une constante plantée dans le code se retrouve en clair dans `main.dart.<empreinte>.js` : c'est vérifié dans ce chapitre.
+- Un secret détecté par gitleaks ne disparaît pas quand on supprime le fichier : il reste dans l'historique, et le contrôle reste rouge. Un vrai secret se **révoque** ; un faux positif se déclare dans `.gitleaksignore`, dans une PR relue.
+- La couverture s'affiche (58,1 % sur le dépôt-modèle nu) ; **aucun seuil** ne fait échouer la CI.
+
+:::
+
+## Pourquoi ce chapitre {#sec-cipub-1}
+
+Le vocabulaire de la CI/CD (intégration continue, livraison continue, workflow, job, étape, runner) a été posé dans le chapitre [-@sec-ci-cd] de la séance 1 : sections « Intégration continue, livraison continue, déploiement continu » et « Les briques » pour les mots, « Le workflow complet, ligne à ligne » pour un premier workflow lu ligne à ligne, [-@sec-ci-pages] pour GitHub Pages, « Les secrets » pour les secrets, « Protections de branche » pour les protections de branche, « Versions et releases » pour les versions et les releases. On ne le redit pas. Ce chapitre-là montrait un workflow d'exemple ; celui de votre dépôt en diffère sur plusieurs points (section [-@sec-cipub-3-7]) : **c'est le fichier fourni qui fait foi**.
+
+Le programme détaillé (@sec-programme-detaille) fixe trois règles, à garder en tête tout au long de la pratique :
+
+- **Chaque équipe publie sa version web** ; l'enseignant ne démontre aucun déploiement.
+- **GitHub Pages est public, donc données fictives uniquement.**
+- **Tout ce qui est dans un build web Flutter est public** (code, ressources, constantes), donc **aucun secret et aucun mot de passe réel dans l'application**.
+
+Un **build web** est la version de l'application produite par `flutter build web` : un dossier `build/web/` de fichiers que n'importe quel navigateur télécharge et exécute. Le **bundle** est l'ensemble de ces fichiers, tel que GitHub Pages les sert. Votre application n'a pas de serveur : tout ce qu'elle sait, elle l'envoie au navigateur du visiteur.
+
+::: {.callout-tip title="À retenir"}
+La CI complète n'est pas à écrire : elle est à activer, à lire et à rendre obligatoire. Ce qu'elle publie est lisible par tout le monde.
+:::
+
+
+## Qui fait quoi {#sec-cipub-2}
+
+Sur votre dépôt, vous avez le **droit d'écriture** : pousser des branches, ouvrir et fusionner des PR, relancer un contrôle. Vous n'avez **pas les droits d'administration** : vous ne pouvez ni activer GitHub Pages, ni changer la protection de `main`, ni ouvrir l'écran de ces réglages. Ces deux réglages sont faits par l'enseignant. (La relance d'un contrôle par un compte qui n'a que le droit d'écriture n'a pas été observée : voir @sec-cipub-non-verifies.)
+
+| Étape | Votre équipe | L'enseignant | Comment vous le constatez |
+|---|---|---|---|
+| Activer la CI complète | Une PR qui copie `docs/seance-4/ci.yml`, relue et fusionnée | Rien | Sur la PR : trois contrôles verts, `publication` sauté |
+| Activer GitHub Pages | Prévenir l'enseignant que la PR est fusionnée | Active Pages (source « GitHub Actions ») | Sur `main` : `publication` vert, le site s'ouvre à son adresse |
+| Rendre la CI obligatoire | Prévenir l'enseignant que `main` contient la CI complète | Ajoute `analyse-et-tests`, `securite` et `site-web` aux contrôles exigés par la protection de `main` | `gh pr checks <numéro> --required` et la commande `gh api` de la section [-@sec-cipub-4-3] listent les trois contrôles ; une PR dont l'un d'eux est rouge ne peut plus être fusionnée |
+| Contrôler le bundle | Les gestes de la section [-@sec-cipub-6] | Rien | Les résultats des gestes, notés dans la PR ou le journal |
+
+L'ordre compte. L'enseignant ne rend la CI obligatoire que sur un dépôt dont `main` contient **déjà** la CI complète : sinon, toutes les PR ouvertes resteraient bloquées en attente d'un contrôle qui n'a jamais tourné (un contrôle exigé qui n'a jamais tourné sur une PR reste « en attente » et bloque la fusion, d'après la documentation GitHub). C'est pourquoi la PR de la section [-@sec-cipub-4] passe **en premier**.
+
+La protection posée par l'enseignant contient aussi : une approbation obligatoire, la relecture des propriétaires du code exigée, aucune exception pour les administrateurs, et la fusion par **commit de fusion** (*merge commit*) seulement. La relecture des propriétaires est celle que demande le fichier `CODEOWNERS` du chapitre [-@sec-test-acceptation] (section [-@sec-acceptation-9-3]) : le fichier désigne les propriétaires de `test/acceptance/`, et c'est **cette protection** qui rend leur relecture obligatoire. Un identifiant inconnu, ou sans droit d'écriture sur le dépôt, rend la ligne sans effet (documentation GitHub) : l'enseignant signale les dépôts dont le fichier `.github/CODEOWNERS` est absent ou invalide.
+
+::: {.callout-tip title="À retenir"}
+Vous faites la PR, l'enseignant fait les réglages, vous constatez le résultat. Ce qui ne se constate pas n'est pas fait.
+:::
+
+
+## Le workflow fourni, lu ligne à ligne {#sec-cipub-3}
+
+Ouvrez `docs/seance-4/ci.yml` dans votre éditeur. On le lit par morceaux, dans l'ordre du fichier. Vous n'avez rien à y modifier ; il s'agit de reconnaître ce que fait chaque partie, pour savoir où regarder quand un contrôle devient rouge.
+
+### L'en-tête, les déclencheurs et les droits {#sec-cipub-3-1}
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Par défaut, les contrôles ne peuvent que lire le dépôt.
+permissions:
+  contents: read
+
+# Une commande qui échoue au milieu d'un tube (a | b) fait échouer l'étape.
+defaults:
+  run:
+    shell: bash
+```
+
+- `name: CI` : le nom affiché dans l'onglet *Actions*. Le nouveau workflow remplace la CI minimale parce qu'il est copié **sur le même fichier**, `.github/workflows/ci.yml` : il n'y a toujours qu'un workflow.
+- `on:` : le workflow tourne à chaque PR (`pull_request`) et à chaque arrivée de commits dans `main` (`push`), c'est-à-dire à chaque fusion.
+- `permissions: contents: read` : le **moindre privilège** du chapitre [-@sec-ci-cd] de la séance 1 (section « Le workflow complet, ligne à ligne »). Seul le contrôle `publication` reçoit plus de droits (section [-@sec-cipub-3-6]).
+- `defaults: run: shell: bash` : toutes les commandes `run:` passent par l'interpréteur `bash`, réglé pour qu'une commande qui échoue au milieu d'un **tube** (`a | b`, la sortie de `a` envoyée à `b`) fasse échouer l'étape. Sans ce réglage, l'échec de `a` pourrait passer inaperçu si `b` réussit.
+
+Les seize premières lignes du fichier sont des commentaires (`#`) : elles rappellent la commande d'activation et nomment les quatre contrôles, dont les trois premiers tournent en même temps.
+
+### `analyse-et-tests` : les six commandes, plus la couverture {#sec-cipub-3-2}
+
+```yaml
+jobs:
+  analyse-et-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v7
+
+      - name: Installer Flutter 3.50.1
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.50.1
+          cache: true
+
+      - name: Installer les dépendances
+        run: flutter pub get --enforce-lockfile
+
+      - name: Générer le code
+        run: dart run build_runner build --delete-conflicting-outputs
+```
+
+Le nom d'un **job** (`analyse-et-tests`) est le nom du **contrôle** que vous verrez sur la page de la PR, et c'est ce nom que la protection de `main` exige. Chaque `- name:` est une **étape**, avec le libellé que vous lirez dans le journal du contrôle.
+
+La suite reprend les étapes que votre CI minimale avait déjà depuis la séance 2 : instantanés du schéma de la base (`make-migrations` ne doit rien changer), mise en forme, analyse. Une seule étape change, la dernière :
+
+```yaml
+      - name: Tester et mesurer la couverture
+        run: flutter test --coverage
+
+      # La couverture est la part des lignes exécutées par au moins un test, parmi les
+      # fichiers que les tests chargent (un fichier qu'aucun test ne charge n'est pas compté).
+      # Elle s'affiche dans le résumé du contrôle ; aucun seuil ne fait échouer la CI.
+      - name: Afficher la couverture
+        run: |
+          awk -F: '/^LF:/ { total += $2 } /^LH:/ { couvertes += $2 }
+            END { printf "Couverture des tests : %.1f %% (%d lignes exécutées sur %d)\n",
+                  (total ? couvertes * 100 / total : 0), couvertes, total }' \
+            coverage/lcov.info | tee -a "$GITHUB_STEP_SUMMARY"
+```
+
+`flutter test` devient `flutter test --coverage`, et une étape **affiche** la couverture (section [-@sec-cipub-8]). Le bloc `awk` additionne deux nombres du fichier `coverage/lcov.info` produit par les tests : les lignes mesurées (`LF`) et les lignes exécutées (`LH`). `tee -a "$GITHUB_STEP_SUMMARY"` recopie la phrase dans le **résumé** de l'exécution. Ce contrôle a duré 2 min 7 s dans l'essai en ligne.
+
+### `securite` : dépendances et secrets {#sec-cipub-3-3}
+
+```yaml
+  securite:
+    runs-on: ubuntu-latest
+    steps:
+      # fetch-depth: 0 récupère tout l'historique : un secret supprimé du dernier
+      # commit reste lisible dans les commits précédents.
+      - name: Récupérer le dépôt et tout son historique
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+```
+
+Par défaut, `actions/checkout` ne récupère que le dernier commit. `fetch-depth: 0` récupère **tout l'historique** : c'est ce qui permet à gitleaks de trouver un secret qu'on a cru effacer (section [-@sec-cipub-7-3]).
+
+```yaml
+      # Compare les versions de pubspec.lock à la base publique de vulnérabilités OSV.
+      # L'outil est téléchargé à une version précise. Son empreinte (SHA256) est écrite
+      # ici : si le fichier téléchargé n'est pas exactement celui-là, l'étape échoue.
+      # Changer de version, c'est changer VERSION et SHA256 ensemble.
+      - name: Chercher des dépendances vulnérables (osv-scanner)
+        env:
+          VERSION: 2.7.1
+          SHA256: fb7dab19a8bd9bbe5c3189f09d4b7ee1820c9553a23bac202648a56efd2f6ee8
+        run: |
+          outil="$RUNNER_TEMP/osv-scanner"
+          curl -sSfL -o "$outil" "https://github.com/google/osv-scanner/releases/download/v${VERSION}/osv-scanner_linux_amd64"
+          echo "$SHA256  $outil" | sha256sum --check -
+          chmod +x "$outil"
+          "$outil" scan --lockfile=pubspec.lock
+```
+
+C'est l'**audit des dépendances pub** du programme. **osv-scanner** est un outil de Google qui lit `pubspec.lock` (les versions exactes de vos bibliothèques) et les compare à **OSV**, une base publique de vulnérabilités connues. Pourquoi un outil extérieur : il n'existe pas de commande `dart pub audit` (le chapitre [-@sec-ci-cd] de la séance 1, section « Autres portes à connaître », laissait l'outil « à vérifier »), et `dart pub get` affiche les avis de sécurité sans jamais échouer (documentation Dart, « Security advisories »).
+
+Les cinq lignes de `run:` se lisent ainsi, sans entrer dans le détail : télécharger l'outil à une **version fixée** (2.7.1), vérifier qu'il a exactement l'**empreinte** écrite dans le workflow (`SHA256:` ; une empreinte SHA-256 est une suite de caractères calculée à partir du contenu d'un fichier : un seul octet changé la change entièrement), puis le lancer. Si l'empreinte ne correspond pas, l'étape s'arrête avant d'exécuter quoi que ce soit. Dans l'essai, la vérification affichait `…/osv-scanner: OK`. Changer de version, c'est changer `VERSION` et `SHA256` ensemble, dans une PR relue.
+
+```yaml
+      # Cherche des secrets (clés, jetons, mots de passe) dans tous les commits de main
+      # et, sur une PR, dans ceux de la PR. Les autres branches ne sont pas lues : elles
+      # le seront quand elles feront l'objet d'une PR.
+      # --redact masque la valeur trouvée dans le journal, qui est public.
+      - name: Chercher des secrets dans l'historique (gitleaks)
+        env:
+          VERSION: 8.30.1
+          SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          archive="$RUNNER_TEMP/gitleaks.tar.gz"
+          curl -sSfL -o "$archive" "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz"
+          echo "$SHA256  $archive" | sha256sum --check -
+          tar -xzf "$archive" -C "$RUNNER_TEMP" gitleaks
+          "$RUNNER_TEMP/gitleaks" git --redact --verbose --log-opts="--full-history HEAD" .
+```
+
+**gitleaks** cherche dans les commits des chaînes qui ressemblent à des secrets (clés d'API, jetons, mots de passe). C'est le « gitleaks épinglé » du programme : **binaire épinglé** veut dire téléchargé à une version précise (8.30.1) et vérifié par l'empreinte écrite dans le workflow, même schéma que pour osv-scanner (sortie de l'essai : `…/gitleaks.tar.gz: OK`).
+
+L'option `--log-opts="--full-history HEAD"` limite la lecture à **l'historique de ce qui est contrôlé** : tous les commits de `main` et, sur une PR, ceux de la PR. Sans elle, gitleaks lisait **toutes les branches** du dépôt. C'est observé dans l'essai, sur le même run : sans l'option, `5 commits scanned` et `leaks found: 1`, la fuite étant le faux secret d'une autre branche, sans rapport avec `main` ; avec l'option, `3 commits scanned` et `no leaks found`. Sans cette limite, une branche abandonnée contenant un secret aurait bloqué les PR de toute l'équipe. Une branche est contrôlée quand elle fait l'objet d'une PR.
+
+`--redact` remplace la valeur trouvée par `REDACTED` dans le journal : le journal d'un dépôt public est public, il ne doit pas recopier le secret qu'il dénonce.
+
+Ce contrôle a duré 6 s dans l'essai.
+
+### `site-web` : la version web se construit {#sec-cipub-3-4}
+
+```yaml
+  site-web:
+    runs-on: ubuntu-latest
+```
+
+`site-web` n'attend aucun autre contrôle : il démarre en même temps qu'`analyse-et-tests` et `securite`. Viennent ensuite les mêmes étapes d'installation et de génération que dans `analyse-et-tests` (récupérer, installer Flutter 3.50.1, dépendances, `build_runner`), puis :
+
+```yaml
+      # Le site est servi sous le nom du dépôt (https://<organisation>.github.io/<dépôt>/),
+      # d'où --base-href. --no-web-resources-cdn embarque le moteur de rendu au lieu
+      # de le charger chez Google. Tout ce qui est dans build/web/ sera public.
+      - name: Construire la version web
+        run: >
+          flutter build web --release
+          --base-href "/${{ github.event.repository.name }}/"
+          --no-web-resources-cdn
+          --web-content-hash
+
+      - name: Préparer le site pour GitHub Pages
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: build/web
+```
+
+C'est la commande du `README` du dépôt-modèle, à un détail près : `<dépôt>` y est remplacé par `${{ github.event.repository.name }}`, que GitHub remplit avec le nom de **votre** dépôt. C'est pourquoi rien n'est à adapter. Les trois options :
+
+- `--base-href "/equipe_04/"` : le site n'est pas servi à la racine d'un domaine, mais sous le nom du dépôt (`https://<organisation>.github.io/equipe_04/`). Sans cette option, le navigateur cherche les fichiers au mauvais endroit et la page reste blanche (chapitre [-@sec-ci-cd] de la séance 1, section « Le workflow complet, ligne à ligne »).
+- `--no-web-resources-cdn` : embarque **CanvasKit** (le moteur qui dessine l'application dans le navigateur) au lieu de le faire charger depuis `www.gstatic.com`, un serveur de Google, tiers qu'il faudrait sinon déclarer dans la fiche de conformité (`README`, « Fichiers binaires du web »).
+- `--web-content-hash` : ajoute une **empreinte** aux noms de fichiers (`main.dart.8d62e962.js`), pour que les navigateurs prennent la nouvelle version après chaque publication.
+
+La dernière étape range `build/web` comme **artefact** (un fichier produit par un contrôle et conservé avec l'exécution) nommé `github-pages`. Sur une PR, le site construit est donc téléchargeable depuis la page de l'exécution, sans être publié (environ 15 Mo compressé dans l'essai). Ce contrôle a duré 2 min dans l'essai.
+
+### Trois contrôles exigés, pas quatre {#sec-cipub-3-5}
+
+La protection de `main` exige `analyse-et-tests`, `securite` **et `site-web`** : un build web cassé ne se fusionne plus. C'est ce que demande le programme (la CI « bloque la fusion en cas d'échec », et « le build web construit » fait partie de ce qui ne se sacrifie jamais). `publication` n'est **pas** exigé : il ne tourne jamais sur une PR, et une publication bloquée relève du plan B (section [-@sec-cipub-9]).
+
+### `publication` : en ligne, depuis `main` seulement {#sec-cipub-3-6}
+
+```yaml
+  publication:
+    # Seule la branche main publie : une PR construit le site sans le mettre en ligne.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [analyse-et-tests, securite, site-web]
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    # Deux publications ne se chevauchent pas ; celle qui est en cours se termine.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Publier sur GitHub Pages
+        id: deploiement
+        uses: actions/deploy-pages@v5
+```
+
+- `if:` : le contrôle ne tourne que sur un `push` dans `main`. Sur une PR, il est **sauté** (« Skipped »). Un job sauté par une condition `if:` compte comme réussi (documentation GitHub).
+- `needs: [analyse-et-tests, securite, site-web]` : on ne publie que si les trois autres contrôles sont verts (tests, absence de secret détecté, site construit).
+- `permissions` : les seuls droits d'écriture du workflow, limités à la publication sur Pages (`pages: write`) et à la preuve de l'origine de la publication (`id-token: write`).
+- `environment: github-pages` : GitHub crée seul cet **environnement** (une cible de déploiement avec ses règles) lors de l'activation de Pages, avec une règle observée dans l'essai : seule `main` peut y déployer.
+- `concurrency` : si deux fusions arrivent coup sur coup, la seconde publication attend la fin de la première.
+
+Ce contrôle a duré 5 s dans l'essai.
+
+### Le pipeline, et ce que prouve chaque contrôle {#sec-cipub-3-7}
+
+```{mermaid}
+flowchart LR
+    A["analyse-et-tests<br>(exigé)"] --> D["publication<br>(main seulement)"]
+    B["securite<br>(exigé)"] --> D
+    C["site-web<br>(exigé)"] --> D
+```
+
+`analyse-et-tests`, `securite` et `site-web` démarrent ensemble ; `publication` attend les trois. Dans l'essai, l'ensemble était vert en un peu plus de deux minutes, et la publication suivait. C'est le pipeline cible du programme : `build_runner`, `flutter analyze`, `flutter test --coverage`, audit des dépendances pub, détection de secrets, `flutter build web`, déploiement sur GitHub Pages.
+
+| Contrôle | Vert, il prouve que… | Il ne prouve pas que… |
+|---|---|---|
+| `analyse-et-tests` | le code se génère, le schéma de la base est cohérent, la mise en forme est respectée, l'analyse ne signale rien, et tous les tests passent | les tests vérifient la bonne chose (c'est le rôle du test d'acceptation, voir @sec-test-acceptation) |
+| `securite` | aucune bibliothèque de `pubspec.lock` n'a de vulnérabilité **connue** d'OSV ce jour-là, et aucune chaîne ressemblant à un secret n'a été trouvée dans l'historique de `main` (et de la PR) | qu'aucun secret n'existe : gitleaks reconnaît des formes, pas tout |
+| `site-web` | la version web se construit avec les options de publication | qu'elle fonctionne une fois ouverte (cela se vérifie à l'adresse publiée) |
+| `publication` | le site construit a été déposé sur GitHub Pages | que vous voyez déjà la nouvelle version (section [-@sec-cipub-5-4]) |
+
+Ce que le workflow réel change par rapport à l'exemple du chapitre [-@sec-ci-cd] de la séance 1 (section « Le workflow complet, ligne à ligne ») : les noms des contrôles, la version de Flutter (3.50.1), les étapes `build_runner`, schéma et mise en forme, le contrôle `securite` (absent de l'exemple), le build qui n'attend plus les tests, `shell: bash`, les options `--no-web-resources-cdn` et `--web-content-hash`, et **l'absence de seuil de couverture** (l'exemple échouait sous 60 %, le workflow réel n'échoue jamais sur la couverture). Les versions des actions sont les mêmes (`actions/checkout@v7`, `subosito/flutter-action@v2`, `actions/upload-pages-artifact@v5`, `actions/deploy-pages@v5`).
+
+::: {.callout-tip title="À retenir"}
+Un nom de job est un nom de contrôle. Trois contrôles tournent en même temps et sont exigés (`analyse-et-tests`, `securite`, `site-web`) ; le quatrième publie, et seule `main` publie.
+:::
+
+
+## En pratique, étape 1 : activer la CI complète par une PR {#sec-cipub-4}
+
+### La PR {#sec-cipub-4-1}
+
+Le gardien du harnais et de la CI (rôle de `PROJET.md`) ouvre la PR ; un coéquipier la relit. Dans le terminal, à la racine du dépôt :
+
+```bash
+git switch main
+git pull
+git switch -c ci-complete
+cp docs/seance-4/ci.yml .github/workflows/ci.yml
+git status --short
+```
+
+Vous devez voir **une seule ligne** :
+
+```text
+ M .github/workflows/ci.yml
+```
+
+Puis, comme pour toute PR (voir @sec-travailler-a-plusieurs) :
+
+```bash
+git add .github/workflows/ci.yml
+git commit -m "ci: activer la CI complète de la séance 4"
+git push -u origin ci-complete
+gh pr create --web
+```
+
+`gh pr create --web` ouvre la PR dans le navigateur, avec le modèle de description du dépôt à remplir ; `--fill` est à éviter, car il saute ce modèle (chapitre [-@sec-demarrer-projet] de la séance 2, section « Ouvrir la PR avec le modèle »).
+
+Si `docs/seance-4/ci.yml` n'existe pas dans votre dépôt, la commande `cp` répond qu'elle ne trouve pas le fichier : prévenez l'enseignant (fiche V, annexe [-@sec-fiche-v]).
+
+### Lire les contrôles sur la page de la PR {#sec-cipub-4-2}
+
+La PR fait tourner le **nouveau** workflow, celui de la branche. Comptez un peu plus de deux minutes : les trois contrôles tournent en même temps. Sur la page de la PR, en bas, la liste des contrôles doit finir ainsi :
+
+| Contrôle | État attendu |
+|---|---|
+| `analyse-et-tests` | vert |
+| `securite` | vert |
+| `site-web` | vert |
+| `publication` | sauté (« Skipped ») |
+
+Dans le terminal, `gh pr checks` donne la même liste. Sur la PR d'essai, une fois tout terminé, son résumé était :
+
+```text
+Passed: 3, Failed: 0, Skipped/cancelled: 1
+```
+
+Le relecteur relit par les preuves (chapitre [-@sec-demarrer-projet] de la séance 2, section [-@sec-projet-relire] ; chapitre [-@sec-travailler-a-plusieurs] de la séance 3) : la liste des fichiers touchés (onglet « Files changed ») ne contient que `.github/workflows/ci.yml`, et les contrôles sont dans l'état du tableau. Il n'a pas à juger le YAML : c'est le fichier fourni, et `git status` a montré qu'il n'y avait rien d'autre. Approbation, puis fusion par commit de fusion.
+
+### Rendre la CI obligatoire, et le constater {#sec-cipub-4-3}
+
+Une fois la PR fusionnée, `main` contient la CI complète. **Prévenez l'enseignant** : c'est le signal qu'il attend pour rendre `analyse-et-tests`, `securite` et `site-web` obligatoires sur votre dépôt (section [-@sec-cipub-2]). Vous ne pouvez pas ouvrir l'écran de protection de `main` (il demande les droits d'administration) : deux commandes le remplacent.
+
+**Sur une PR** ouverte après le réglage (`<numéro>` est le numéro de la PR) :
+
+```bash
+gh pr checks <numéro> --required
+```
+
+L'option `--required` ne montre que les contrôles exigés. Dans l'essai, elle a listé les trois contrôles `analyse-et-tests`, `securite` et `site-web`, chacun avec son état (`pass` quand il est vert) et sa durée. Rien dans la liste : la CI n'est pas encore obligatoire.
+
+**Sur le dépôt lui-même**, sans PR (remplacez `<organisation>` et `equipe_04` par les vôtres) :
+
+```bash
+gh api repos/<organisation>/equipe_04/branches/main --jq '.protection.required_status_checks.contexts'
+```
+
+Dans l'essai, la réponse était :
+
+```text
+["analyse-et-tests","securite","site-web"]
+```
+
+Une liste vide (`[]`) veut dire qu'aucun contrôle n'est exigé. Cette lecture fonctionne même sans aucun droit sur le dépôt (essayée sans authentification sur le dépôt d'essai, public) : c'est aussi le geste de l'équipe qui vous audite (chapitre [-@sec-securite-audit], section [-@sec-audit-7-2]). La lecture détaillée des réglages de protection, elle, est refusée sans droits d'administration : inutile de la chercher.
+
+Le constat qui ne trompe pas est un refus. Dans l'essai, avec `securite` rouge, la PR était bloquée :
+
+```bash
+gh pr view <numéro> --json mergeStateStatus,reviewDecision
+```
+
+répondait `mergeStateStatus: BLOCKED` et `reviewDecision: REVIEW_REQUIRED`, et une tentative de fusion sans approbation a été refusée par GitHub avec :
+
+```text
+Pull request … is not mergeable: the base branch policy prohibits the merge.
+```
+
+Vous n'avez pas à provoquer ce refus. Il suffit de constater, sur la première PR qui suit, que le bouton de fusion reste indisponible tant que les trois contrôles exigés ne sont pas verts et qu'aucun coéquipier n'a approuvé.
+
+### Une PR ouverte avant la fusion de la CI complète {#sec-cipub-4-4}
+
+Une PR ouverte **avant** que la CI complète arrive dans `main` a tourné avec l'ancien workflow : les contrôles `securite` et `site-web` n'ont jamais tourné sur elle. Une fois ces contrôles exigés, ils y restent « en attente » et la PR ne peut pas être fusionnée (un contrôle exigé qui n'a jamais tourné bloque la fusion, d'après la documentation GitHub). Le remède : mettre la branche à jour depuis `main`, soit par le bouton « Update branch » de la page de la PR, soit dans le terminal :
+
+```bash
+git switch main
+git pull
+git switch <branche-de-la-PR>
+git merge main
+git push
+```
+
+Le push relance le workflow, cette fois complet. Ce cas n'a pas été observé dans l'essai : il est décrit d'après la documentation.
+
+::: {.callout-tip title="À retenir"}
+La PR de la CI passe en premier, puis on prévient l'enseignant. La CI est obligatoire quand une PR rouge ou non approuvée ne peut plus être fusionnée : c'est un constat, pas une promesse.
+:::
+
+
+## En pratique, étape 2 : le build web et la publication {#sec-cipub-5}
+
+### Ce que produit le build, sur votre poste {#sec-cipub-5-1}
+
+Avant d'attendre la publication, regardez une fois ce que la CI construit. Sur votre poste, sur `main` à jour, après `dart run build_runner build --delete-conflicting-outputs` :
+
+```bash
+flutter build web --release --base-href "/equipe_04/" --no-web-resources-cdn --web-content-hash
+```
+
+Remplacez `equipe_04` par le nom de votre dépôt. Sur la copie du dépôt-modèle, la commande a pris 39 s et s'est terminée par :
+
+```text
+✓ Built build/web
+```
+
+Puis :
+
+```bash
+ls build/web
+```
+
+```text
+assets
+canvaskit
+drift_worker.dart.js
+favicon.png
+flutter.js
+flutter.js.map
+flutter_bootstrap.js
+flutter_service_worker.js
+icons
+index.html
+main.dart.da8c852c.js
+manifest.json
+precache_manifest.json
+sqlite3.wasm
+version.json
+```
+
+À reconnaître : `index.html` (la page d'entrée), `main.dart.<empreinte>.js` (**tout votre code Dart**, traduit en JavaScript, un seul fichier), `canvaskit/` (le moteur de rendu embarqué), `sqlite3.wasm` et `drift_worker.dart.js` (la base dans le navigateur, recopiés depuis `web/`), `assets/` (les polices et les ressources). Le dossier pèse 42 Mo, à cause de CanvasKit. L'empreinte (`da8c852c`) change à chaque modification du code.
+
+Vérifiez la balise qui fait marcher l'adresse sous le nom du dépôt :
+
+```bash
+grep -o '<base href="[^"]*">' build/web/index.html
+```
+
+```text
+<base href="/equipe_04/">
+```
+
+Un mot sur `flutter.js.map` : c'est une **carte de source** (un fichier qui relie un code transformé à son code d'origine). Le chapitre [-@sec-ci-cd] de la séance 1 (section [-@sec-ci-securite], point 6) rappelle que la documentation Flutter recommande de ne pas publier les cartes de source. Celle-ci concerne `flutter.js`, le chargeur fourni par Flutter : ses sources sont celles de Flutter (`src/loader.js`, `src/flutter.js`…), pas les vôtres, et aucune carte n'est produite pour `main.dart.<empreinte>.js`. Elle est publiée telle quelle par le workflow fourni : la garder ou l'exclure est une décision de l'enseignant (voir @sec-cipub-non-verifies). Elle ne contient aucun chemin du poste de construction.
+
+### Activer Pages : ce que vous voyez avant et après {#sec-cipub-5-2}
+
+GitHub Pages est activé par l'enseignant, avec la source « GitHub Actions ». Deux cas se présentent, selon que l'activation précède ou suit la fusion de votre PR.
+
+**Pages déjà activé quand la PR est fusionnée.** La fusion déclenche le workflow sur `main` ; les quatre contrôles tournent, `publication` compris, et passent au vert.
+
+**Pages pas encore activé.** Dans l'essai, au premier push dans `main`, les trois premiers contrôles étaient verts et `publication` était rouge au bout de 5 s, avec dans son journal :
+
+```text
+Error: Failed to create deployment (status: 404) with build version … Ensure GitHub Pages has been enabled: https://github.com/<organisation>/<dépôt>/settings/pages
+Error: HttpError: Not Found
+Error: Creating Pages deployment failed
+```
+
+Ce rouge ne dit rien de votre code : il dit « Pages n'est pas activé ». Que faire :
+
+1. Prévenir l'enseignant (il active Pages ; vous ne pouvez pas le faire vous-même, et le lien du message mène à un écran de réglages qui vous est fermé).
+2. Une fois Pages activé, relancer **le seul contrôle en échec** : onglet *Actions*, l'exécution rouge sur `main`, bouton « Re-run failed jobs ». Inutile de refaire une PR. Si ce bouton ne vous est pas accessible (la relance par un compte étudiant n'a pas été vérifiée), prévenez l'enseignant ; de toute façon, la prochaine fusion dans `main` republie le site.
+
+Dans l'essai, après l'activation et cette relance, `publication` est passé au vert et le site était en ligne.
+
+### Vérifier l'adresse publiée {#sec-cipub-5-3}
+
+L'adresse est `https://<organisation>.github.io/<dépôt>/`, par exemple `https://<organisation>.github.io/equipe_04/`. Elle s'affiche aussi sur le contrôle `publication` vert (c'est l'`url` de l'environnement `github-pages`). Ouvrez-la dans Chrome. Ce que vous devez voir, d'après l'essai sur le dépôt-modèle :
+
+- l'application, ici l'écran « Jets de dé » (chez vous, votre premier écran) ;
+- dans la console des outils de développement (touche `F12`, ou menu de Chrome, « Plus d'outils », « Outils de développement »), un message `Using WasmStorageImplementation.sharedIndexedDb …` : il est normal (`README`, « Fichiers binaires du web »).
+
+Une page blanche ou une erreur 404 est un constat à traiter (section [-@sec-cipub-5-5]).
+
+### La nouvelle version n'apparaît pas tout de suite {#sec-cipub-5-4}
+
+GitHub Pages sert la page avec une durée de cache de dix minutes (`cache-control: max-age=600`, observé dans l'essai). Après une fusion, votre navigateur peut montrer l'ancienne version pendant une dizaine de minutes. Rechargez sans le cache (dans Chrome, `Ctrl+Maj+R`, ou `Cmd+Maj+R` sur macOS) avant de conclure que la publication a échoué. La preuve de publication est le contrôle `publication` vert, pas l'écran.
+
+### Page blanche ou erreur 404 {#sec-cipub-5-5}
+
+Trois causes, à vérifier dans cet ordre :
+
+1. **Pages n'est pas activé, ou `publication` n'est pas vert** : regardez le contrôle `publication` du dernier commit de `main` (section [-@sec-cipub-5-2]). Tant qu'il n'est pas vert, l'adresse peut répondre 404.
+2. **L'ancienne version est en cache** : rechargez sans le cache et attendez une dizaine de minutes (section [-@sec-cipub-5-4]).
+3. **Le `base href` ne correspond pas au nom du dépôt** : la page reste blanche, car le navigateur cherche les fichiers au mauvais endroit (section [-@sec-cipub-3-4]). Avec le workflow fourni, le nom est lu par GitHub ; ce cas vient surtout d'un build local fait avec un autre nom (section [-@sec-cipub-5-1]). Dans l'onglet « Network » des outils de développement, des fichiers en erreur 404 le signalent.
+
+Si aucune de ces causes ne s'applique, prévenez l'enseignant (fiche V).
+
+::: {.callout-tip title="À retenir"}
+`publication` rouge en 5 s avec « Ensure GitHub Pages has been enabled » : prévenir l'enseignant, puis « Re-run failed jobs ». La preuve de la publication est le contrôle vert et l'adresse qui s'ouvre.
+:::
+
+
+## En pratique, étape 3 : contrôler que le bundle ne contient ni secret ni donnée réelle {#sec-cipub-6}
+
+Le programme demande de « contrôler que le bundle publié ne contient ni secret ni donnée réelle », et le point « Secrets » de l'audit croisé y revient (chapitre [-@sec-securite-audit], section [-@sec-audit-7-3]). Lire 42 Mo de fichiers n'est pas un geste réaliste. Les gestes qui suivent sont **proposés** par ce chapitre, à valider par l'enseignant ; chacun a été **essayé** sur une copie du dépôt-modèle, et les sorties montrées sont réelles. Ils se font sur votre poste, sur `main` à jour, après le build de la section [-@sec-cipub-5-1] : c'est le même code que celui que la CI publie.
+
+**Pour l'équipe qui audite** (section [-@sec-audit-7-3]), deux façons d'obtenir le bundle d'une autre équipe : cloner son dépôt et lancer le build de la section [-@sec-cipub-5-1] avec **le nom du dépôt audité** dans `--base-href`, ou télécharger l'artefact `github-pages` de la dernière exécution sur `main` (onglet *Actions*). Le geste 4 (onglet Réseau) se fait directement sur le site publié. La trace des gestes laissée par l'équipe auditée (description de PR ou `JOURNAL.md`, voir la fin de cette section) sert aussi de preuve à l'auditeur.
+
+Sous Windows, les commandes `grep`, `find` et `ls` se tapent dans Git Bash ; leurs équivalents PowerShell n'ont pas été essayés.
+
+### Geste 1 : constater que le code est lisible {#sec-cipub-6-1}
+
+Ce geste ne cherche pas un secret : il **prouve** la règle « tout ce qui est dans un build web est public ». Créez d'abord une branche d'essai, que vous ne pousserez pas :
+
+```bash
+git switch -c essai-bundle
+```
+
+Puis demandez à l'agent d'ajouter une constante fictive reconnaissable dans `lib/main.dart`, et de l'afficher dans la console au démarrage. Sur la copie, le fichier est devenu :
+
+```dart
+// Essai du chapitre 2 : une constante fictive, pour la retrouver dans le build.
+const cleFictive = 'CLE-FICTIVE-EQUIPE04-0000';
+
+void main() {
+  configurerDependances();
+  debugPrint(cleFictive);
+  runApp(const App());
+}
+```
+
+Le `debugPrint` compte : une constante que rien n'utilise est retirée par le compilateur, et l'essai ne prouverait rien. Reconstruisez (commande de la section [-@sec-cipub-5-1]), puis cherchez la chaîne :
+
+```bash
+grep -rl 'CLE-FICTIVE' build/web
+```
+
+```text
+build/web/main.dart.8d62e962.js
+```
+
+La constante est **en clair** dans le fichier de code publié. Une vraie clé d'API rangée au même endroit le serait tout autant, et n'importe quel visiteur la lirait avec les outils de développement de son navigateur. Annulez ensuite tout l'essai, sans rien commiter :
+
+```bash
+git restore lib/main.dart
+git switch main
+git branch -D essai-bundle
+git status --short
+```
+
+La dernière commande ne doit **rien** afficher : la constante n'est ni dans `main`, ni dans un fichier modifié. Reconstruisez (section [-@sec-cipub-5-1]) ; sur la copie, `grep -rl 'CLE-FICTIVE' build/web` ne répondait plus rien.
+
+Une remarque pour vos propres recherches : les lettres accentuées ne sont pas écrites telles quelles dans ce fichier. Le titre « Jets de dé » y figure sous la forme `Jets de d\xe9`. Cherchez donc une partie **sans accent** de la valeur.
+
+### Geste 2 : chercher vos propres valeurs, pas des mots-clés {#sec-cipub-6-2}
+
+Le réflexe serait de chercher `password` ou `api_key` dans le bundle. Sur la copie, `grep -rlI -i 'api_key\|apikey\|password' build/web` répond `main.dart.<empreinte>.js`, alors que le dépôt-modèle ne contient aucun secret : Flutter y range des noms de champs comme `password` et `current-password`, pour le remplissage automatique des formulaires. Ce geste produit du bruit et ne prouve rien.
+
+Le geste utile cherche **des valeurs que vous connaissez** :
+
+- une valeur de votre `.env` local, si vous en avez un (il ne doit contenir que des réglages non sensibles, `.env.example`) ;
+- un nom réel qui ne doit jamais apparaître (le vôtre, celui d'un enseignant, d'une entreprise réelle) ;
+- un extrait de votre seed : vous **devez** le retrouver, car le seed est du code ou une ressource, donc il est publié. C'est la preuve que le seed doit être fictif de bout en bout.
+
+```bash
+grep -rl 'valeur-connue' build/web
+```
+
+Aucune réponse pour une valeur interdite : conforme. Une réponse : constat, à traiter avant toute publication (section [-@sec-cipub-7-3] si c'est un secret).
+
+### Geste 3 : vérifier qu'aucun `.env` ni fichier de données n'est dans le build {#sec-cipub-6-3}
+
+```bash
+find build/web -name '.env*'
+find build/web/assets -type f
+```
+
+La première commande ne doit rien répondre. La seconde liste les ressources publiées : sur le dépôt-modèle, des manifestes, `NOTICES`, des polices et des *shaders* (petits programmes graphiques), rien d'autre. Un fichier de données (`.csv`, `.json`, `.xlsx`) dans cette liste est publié : il doit être fictif.
+
+Deux expériences faites sur la copie montrent pourquoi ce geste existe :
+
+- un fichier `.env` placé dans le dossier `web/` s'est retrouvé tel quel dans `build/web/.env`. Tout ce que contient `web/` est recopié dans le build. git l'ignore (règle `.env` du `.gitignore`), donc la CI ne le publie pas, mais un build fait sur votre poste pour le plan B (section [-@sec-cipub-9]) le contient ;
+- un fichier `seed/arrets_essai.csv` déclaré comme ressource (*asset*) dans `pubspec.yaml` est sorti sous `build/web/assets/seed/arrets_essai.5b695e72.csv`, lisible par tout visiteur.
+
+Un `.env` placé à la racine du dépôt, lui, n'est pas entré dans le build.
+
+### Geste 4 : regarder où va le navigateur {#sec-cipub-6-4}
+
+Sur l'adresse publiée, ouvrez les outils de développement de Chrome (`F12`), onglet « Network » (Réseau), et rechargez la page. Toutes les requêtes doivent aller vers `<organisation>.github.io/<dépôt>/`. Dans l'essai, c'était le cas : `flutter_bootstrap.js`, `canvaskit/chromium/canvaskit.wasm`, `main.dart.<empreinte>.js`, les polices et `drift_worker.dart.js`, et **aucune requête vers `www.gstatic.com`** : l'effet de `--no-web-resources-cdn` est constaté. Une requête vers un autre domaine est soit un tiers à déclarer dans la fiche de conformité, soit une erreur à corriger.
+
+Notez le résultat des quatre gestes dans la description de la PR qui suit la publication, ou dans `JOURNAL.md` : ils servent de preuve pour le point « Secrets » de l'audit.
+
+::: {.callout-tip title="À retenir"}
+Le bundle se contrôle par des recherches de valeurs connues, la liste des fichiers publiés et l'onglet Réseau. Une constante dans le code est lisible par tous : la preuve tient en une ligne de `grep`.
+:::
+
+
+## Lire un contrôle rouge sans lire le code {#sec-cipub-7}
+
+### Où cliquer {#sec-cipub-7-1}
+
+Sur la page de la PR, à côté du contrôle rouge, un lien ouvre son **journal** : la liste des étapes, chacune avec sa pastille. Ouvrez la **première étape rouge** ; les étapes suivantes sont grises (sautées), elles ne disent rien. Dans le journal, la ligne utile est presque toujours **à la fin** de l'étape rouge, juste avant `Error: Process completed with exit code 1.` (le **code de sortie** est le nombre qu'une commande renvoie en finissant : 0 veut dire « réussi », tout autre nombre « échoué », et c'est ce qui rend l'étape rouge).
+
+Dans le terminal, `gh pr checks` donne la même liste, et son option `--web` ouvre la page des contrôles dans le navigateur.
+
+### Les quatre contrôles {#sec-cipub-7-2}
+
+| Contrôle rouge | Ce que cela veut dire | Ligne à chercher | Première chose à faire |
+|---|---|---|---|
+| `analyse-et-tests` | Une des six commandes de « Vérifier avant une PR » échoue | Le nom de l'étape rouge, puis la fin de son journal (`Some tests failed.`, un `info` ou `error` de l'analyse, un fichier à remettre en forme) | Relancer **la même commande** sur votre poste, sur la branche de la PR, et lire la même erreur ; la fiche N de la séance 3 (annexe [-@sec-fiche-n]) traite les cas courants |
+| `securite` | Une dépendance a une vulnérabilité connue, ou gitleaks a trouvé une forme de secret dans l'historique de `main` ou de la PR | L'étape rouge (osv-scanner ou gitleaks), puis `WRN leaks found` ou la liste des bibliothèques signalées | Section [-@sec-cipub-7-3] ou [-@sec-cipub-7-5] ; ne rien pousser d'autre tant que ce n'est pas compris |
+| `site-web` | La version web ne se construit pas ; la PR ne peut pas être fusionnée (contrôle exigé) | La fin de l'étape « Construire la version web » | Relancer la commande de la section [-@sec-cipub-5-1] sur votre poste |
+| `publication` | Le site n'a pas pu être déposé sur Pages | `Ensure GitHub Pages has been enabled` (section [-@sec-cipub-5-2]) | Prévenir l'enseignant, puis « Re-run failed jobs » |
+
+Les trois premiers contrôles tournent en même temps : deux croix rouges sont deux problèmes distincts, à lire chacune. `publication`, lui, ne démarre pas tant que les trois autres ne sont pas verts : sur `main`, un `publication` qui n'a pas tourné n'est pas un second problème.
+
+### `securite` rouge à cause de gitleaks : le rapport réel {#sec-cipub-7-3}
+
+Dans le premier essai, une PR ajoutait un fichier contenant un faux secret, fabriqué pour l'occasion (`api_key = "…"`). Le journal de l'étape gitleaks s'est terminé ainsi (avec le workflow durci, une PR neuve contenant un faux secret a de même rendu `securite` rouge, en 6 s) :
+
+```text
+Finding:     api_key = "REDACTED"
+Secret:      REDACTED
+RuleID:      generic-api-key
+Entropy:     5.000000
+File:        essai/config-essai.txt
+Line:        1
+Commit:      e0716350b45322a3459fa71b4bd68afee74bf94e
+Author:      …
+Date:        2026-11-27T12:27:54Z
+Fingerprint: e0716350b45322a3459fa71b4bd68afee74bf94e:essai/config-essai.txt:generic-api-key:1
+
+INF 3 commits scanned.
+WRN leaks found: 1
+Error: Process completed with exit code 1.
+```
+
+Ce qu'on y lit, sans connaître l'outil :
+
+- `File` et `Line` : **où** est la chaîne suspecte ;
+- `Commit` : **dans quel commit** elle est entrée ;
+- `RuleID` : **quelle règle** l'a reconnue (`generic-api-key` : « une clé d'API, en général ») ;
+- `Secret: REDACTED` : la valeur est **masquée** par `--redact`. Elle n'est pas recopiée dans le journal public, et vous ne devez pas la recopier non plus (ni dans un commentaire, ni dans une issue) ;
+- `Fingerprint` : l'**empreinte** de cette découverte (commit, fichier, règle, ligne), qui sert pour un faux positif (section [-@sec-cipub-7-4]).
+
+**Supprimer le fichier ne suffit pas.** Dans l'essai, un nouveau commit qui supprimait le fichier a laissé le contrôle **rouge** : gitleaks lit tous les commits de la PR (`fetch-depth: 0`), et le secret est toujours dans le commit précédent. Une fois la PR fusionnée, il serait dans l'historique de `main`, lu à chaque exécution. C'est la règle du programme : **un secret qui fuit se révoque, on ne se contente pas de le supprimer**.
+
+Devant un **vrai** secret (une vraie clé, un vrai mot de passe) :
+
+1. Ne le recopiez nulle part.
+2. **Révoquez-le** : rendez-le inutilisable auprès du service qui l'a émis. Le fond est dans la section [-@sec-audit-2-4] du chapitre [-@sec-securite-audit].
+3. Prévenez l'enseignant, qui décide avec vous de la suite à donner à la PR et à son historique.
+
+### Un faux positif : `.gitleaksignore`, dans une PR relue {#sec-cipub-7-4}
+
+Un **faux positif** est une alerte sur quelque chose qui n'est pas un secret : une valeur d'exemple, une chaîne de test qui ressemble à une clé. Il se déclare dans un fichier `.gitleaksignore` à la racine du dépôt, **une ligne par empreinte**, en recopiant la ligne `Fingerprint:` du rapport. Pour le rapport ci-dessus :
+
+```text
+e0716350b45322a3459fa71b4bd68afee74bf94e:essai/config-essai.txt:generic-api-key:1
+```
+
+Dans l'essai, une fois ce fichier ajouté à la PR, `securite` est repassé au vert.
+
+Ce fichier fait taire l'alerte : il est donc **sensible**. Règles proposées :
+
+- seulement pour un vrai faux positif, jamais pour « faire passer » un vrai secret ;
+- dans une PR relue, dont la description dit pourquoi ce n'est pas un secret ;
+- en cas de doute, demander à l'enseignant avant d'ajouter la ligne.
+
+Ce fichier est dans le dépôt public : l'équipe qui vous audite peut le lire, comme tout le reste.
+
+### `securite` rouge à cause d'osv-scanner : une dépendance vulnérable {#sec-cipub-7-5}
+
+Aucune alerte d'osv-scanner n'a pu être observée : au 27 novembre 2026, le verrou du dépôt-modèle n'avait aucune vulnérabilité connue. Dans l'essai, le cas vert donnait :
+
+```text
+…/osv-scanner: OK
+Scanned …/pubspec.lock file and found 136 packages
+No issues found
+```
+
+(La première ligne, vérification de l'empreinte, est celle du workflow durci ; les deux suivantes viennent du premier essai, dont l'outil et le verrou étaient les mêmes.)
+
+D'après sa documentation, osv-scanner termine avec le code de sortie 1 quand il trouve une vulnérabilité, ce qui rend l'étape rouge ; à la place de `No issues found`, le journal liste alors les bibliothèques concernées. La base OSV évolue : une alerte peut apparaître alors que votre équipe n'a rien changé (déduction, non observée).
+
+La règle du projet, elle, est fixée par le `README` du dépôt :
+
+- **`flutter pub upgrade` est interdit** (et refusé à l'agent par `.claude/settings.json`) : il changerait les bibliothèques verrouillées ;
+- ajouter ou changer une dépendance se fait **par une PR dédiée, avec l'accord de l'équipe et de l'enseignant**.
+
+La première chose à faire est donc : **prévenir l'enseignant**, avec le nom de la bibliothèque et de l'étape rouge. Ne demandez pas à l'agent de « corriger la dépendance ». Un avis accepté peut se déclarer dans un fichier `osv-scanner.toml` d'après la documentation de l'outil ; ce cas n'a pas été essayé, et la décision revient à l'enseignant.
+
+::: {.callout-tip title="À retenir"}
+Un contrôle rouge se lit à la fin de sa première étape rouge. gitleaks : le fichier, la ligne, le commit, jamais la valeur ; supprimer ne suffit pas ; un vrai secret se révoque. osv-scanner : on prévient l'enseignant, on ne met rien à jour soi-même.
+:::
+
+
+## La couverture {#sec-cipub-8}
+
+La **couverture** des tests est la part des lignes exécutées par au moins un test pendant `flutter test --coverage`, **parmi les fichiers que les tests chargent** : un fichier de `lib/` qu'aucun test ne charge n'est pas compté du tout (commentaire du workflow). Elle s'affiche à la fin de `analyse-et-tests`, à l'étape « Afficher la couverture », et dans le **résumé** de l'exécution (onglet *Actions*, l'exécution, sa page d'accueil). Sur le dépôt-modèle nu, dans l'essai en ligne :
+
+```text
+Couverture des tests : 58.1 % (251 lignes exécutées sur 432)
+```
+
+Sur la copie locale, la même commande `awk` a donné le même résultat, écrit avec une virgule (`58,1 %`) parce que le poste était réglé en français. Si vous la rejouez sur votre poste après `flutter test --coverage`, vous pouvez voir l'une ou l'autre écriture.
+
+**Aucun seuil ne fait échouer la CI** : le workflow le dit en commentaire, et l'étape ne fait qu'afficher. C'est une différence avec l'exemple du chapitre [-@sec-ci-cd] de la séance 1 (section « Tests et couverture »), qui échouait sous 60 %. La mise en garde de ce chapitre reste entière : **la couverture mesure ce qui est exécuté, pas ce qui est vérifié**. Et comme un fichier qu'aucun test ne charge n'entre pas dans le calcul, ajouter du code sans aucun test peut laisser le pourcentage inchangé. Un test qui traverse une fonction sans rien affirmer fait monter le chiffre sans rien protéger. Lisez la couverture comme une **tendance** d'une PR à l'autre ; une forte baisse sur une PR qui ajoute du code sans test mérite une question en relecture.
+
+::: {.callout-tip title="À retenir"}
+La couverture s'affiche, elle ne bloque pas. Elle dit ce qui a été exécuté, pas ce qui a été vérifié.
+:::
+
+
+## Le plan B {#sec-cipub-9}
+
+Le programme prévoit, mot pour mot : **« Plan B si Pages ou Actions posent problème : build web local et démonstration avec `flutter run -d chrome`, publication terminée dans le sprint. »**
+
+Concrètement :
+
+- le build web local est celui de la section [-@sec-cipub-5-1] ; il prouve que la version web se construit avec les options de publication ;
+- la démonstration se fait avec `flutter run -d chrome` ;
+- la publication sur GitHub Pages « peut glisser dans le sprint » (programme) ; la CI obligatoire, elle, ne glisse pas (« ne se sacrifient jamais : […] la CI verte et obligatoire sur `main`, le build web construit »).
+
+La definition of done accepte « la version web de l'équipe est publiée sur GitHub Pages (ou le plan B est documenté) ». **Documenter**, proposition : une ligne datée dans la rubrique « Décisions de l'équipe » de `PROJET.md` ou dans `JOURNAL.md`, qui dit ce qui a bloqué (le message réel), ce qui a été fait (build local, démonstration) et quand la publication sera reprise.
+
+Si la séance prend du retard, le programme prévoit aussi, dans son ordre de coupe, que « le bloc 5 (CI/CD en pratique) se réduit à la lecture du workflow fourni » : la section [-@sec-cipub-3] se lit alors seule, sans la démonstration.
+
+Rappel de la section [-@sec-cipub-6-3] : un build fait sur votre poste contient tout ce qui est dans `web/`, y compris des fichiers ignorés par git. Faites les gestes de la section [-@sec-cipub-6] sur ce build aussi.
+
+::: {.callout-tip title="À retenir"}
+Plan B : build local, `flutter run -d chrome`, publication dans le sprint, et une ligne écrite qui le documente.
+:::
+
+
+## La release `v0.1` {#sec-cipub-10}
+
+Le bloc 12 prévoit un **tag `v0.1` et une release GitHub avec notes si `main` est verte**. Son poids est **Pratique** : c'est le deuxième élément de l'ordre de coupe, et il « peut glisser dans le sprint ». Le tag et la release sont définis au chapitre [-@sec-ci-cd] de la séance 1 (section « Versions et releases ») ; vous avez déjà posé un tag, `s2-fin` (chapitre [-@sec-demarrer-projet] de la séance 2, section [-@sec-projet-journal]).
+
+**Condition du programme : `main` est verte.** Sur la page d'accueil du dépôt, le dernier commit de `main` porte une coche verte. (Proposition, au-delà du programme : attendre aussi que `publication` soit vert, ou que le plan B soit documenté, pour que les notes puissent donner l'adresse publiée.)
+
+Le workflow ne se déclenche pas sur un tag : aucun contrôle ne tourne « sur le tag ». La CI verte se lit sur le **commit tagué**. On tague donc un commit de `main` dont la pastille est verte : c'est le cas du dernier commit de `main` juste après `git pull`, si sa coche est verte sur GitHub.
+
+Les gestes, dans l'ordre que vous connaissez, puis la release :
+
+```bash
+git switch main
+git pull
+git tag v0.1
+git push origin v0.1
+gh release create v0.1 --verify-tag --title "v0.1" --generate-notes
+```
+
+D'après l'aide de `gh release create` (gh 2.100.0, lue, non exécutée) :
+
+- `--verify-tag` arrête la commande si le tag n'existe pas déjà sur GitHub : la release est posée sur le tag que vous avez vérifié, pas sur un état choisi par défaut ;
+- `--generate-notes` produit le titre et les notes à partir de l'historique, par l'API de GitHub ; `--notes "…"` ou `--notes-file <fichier>` permettent d'écrire les notes soi-même, et des notes passées par `--notes` s'ajoutent en tête des notes générées ;
+- sans tag existant ni `--verify-tag`, la commande crée elle-même le tag sur l'état le plus récent de la branche par défaut.
+
+Des notes utiles, proposition : ce que fait l'application à ce stade (la première user story, les rôles), l'adresse publiée, et ce qui n'est pas encore là (le clou en rouge, l'import CSV). La release ne reconstruit rien : elle **pointe** un état déjà validé par la CI (chapitre [-@sec-ci-cd] de la séance 1, section « Une release GitHub »).
+
+::: {.callout-tip title="À retenir"}
+`v0.1` seulement si `main` est verte ; sinon dans le sprint. Un tag, puis une release avec des notes.
+:::
+
+
+## Pour les thèmes A, B et C {#sec-cipub-11}
+
+Le workflow est **le même pour les trois thèmes** : même fichier, mêmes quatre contrôles, mêmes trois contrôles exigés, rien à adapter. Ce qui diffère, c'est ce qui **ne doit pas se trouver dans le bundle**, d'après les mesures de conformité obligatoires de chaque `themes/PROJET-*.md`. C'est là qu'orienter les recherches du geste 2 (section [-@sec-cipub-6-2]).
+
+| Thème | Ce qui ne doit pas être dans le bundle | Où le chercher |
+|---|---|---|
+| **A** · Le registre du comptoir des Passeurs | Un nom réel : pseudonymes uniquement ; journal technique sans nom d'utilisateur | Le seed et les ressources (geste 2, geste 3) |
+| **B** · TRS de la ligne 4 (exemple suivi) | Un identifiant d'opérateur dans les données métier ; un nom dans un commentaire d'arrêt du seed | Les commentaires d'arrêt du seed, recherchés dans le build (geste 2) |
+| **C** · Vœux de projet | Une donnée réelle d'étudiant : tous les étudiants sont `etu_NNN`, aucune adresse de courriel | Le seed et toute ressource déclarée |
+
+Pour le thème C, l'énoncé (chapitre [-@sec-themes], harnais du thème C) le dit en propres termes : **« tout asset déclaré dans `pubspec.yaml` part dans le build web public, donc seul le seed fictif peut y figurer »** ; c'est exactement l'expérience de la section [-@sec-cipub-6-3]. Le même énoncé prévoit un test de scan des fichiers versionnés lancé par `flutter test` : s'il existe dans votre dépôt, il tourne dans `analyse-et-tests` sans rien changer au workflow.
+
+Pour le thème B, la consigne « aucun nom dans le commentaire d'arrêt » est complétée, d'après `PROJET-B.md`, par une revue des commentaires de la base de démonstration en audit croisé : l'équipe qui vous audite peut refaire le geste 2 sur votre build.
+
+::: {.callout-tip title="À retenir"}
+Un seul workflow pour tous. Chaque thème cherche dans son bundle ce que son énoncé interdit.
+:::
+
+
+## Avez-vous fini ? {#sec-cipub-12}
+
+La part de ce chapitre dans le livrable et la definition of done de la séance 4 :
+
+- [ ] La PR qui active la CI complète est fusionnée ; sur elle, `analyse-et-tests`, `securite` et `site-web` étaient verts et `publication` sauté.
+- [ ] **Le workflow CI s'exécute à chaque PR et bloque la fusion en cas d'échec** : l'enseignant a été prévenu, et vous avez constaté qu'une PR dont un contrôle exigé est rouge ne peut pas être fusionnée.
+- [ ] **Toutes les PR sont fusionnées par merge commit**, après relecture par quelqu'un d'autre que l'auteur.
+- [ ] **Le contrôle de secrets en CI est vert** sur `main` (étape gitleaks de `securite`).
+- [ ] `gh api repos/<organisation>/<dépôt>/branches/main --jq '.protection.required_status_checks.contexts'` répond `["analyse-et-tests","securite","site-web"]`.
+- [ ] **La version web de l'équipe est publiée sur GitHub Pages (ou le plan B est documenté)** : `publication` vert sur `main`, l'adresse s'ouvre et montre votre application.
+- [ ] Le bundle a été contrôlé (section [-@sec-cipub-6]) et le résultat est noté.
+- [ ] Release `v0.1` si `main` est verte (Pratique ; sinon dans le sprint).
+
+
+## Glossaire
+
+- **Artefact** : fichier produit par un contrôle et conservé avec son exécution ; ici, le site construit (`github-pages`).
+- **Build web** : la version de l'application produite par `flutter build web`, dans `build/web/`.
+- **Bundle** : l'ensemble des fichiers du build web que GitHub Pages sert au navigateur.
+- **CanvasKit** : le moteur de rendu de Flutter dans le navigateur ; embarqué grâce à `--no-web-resources-cdn`.
+- **Carte de source** (*source map*, `.map`) : fichier qui relie un code transformé à son code d'origine.
+- **Code de sortie** : nombre renvoyé par une commande en finissant ; 0 pour « réussi », autre chose pour « échoué ».
+- **Contrôle** (*check*) : un job du workflow, tel qu'il apparaît sur la page d'une PR, avec sa pastille.
+- **Contrôle exigé** (*required status check*) : contrôle qui doit être vert pour que la protection de `main` autorise la fusion.
+- **Couverture** : part des lignes exécutées par au moins un test, parmi les fichiers que les tests chargent.
+- **Empreinte** (SHA-256) : suite de caractères calculée à partir du contenu d'un fichier ; elle change si un seul octet change. Dans un rapport gitleaks, `Fingerprint` est l'identifiant d'une découverte.
+- **Environnement** (`github-pages`) : cible de déploiement avec ses propres règles ; seule `main` peut y publier.
+- **Faux positif** : alerte sur quelque chose qui n'est pas un problème réel.
+- **gitleaks** : outil qui cherche des secrets dans l'historique d'un dépôt ; ici, tous les commits de `main` et ceux de la PR.
+- **GitHub Pages** : hébergement de sites statiques de GitHub ; public.
+- **OSV, osv-scanner** : base publique de vulnérabilités connues, et outil qui compare `pubspec.lock` à cette base.
+- **Release** : sur GitHub, un tag accompagné de notes de version.
+- **Révoquer** : rendre un secret inutilisable auprès du service qui l'a émis.
+
+
+## Pour aller plus loin
+
+- Séance 1 : chapitre [-@sec-ci-cd], sections « Intégration continue, livraison continue, déploiement continu » et « GitHub Actions pas à pas » (vocabulaire, premier workflow, Pages, secrets), « Tests et couverture » (couverture), « Protections de branche » (protections), « Versions et releases » (versions et releases), [-@sec-ci-securite] (sécurité de la chaîne de livraison).
+- Séance 2 : chapitre [-@sec-demarrer-projet], section [-@sec-projet-journal] : le tag `s2-fin`.
+- Séance 4 : chapitre [-@sec-test-acceptation], section [-@sec-acceptation-9] : les trois verrous de `test/acceptance/`, dont `CODEOWNERS`.
+- Séance 4 : chapitre [-@sec-securite-audit], sections [-@sec-audit-2-4] (secrets, révocation), [-@sec-audit-2-5] (dépendances), [-@sec-audit-7-2] et [-@sec-audit-7-3] (points « CI » et « Secrets » de l'audit croisé).
+- Les fiches pratiques : fiche Q (CI complète, protection de `main` et GitHub Pages, annexe [-@sec-fiche-q]) et fiche V (dépannage, annexe [-@sec-fiche-v]).
+- Dans votre dépôt : `docs/seance-4/ci.yml` (ses commentaires), `README.md` (« Vérifier avant une PR », « Fichiers binaires du web »).
+
+
+## Points non vérifiés {#sec-cipub-non-verifies}
+
+::: {.callout-note title="Points non vérifiés"}
+
+- **Fichiers fournis dans les dépôts d'équipe.** `docs/seance-4/ci.yml` et `docs/seance-4/CODEOWNERS.modele` existent dans le dépôt-modèle ; ils ne sont dans votre dépôt que si le modèle en ligne a été mis à jour avant la création des dépôts d'équipe. Le chapitre est écrit comme si c'était le cas.
+- **Compte étudiant.** L'essai en ligne a été fait avec un compte administrateur. La relance d'un contrôle (« Re-run failed jobs ») par un compte qui n'a que le droit d'écriture n'a pas été observée. `gh pr checks --required` a été essayé avec le compte de l'essai ; la lecture `gh api …/branches/main` a été essayée sans authentification, donc sans aucun droit.
+- **Fusion sous protection.** Aucune PR n'a été fusionnée sous la protection complète (l'auteur de la PR d'essai ne pouvait pas l'approuver lui-même). La demande automatique de relecture aux propriétaires du code n'a pas été observée (l'auteur était le propriétaire désigné).
+- **Interface de la PR.** Les libellés de l'interface GitHub (emplacement du lien vers le journal, bouton de fusion indisponible) sont décrits de façon générale ; l'essai a lu l'état des contrôles avec `gh`. Seul le libellé « Re-run failed jobs » vient de l'essai.
+- **PR ouverte avant la fusion de la CI complète** (section [-@sec-cipub-4-4]) : contrôles « en attente » et remède par « Update branch » décrits d'après la documentation GitHub, non observés.
+- **osv-scanner rouge.** Aucune alerte réelle n'a été observée, ni le fichier `osv-scanner.toml`. Le contenu du journal en cas d'alerte est décrit d'après la documentation de l'outil, sans exemple.
+- **Après la révocation d'un vrai secret.** Ce que devient le contrôle `securite` (l'historique contient toujours la valeur) n'est pas fixé par les sources ; le chapitre renvoie la décision à l'enseignant.
+- **Release `v0.1`.** Ni `git push origin v0.1` ni `gh release create` n'ont été exécutés ; les options citées viennent de l'aide de gh 2.100.0. Le droit de créer une release avec le seul droit d'écriture n'a pas été vérifié.
+- **Gestes de contrôle du bundle.** Essayés sur une copie locale du dépôt-modèle et sur un build local, pas sur un site publié par la CI (à part l'onglet Réseau, observé dans l'essai en ligne). Ils sont **proposés** par ce chapitre, à valider par l'enseignant. Les équivalents PowerShell n'ont pas été essayés.
+- **Raccourci de rechargement sans cache.** `Ctrl+Maj+R` et `Cmd+Maj+R` sont cités de mémoire, non vérifiés pour ce chapitre.
+- **Durées.** Celles du second essai en ligne (2 min 7 s, 6 s, 2 min ; 5 s pour la publication, mesurée au premier essai) et du build local (39 s) varient d'un jour à l'autre et avec la taille du projet.
+- **Plateformes.** Vérifications locales sous Linux seulement ; ni Windows ni macOS.
+- **`flutter.js.map` publié.** Le workflow fourni publie cette carte de source du chargeur Flutter, alors que le chapitre [-@sec-ci-cd] de la séance 1 (section [-@sec-ci-securite], point 6) rapporte la recommandation de Flutter de ne pas publier les cartes de source. Elle ne concerne que le chargeur, et une recherche sur tout `build/web/` n'a trouvé aucun chemin du poste de construction. La garder ou l'exclure est **un point à décider par l'enseignant**.
+- **Rapport gitleaks cité.** Il vient du premier essai (workflow avant durcissement) ; avec le workflow actuel, seul le résultat (`securite` rouge en 6 s) a été relevé, pas le journal complet. La suppression du fichier et `.gitleaksignore` n'ont été essayés qu'au premier essai.
+
+:::
+
+
+## Sources
+
+Documents du cours :
+
+- Le programme détaillé (@sec-programme-detaille), séance 4 : objectifs, matériel, blocs 5, 6 et 12, ordre de coupe, « Ne se sacrifient jamais », « Peut glisser dans le sprint », checklist d'audit (points « CI » et « Secrets »), livrable, definition of done.
+- Les thèmes (@sec-themes) : harnais du thème C (assets publiés, test de scan).
+- Séance 1 : @sec-ci-cd (sections « Intégration continue, livraison continue, déploiement continu », « GitHub Actions pas à pas », [-@sec-ci-portes], « Protections de branche », « Versions et releases » et [-@sec-ci-securite]). Séance 2 : @sec-demarrer-projet (sections [-@sec-projet-relire] et [-@sec-projet-journal]). Séance 3 : @sec-travailler-a-plusieurs. Séance 4 : @sec-test-acceptation (section [-@sec-acceptation-9]) et @sec-securite-audit (sections [-@sec-audit-2-4], [-@sec-audit-2-5], [-@sec-audit-7-2] et [-@sec-audit-7-3]).
+
+Dépôt-modèle (relu le 27 novembre 2026) : `docs/seance-4/ci.yml`, `docs/seance-4/CODEOWNERS.modele`, `.github/workflows/ci.yml`, `README.md` (« Version de Flutter », « Démarrer », « Vérifier avant une PR », « Fichiers binaires du web »), `.gitignore`, `.env.example`, `pubspec.yaml`, `themes/PROJET-A.md`, `themes/PROJET-B.md`, `themes/PROJET-C.md` (mesures de conformité obligatoires).
+
+Essai en ligne (27 novembre 2026), sur un dépôt d'essai créé depuis le dépôt-modèle, avec l'accord de l'enseignant : PR activant la CI complète ; durées des contrôles ; couverture ; `securite` vert puis rouge (faux secret fabriqué), suppression du fichier sans effet, `.gitleaksignore` ; `publication` rouge avant l'activation de Pages, puis vert après « Re-run failed jobs » ; site ouvert dans un navigateur (requêtes, `<base href>`, console, `cache-control`) ; protection de `main` (une approbation, propriétaires du code, merge commit seulement) et refus de fusion ; `gh pr checks`. Second essai, workflow durci (même jour, fait foi) : trois contrôles en parallèle et leurs durées, trois contrôles exigés, `gh pr checks --required`, lecture publique de `…/branches/main` par `gh api`, gitleaks avec et sans `--log-opts`, empreintes écrites dans le workflow.
+
+Documentation consultée pour l'essai (27 novembre 2026) : docs.github.com (« About code owners », « Troubleshooting required status checks », offres GitHub pour Pages) ; README de gitleaks ; documentation d'osv-scanner ; dart.dev, « Security advisories ». Aides en ligne de commande lues localement : `flutter build web -h` (Flutter 3.50.1), `gh release create --help`, `gh pr checks --help`, `gh pr view --help` (gh 2.100.0).
+
+Vérifications locales (27 novembre 2026, Linux, Flutter 3.50.1, Dart 3.14.0), sur une copie du dépôt-modèle :
+
+- `flutter pub get --enforce-lockfile`, `dart run build_runner build --delete-conflicting-outputs` (83 sorties), `flutter test --coverage` (`+32: All tests passed!`), commande `awk` du workflow (`Couverture des tests : 58,1 % (251 lignes exécutées sur 432)`), `make-migrations` sans changement, `dart format` sans changement, `flutter analyze` (`No issues found!`) ;
+- `flutter build web --release --base-href "/equipe_04/" --no-web-resources-cdn --web-content-hash` (`✓ Built build/web`, 42 Mo), liste de `build/web/`, balise `<base href="/equipe_04/">` ;
+- contrôle du bundle : branche `essai-bundle`, constante fictive retrouvée dans `main.dart.<empreinte>.js`, puis `git restore`, retour sur la branche principale, `git branch -D essai-bundle`, `git status --short` vide et constante absente du build refait (la copie locale avait `master` pour branche principale, au lieu de `main`) ; recherche de mots-clés (bruit dû aux noms de champs de Flutter) ; `.env` placé dans `web/` recopié dans `build/web/`, `.env` à la racine absent du build ; fichier CSV déclaré comme ressource publié sous `build/web/assets/` ; aucun chemin du poste de construction dans `build/web/`. Toutes ces modifications ont été annulées ensuite.
