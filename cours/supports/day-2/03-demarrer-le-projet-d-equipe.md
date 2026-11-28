@@ -156,7 +156,7 @@ Le dépôt de votre équipe est une copie du dépôt-modèle de l'enseignant. Il
 | `themes/` | Les versions de `PROJET.md` des trois thèmes (`PROJET-A.md`, `PROJET-B.md`, `PROJET-C.md`) ; dossier supprimé à la création du dépôt d'équipe, sinon utilisé par le fichier d'attente `PROJET.md` | Normalement absent ; sinon, voir la section 8 |
 | `JOURNAL.md` | État courant du projet et mémoire des décisions | **À compléter** (section 11) |
 | `.github/pull_request_template.md` | Le modèle de description d'une PR | Utilisé à la première PR (section 9) |
-| `.github/workflows/ci.yml` | La CI minimale, à chaque PR et à chaque fusion dans `main` : installation aux versions verrouillées, génération du code, contrôle des migrations, mise en forme, `flutter analyze`, `flutter test` | À regarder tourner |
+| `.github/workflows/ci.yml` | La CI minimale, à chaque PR et à chaque fusion dans `main` : refus de toute modification d'un instantané de migration déjà fusionné, installation aux versions verrouillées, génération du code, contrôle des migrations, mise en forme, `flutter analyze`, `flutter test` | À regarder tourner |
 | `lib/` et `test/` | Le squelette en couches, avec une fonctionnalité d'exemple (`jets`) : un Cubit et ses tests, un scénario `.feature` en français, une base drift, une garde d'accès (`RequireRole`) et un utilisateur courant simulé à deux rôles | À visiter (section 6) |
 | `test/acceptance/` | Réservé aux cas d'acceptation de la séance 4 ; ne contient qu'un court README (git ne garde pas un dossier vide) | À ne pas modifier |
 | `pubspec.yaml`, `pubspec.lock` | Dépendances déclarées et versions verrouillées | À ne pas modifier |
@@ -202,6 +202,7 @@ Les extraits qui suivent sont recopiés du dépôt-modèle ; si votre équipe a 
 - Ne jamais modifier, désactiver ni supprimer un test pour le faire passer.
 - Ne jamais modifier `test/acceptance/`.
 - Ne jamais modifier à la main `drift_schemas/` ni les fichiers `*.steps.dart`.
+- Ne jamais supprimer ni régénérer un instantané `drift_schemas/**/drift_schema_v*.json` déjà fusionné dans `main`, même si le message d'erreur de `drift_dev` le propose (« delete the existing schema file ») : passer `schemaVersion` à la version suivante. La CI refuse la PR sinon.
 - Aucune donnée réelle, aucun secret, aucun nom de personne dans le dépôt.
 
 ## Avant de dire « c'est terminé »

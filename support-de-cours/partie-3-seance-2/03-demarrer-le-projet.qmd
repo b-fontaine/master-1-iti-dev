@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-2/03-demarrer-le-projet-d-equipe.md · synchro: 2026-11-27 -->
+<!-- source: cours/supports/day-2/03-demarrer-le-projet-d-equipe.md · synchro: 2026-11-28 -->
 
 # Démarrer le projet d'équipe {#sec-demarrer-projet}
 
@@ -28,10 +28,11 @@ Jusqu'ici, vous vous êtes entraînés : git dans un dépôt d'essai (@sec-git),
 Le chapitre ne redit pas ce que les autres expliquent. Les gestes git sont dans le chapitre [-@sec-git], la configuration de l'agent dans le chapitre [-@sec-configurer-claude-code], les fiches à suivre en pratique dans l'annexe [-@sec-fiches]. Flutter, le TDD et les patrons d'architecture ont leurs chapitres dans la séance 1 (@sec-guide-flutter, @sec-pratique-craft-flutter et @sec-design-patterns) : vous trouverez ici les renvois précis.
 
 ```{mermaid}
+%%| fig-width: 5.6
 flowchart LR
-    A["1 · Cloner,<br>installer, vérifier"] --> B["2 · Lire le contexte,<br>compléter PROJET.md"]
-    B --> C["3 · Branche, commit,<br>PR avec le modèle"]
-    C --> D["4 · Relecture, fusion,<br>main protégée vérifiée"]
+    A["1 · Cloner,<br>installer,<br>vérifier"] --> B["2 · Lire le<br>contexte,<br>compléter<br>PROJET.md"]
+    B --> C["3 · Branche,<br>commit, PR<br>avec le modèle"]
+    C --> D["4 · Relecture,<br>fusion, main<br>protégée<br>vérifiée"]
     D --> E["5 · JOURNAL.md<br>et tag s2-fin"]
 ```
 
@@ -166,7 +167,7 @@ Le dépôt de votre équipe est une copie du dépôt-modèle de l'enseignant. Il
 | `themes/` | Les versions de `PROJET.md` des trois thèmes (`PROJET-A.md`, `PROJET-B.md`, `PROJET-C.md`) ; dossier supprimé à la création du dépôt d'équipe, sinon utilisé par le fichier d'attente `PROJET.md` | Normalement absent ; sinon, voir @sec-projet-projet-md |
 | `JOURNAL.md` | État courant du projet et mémoire des décisions | **À renseigner** (@sec-projet-journal) |
 | `.github/pull_request_template.md` | Le modèle de description d'une PR | Utilisé à la première PR (@sec-projet-premiere-pr) |
-| `.github/workflows/ci.yml` | La CI minimale, à chaque PR et à chaque fusion dans `main` : installation aux versions verrouillées, génération du code, contrôle des migrations, mise en forme, `flutter analyze`, `flutter test` | À regarder tourner |
+| `.github/workflows/ci.yml` | La CI minimale, à chaque PR et à chaque fusion dans `main` : refus de toute modification d'un instantané de migration déjà fusionné, installation aux versions verrouillées, génération du code, contrôle des migrations, mise en forme, `flutter analyze`, `flutter test` | À regarder tourner |
 | `lib/` et `test/` | Le squelette en couches, avec une fonctionnalité d'exemple (`jets`) : un Cubit et ses tests, un scénario `.feature` en français, une base drift, une garde d'accès (`RequireRole`) et un utilisateur courant simulé à deux rôles | À visiter (@sec-projet-visite) |
 | `test/acceptance/` | Réservé aux cas d'acceptation de la séance 4 ; ne contient qu'un court README (git ne garde pas un dossier vide) | À ne pas modifier |
 | `pubspec.yaml`, `pubspec.lock` | Dépendances déclarées et versions verrouillées | À ne pas modifier |
@@ -211,6 +212,7 @@ Les extraits qui suivent sont recopiés du dépôt-modèle ; si votre équipe a 
 - Ne jamais modifier, désactiver ni supprimer un test pour le faire passer.
 - Ne jamais modifier `test/acceptance/`.
 - Ne jamais modifier à la main `drift_schemas/` ni les fichiers `*.steps.dart`.
+- Ne jamais supprimer ni régénérer un instantané `drift_schemas/**/drift_schema_v*.json` déjà fusionné dans `main`, même si le message d'erreur de `drift_dev` le propose (« delete the existing schema file ») : passer `schemaVersion` à la version suivante. La CI refuse la PR sinon.
 - Aucune donnée réelle, aucun secret, aucun nom de personne dans le dépôt.
 
 ## Avant de dire « c'est terminé »
@@ -479,7 +481,8 @@ Ces lignes ne servent pas à vous surveiller. Elles répondent à trois règles 
 - **Mesurer plutôt que croire** : dans l'essai contrôlé de METR (juillet 2025) vu en séance 1 (voir @sec-craft-ia), des développeurs expérimentés pensaient avoir gagné 20 % de temps avec l'IA et en avaient perdu 19 %. Noter le temps estimé, le temps réel et les retouches est la seule façon de ne pas se fier à son impression.
 
 ```{mermaid}
-flowchart LR
+%%| fig-width: 4.2
+flowchart TD
     B["Branche<br>poussée"] --> P["PR ouverte<br>modèle rempli"]
     P --> R{"Relecture<br>par un coéquipier"}
     R -->|"à corriger"| C["Nouveau commit<br>sur la branche"]
@@ -618,16 +621,14 @@ Le tag dit **quel** état retrouver, le journal dit **quoi en faire**. L'un sans
 
 L'interruption de huit semaines est derrière vous : elle séparait la séance 1 de celle-ci, et c'est pour elle que la fiche 0 de l'annexe [-@sec-fiches] fait revérifier son poste. La suite est plus serrée.
 
-```{mermaid}
-timeline
-    title De la séance 2 à la soutenance
-    Mercredi 2 décembre : Séance 2 : équipes, dépôt, tag s2-fin, JOURNAL.md à jour
-    Vendredi 4 décembre : Séance 3 : bref contrôle, première user story, données, RGPD
-    Mercredi 16 décembre : Séance 4 : qualité, CI/CD, sécurité, AI Act, passage devant le RSSI
-    Vendredi 18 décembre : Fiche de conformité v1 déposée en PR
-    Du samedi 19 décembre au dimanche 3 janvier : Vacances de fin d'année, sans travail imposé
-    Vendredi 29 janvier 2027, après-midi : Séance 5 : retouches et soutenance
-```
+| Date | De la séance 2 à la soutenance |
+|---|---|
+| Mercredi 2 décembre | Séance 2 : équipes, dépôt, tag `s2-fin`, `JOURNAL.md` à jour |
+| Vendredi 4 décembre | Séance 3 : bref contrôle, première user story, données, RGPD |
+| Mercredi 16 décembre | Séance 4 : qualité, CI/CD, sécurité, AI Act, passage devant le RSSI |
+| Vendredi 18 décembre | Fiche de conformité v1 déposée en PR |
+| Du samedi 19 décembre au dimanche 3 janvier | Vacances de fin d'année, sans travail imposé |
+| Vendredi 29 janvier 2027, après-midi | Séance 5 : retouches et soutenance |
 
 ### Entre la séance 2 et la séance 3
 

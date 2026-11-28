@@ -131,6 +131,7 @@ Les `README.md` de `cours/supports/` et de `cours/presentations/` sont des notes
 
 - Un bloc de code qui contient lui-même des titres `##` ou des clôtures doit rester un bloc fermé : vérifier l'appariement des clôtures.
 - Un tableau très large reste un tableau à barres ; s'il déborde, le scinder ou passer en liste.
+- Un bloc ` ```{mermaid} ` s'insère dans le PDF à sa taille naturelle : un schéma large déborde ou est coupé à droite de la page. Fixer sa largeur par une ligne `%%| fig-width: 5.6` juste sous ` ```{mermaid} ` (en pouces ; la colonne de texte en fait 5,67). Choisir une valeur plus petite pour un schéma étroit, car `fig-width` agrandit aussi un schéma moins large que la colonne, puis contrôler la page dans le PDF. Si le texte devient trop petit (un `flowchart LR` de plus de cinq boîtes) ou si le schéma ressort rogné, passer en `flowchart TD`, couper les libellés par des `<br/>`, ou revenir à une liste ou un tableau (règle 8).
 - Un caractère absent des polices fait échouer la compilation du PDF (voir Prérequis). Les flèches, ≥ et ✓ ont un repli ; un émoji en couleur ne passe pas : le remplacer par un mot ou un symbole simple.
 
 ## Interdits absolus dans les `.qmd`

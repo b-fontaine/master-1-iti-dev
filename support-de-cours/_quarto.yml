@@ -76,6 +76,7 @@ format:
     documentclass: scrbook
     classoption: [twoside, BCOR=12mm, DIV=11]
     papersize: a4
+    fontsize: 10pt
     pdf-engine: lualatex
     toc: true
     number-sections: true

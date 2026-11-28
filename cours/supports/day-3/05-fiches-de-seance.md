@@ -326,7 +326,7 @@ Le `git status --porcelain` ne doit **rien** afficher : `make-migrations` n'a ri
 
 **Étape 8 · La fiche, puis la PR.** Notez en commentaire (`<!-- … -->`) dans `docs/fiche_conformite.md` les rubriques que touche le modèle (thème B : 2, 5, 6 et 11 ; exemple au chapitre 4, section 8). Poussez, ouvrez la PR (fiche H, étape 10), joignez la photo du modèle. Un coéquipier relit avec la fiche I, ligne 9 comprise.
 
-**Trois interdits** : modifier une base à la main pour faire passer un changement ; modifier à la main `drift_schemas/` ou un fichier `*.steps.dart` ; supprimer ou regénérer un instantané `drift_schema_vN.json` déjà fusionné dans `main`, même si `make-migrations` le propose.
+**Trois interdits** : modifier une base à la main pour faire passer un changement ; modifier à la main `drift_schemas/` ou un fichier `*.steps.dart` ; supprimer ou régénérer un instantané `drift_schema_vN.json` déjà fusionné dans `main`, même si `make-migrations` le propose.
 
 **Si deux branches ont préparé chacune une version 2.** Celle de `main` reste ; la branche qui fusionne en second devient la **version 3**. Avec le gardien des données, sur la branche en conflit après `git pull origin main` :
 
@@ -426,7 +426,7 @@ $ git switch -c journal-s3
    Section « Interdits » :
 
    ```markdown
-   - Ne jamais supprimer ni regénérer un instantané `drift_schemas/` déjà présent sur
+   - Ne jamais supprimer ni régénérer un instantané `drift_schemas/` déjà présent sur
      `main`, même si `make-migrations` le propose.
    ```
 
@@ -468,6 +468,7 @@ $ git switch -c journal-s3
 | Conflit dans `pubspec.yaml` ou `pubspec.lock` | Deux branches ont modifié les dépendances | `git merge --abort`, prévenir le gardien du harnais et un encadrant. Jamais de correction à la main |
 | `CONFLICT (add/add)` sur `drift_schema_v2.json`, `base_de_donnees.steps.dart`, `schema_v2.dart`, et conflit dans `base_de_donnees.dart` | Deux branches ont préparé chacune une version 2 | Celle de `main` reste, la vôtre devient la version 3 : fiche K, encadré « Si deux branches… » (chapitre 4, section 7.2) |
 | `make-migrations` s'arrête : `A schema for version 2 … already exists and differs from the current schema` | Une table a changé sans nouvelle version | Passer à la version suivante (`schemaVersion` + 1). **Ne jamais** supprimer l'instantané existant |
+| Le contrôle de la PR est rouge à l'étape « Refuser la modification d'un instantané déjà fusionné » | Un instantané `drift_schema_vN.json` déjà présent sur `main` a été modifié, supprimé ou régénéré | Le rétablir : `git fetch origin`, puis `git restore --source origin/main -- drift_schemas/base_de_donnees/drift_schema_vN.json`. Passer ensuite à la version suivante et relancer `make-migrations` (chapitre 4, section 7.2) |
 | Le test de migration échoue : `Schema does not match` | `onUpgrade` ne crée pas les nouvelles tables | Écrire l'étape `fromNToM` (fiche K, étape 5) |
 | `flutter analyze` : `The named parameter 'from2To3' is required` | Une version a été ajoutée sans son étape | Écrire `from2To3` à la suite de `from1To2` |
 | `les clés étrangères sont activées` échoue (`Expected: <1>`, `Actual: <0>`) et le refus de l'orphelin ne lève plus d'erreur | La ligne `PRAGMA foreign_keys = ON` de `beforeOpen` a été retirée | La remettre. Ne jamais « corriger » le test |
@@ -475,7 +476,7 @@ $ git switch -c journal-s3
 | L'agent propose `git push --force` ou `gh pr review --approve` | Il veut en finir à votre place | Refuser. On ajoute un commit, on ne réécrit rien ; une approbation engage une personne |
 | Votre base de développement dans Chrome est incohérente | Votre base locale seulement | Outils de développement, onglet « Application », « Clear site data ». Ce n'est pas une migration |
 
-**Trois choses à ne pas faire, même si un tutoriel ou l'agent le propose :** `git push --force` ; `flutter pub upgrade` ; supprimer ou regénérer un instantané de `drift_schemas/` déjà fusionné.
+**Trois choses à ne pas faire, même si un tutoriel ou l'agent le propose :** `git push --force` ; `flutter pub upgrade` ; supprimer ou régénérer un instantané de `drift_schemas/` déjà fusionné.
 
 ---
 

@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-3/04-les-donnees.md · synchro: 2026-11-27 -->
+<!-- source: cours/supports/day-3/04-les-donnees.md · synchro: 2026-11-28 -->
 
 # Les données : modéliser, migrer, prouver l'intégrité {#sec-donnees}
 
@@ -435,7 +435,7 @@ Un instantané déjà fusionné est une **archive** : il décrit des bases qui e
 Fatal error: A schema for version 2 of the base_de_donnees database already exists and differs from the current schema. Either delete the existing schema file (…/drift_schemas/base_de_donnees/drift_schema_v2.json) or update the schema version in the database file.
 ```
 
-Le message propose deux sorties. **Une seule est bonne** : « update the schema version », c'est-à-dire passer à la version suivante. Supprimer l'instantané existant revient à réécrire une version déjà publiée ; la section [-@sec-donnees-7-2] montre pourquoi c'est dangereux, et que la CI ne le voit pas.
+Le message propose deux sorties. **Une seule est bonne** : « update the schema version », c'est-à-dire passer à la version suivante. Supprimer l'instantané existant revient à réécrire une version déjà publiée ; la section [-@sec-donnees-7-2] montre pourquoi c'est dangereux, pourquoi les six commandes de vérification ne le voient pas, et le second contrôle que la CI fait pour le refuser.
 
 ::: {.callout-tip title="À retenir"}
 Toute modification d'une table : `schemaVersion` + 1, `build_runner`, `make-migrations`, une étape `fromNToM` sans toucher aux précédentes, des tests verts. Les instantanés de `drift_schemas/` ne se modifient ni ne se suppriment jamais.
@@ -595,7 +595,7 @@ Deux observations. « add/add » signifie que les deux branches ont **créé** l
 
 2. **Rajouter sa table dans `base_de_donnees.dart` et passer à la version 3.** L'import de sa table, son nom dans la liste (`[Jets, Postes, Quarts, OrdresFabrication]`), `schemaVersion => 3`. On **ne touche pas** à `from1To2` : c'est celle de `main`, elle décrit le passage à la version 2 déjà fusionnée.
 
-3. **Regénérer.** `dart run build_runner build --delete-conflicting-outputs`, puis `dart run drift_dev make-migrations`, qui annonce :
+3. **Régénérer.** `dart run build_runner build --delete-conflicting-outputs`, puis `dart run drift_dev make-migrations`, qui annonce :
 
    ```text
    INFO: base_de_donnees: Creating schema file for version 3
@@ -620,7 +620,15 @@ Deux observations. « add/add » signifie que les deux branches ont **créé** l
 
 Le résultat a été contrôlé sur une base enregistrée dans un fichier : créée avec le code de `main` (version 2 : `jets`, `postes`, `quarts`), puis ouverte avec le code de la branche résolue, elle est passée en version 3 et a reçu la table `ordres_fabrication`.
 
-**La mauvaise sortie, et pourquoi la CI ne la voit pas.** La tentation, pendant le conflit, est de « tout garder en version 2 » : réunir les trois tables dans `from1To2`, supprimer `drift_schema_v2.json` (comme le suggère le message d'erreur de la section [-@sec-donnees-5-4]) et le regénérer. Cette résolution a été essayée : `flutter analyze` sans remarque, `flutter test` vert (39 tests), et **le contrôle de la CI passe**, puisque l'instantané regénéré est cohérent avec le code. Pourtant, une base déjà en version 2 (créée avec le code de `main`, comme celle d'un navigateur qui a ouvert la version publiée) a été ouverte avec ce code : elle est restée en version 2, **sans** la table `ordres_fabrication`. drift n'a rien à migrer, puisque la version n'a pas changé. Rien ne le signale ; l'erreur n'apparaîtra qu'à la première écriture dans cette table, chez quelqu'un d'autre.
+**La mauvaise sortie, et pourquoi les six commandes ne la voient pas.** La tentation, pendant le conflit, est de « tout garder en version 2 » : réunir les trois tables dans `from1To2`, supprimer `drift_schema_v2.json` (comme le suggère le message d'erreur de la section [-@sec-donnees-5-4]) et le régénérer. Cette résolution a été essayée : `flutter analyze` sans remarque, `flutter test` vert (39 tests), et **le contrôle de la section [-@sec-donnees-5-4] passe** (`make-migrations` ne change rien), puisque l'instantané régénéré est cohérent avec le code. Pourtant, une base déjà en version 2 (créée avec le code de `main`, comme celle d'un navigateur qui a ouvert la version publiée) a été ouverte avec ce code : elle est restée en version 2, **sans** la table `ordres_fabrication`. drift n'a rien à migrer, puisque la version n'a pas changé. Aucune des six commandes ne le signale ; l'erreur n'apparaîtra qu'à la première écriture dans cette table, chez quelqu'un d'autre.
+
+**Le second contrôle de la CI.** C'est pour cette faute que la CI du dépôt fait un contrôle de plus, avant les six commandes : l'étape « Refuser la modification d'un instantané déjà fusionné » compare la PR à `main` et passe au rouge si un fichier de `drift_schemas/` déjà présent sur `main` est modifié, supprimé ou renommé. Seul l'ajout d'un instantané passe ; un instantané créé dans la PR en cours, pas encore fusionné, peut encore être régénéré. Pour le rejouer sur votre poste avant d'ouvrir la PR, commitez votre travail, lancez `git fetch origin`, puis cette commande, qui ne doit rien afficher :
+
+```bash
+git diff --no-renames --diff-filter=MDT --name-only origin/main...HEAD -- drift_schemas
+```
+
+Ce contrôle ne dispense pas de la relecture : jusqu'à la séance 4, une pastille rouge se regarde mais n'empêche pas la fusion.
 
 D'où la règle : **un instantané déjà fusionné dans `main` ne se supprime ni ne se regénère**. En relecture, une PR dont la liste des fichiers montre un `drift_schema_vN.json` existant modifié ou supprimé (et pas seulement un nouveau ajouté) est à refuser (ligne 9 de la checklist de revue, chapitre [-@sec-travailler-a-plusieurs], section [-@sec-equipe-5]).
 
@@ -642,7 +650,7 @@ Le programme demande d'ajouter cette règle à `CLAUDE.md`, au bilan de la séan
 Et dans la section « Interdits » :
 
 ```markdown
-- Ne jamais supprimer ni regénérer un instantané `drift_schemas/` déjà présent sur
+- Ne jamais supprimer ni régénérer un instantané `drift_schemas/` déjà présent sur
   `main`, même si `make-migrations` le propose.
 ```
 
@@ -755,6 +763,7 @@ Le livrable de fin de séance, identique pour les trois thèmes, dit « modèle 
 - **Tables `arrets`, `ordres_fabrication` complète et `declarations_production`** : dessinées dans le schéma de la section [-@sec-donnees-3-2] d'après l'énoncé, non implémentées. Une table `ordres_fabrication` réduite (sans `quantite_lancee`) a servi à l'expérience des deux branches. La contrainte sur la liste des catégories d'arrêt n'a pas été écrite ni testée.
 - **Schéma `mermaid`** (section [-@sec-donnees-3-2]) : syntaxe `erDiagram` relue, rendu non vérifié au moment de la rédaction.
 - **Expériences sur les clés étrangères** (section [-@sec-donnees-6-2]) : faites dans des tests temporaires, retirés ensuite. La version de SQLite (3.54.1) est celle que le paquet `sqlite3` a fournie aux tests sous Linux ; la base web (`web/sqlite3.wasm`) n'a pas été testée sur ce point.
+- **Second contrôle de la CI** (section [-@sec-donnees-7-2], étape « Refuser la modification d'un instantané déjà fusionné ») : ajouté au dépôt-modèle après les essais de ce chapitre. Son script a été rejoué le 28 novembre 2026 sur un dépôt git d'essai local (instantané ajouté, modifié, supprimé, renommé, régénéré dans la même PR, envoi dans `main`) ; il n'a pas été observé sur GitHub, et la mauvaise résolution de la section [-@sec-donnees-7-2] n'a pas été rejouée avec lui.
 - **Base déjà en version 2 ouverte par le code résolu** (section [-@sec-donnees-7-2]) : simulée avec une base enregistrée dans un fichier, sur le bureau Linux, pas dans un navigateur.
 - **Message de `git pull origin main`** : le conflit a été obtenu avec `git pull origin main` (réglage `pull.rebase false`) dans un clone, et avec `git merge` dans la copie ; la sortie anglaise citée vient de `git merge` avec `LC_ALL=C`. GitHub, qui signale le conflit sur la page de la PR, n'a pas été utilisé.
 - **Le piège de l'agent** (section [-@sec-donnees-7-1]) : la modification du test a été écrite à la main pour reproduire ce que ferait un agent ; aucun agent n'a été lancé.
@@ -778,4 +787,4 @@ Documentation officielle (citée pour aller plus loin, non relue en ligne pour c
 - drift, migrations et tests de migration : https://drift.simonbinder.eu/migrations/
 - SQLite, clés étrangères : https://www.sqlite.org/foreignkeys.html
 
-Vérifications locales (26 novembre 2026, Linux, Flutter 3.50.1) : sur une copie du dépôt-modèle, état de départ vert (32 tests, `flutter analyze` sans remarque) ; ajout des tables `postes` et `quarts`, migration vers la version 2 avec `dart run drift_dev make-migrations`, 39 tests verts, `flutter analyze` sans remarque, contrôle de la CI rejoué ; table modifiée sans nouvelle version (erreur de `make-migrations`) ; clés étrangères désactivées puis réactivées ; deux branches en version 2, fusion en conflit, résolution en version 3 (41 tests verts) et mauvaise résolution en version 2 regénérée (contrôle de la CI passé, base v2 existante non migrée).
+Vérifications locales (26 novembre 2026, Linux, Flutter 3.50.1) : sur une copie du dépôt-modèle, état de départ vert (32 tests, `flutter analyze` sans remarque) ; ajout des tables `postes` et `quarts`, migration vers la version 2 avec `dart run drift_dev make-migrations`, 39 tests verts, `flutter analyze` sans remarque, contrôle de la CI rejoué ; table modifiée sans nouvelle version (erreur de `make-migrations`) ; clés étrangères désactivées puis réactivées ; deux branches en version 2, fusion en conflit, résolution en version 3 (41 tests verts) et mauvaise résolution en version 2 régénérée (les six commandes de la CI passées, base v2 existante non migrée ; le second contrôle de la CI n'existait pas encore).

@@ -17,6 +17,39 @@ jobs:
     steps:
       - name: Récupérer le dépôt
         uses: actions/checkout@v7
+        with:
+          # Tout l'historique : le contrôle suivant compare la PR à sa branche cible.
+          fetch-depth: 0
+
+      # Un instantané du schéma déjà fusionné décrit des bases qui existent : il ne se
+      # modifie ni ne se supprime. Seul l'ajout d'un instantané (nouvelle version) passe.
+      # Les six commandes suivantes ne voient pas cette faute (docs/ARCHITECTURE.md, section 7).
+      - name: Refuser la modification d'un instantané déjà fusionné
+        env:
+          EVENEMENT: ${{ github.event_name }}
+          BRANCHE_CIBLE: ${{ github.base_ref }}
+          COMMIT_PRECEDENT: ${{ github.event.before }}
+        run: |
+          if [ "$EVENEMENT" = "pull_request" ]; then
+            # PR : on compare au point où la branche a quitté sa branche cible.
+            base="$(git merge-base "origin/$BRANCHE_CIBLE" HEAD)"
+          else
+            # Envoi dans main (fusion d'une PR ou envoi direct) : on compare au commit précédent.
+            base="$COMMIT_PRECEDENT"
+          fi
+          if ! git cat-file -e "$base^{commit}" 2>/dev/null; then
+            echo "Aucun commit de comparaison (premier envoi de la branche, ou historique réécrit) : rien à contrôler."
+            exit 0
+          fi
+          fautifs="$(git diff --no-renames --diff-filter=MDT --name-only "$base" HEAD -- drift_schemas)"
+          if [ -n "$fautifs" ]; then
+            echo "::error::Instantané déjà fusionné modifié ou supprimé (voir docs/ARCHITECTURE.md, section 7)."
+            echo "$fautifs"
+            echo "Rétablir ces fichiers, puis passer schemaVersion à la version suivante et relancer"
+            echo "dart run drift_dev make-migrations, qui ajoutera un nouvel instantané."
+            exit 1
+          fi
+          echo "Aucun instantané déjà fusionné n'est modifié ni supprimé."
 
       - name: Installer Flutter 3.50.1
         uses: subosito/flutter-action@v2

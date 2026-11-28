@@ -1,4 +1,4 @@
-<!-- source: cours/programme-detaille.md · synchro: 2026-11-27 -->
+<!-- source: cours/programme-detaille.md · synchro: 2026-11-28 -->
 
 # Le programme détaillé {#sec-programme-detaille}
 

@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-2/02-configurer-claude-code.md · synchro: 2026-11-25 -->
+<!-- source: cours/supports/day-2/02-configurer-claude-code.md · synchro: 2026-11-28 -->
 
 # Configurer Claude Code {#sec-configurer-claude-code}
 
@@ -55,7 +55,8 @@ Un gel écrit dans le prompt est une demande. Si une action ne doit jamais arriv
 Une analogie d'entreprise : une **note de service** dit « l'accès à la salle des serveurs est réservé à l'équipe d'exploitation ». Un **badge** qui n'ouvre pas la porte dit la même chose, mais il ne dépend ni de la mémoire ni de la bonne volonté de celui qui passe. Les deux sont utiles : la note explique, le badge garantit.
 
 ```{mermaid}
-flowchart LR
+%%| fig-width: 4.4
+flowchart TD
     V["Vous"] -->|"prompt"| M["Modèle"]
     C["CLAUDE.md, skills<br/>(consignes)"] -.->|"lus par"| M
     M -->|"propose une action"| H{"Claude Code<br/>(le harnais)"}
@@ -494,11 +495,12 @@ Réflexe à prendre dès le départ : **une session, une tâche**. Et ce qui doi
 Le **spec-driven development** (développement piloté par la spécification), vu dans le chapitre [-@sec-outils-agentiques], consiste à écrire l'intention et les critères d'acceptation avant de demander le code. Des cadres outillent cette discipline. **spec-kit**, publié par GitHub, en est un exemple ; BMAD et AI-DLC, cités en séance 1, en sont d'autres.
 
 ```{mermaid}
+%%| fig-width: 5.6
 flowchart LR
-    C["Constitution<br/>principes du projet"] --> S["Spécification<br/>quoi, pour qui, critères"]
-    S --> P["Plan<br/>comment, avec quoi"]
-    P --> T["Tâches<br/>petites, vérifiables"]
-    T --> I["Code<br/>par l'agent, relu"]
+    C["Constitution<br/>principes<br/>du projet"] --> S["Spécification<br/>quoi, pour qui,<br/>critères"]
+    S --> P["Plan<br/>comment,<br/>avec quoi"]
+    P --> T["Tâches<br/>petites,<br/>vérifiables"]
+    T --> I["Code<br/>par l'agent,<br/>relu"]
 ```
 
 Concrètement, spec-kit s'installe en ligne de commande (il demande Python 3.11 ou plus et l'outil `uv`), puis prépare un projet pour un agent donné :

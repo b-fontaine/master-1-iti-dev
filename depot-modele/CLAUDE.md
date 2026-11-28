@@ -21,6 +21,7 @@
 - Ne jamais modifier, désactiver ni supprimer un test pour le faire passer.
 - Ne jamais modifier `test/acceptance/`.
 - Ne jamais modifier à la main `drift_schemas/` ni les fichiers `*.steps.dart`.
+- Ne jamais supprimer ni régénérer un instantané `drift_schemas/**/drift_schema_v*.json` déjà fusionné dans `main`, même si le message d'erreur de `drift_dev` le propose (« delete the existing schema file ») : passer `schemaVersion` à la version suivante. La CI refuse la PR sinon.
 - Aucune donnée réelle, aucun secret, aucun nom de personne dans le dépôt.
 
 ## Avant de dire « c'est terminé »

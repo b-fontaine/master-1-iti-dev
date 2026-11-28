@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-4/04-ai-act-et-rssi.md · synchro: 2026-11-27 -->
+<!-- source: cours/supports/day-4/04-ai-act-et-rssi.md · synchro: 2026-11-28 -->
 
 # L'AI Act et le passage devant le RSSI {#sec-ai-act-rssi}
 
@@ -30,8 +30,8 @@ En séance 3, vous avez répondu à la question « quelles données mon outil tr
 Le module fixe le réflexe professionnel que la séance met en scène : **aucun applicatif ne touche des données réelles ni n'est mis à disposition d'autres personnes sans validation du RSSI** (et du DPO si des données personnelles sont en jeu) (module de conformité, section [-@sec-conf-pourquoi]). Le passage de la séance 4 en est une répétition à taille réelle : même dossier, mêmes questions, décision possible dans les deux sens.
 
 ```{mermaid}
-%%| fig-width: 6
-flowchart LR
+%%| fig-width: 2.4
+flowchart TD
     A["AI Act en une page<br>bloc 8"] --> B["Atelier : 10 cartes<br>bloc 9"]
     B --> C["Classement provisoire<br>de votre projet<br>rubrique 9"]
     C --> D["Passage devant le RSSI<br>décision provisoire<br>bloc 10"]

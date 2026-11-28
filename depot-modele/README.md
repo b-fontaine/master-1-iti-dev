@@ -40,7 +40,7 @@ flutter build web --release --base-href "/<dépôt>/" --no-web-resources-cdn --w
 
 ## Vérifier avant une PR : les commandes de la CI
 
-C'est la liste de référence, citée par `CLAUDE.md` et `docs/ARCHITECTURE.md`. La CI (`.github/workflows/ci.yml`) lance exactement ces commandes, dans cet ordre, à chaque PR :
+C'est la liste de référence, citée par `CLAUDE.md` et `docs/ARCHITECTURE.md`. La CI (`.github/workflows/ci.yml`) lance ces six commandes, dans cet ordre, à chaque PR :
 
 1. `flutter pub get --enforce-lockfile`
 2. `dart run build_runner build --delete-conflicting-outputs`
@@ -49,7 +49,13 @@ C'est la liste de référence, citée par `CLAUDE.md` et `docs/ARCHITECTURE.md`.
 5. `flutter analyze`
 6. `flutter test`
 
-En séance 4, la CI complète remplace ce fichier : `docs/seance-4/ci.yml`, fourni inactif, se copie par-dessus `.github/workflows/ci.yml` (`cp docs/seance-4/ci.yml .github/workflows/ci.yml`, dans une PR). Elle garde ces six commandes, mesure en plus la couverture des tests (`flutter test --coverage`), cherche les dépendances vulnérables et les secrets dans l'historique, construit la version web et la publie sur GitHub Pages depuis `main`.
+La CI fait un contrôle de plus, avant ces six commandes. Il n'a pas de numéro dans la liste, parce qu'il ne lance rien sur le code : il compare la PR à sa branche cible, et refuse toute PR qui **modifie ou supprime un instantané de `drift_schemas/` déjà fusionné** (seul l'ajout d'un instantané passe ; voir `docs/ARCHITECTURE.md`, section 7). Les six commandes ne voient pas cette faute. Pour le rejouer sur votre poste avant d'ouvrir la PR, commitez votre travail, lancez `git fetch origin`, puis cette commande, qui ne doit rien afficher (elle ne voit que ce qui est commité) :
+
+```bash
+git diff --no-renames --diff-filter=MDT --name-only origin/main...HEAD -- drift_schemas
+```
+
+En séance 4, la CI complète remplace ce fichier : `docs/seance-4/ci.yml`, fourni inactif, se copie par-dessus `.github/workflows/ci.yml` (`cp docs/seance-4/ci.yml .github/workflows/ci.yml`, dans une PR). Elle garde ces six commandes et le contrôle des instantanés, mesure en plus la couverture des tests (`flutter test --coverage`), cherche les dépendances vulnérables et les secrets dans l'historique, construit la version web et la publie sur GitHub Pages depuis `main`.
 
 Bon à savoir :
 
