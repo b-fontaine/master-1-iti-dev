@@ -2,7 +2,7 @@
 
 *Séance 5 « Retouches et soutenance » · Master ITI, Nantes Université, 2026-2027. Chapitre à lire avant ou après la séance. Les commandes git et `flutter test` ont été exécutées le 27 novembre 2026 sous Linux (git 2.53.0, Flutter 3.50.1, Dart 3.14.0), sur une copie du dépôt-modèle placée hors du dépôt du cours, avec un dépôt distant local : rien n'a été écrit sur GitHub ; quelques commandes `gh` ont été essayées en lecture seule sur le dépôt du cours (gh 2.100.0), pas sur un dépôt d'équipe.*
 
-Ce chapitre accompagne la fin du bloc 5 (les questions individuelles qui suivent la partie commune de chaque soutenance), puis les blocs 6, 7 et 8 : fiches d'évaluation par les pairs, retour d'expérience collectif, clôture. Il répond à deux questions que chacun se pose avant le vendredi 29 janvier 2027 : « sur quoi vais-je être interrogé, et comment m'y préparer sans savoir lire le Dart ? » et « comment ma note est-elle construite ? ». Tout ce qui touche au barème est **cité mot pour mot** du programme, puis commenté. Tout ce qui est un conseil de préparation est **signalé comme une proposition** des supports. L'exemple suivi est le dépôt `equipe_04`, du thème B.
+Ce chapitre accompagne la fin du bloc 5 (les questions individuelles qui suivent la partie commune de chaque soutenance), puis les blocs 6, 7 et 8 : fiches d'évaluation par les pairs, retour d'expérience écrit, clôture. Il répond à deux questions que chacun se pose avant le vendredi 29 janvier 2027 : « sur quoi vais-je être interrogé, et comment m'y préparer sans savoir lire le Dart ? » et « comment ma note est-elle construite ? ». Tout ce qui touche au barème est **cité mot pour mot** du programme, puis commenté. Tout ce qui est un conseil de préparation est **signalé comme une proposition** des supports. L'exemple suivi est le dépôt `equipe_04`, du thème B.
 
 ## Ce que vous allez retenir
 
@@ -53,9 +53,9 @@ Le programme (section 7, « Format de la soutenance »), mot pour mot :
 
 **Quand.** Les questions individuelles viennent après la partie commune de votre équipe : le bloc 5 décrit le passage comme « démonstration en direct, « sous le capot », conformité, puis questions individuelles ». Le déroulement de la partie commune est au chapitre 2, section 11.
 
-**Combien de temps.** Le programme ne fixe pas de minutage. Il donne un **ordre de grandeur d'organisation**, « à ajuster », dans la formule du budget par équipe : « une partie commune d'une dizaine de minutes + quatre minutes de questions par étudiant + une transition de quatre minutes » (chapitre 2, section 2). Les deux questions tiennent donc dans quelques minutes : la réponse à la question 1 se prépare courte.
+**Combien de temps.** Le programme ne fixe pas de minutage. Il donne un **ordre de grandeur d'organisation**, « à ajuster », dans la formule du budget par équipe : « de l'ordre de **20 minutes par équipe**, transition comprise : une partie commune brève, puis **trois minutes de questions par étudiant** » (chapitre 2, section 2). Il ajoute : « la question 1 est brève, la question 2 très brève ». Vos deux questions tiennent donc en trois minutes : la réponse à la question 1 se prépare courte.
 
-**Qui pose les questions, et avec quoi.** Dans chaque salle, un évaluateur, et un second évaluateur ou un observateur. D'après le programme, l'évaluateur dispose d'une « **fiche de notation pré-remplie par étudiant** (équipe, étudiant, PR tirée au sort, échelle de compréhension de 0 à 4 pour les deux questions) », et l'observateur « chronomètre et note les écarts ». Avant les passages, les évaluateurs se calibrent entre eux (bloc 4) : ils appliquent l'échelle « à deux exemples de réponses ». Ces deux exemples ne sont pas publiés ; ce chapitre ne les connaît pas.
+**Qui pose les questions, et avec quoi.** L'enseignant, seul évaluateur, sans observateur. D'après le programme, il dispose d'une « **fiche de notation pré-remplie par étudiant** (équipe, étudiant, PR tirée au sort, échelle de compréhension de 0 à 4 pour les deux questions) » ; il chronomètre lui-même et note les écarts, à moins de confier le chronomètre et la fiche d'observation à un étudiant volontaire d'une équipe qui ne passe pas. Avant les passages, il relit l'échelle « sur ses deux exemples de réponses » (calibrage, bloc 4). Ces deux exemples ne sont pas publiés ; ce chapitre ne les connaît pas.
 
 **« La même trame pour tous ».** Tout le monde reçoit le même type de questions, notées sur la même échelle, y compris l'étudiant absent, interrogé plus tard (section 11). La trame est fixée ; la PR et la question 2 changent d'un étudiant à l'autre.
 
@@ -278,7 +278,7 @@ Repérez aussi **un risque** : ce que la PR ne vérifie pas, ce qui pourrait mal
 6. **Et si on changeait…** : un changement, sa conséquence, le test qui rougirait ; un risque.
 7. **Pour aller au bout** : un test que vous ajouteriez ou une autre façon de faire ; le lien avec une règle du thème, les données ou la fiche de conformité ; une limite.
 
-Puis dites-la **à voix haute** à un coéquipier, sans la lire, en vous chronométrant : la question 1 dure quelques minutes, pas un quart d'heure.
+Puis dites-la **à voix haute** à un coéquipier, sans la lire, en vous chronométrant : les deux questions tiennent en trois minutes, et la question 1 est « brève » : quelques phrases, pas un exposé.
 
 > **À retenir.** Description, fichiers, tests, écran, « et si on changeait… ». Cinq preuves, aucune ne demande de lire le code.
 
@@ -318,7 +318,7 @@ Trois remarques, qui sont des lectures des supports.
 
 ### 5.2 Un exemple, sur le thème B
 
-*Exemple rédigé pour ce chapitre : une proposition, à valider par l'enseignant. Ce ne sont pas les exemples de réponses qui servent au calibrage des évaluateurs, que le programme ne publie pas.* La PR imaginée est celle de la première user story du thème B, la disponibilité d'un quart, avec les valeurs de l'énoncé (quart de 480 minutes, pause de 30, panne de 45, changement de série de 15 : temps requis 450 minutes, temps de marche 390 minutes, disponibilité affichée 86,7 %).
+*Exemple rédigé pour ce chapitre : une proposition, à valider par l'enseignant. Ce ne sont pas les deux exemples de réponses sur lesquels l'enseignant relit l'échelle, que le programme ne publie pas.* La PR imaginée est celle de la première user story du thème B, la disponibilité d'un quart, avec les valeurs de l'énoncé (quart de 480 minutes, pause de 30, panne de 45, changement de série de 15 : temps requis 450 minutes, temps de marche 390 minutes, disponibilité affichée 86,7 %).
 
 | Niveau | Ce que l'étudiant dit |
 |---|---|
@@ -436,7 +436,7 @@ Le nombre de commits ne compte donc pas. Inutile de découper artificiellement s
 
 ### 9.1 Un point : la lecture de trois PR tirées au sort
 
-La grille dit : « 1 point : lecture de **3 PR tirées au sort** parmi celles que l'étudiant a ouvertes ou approuvées ». Ce sont les évaluateurs qui lisent ; le programme place la lecture des dépôts la veille de la séance.
+La grille dit : « 1 point : lecture de **3 PR tirées au sort** parmi celles que l'étudiant a ouvertes ou approuvées ». C'est l'enseignant qui lit ; le programme place la lecture des dépôts la veille de la séance.
 
 Ce que le programme ne dit pas : ce qui, dans ces trois PR, rapporte le point ; si la PR de votre question 1 fait partie des trois ; si les trois vous sont communiquées. Ces points sont listés en « Points non vérifiés ». Le seul indice est dans la règle du plafonnement (section 10), qui parle d'une PR « ouverte ou approuvée de façon substantielle ».
 
@@ -473,7 +473,7 @@ Avec quatre coéquipiers qui notent (équipe de cinq), le nombre de sommes est p
 
 « Les fiches restent confidentielles » : vos coéquipiers ne voient pas ce que vous avez écrit. *Proposition des supports :* remplissez la vôtre seul, à partir de ce que vous avez **constaté** pendant le projet (PR ouvertes, relectures faites, engagements tenus), pas de l'ambiance du dernier jour.
 
-> **À retenir.** Pas de décompte de commits. Trois PR lues par les évaluateurs, et la médiane des notes de vos coéquipiers : 0, 0,5 ou 1 point.
+> **À retenir.** Pas de décompte de commits. Trois PR lues par l'enseignant, et la médiane des notes de vos coéquipiers : 0, 0,5 ou 1 point.
 
 ---
 
@@ -512,7 +512,7 @@ C'est la règle d'or de la séance 1, traduite en points. Deux situations diffé
 
 ---
 
-## 11. Cas particuliers : l'étudiant absent, le format dégradé
+## 11. Cas particuliers : l'étudiant absent, un seul évaluateur
 
 **L'étudiant absent.** Le programme, mot pour mot :
 
@@ -522,13 +522,13 @@ L'équipe ne reporte donc pas son passage : la démonstration, le « sous le cap
 
 *Proposition, au-delà du programme.* Si vous savez à l'avance que vous serez absent, prévenez l'enseignant et votre équipe dès que possible, et préparez votre PR comme si vous passiez le jour même.
 
-**Le format dégradé.** Le format prévu est à deux salles, avec un évaluateur et un second évaluateur ou un observateur par salle (chapitre 2, section 2). Si le second évaluateur est absent, le programme prévoit un **format dégradé** : une salle, un seul évaluateur, un budget réduit « de l'ordre de **20 minutes par équipe** (démonstration brève, « sous le capot » et conformité très courts, trois minutes de questions par étudiant) ». Pour l'oral individuel, le programme dit :
+**Un seul évaluateur.** L'enseignant est seul pour la soutenance (décision du 28 novembre 2026) : une salle, les équipes l'une après l'autre, un seul évaluateur, sans observateur (chapitre 2, section 2). C'est le format retenu, et le seul. Le programme dit ce qu'il coûte :
 
-> Ce format est **dégradé** : la compréhension orale (4 points) est alors évaluée sur une durée plus courte par étudiant (question 1 brève, question 2 très brève) par un seul évaluateur, sans observateur ; le barème ne change pas, mais l'enseignant le **signale aux étudiants** (dossier de notes et note d'oral marqués « format dégradé ») et relit les notes extrêmes à partir des fiches pré-remplies.
+> Avec 8 équipes, la succession des soutenances occupe l'essentiel de la séance : il reste peu de place pour les retouches, le gel et la clôture, et chaque étudiant n'a que trois minutes de questions, alors que la compréhension orale pèse 4 points sur 20. Le barème ne change pas ; le format est **annoncé aux étudiants à l'avance**, et l'enseignant **relit les notes extrêmes** à partir des fiches pré-remplies.
 
-Ce que cela change pour vous : moins de temps par question, donc une réponse encore plus ramassée. Ce que cela ne change pas : les deux questions, l'échelle, les points, et votre préparation. Dans ce format, la plénière « est remplacée par un retour d'expérience écrit (questionnaire en ligne) ».
+Ce que cela change pour vous : trois minutes de questions, la question 1 « brève » et la question 2 « très brève », donc une réponse ramassée. Ce que cela ne change pas : les deux questions, l'échelle, les points, et votre préparation.
 
-> **À retenir.** Absent : même trame, dans les 15 jours. Format dégradé : même barème, moins de temps, et c'est signalé.
+> **À retenir.** Absent : même trame, dans les 15 jours. Un seul évaluateur : même barème, trois minutes par étudiant, un format annoncé à l'avance.
 
 ---
 
@@ -538,15 +538,15 @@ Le programme, bloc par bloc (contenu et intention mot pour mot) :
 
 | Bloc | Poids | Contenu | Intention |
 |---|---|---|---|
-| **6. Fiches d'évaluation par les pairs et harmonisation des notes** | **Indispensable** pour les fiches des pairs (1 point de la note) ; **Important** pour l'harmonisation entre évaluateurs | Fiches d'évaluation par les pairs remplies par les étudiants ; les évaluateurs harmonisent leurs notes entre eux (second calibrage). | Recueillir l'évaluation des pairs et garantir l'équité de la notation entre les deux salles. |
-| **7. Retour d'expérience collectif (plénière)** | **Pratique** | Ce qui a marché, ce qui a échoué, ce que je ferais autrement ; l'IA, les limites, la conformité ; ce que je dirais à une équipe de développement. | Prendre du recul sur l'ensemble de la formation. Peut être remplacé par le questionnaire en ligne. |
+| **6. Fiches d'évaluation par les pairs et relecture des notes** | **Indispensable** pour les fiches des pairs (1 point de la note) ; **Important** pour la relecture des notes | Fiches d'évaluation par les pairs remplies par les étudiants ; l'enseignant relit les notes extrêmes à partir des fiches pré-remplies. | Recueillir l'évaluation des pairs et garantir l'équité de la notation entre le premier et le dernier passage. |
+| **7. Retour d'expérience écrit** | **Pratique** | Ce qui a marché, ce qui a échoué, ce que je ferais autrement ; l'IA, les limites, la conformité ; ce que je dirais à une équipe de développement. Rempli en fin de séance s'il reste du temps, sinon après la séance. | Prendre du recul sur l'ensemble de la formation, sans plénière. |
 | **8. Clôture** | **Important** | Consignes pour la suite (questionnaire de fin de formation en ligne, notes). | Clore la formation proprement. |
 
-**Les fiches des pairs.** Le bloc 6 réunit deux activités : les fiches d'évaluation par les pairs (barème et calcul en section 9.2) et l'harmonisation des notes entre évaluateurs. Les fiches sont protégées par le programme : « Ne se sacrifient jamais : le gel et le tag `v1.0`, les soutenances avec leurs deux questions individuelles, les fiches d'évaluation par les pairs. » Quant au moment de les remplir, le programme les place à la fois pendant les passages et au bloc 6 : l'enseignant dit quand les remplir.
+**Les fiches des pairs.** Le bloc 6 réunit deux activités : les fiches d'évaluation par les pairs (barème et calcul en section 9.2) et la relecture des notes extrêmes par l'enseignant. Les fiches sont protégées par le programme : « Ne se sacrifient jamais : le gel et le tag `v1.0`, les soutenances avec leurs deux questions individuelles, les fiches d'évaluation par les pairs. » Quant au moment de les remplir, le programme les place à la fois pendant les passages et au bloc 6 : l'enseignant dit quand les remplir.
 
-L'harmonisation est l'affaire des évaluateurs : elle sert à ce qu'une même réponse reçoive la même note dans les deux salles.
+La relecture des notes est l'affaire de l'enseignant : elle sert à ce qu'une même réponse reçoive la même note au premier et au dernier passage.
 
-**La plénière.** Elle est classée **Pratique** : c'est le premier élément de l'ordre de coupe (« La plénière (bloc 7, Pratique), remplacée par le questionnaire en ligne »), et le programme ajoute : « Si les passages d'une salle prennent du retard, on raccourcit la plénière avant de toucher à un passage. » Si elle a lieu, ses trois thèmes sont ceux du tableau. Ils recoupent le regard critique que votre équipe a préparé pour la soutenance (chapitre 2, section 9) : vous avez déjà la matière.
+**Le retour d'expérience écrit.** Il n'y a pas de plénière : le retour d'expérience collectif est « remplacé par un retour d'expérience écrit (questionnaire en ligne) », rempli en fin de séance s'il reste du temps, sinon après. Il est classé **Pratique** : c'est le premier élément de l'ordre de coupe (« Le retour d'expérience écrit (bloc 7, Pratique), rempli après la séance »), et le programme ajoute : « Si les passages prennent du retard, on renvoie le questionnaire après la séance et on réduit la clôture avant de toucher à un passage. » Ses trois thèmes sont ceux du tableau. Ils recoupent le regard critique que votre équipe a préparé pour la soutenance (chapitre 2, section 9) : vous avez déjà la matière.
 
 **La clôture, et ce qui vient après.** La clôture donne les consignes pour la suite : le questionnaire de fin de formation, en ligne, et les notes. Le programme, mot pour mot :
 
@@ -554,7 +554,7 @@ L'harmonisation est l'affaire des évaluateurs : elle sert à ce qu'une même r�
 
 Le programme prévoit donc que la communication des notes peut glisser après la séance. Si la clôture est écourtée (elle est le dernier élément de l'ordre de coupe, « réduite aux consignes essentielles »), retenez l'essentiel : répondre au questionnaire en ligne.
 
-> **À retenir.** La fiche des pairs se remplit quoi qu'il arrive. La plénière peut devenir un questionnaire en ligne. La communication des notes peut glisser après la séance.
+> **À retenir.** La fiche des pairs se remplit quoi qu'il arrive. Le retour d'expérience se fait par écrit, en ligne, en fin de séance ou après. La communication des notes peut glisser après la séance.
 
 ---
 
@@ -584,16 +584,15 @@ Votre préparation personnelle, avant la séance (propositions de ce chapitre) :
 
 ## Glossaire
 
-- **Calibrage** : courte séance où les évaluateurs appliquent l'échelle aux mêmes exemples de réponses, pour noter de la même façon.
+- **Calibrage** : relecture, par l'enseignant avant les passages, de l'échelle de compréhension sur ses deux exemples de réponses, pour noter de la même façon du premier au dernier passage.
 - **Contribution vérifiée** : critère individuel de la grille (2 points) : lecture de trois PR tirées au sort, et évaluation par les pairs.
 - **Échelle de compréhension orale** : les cinq niveaux, de 0 à 4, sur lesquels chaque question individuelle est notée.
 - **Étiquette `erreur-agent`** : étiquette GitHub posée sur une PR qui documente une erreur de l'agent repérée par l'équipe.
 - **Évaluation par les pairs** : note donnée à chaque étudiant par les autres membres de son équipe, sur trois questions fixes ; les fiches restent confidentielles.
-- **Fiche de notation pré-remplie** : feuille de l'évaluateur, une par étudiant : équipe, étudiant, PR tirée au sort, échelle de 0 à 4 pour les deux questions.
-- **Format dégradé** : soutenances dans une seule salle, avec un seul évaluateur, quand le second évaluateur est absent ; même barème, temps réduit.
-- **Harmonisation** : mise en accord des notes entre les évaluateurs des deux salles, après les passages (second calibrage).
+- **Fiche de notation pré-remplie** : feuille de l'enseignant, seul évaluateur, une par étudiant : équipe, étudiant, PR tirée au sort, échelle de 0 à 4 pour les deux questions.
 - **Médiane** : valeur du milieu d'une série rangée par ordre croissant ; elle ne bouge pas quand une seule valeur extrême change.
 - **Plafonnement** : limite de 10 sur 14 appliquée aux notes collectives d'un étudiant dont la contribution est jugée nulle.
+- **Relecture des notes extrêmes** : après les passages, l'enseignant relit les notes les plus hautes et les plus basses à partir des fiches de notation pré-remplies.
 - **Trailer** : ligne ajoutée à la fin du message d'un commit, par exemple `Co-Authored-By`.
 - **Trame** : le canevas commun des deux questions individuelles, identique pour tous les étudiants.
 
@@ -604,7 +603,7 @@ Les autres termes (PR, approbation, tag, clou, cas d'acceptation, valeur faussé
 ## Pour aller plus loin
 
 - Chapitre 1 de cette séance : section 2 (le calendrier de la fin du sprint), section 4 (le dossier de rendu, dont 4.5 la fiche de conformité et 4.7 les PR et leurs sections de suivi), section 6 (vérifier le rendu comme un évaluateur), section 9 (le gel et le tag `v1.0`).
-- Chapitre 2 de cette séance : section 2 (le dispositif, le budget, le format dégradé), sections 6 et 7 (« sous le capot », les mesures, et en 7.4 les deux cas `erreur-agent`), section 8 (le point de conformité), section 9 (le regard critique), section 11 (le passage).
+- Chapitre 2 de cette séance : section 2 (le dispositif à une salle, le budget), sections 6 et 7 (« sous le capot », les mesures, et en 7.4 les deux cas `erreur-agent`), section 8 (le point de conformité), section 9 (le regard critique), section 11 (le passage).
 - Chapitre 4 de cette séance : fiche Z (oral individuel, fiche des pairs et livrable).
 - Séance 3, chapitre 1 : sections 4 et 5 (relire par les preuves, la checklist), section 7.3 (présenter sa PR à voix haute) ; chapitre 5, fiche I. Séance 3, chapitre 3, section 5 : vos droits.
 - Séance 2, chapitre 3 : section 3 (les couches), sections 9.2 et 9.3 (le modèle de PR et le suivi), section 13 (les dix règles du jeu).
@@ -623,7 +622,7 @@ Les autres termes (PR, approbation, tag, clou, cas d'acceptation, valeur faussé
 - **Moyenne ou poids inégal.** Le programme écrit à la fois « la note est la moyenne des deux questions arrondie au demi-point » et « la question 1 […] porte l'essentiel de la note ». Une moyenne simple donne le même poids aux deux questions. Par ailleurs, si chaque question reçoit une note entière, la moyenne des deux tombe déjà sur un demi-point : l'arrondi n'a d'effet que si une question peut recevoir une note intermédiaire. Le chapitre cite les deux phrases sans trancher.
 - **L'échelle est écrite pour une PR.** Ses niveaux parlent de « la PR », mais elle sert aussi à noter la question 2, qui ne porte pas sur une PR : le programme ne dit pas comment la transposer.
 - **Deux listes de sujets pour la question 2.** Le programme en cite quatre à un endroit (règle du thème, cas d'erreur d'agent, fiche de conformité, droits d'une personne concernée) et donne le patron d'architecture en exemple à un autre. La section 6 les rassemble dans un seul tableau.
-- **L'échelle suppose une lecture ligne à ligne.** « Lit à voix haute » et « que se passe-t-il si je supprime cette ligne ? » décrivent un oral devant du code, alors que les étudiants ne sont pas développeurs. Le chapitre cite l'échelle mot pour mot et prépare par les preuves ; la forme réelle des questions appartient aux évaluateurs.
+- **L'échelle suppose une lecture ligne à ligne.** « Lit à voix haute » et « que se passe-t-il si je supprime cette ligne ? » décrivent un oral devant du code, alors que les étudiants ne sont pas développeurs. Le chapitre cite l'échelle mot pour mot et prépare par les preuves ; la forme réelle des questions appartient à l'enseignant.
 - **Le seuil de 20 lignes « hors fichiers générés ».** Dans le dépôt-modèle, les fichiers produits par `build_runner` ne sont pas versionnés : ils ne figurent dans aucune PR. Le programme ne dit pas quels fichiers versionnés comptent comme « générés » (instantanés de `drift_schemas/`, test de migration généré, `pubspec.lock` ?).
 - **« 24 h avant ».** La PR est communiquée la veille avant 9h et la séance commence à 13h45 (`README.md` du dépôt du cours) : l'intervalle dépasse 24 heures, ce qui est cohérent avec « au moins 24 h avant le premier passage ». Le moyen de communication et l'état du dépôt sur lequel le tirage est fait ne sont pas précisés.
 - **Médiane avec un nombre pair de coéquipiers.** Dans une équipe de cinq (ou de trois), chaque étudiant est noté par quatre (ou deux) coéquipiers : la médiane peut alors valoir 2,5 ou 4,5, des valeurs que la conversion du programme (0 à 2, 3 à 4, 5 à 6) ne prévoit pas. L'exemple chiffré de la section 9.2 est inventé, et se limite au cas de trois coéquipiers.
@@ -634,11 +633,12 @@ Les autres termes (PR, approbation, tag, clou, cas d'acceptation, valeur faussé
 - **Description d'une PR après `v1.0-rc`.** Le programme ne dit pas si une description peut encore être complétée, ni que la PR tirée au sort est fusionnée (il écrit « ouvertes ou approuvées »).
 - **L'étudiant absent.** Le programme ne dit pas si sa PR tirée au sort reste la même, ni comment sont recueillies les fiches des pairs qui le concernent.
 - **Definition of done et étudiant absent.** La ligne « Chaque étudiant a répondu à deux questions individuelles » ne peut pas être vraie le jour même si un étudiant est interrogé « dans les 15 jours ».
-- **Exemples de calibrage.** Les « deux exemples de réponses » sur lesquels les évaluateurs se calibrent ne sont pas publiés ; l'exemple de la section 5.2 n'en fait pas partie.
+- **Exemples de calibrage.** Les « deux exemples de réponses » sur lesquels l'enseignant relit l'échelle ne sont pas publiés ; l'exemple de la section 5.2 n'en fait pas partie.
 - **Textes proposés, à valider par l'enseignant.** Section 3.3 : lister ses PR avant le tirage. Toute la section 4 : les gestes de préparation par les preuves, le tableau des chemins, le détour « avant et après », les trois façons de préparer « et si on changeait… » (dont le recours à l'agent) et la façon d'annuler un essai, la trame en sept lignes. Section 5 : la colonne « le geste qui y prépare », les trois remarques de 5.1, l'exemple de réponses par niveau sur le thème B (5.2). Section 6 : la colonne « ce qu'il faut pouvoir dire » et l'entraînement en équipe. Section 7 : les colonnes « ce qui se constate » et « où vous en parlez », la forme de réponse proposée. Section 8 : la lecture « une bonne part se joue avant la séance » et le tableau « la preuve à avoir sous la main ». Section 9 : ce qu'un lecteur voit dans une PR (9.1), le conseil sur la fiche des pairs (9.2). Section 10 : la lecture du plafonnement, le conseil de prévenir l'enseignant pour une donnée réelle ou un secret. Section 11 : le conseil à l'étudiant absent. Section 13 : la liste de préparation personnelle.
 - **Commandes `gh`.** Elles ont été essayées en lecture seule sur le dépôt du cours, pas sur un dépôt d'équipe, qui n'existe pas encore. `gh pr list --state all --search "reviewed-by:@me"` a répondu une liste vide (aucune PR relue) : son résultat sur un dépôt d'équipe n'a pas été observé. La commande avec `--jq` de la section 4.3 n'a été essayée que sous Linux. Les écrans GitHub équivalents (filtres de l'onglet « Pull requests », onglets d'une PR) sont décrits de façon générale, sans avoir été rejoués pour ce chapitre.
 - **Essais locaux.** Les essais des sections 4.5 et 4.6 ont été faits sur une copie du dépôt-modèle nu (fonctionnalité d'exemple `jets`, 32 tests), avec un dépôt distant local, où la fusion d'une PR est simulée par une fusion locale. Ils n'ont pas été faits sur une vraie PR d'équipe. La modification de la règle a été faite à la main, pas par un agent. L'annulation (`git restore lib/ test/`, `build_runner`, `git status`) a été rejouée sur cette copie, avec la règle et un scénario faussés. `flutter run -d chrome` n'a pas été rejoué pour cette séance. Linux seulement : ni Windows ni macOS.
 - **Le déroulement réel de l'oral** (ordre des questions, affichage de la PR, temps réellement accordé) n'a pas été observé : il est décrit d'après le programme.
+- **Trois minutes par étudiant.** Aucune soutenance n'a été jouée dans ce format : on ne sait pas si deux questions, dont une préparée sur une PR, tiennent en trois minutes, ni comment ce temps se partage entre elles (le programme dit seulement « question 1 brève, question 2 très brève »).
 
 ---
 

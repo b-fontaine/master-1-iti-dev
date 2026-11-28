@@ -18,7 +18,7 @@ Ce chapitre accompagne le troisième temps de la séance : vous quittez le dép�
 
 ## 1. Pourquoi ce chapitre
 
-Jusqu'ici, vous vous êtes entraînés : git dans un dépôt d'essai (chapitre 1, `01-git-pas-a-pas.md`), la configuration de Claude Code dans ce même dépôt (chapitre 2, `02-configurer-claude-code.md`). Rien de ce que vous y avez fait ne pouvait gêner quelqu'un d'autre. À partir de maintenant, vous travaillez à plusieurs dans un dépôt **public**, qui sera lu par vos coéquipiers, par une autre équipe en séances 3 et 4, par l'enseignant et par un jury.
+Jusqu'ici, vous vous êtes entraînés : git dans un dépôt d'essai (chapitre 1, `01-git-pas-a-pas.md`), la configuration de Claude Code dans ce même dépôt (chapitre 2, `02-configurer-claude-code.md`). Rien de ce que vous y avez fait ne pouvait gêner quelqu'un d'autre. À partir de maintenant, vous travaillez à plusieurs dans un dépôt **public**, qui sera lu par vos coéquipiers, par une autre équipe en séances 3 et 4 et par l'enseignant.
 
 Le chapitre ne redit pas ce que les autres expliquent. Les gestes git sont dans le chapitre 1, la configuration de l'agent dans le chapitre 2, les fiches à suivre pendant l'atelier dans le chapitre 4 (`04-fiches-de-seance.md`). Flutter, le TDD et les patrons d'architecture ont leurs chapitres dans les supports de la séance 1 (chapitres 4, 5 et 9) : vous trouverez ici les renvois précis.
 
@@ -48,7 +48,7 @@ Aucun formulaire n'a été lancé après la séance 1 : il n'y a, en arrivant, n
 
 ### 2.2 Ce qui se passe pendant les ateliers git et configuration
 
-Pendant que vous travaillez dans votre dépôt d'essai (chapitres 1 et 2), l'enseignant ou une aide lance un script avec la liste obtenue : il crée **un dépôt par équipe** à partir d'un **dépôt-modèle** (section 4), y place le `PROJET.md` du thème attribué et ajoute chaque membre comme **collaborateur**. Comme les dépôts sont créés après l'attribution des thèmes, rien n'est à renommer ni à remplacer.
+Pendant que vous travaillez dans votre dépôt d'essai (chapitres 1 et 2), l'enseignant lance un script avec la liste obtenue : il crée **un dépôt par équipe** à partir d'un **dépôt-modèle** (section 4), y place le `PROJET.md` du thème attribué et ajoute chaque membre comme **collaborateur**. Comme les dépôts sont créés après l'attribution des thèmes, rien n'est à renommer ni à remplacer.
 
 Vous recevez alors une invitation par courriel : **acceptez-la à la pause** (courriel de GitHub, ou `github.com/notifications`). Un dépôt public se lit sans invitation, il ne s'écrit pas sans elle. Au début de l'atelier d'initialisation, chacun vérifie qu'il voit le dépôt de son équipe sur GitHub et qu'il y a un accès en écriture.
 
@@ -321,7 +321,7 @@ Ouvrez ensuite le dossier dans VS Code (`code .`), puis lancez Claude Code **dan
 |---|---|---|
 | `gh repo clone` répond que le dépôt est introuvable | Faute de frappe, ou numéro d'équipe erroné | Vérifier le nom sur GitHub ; `gh auth status` pour voir le compte connecté |
 | Le clone marche, mais le premier `git push` est refusé (erreur 403) | Invitation de collaborateur non acceptée | Accepter l'invitation (courriel de GitHub ou `github.com/notifications`) |
-| `flutter pub get` échoue sur une version | Flutter plus ancien que 3.50 (celui de la séance 1, par exemple) | `flutter --version` ; si la version est inférieure à 3.50, `flutter upgrade` (met à jour Flutter, permis), puis relancer. **Ne jamais** modifier `pubspec.yaml` ni lancer `flutter pub upgrade` (il changerait les bibliothèques verrouillées). Si l'erreur persiste : appeler un encadrant |
+| `flutter pub get` échoue sur une version | Flutter plus ancien que 3.50 (celui de la séance 1, par exemple) | `flutter --version` ; si la version est inférieure à 3.50, `flutter upgrade` (met à jour Flutter, permis), puis relancer. **Ne jamais** modifier `pubspec.yaml` ni lancer `flutter pub upgrade` (il changerait les bibliothèques verrouillées). Si l'erreur persiste : appeler l'enseignant |
 | `flutter analyze` signale `package:flutter/material.dart` | Code repris d'un exemple de la séance 1 | Remplacer l'import par `package:material_ui/material_ui.dart` |
 | `flutter test` signale des fichiers manquants (noms en `.g.dart` ou `_test.dart` générés) | `build_runner` n'a pas été lancé | Lancer la commande `build_runner`, puis relancer les tests |
 | `build_runner` s'arrête sur un conflit de fichiers | Anciens fichiers générés | Vérifier que l'option `--delete-conflicting-outputs` est bien présente |
@@ -629,7 +629,7 @@ Si votre équipe n'a pas terminé l'initialisation aujourd'hui (première PR rel
 
 - **Entre la séance 3 et la séance 4, douze jours** : une tâche facultative, de 2 h au plus par étudiant, pour terminer ce qui aura glissé de la séance 3 (jeu de données complet, rôles). Elle sera précisée en séance 3.
 - **Le sprint final** se place entre la séance 4 (16 décembre) et la soutenance, le vendredi 29 janvier 2027 après-midi : 15 à 20 heures par équipe. Il englobe les vacances de fin d'année (du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus) : aucun travail n'est imposé pendant les vacances au-delà de ce que votre équipe choisit.
-- **Jalons** : fiche de conformité v1 en PR le vendredi 18 décembre 2026 ; réponse du RSSI au plus tard une semaine avant la soutenance ; gel et tag `v1.0-rc` l'avant-veille de la soutenance à 18 h ; lecture des dépôts par les évaluateurs la veille.
+- **Jalons** : fiche de conformité v1 en PR le vendredi 18 décembre 2026 ; réponse du RSSI au plus tard une semaine avant la soutenance ; gel et tag `v1.0-rc` l'avant-veille de la soutenance à 18 h ; lecture des dépôts par l'enseignant la veille.
 
 ### 12.3 Ce qu'il ne faut pas faire d'ici là
 

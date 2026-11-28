@@ -538,7 +538,7 @@ $ git log --oneline --graph --all
 * 30fa585 Ajoute la recette des galettes
 ```
 
-`git add` dit à git « ce fichier est résolu » ; `git commit` conclut. Le graphe montre les deux lignes qui se séparent puis se rejoignent dans un commit de fusion à deux parents. C'est ce dessin que l'encadrant vous demandera de montrer à la fin de l'atelier.
+`git add` dit à git « ce fichier est résolu » ; `git commit` conclut. Le graphe montre les deux lignes qui se séparent puis se rejoignent dans un commit de fusion à deux parents. C'est ce dessin que l'enseignant vous demandera de montrer à la fin de l'atelier.
 
 ### 7.5 Conflit dans une pull request
 

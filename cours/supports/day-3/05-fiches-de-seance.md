@@ -268,7 +268,7 @@ Poussez et ouvrez la PR comme à la fiche H, étape 10. Le relecteur, un coéqui
 
 **Avant tout : une seule migration à la fois.** Prévenez le gardien des données avant de modifier une table drift ou `schemaVersion`. Tant qu'une PR de migration est ouverte, aucune autre branche n'en prépare.
 
-**Étape 1 · Le modèle sur papier, validé par l'enseignant ou une aide.** Une boîte par entité avec ses colonnes (type, obligatoire ou non) ; la clé primaire `id` ; un trait par relation, avec sa cardinalité et la clé étrangère, toujours du côté « plusieurs » ; les contraintes en marge (unicité, `fin > début`, liste fermée) ; ce qu'on **ne stocke pas**, et pourquoi (thème B : aucune colonne d'opérateur). Les entités viennent de l'énoncé, rubrique « Données manipulées ». Dates en UTC (`debut_utc`, `fin_utc`).
+**Étape 1 · Le modèle sur papier, validé par l'enseignant.** Une boîte par entité avec ses colonnes (type, obligatoire ou non) ; la clé primaire `id` ; un trait par relation, avec sa cardinalité et la clé étrangère, toujours du côté « plusieurs » ; les contraintes en marge (unicité, `fin > début`, liste fermée) ; ce qu'on **ne stocke pas**, et pourquoi (thème B : aucune colonne d'opérateur). Les entités viennent de l'énoncé, rubrique « Données manipulées ». Dates en UTC (`debut_utc`, `fin_utc`).
 
 **Étape 2 · Une branche, puis les tests d'abord.**
 
@@ -454,7 +454,7 @@ $ git switch -c journal-s3
 | `flutter test` est vert, mais aucun scénario n'apparaît dans le compte | Les tests tirés des `.feature` n'ont pas été générés : ils disparaissent sans bruit | Même geste : `build_runner`, puis `flutter test` |
 | `… packages have newer versions incompatible with dependency constraints` | Les versions sont verrouillées exprès | Rien. **Jamais** `flutter pub upgrade` |
 | `git status` montre des fichiers modifiés de mercredi ; ou `git pull` refuse à cause de modifications locales | Du travail non commité est resté | `git diff` ; à garder : une branche et un commit ; à jeter : `git restore <fichier>` (irréversible) |
-| `git pull` affiche un conflit sur `main` | Un commit a été fait sur `main` en local | Appeler un encadrant (chapitre 1 de la séance 2, section 9.9) |
+| `git pull` affiche un conflit sur `main` | Un commit a été fait sur `main` en local | Appeler l'enseignant (chapitre 1 de la séance 2, section 9.9) |
 | Tout est rouge chez un seul membre | Poste différent des autres | Comparer `flutter --version` avec un poste qui marche |
 | Des étapes générées portent les valeurs dans leur nom (`un_quart_de480_minutes.dart`) | Le scénario a été écrit sans accolades | Valeurs entre accolades (`{480}`, `{'pause'}`), puis `build_runner` (chapitre 2, section 4.2) |
 | Les mots-clés `Soit`, `Quand`, `Alors` ne sont pas reconnus | `# language: fr` n'est pas la première ligne | Le mettre en première ligne, sans rien avant |
@@ -465,7 +465,7 @@ $ git switch -c journal-s3
 | La page de la PR affiche *This branch has conflicts that must be resolved* | Une PR d'un coéquipier, fusionnée avant, touche la même zone | `git switch <branche>`, `git pull origin main`, résoudre dans VS Code, `git add`, `git commit`, `flutter test`, `git push` (chapitre 1, sections 6.3 à 6.5). Jamais `--force` |
 | Conflit dans `JOURNAL.md` ou « Décisions de l'équipe » | Deux personnes ont ajouté une ligne au même endroit | Garder les deux entrées ; vérifier avec `git diff` qu'aucune ligne n'est perdue et qu'il ne reste aucun marqueur |
 | Un fichier généré (`*.g.dart`, test tiré d'un `.feature`) apparaît dans un conflit ou dans le diff d'une PR | Il a été commité par erreur | Le signaler en relecture ; relancer `build_runner` après la fusion (chapitre 1, section 6.7) |
-| Conflit dans `pubspec.yaml` ou `pubspec.lock` | Deux branches ont modifié les dépendances | `git merge --abort`, prévenir le gardien du harnais et un encadrant. Jamais de correction à la main |
+| Conflit dans `pubspec.yaml` ou `pubspec.lock` | Deux branches ont modifié les dépendances | `git merge --abort`, prévenir le gardien du harnais et l'enseignant. Jamais de correction à la main |
 | `CONFLICT (add/add)` sur `drift_schema_v2.json`, `base_de_donnees.steps.dart`, `schema_v2.dart`, et conflit dans `base_de_donnees.dart` | Deux branches ont préparé chacune une version 2 | Celle de `main` reste, la vôtre devient la version 3 : fiche K, encadré « Si deux branches… » (chapitre 4, section 7.2) |
 | `make-migrations` s'arrête : `A schema for version 2 … already exists and differs from the current schema` | Une table a changé sans nouvelle version | Passer à la version suivante (`schemaVersion` + 1). **Ne jamais** supprimer l'instantané existant |
 | Le contrôle de la PR est rouge à l'étape « Refuser la modification d'un instantané déjà fusionné » | Un instantané `drift_schema_vN.json` déjà présent sur `main` a été modifié, supprimé ou régénéré | Le rétablir : `git fetch origin`, puis `git restore --source origin/main -- drift_schemas/base_de_donnees/drift_schema_vN.json`. Passer ensuite à la version suivante et relancer `make-migrations` (chapitre 4, section 7.2) |

@@ -1,4 +1,4 @@
-<!-- source: cours/presentations/day-2/index.html, cours/presentations/day-2/notes.html · synchro: 2026-11-27 -->
+<!-- source: cours/presentations/day-2/index.html, cours/presentations/day-2/notes.html · synchro: 2026-11-28 -->
 
 # La séance 2 en bref {#sec-s2-en-bref}
 

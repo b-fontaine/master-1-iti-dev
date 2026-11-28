@@ -10,7 +10,7 @@ Tout ce qui est montré ici a été réellement fait sur une copie du dépôt-mo
 
 - **Les données survivent au code.** On réécrit un écran en une heure ; une base remplie, elle, doit être transformée sans rien perdre. C'est pour cela que toute modification de la base passe par une **migration** explicite, versionnée, testée.
 - Un modèle de données se décrit avec quatre mots : **entités** (les choses dont on garde la trace), **relations** (comment elles se rattachent), **clés** (primaire : l'identité d'une ligne ; étrangère : le rattachement à une autre table) et **contraintes** (ce que la base refuse).
-- **Le modèle se dessine sur papier d'abord**, se fait valider par l'enseignant ou une aide, et seulement ensuite se confie à l'agent.
+- **Le modèle se dessine sur papier d'abord**, se fait valider par l'enseignant, et seulement ensuite se confie à l'agent.
 - **drift** en une phrase : on déclare les tables en Dart dans la couche `data`, et `build_runner` génère le code d'accès typé à la base SQLite.
 - **Une migration, c'est quatre gestes** : `schemaVersion` + 1, `dart run drift_dev make-migrations`, une étape `fromNToM` dans `onUpgrade`, des tests verts. La CI vérifie qu'aucune table n'a changé sans nouvelle version.
 - **Avec SQLite, les clés étrangères ne sont vérifiées que si on le demande** : le dépôt-modèle le fait à chaque ouverture, et un test le prouve en faisant échouer une insertion orpheline.
@@ -89,7 +89,7 @@ Modéliser, c'est aussi décider de ce qu'on **ne stocke pas**. Pour le thème B
 
 ## 3. Le modèle sur papier d'abord
 
-Le programme est explicite : d'abord un modèle sur papier, validé en passant par l'enseignant ou une aide, puis seulement le travail avec l'agent. Un modèle se corrige en deux minutes avec une gomme ; une fois migré et fusionné, il se corrige par une nouvelle migration.
+Le programme est explicite : d'abord un modèle sur papier, validé en passant par l'enseignant, puis seulement le travail avec l'agent. Un modèle se corrige en deux minutes avec une gomme ; une fois migré et fusionné, il se corrige par une nouvelle migration.
 
 ### 3.1 Ce qu'on dessine
 
@@ -703,7 +703,7 @@ Le livrable de fin de séance, identique pour les trois thèmes, dit « modèle 
 
 ## 11. Avez-vous fini ? La part « données » de la definition of done
 
-- [ ] Le modèle a été dessiné sur papier et validé par l'enseignant ou une aide ; la photo ou le schéma est joint à la PR.
+- [ ] Le modèle a été dessiné sur papier et validé par l'enseignant ; la photo ou le schéma est joint à la PR.
 - [ ] Les tables du thème sont déclarées dans le `data/` de leur fonctionnalité et ajoutées à `@DriftDatabase`.
 - [ ] `schemaVersion` vaut 2 (ou 3 si vous êtes passés par la résolution de la section 7.2, avec alors `drift_schema_v3.json` en plus), et `drift_schema_v2.json`, `base_de_donnees.steps.dart` et `test/core/data/migrations/` sont commités.
 - [ ] Sur une base en mémoire vide, le schéma se crée et la migration se rejoue sans erreur : `flutter test test/core/data/migrations` est vert.
@@ -760,7 +760,7 @@ Le livrable de fin de séance, identique pour les trois thèmes, dit « modèle 
 - **Message de `git pull origin main`** : le conflit a été obtenu avec `git pull origin main` (réglage `pull.rebase false`) dans un clone, et avec `git merge` dans la copie ; la sortie anglaise citée vient de `git merge` avec `LC_ALL=C`. GitHub, qui signale le conflit sur la page de la PR, n'a pas été utilisé.
 - **Le piège de l'agent** (section 7.1) : la modification du test a été écrite à la main pour reproduire ce que ferait un agent ; aucun agent n'a été lancé.
 - **Commentaire de la fiche** (section 8) : proposition des supports, à valider par l'enseignant.
-- **Le modèle est validé « en passant par l'enseignant ou une aide »** : la forme de cette validation (photo, schéma dans la PR) est une suggestion du chapitre, pas une consigne du programme.
+- **Le modèle est validé « en passant par l'enseignant »** : la forme de cette validation (photo, schéma dans la PR) est une suggestion du chapitre, pas une consigne du programme.
 
 ---
 

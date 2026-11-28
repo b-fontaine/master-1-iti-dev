@@ -334,6 +334,7 @@ ListenableBuilder(
 ```
 
 ```{mermaid}
+%%| fig-width: 5.6
 sequenceDiagram
     participant E as Écran
     participant P as Pv (ChangeNotifier)

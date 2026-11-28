@@ -1,4 +1,4 @@
-<!-- source: README.md · synchro: 2026-11-27 -->
+<!-- source: README.md · synchro: 2026-11-28 -->
 
 # Le programme {#sec-programme}
 
@@ -106,8 +106,8 @@ Un bonus d'un point au plus (règle métier avancée facultative) peut s'ajouter
 ## Moyens nécessaires
 
 - **Étudiants** : un ordinateur portable personnel permettant d'installer des logiciels, une connexion internet et un compte GitHub gratuit. Le SDK Flutter est téléchargé chez soi avant la première séance ; Docker n'est pas requis. Les accès à un assistant de code par IA pour les 32 étudiants sont mis à disposition pour la durée de l'enseignement (comptes ou crédits nominatifs, modalités et financement précisés avant la première séance).
-- **Salle** : une salle avec tables d'équipe, vidéoprojecteur, prises électriques pour 32 ordinateurs portables et réseau sans fil dimensionné pour 32 postes (téléchargements simultanés lors de la séance 1). Pour la soutenance de la séance 5, le vendredi 29 janvier 2027 après-midi, deux salles simultanées.
-- **Encadrement** : 2 à 3 assistants en renfort de l'enseignant lors des séances 1 et 2 (installations), 1 en séance 3 et 2 en séance 4. Lors de la séance 4, trois intervenants tiennent le rôle du RSSI pour les passages en parallèle ; un second évaluateur par salle est souhaité pour la soutenance.
+- **Salle** : une salle avec tables d'équipe, vidéoprojecteur, prises électriques pour 32 ordinateurs portables et réseau sans fil dimensionné pour 32 postes (téléchargements simultanés lors de la séance 1). La soutenance de la séance 5, le vendredi 29 janvier 2027 après-midi, se tient dans la même salle : les équipes passent l'une après l'autre.
+- **Encadrement** : l'enseignant est seul, sans assistant ; dans chaque équipe, un binôme d'entraide. Lors de la séance 4, il tient l'une des trois tables du passage devant le RSSI, et deux étudiants volontaires munis de la grille de décision tiennent les deux autres. Il est le seul évaluateur de la soutenance.
 - **RSSI** : le rôle est tenu par l'enseignant (simulation), lors de la séance 4 puis par un avis écrit rendu au plus tard une semaine avant la séance 5.
 - **Hébergement** : les dépôts de projet sont hébergés dans une organisation GitHub dédiée à l'enseignement. Chaque équipe publie sa version web sur GitHub Pages, publique : données fictives uniquement, et rien de secret dans l'application.
 

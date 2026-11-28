@@ -102,7 +102,7 @@ Si le temps le permet, l'enseignant propose un quiz éclair de cinq questions su
 |---|---|
 | `git status` montre des fichiers modifiés de mercredi | Les regarder (`git diff`) : à garder, on crée une branche et on commite ; à jeter, `git restore <fichier>` (irréversible, chapitre 1 de la séance 2, section 9.10) |
 | `git pull` refuse à cause de modifications locales | Même chose : commiter sur une branche ou restaurer, puis relancer |
-| `git pull` affiche un conflit sur `main` | Vous aviez commité sur `main` en local : voir le chapitre 1 de la séance 2, section 9.9, et appeler un encadrant |
+| `git pull` affiche un conflit sur `main` | Vous aviez commité sur `main` en local : voir le chapitre 1 de la séance 2, section 9.9, et appeler l'enseignant |
 | `flutter test` échoue sur des fichiers manquants | `build_runner` n'a pas tourné (2.1) |
 | Tout est rouge chez un seul membre | Comparer `flutter --version` avec un poste qui marche ; la fiche N du chapitre 5 reprend les pannes de la séance |
 
@@ -447,7 +447,7 @@ Pourquoi le faire alors que GitHub ne signale aucun conflit ? Parce que deux mod
 | Fichier | Conflit possible ? | Que faire |
 |---|---|---|
 | Fichiers générés (`*.g.dart`, tests tirés des `.feature`) | **Non** : ils sont ignorés par git (`.gitignore` du dépôt), chacun les régénère | Relancer `build_runner` après la fusion. Si l'un d'eux apparaît dans un conflit ou dans le diff d'une PR, c'est qu'il a été commité par erreur : le signaler en relecture |
-| `pubspec.yaml` et `pubspec.lock` | En principe non : ajouter une dépendance se fait par une PR dédiée, avec l'accord de l'équipe et de l'enseignant (`README.md` du dépôt) | Ne jamais corriger `pubspec.lock` à la main. `git merge --abort`, prévenir le gardien du harnais et un encadrant ; la dépendance sera rajoutée sur un `main` à jour |
+| `pubspec.yaml` et `pubspec.lock` | En principe non : ajouter une dépendance se fait par une PR dédiée, avec l'accord de l'équipe et de l'enseignant (`README.md` du dépôt) | Ne jamais corriger `pubspec.lock` à la main. `git merge --abort`, prévenir le gardien du harnais et l'enseignant ; la dépendance sera rajoutée sur un `main` à jour |
 | `drift_schemas/`, `base_de_donnees.steps.dart`, `schemaVersion` | Oui, si deux branches préparent chacune une migration | Le chapitre 4, section sur la règle « une migration à la fois », dit comment l'éviter et comment s'en sortir. Les instantanés et le fichier `.steps.dart` ne se modifient jamais à la main ; `schemaVersion`, lui, se change à la main, d'une version à la fois |
 | `JOURNAL.md`, « Décisions de l'équipe » de `PROJET.md` | **Oui, souvent** : tout le monde ajoute à la fin | Garder les deux entrées (6.4). Pour l'« État courant », une seule plume : le gardien du harnais |
 

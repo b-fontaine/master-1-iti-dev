@@ -409,7 +409,7 @@ Le module (section 6.2) fixe le dossier et les critères. Le RSSI regarde **la f
 | Accès par rôle testé | |
 | Limites d'usage écrites | |
 
-Ces deux listes sont la **grille go/no-go** dont se servent les observateurs (section 8.3) et, à défaut d'intervenant, l'étudiant volontaire qui tient une table.
+Ces deux listes sont la **grille go/no-go** dont se servent les observateurs (section 8.3) et les deux étudiants volontaires qui tiennent chacun une table.
 
 ### 7.2 Ce qu'il faut pouvoir montrer, écran par écran
 
@@ -470,7 +470,7 @@ Le RSSI peut en poser d'autres. Les critères de la section 7.1 vous disent lesq
 
 ### 8.1 Le dispositif
 
-**Trois tables en parallèle**, un RSSI par table : l'enseignant, le RSSI de l'établissement s'il est invité, un second intervenant ou une aide (à confirmer) ; à défaut, un étudiant volontaire muni de la grille go/no-go. Les équipes passent à tour de rôle devant leur table ; le jeu de rôle **est** le passage, ce n'est pas une activité en plus (programme, bloc 10 ; module de conformité, section 8.2).
+**Trois tables en parallèle**, un RSSI par table : l'enseignant à l'une, un étudiant volontaire muni de la grille go/no-go à chacune des deux autres (un volontaire ne juge pas sa propre équipe). La décision rendue à une table, quelle qu'elle soit, est provisoire : la réponse écrite est celle de l'enseignant. Les équipes passent à tour de rôle devant leur table ; le jeu de rôle **est** le passage, ce n'est pas une activité en plus (programme, bloc 10 ; module de conformité, section 8.2).
 
 | 8 équipes (3-3-2) | 7 équipes (3-2-2) |
 |---|---|
@@ -641,7 +641,7 @@ Et, pour vous-même, ce que ce chapitre ajoute : la décision provisoire et ses 
 - **Choix de la case pour le thème C.** Le module ne dit pas quelle case cocher quand l'outil est traité « comme si » haut risque. La consigne de la section 5.2 (cocher « hors champ » si l'étape 0 répond « non », avec la mention de la démarche de précaution) découle de ce que la démarche n'est « pas une qualification juridique » ; elle est à confirmer par l'enseignant.
 - **Rubrique 8 : discutée ou remplie en séance 4 ?** Le programme se contredit : le bloc 9 et le livrable de la séance 4 disent que la rubrique 8 est « discutée devant le RSSI », alors que sa section 10 annonce « classement et rôle provisoires (rubriques 8 et 9) ». Ce chapitre suit le bloc 9 et le livrable : la rubrique 8 est rédigée pour la v1.
 - **Exemples rédigés pour ce chapitre** : la fiche du thème B (rubrique 9 en version 0.2, rubrique 8 pour la v1), le squelette de la rubrique 8 et les trois réponses du thème C (section 5.2), la trame de quatre minutes, la répartition de la parole, les réponses préparées aux trois questions pour le thème B, la façon de transformer des conditions en issues et les exemples de conditions de la section 9.2. Ils sont à valider par l'enseignant.
-- **Organisation de la séance.** Les intervenants des tables 2 et 3 sont « à confirmer » dans le programme ; l'ordre de passage dans une table n'est fixé par aucun document, d'où la consigne de la section 3.5 pour l'équipe qui passe la première (rubrique 9 rédigée pendant la mise en commun de l'atelier, ou présentée à l'oral et rédigée après le passage) ; la présence d'un DPO au passage du thème C n'est pas organisée par le programme.
+- **Organisation de la séance.** Le programme fait désigner en début de séance les deux étudiants volontaires qui tiennent deux des trois tables, sans dire comment ils sont choisis, ni si un volontaire passe aussi avec son équipe ; l'ordre de passage dans une table n'est fixé par aucun document, d'où la consigne de la section 3.5 pour l'équipe qui passe la première (rubrique 9 rédigée pendant la mise en commun de l'atelier, ou présentée à l'oral et rédigée après le passage) ; la présence d'un DPO au passage du thème C n'est pas organisée par le programme.
 - **Dates et calendrier** (16 et 18 décembre 2026, vacances, séance 5 le vendredi 29 janvier 2027 après-midi) : repris du programme, susceptibles d'ajustement par l'enseignant.
 
 ---

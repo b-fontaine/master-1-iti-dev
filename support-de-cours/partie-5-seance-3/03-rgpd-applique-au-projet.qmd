@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-3/03-rgpd-applique-au-projet.md · synchro: 2026-11-27 -->
+<!-- source: cours/supports/day-3/03-rgpd-applique-au-projet.md · synchro: 2026-11-28 -->
 
 # Le RGPD appliqué à votre projet : qualifier ses données, commencer la fiche {#sec-rgpd-projet}
 
@@ -226,7 +226,7 @@ Rappel du thème : un calcul du TRS par poste et par quart pour la ligne 4 d'un 
 - Ce que l'équipe en fait : rien de réel dans le dossier du projet, donc rien de réel dans les prompts. La rubrique 7 le confirmera.
 
 **Question 4. Utilisé en dehors de l'équipe ?**
-- Dans la formation : **oui**, d'une certaine façon. Le dépôt est lu par une autre équipe (revue croisée), par l'enseignant et par un jury, et le build web public peut être ouvert par n'importe qui.
+- Dans la formation : **oui**, d'une certaine façon. Le dépôt est lu par une autre équipe (revue croisée) et par l'enseignant, et le build web public peut être ouvert par n'importe qui.
 - En usage réel : **oui**, par une responsable et des opérateurs.
 
 **Conclusion pour B** : au moins un « oui » (trois, en fait). Fiche de conformité et passage devant le RSSI, ce qui est prévu au calendrier. Le même raisonnement mène à la même conclusion pour A et C : **la question 3 suffit à elle seule**, parce que tous les projets se construisent avec un agent.

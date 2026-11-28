@@ -1,4 +1,4 @@
-<!-- source: cours/presentations/day-5/index.html, cours/presentations/day-5/notes.html · synchro: 2026-11-27 -->
+<!-- source: cours/presentations/day-5/index.html, cours/presentations/day-5/notes.html · synchro: 2026-11-28 -->
 
 # La séance 5 en bref {#sec-s5}
 
@@ -18,19 +18,19 @@ Le premier objectif se joue au début de la séance. Le deuxième et le troisiè
 
 ## Déroulé {#sec-s5-deroule}
 
-La séance suit quatre temps, qui regroupent les huit blocs du programme ; les intitulés des temps (geler, répéter, soutenir, conclure) sont propres à ce résumé, pas au programme. Le programme donne un ordre logique des blocs, sans horaire : il raisonne en blocs pondérés, pas en minutage. Il prévoit une pause entre deux séries de passages, au moment le moins gênant.
+La séance suit quatre temps, qui regroupent les huit blocs du programme ; les intitulés des temps (geler, répéter, soutenir, conclure) sont propres à ce résumé, pas au programme. Le programme donne un ordre logique des blocs, sans horaire : il raisonne en blocs pondérés, pas en minutage. Il prévoit une pause au milieu des passages, au moment le moins gênant.
 
 | Temps | Contenu | Livrable | Où le retrouver |
 |---|---|---|---|
 | Avant la séance | Tag `v1.0-rc` et dossier de rendu déposés l'avant-veille à 18h ; PR tirées au sort communiquées la veille avant 9h | `v1.0-rc` et dossier de rendu déposés | @sec-geler-livrer, fiche W |
 | 1 · Geler (blocs 1 à 3) | Briefing ; retouches bloquantes ; gel du code et tag `v1.0` | Correctifs bloquants fusionnés, CI verte sur `main` ; `v1.0` sur le dernier commit de `main`, avant le premier passage | @sec-geler-livrer, fiche X |
-| 2 · Répéter (bloc 4) | Répétition technique de chaque équipe dans sa salle ; les évaluateurs se calibrent en parallèle | Affichage, jeu de données de secours et plan B enregistré vérifiés dans la salle | @sec-soutenance-equipe, fiche Y |
+| 2 · Répéter (bloc 4) | Répétition technique de chaque équipe, à tour de rôle au vidéoprojecteur ; l'enseignant relit l'échelle de notation en parallèle | Affichage, jeu de données de secours et plan B enregistré vérifiés dans la salle | @sec-soutenance-equipe, fiche Y |
 | 3 · Soutenir (bloc 5) | Le passage de chaque équipe : une partie commune, puis deux questions par étudiant | Soutenance passée ; chaque étudiant a répondu à deux questions | @sec-soutenance-equipe, @sec-oral-individuel, fiches Y et Z |
-| 4 · Conclure (blocs 6 à 8) | Fiches d'évaluation par les pairs ; retour d'expérience collectif ; clôture | Chaque étudiant a rempli sa fiche d'évaluation par les pairs | @sec-oral-individuel, fiche Z |
+| 4 · Conclure (blocs 6 à 8) | Fiches d'évaluation par les pairs ; retour d'expérience écrit ; clôture | Chaque étudiant a rempli sa fiche d'évaluation par les pairs | @sec-oral-individuel, fiche Z |
 
 Les fiches W à Z sont rassemblées dans l'annexe [-@sec-fiches]. Pour l'édition 2026-2027, la séance a lieu le vendredi 29 janvier 2027 : l'avant-veille à 18h est le mercredi 27 janvier 2027, la veille avant 9h le jeudi 28 janvier 2027. Ces deux dates sont déduites de celle de la séance : le programme fait foi (voir @sec-gel-2).
 
-Le programme classe **Indispensable** (à ne pas sacrifier) le gel du code, les soutenances, les fiches d'évaluation par les pairs et le calibrage des évaluateurs. Sont **Important** (à garder sauf contrainte forte) le briefing, les retouches bloquantes, la répétition technique, l'harmonisation des notes entre évaluateurs et la clôture. Le retour d'expérience collectif est **Pratique** (si le rythme le permet). Le détail bloc par bloc est dans le chapitre [-@sec-programme-detaille].
+Le programme classe **Indispensable** (à ne pas sacrifier) le gel du code, les soutenances, les fiches d'évaluation par les pairs et le calibrage (la relecture de l'échelle par l'enseignant avant les passages). Sont **Important** (à garder sauf contrainte forte) le briefing, les retouches bloquantes, la répétition technique, la relecture des notes extrêmes et la clôture. Le retour d'expérience écrit est **Pratique** (si le rythme le permet). Le détail bloc par bloc est dans le chapitre [-@sec-programme-detaille].
 
 **Livrable de fin de séance.** Tag `v1.0`, dossier de rendu à jour et soutenance passée. Il se vérifie avec la fiche Z (annexe [-@sec-fiche-z]).
 
@@ -46,16 +46,11 @@ Le tag `v1.0-rc` et le dossier de rendu sont déposés l'avant-veille de la séa
 Le programme ne dit pas ce qui est permis entre le dépôt de `v1.0-rc` et le début de la séance. Les supports proposent d'appliquer déjà la règle des retouches bloquantes : des correctifs, pas de nouvelle fonctionnalité (voir @sec-gel-2). Il ne dit pas non plus comment l'heure du dépôt est constatée : un tag léger ne porte pas de date propre, git affiche celle du commit tagué (voir @sec-gel-5-3).
 :::
 
-### Le briefing : deux salles, un ordre de passage, une grille
+### Le briefing : une salle, un ordre de passage, une grille
 
-Le briefing sert à ce que chacun sache où il passe, dans quel ordre et selon quels critères. Les soutenances ont lieu dans deux salles en parallèle. L'ordre de passage est tiré au sort à l'avance et annoncé au briefing. Dans chaque salle, un évaluateur, et un second évaluateur ou un observateur, qui chronomètre et note les écarts. Vous restez dans la salle de vos équipes pendant tous les passages : vous formez le public.
+Le briefing sert à ce que chacun sache dans quel ordre il passe et selon quels critères. Les soutenances ont lieu dans une seule salle : les équipes passent l'une après l'autre devant l'enseignant, seul évaluateur, sans observateur. Il chronomètre lui-même, avec un chronomètre visible de tous, et note les écarts ; il peut confier le chronomètre et la fiche d'observation, facultative, à un étudiant volontaire d'une équipe qui ne passe pas. L'ordre de passage est tiré au sort à l'avance et affiché dans la salle. Tous les étudiants restent dans la salle pendant tous les passages : ils forment le public et remplissent les fiches d'évaluation par les pairs.
 
-| Promotion | Salle 1 | Salle 2 |
-|---|---|---|
-| 8 équipes | 01, 03, 05, 07 | 02, 04, 06, 08 |
-| 7 équipes (affectation indicative, à ajuster selon les effectifs réels) | 02, 04, 06 puis 01 | 03, 05, 07 |
-
-Avec 7 équipes, la salle 1 est la plus chargée et tient sans marge ; la salle 2 garde une marge qui absorbe les dépassements. Si le second évaluateur est absent, le programme prévoit un **format dégradé**, qu'il dit non recommandé : une seule salle, un seul évaluateur, un budget réduit par équipe, et un retour d'expérience écrit à la place de la plénière. Le barème ne change pas, mais ce format est signalé aux étudiants. Voir @sec-gel-7, @sec-sout-2-2 et @sec-sout-2-4.
+Ce format est annoncé aux étudiants à l'avance ; c'est le seul retenu. Avec 8 équipes, la succession des soutenances occupe l'essentiel de la séance, et chaque étudiant n'a que trois minutes de questions. Le barème ne change pas, et l'enseignant relit les notes extrêmes à partir des fiches de notation pré-remplies. Avec 7 équipes (4 équipes de 5 et 3 de 4), le budget par équipe reste le même. Voir @sec-gel-7, @sec-sout-2-2 et @sec-sout-2-4.
 
 Les critères sont ceux de la grille sur 20, que vous connaissez déjà : 14 points collectifs et 6 individuels.
 
@@ -115,7 +110,7 @@ Un correctif fusionné après le tag n'est pas dans ce qui sera évalué. Un tag
 
 ### La répétition technique
 
-Chaque équipe vérifie sa démonstration dans sa salle, sur le vidéoprojecteur de la salle : **l'affichage**, **le jeu de données de secours**, **le plan B enregistré**. Le but est d'éviter la panne technique au moment du passage ; ce n'est pas la répétition du discours, faite avant la séance. Chaque salle dispose d'une machine de secours. En parallèle, les évaluateurs se calibrent : ils appliquent l'échelle de 0 à 4 à deux exemples de réponses, pour harmoniser la notation.
+Chaque équipe vérifie sa démonstration, en se branchant à tour de rôle sur le vidéoprojecteur de la salle : **l'affichage**, **le jeu de données de secours**, **le plan B enregistré**. Le but est d'éviter la panne technique au moment du passage ; ce n'est pas la répétition du discours, faite avant la séance. La salle dispose d'une machine de secours. En parallèle, l'enseignant se calibre : il relit l'échelle de 0 à 4 sur deux exemples de réponses, pour noter de la même façon du premier au dernier passage.
 
 Si le temps manque, cette vérification se fait en équipe avant la séance, ou pendant le passage de l'équipe précédente. Deux pièges : découvrir l'affichage de la salle au moment de passer ; un jeu de données de secours qui contiendrait des données réelles, alors qu'il est fictif comme toutes les données du projet. Voir @sec-sout-10-2 et la fiche Y (annexe [-@sec-fiche-y]).
 
@@ -127,10 +122,10 @@ Un passage a deux parties. La partie commune se déroule en trois temps :
 - **un passage « sous le capot »** : le harnais, une décision sur les données, un moment de l'historique git, les mesures (temps estimé et temps réel) ;
 - **un point de conformité** : la fiche, l'avis du RSSI, les limites d'usage.
 
-Viennent ensuite les questions individuelles : deux par étudiant, la même trame pour tous. L'observateur chronomètre : le respect du temps compte dans le point du critère « Soutenance ».
+Viennent ensuite les questions individuelles : deux par étudiant, la même trame pour tous. L'enseignant chronomètre : le respect du temps compte dans le point du critère « Soutenance ».
 
 ::: {.callout-note title="Un budget indicatif, pas un minutage"}
-Le programme donne un ordre de grandeur, à ajuster selon les équipes et les évaluateurs : « une partie commune d'une dizaine de minutes + quatre minutes de questions par étudiant + une transition de quatre minutes », soit de l'ordre de 30 minutes pour une équipe de 4 et de 34 minutes pour une équipe de 5. C'est une contrainte d'organisation : ni un déroulé de parole ni un minutage de la séance. Voir @sec-sout-2-3 et @sec-pd-soutenance-format.
+Le programme donne un ordre de grandeur, à ajuster selon les équipes : de l'ordre de 20 minutes par équipe, transition comprise, avec une partie commune brève (démonstration brève, « sous le capot » et conformité très courts) et trois minutes de questions par étudiant (question 1 brève, question 2 très brève). Une fois les questions comptées, il reste de l'ordre de 8 minutes pour la partie commune et la transition d'une équipe de 4, et 5 pour une équipe de 5 ; avec 7 équipes, le budget par équipe reste le même. C'est une contrainte d'organisation : ni un déroulé de parole ni un minutage de la séance. Voir @sec-sout-2-3 et @sec-pd-soutenance-format.
 :::
 
 Si un membre est absent, l'équipe passe normalement ; l'étudiant absent le jour de la soutenance est interrogé dans les 15 jours, avec la même trame (voir @sec-oral-11). Détails de chaque temps : @sec-sout-3, puis @sec-sout-6 pour le « sous le capot », @sec-sout-7 pour les mesures, @sec-sout-8 pour la conformité, @sec-sout-9 pour le regard critique et @sec-sout-11 pour le déroulement d'un passage.
@@ -159,7 +154,7 @@ Chaque question est notée de 0 à 4 ; la note est la moyenne des deux questions
 
 ### L'échelle de compréhension orale, de 0 à 4
 
-L'échelle est la même pour les deux questions et pour tous ; l'évaluateur l'a sous les yeux. Son texte est celui du programme.
+L'échelle est la même pour les deux questions et pour tous ; l'enseignant l'a sous les yeux. Son texte est celui du programme.
 
 | Niveau | Ce que montre la réponse |
 |---|---|
@@ -170,7 +165,7 @@ L'échelle est la même pour les deux questions et pour tous ; l'évaluateur l'a
 | 4 | En plus, propose un test ou une alternative argumentée, relie le travail aux règles du thème, aux données ou à la conformité, et nomme une limite. L'explication est faite en langage clair, comme à un chef de projet. |
 
 ::: {.callout-tip title="Se préparer à la question des conséquences"}
-L'échelle parle de lignes de code ; la préparation proposée ici, au-delà du programme, passe par les preuves. Pour une modification donnée, demandez-vous ce qui changerait : quel test rougirait, quel écran afficherait autre chose. Aucun niveau n'est promis pour une réponse donnée : c'est l'évaluateur qui note. Voir @sec-oral-4-6 et @sec-oral-5.
+L'échelle parle de lignes de code ; la préparation proposée ici, au-delà du programme, passe par les preuves. Pour une modification donnée, demandez-vous ce qui changerait : quel test rougirait, quel écran afficherait autre chose. Aucun niveau n'est promis pour une réponse donnée : c'est l'enseignant qui note. Voir @sec-oral-4-6 et @sec-oral-5.
 :::
 
 ### « C'est l'agent qui l'a écrit » n'est pas une réponse recevable
@@ -206,9 +201,9 @@ Ce point est la moitié de la contribution vérifiée ; l'autre point vient de l
 
 ### Le retour d'expérience et la clôture
 
-Le retour d'expérience collectif, en plénière, sert à prendre du recul sur l'ensemble de la formation. Trois sujets, dans l'ordre : ce qui a marché, ce qui a échoué, ce que je ferais autrement ; l'IA, les limites, la conformité ; ce que je dirais à une équipe de développement. Il peut être remplacé par le questionnaire en ligne.
+Le retour d'expérience se fait par écrit, sans plénière : un questionnaire en ligne, rempli en fin de séance s'il reste du temps, sinon après. Il sert à prendre du recul sur l'ensemble de la formation. Trois sujets, dans l'ordre : ce qui a marché, ce qui a échoué, ce que je ferais autrement ; l'IA, les limites, la conformité ; ce que je dirais à une équipe de développement.
 
-La clôture donne les consignes pour la suite : le livrable de fin de séance, à vérifier avec la fiche Z ; le questionnaire de fin de formation, en ligne, qui recueille aussi le retour d'expérience si la plénière a été remplacée ; les notes, communiquées après la séance. Voir @sec-oral-12.
+La clôture donne les consignes pour la suite : le livrable de fin de séance, à vérifier avec la fiche Z ; le questionnaire de fin de formation, en ligne, comme le retour d'expérience écrit ; les notes, communiquées après la séance. Voir @sec-oral-12.
 
 ::: {.callout-tip title="Ce que « fini » veut dire"}
 La *definition of done* du programme : `v1.0-rc` déposé l'avant-veille à 18h, `v1.0` taguée avant le premier passage, CI verte sur les deux tags ; un `README` testé à froid qui permet de lancer l'application en moins de 10 minutes, et la version web publiée sur GitHub Pages accessible ; une fiche de conformité complète (13 rubriques) avec la réponse du RSSI datée ; deux questions individuelles pour chaque étudiant ; `JOURNAL.md` à jour, et des PR qui portent leur section « ce que l'agent a proposé, ce que j'ai refusé » et leurs temps.
@@ -220,12 +215,12 @@ Le test à froid du programme cite `git clone`, `flutter pub get` et `flutter ru
 
 L'ordre de coupe du programme, du moins utile au plus utile :
 
-1. la plénière, remplacée par le questionnaire en ligne ;
+1. le retour d'expérience écrit, rempli après la séance ;
 2. les retouches : s'en tenir aux seuls correctifs bloquants, sans déborder sur le gel ;
 3. la répétition technique, faite en équipe avant la séance ou pendant le passage de l'équipe précédente ;
 4. la clôture, réduite aux consignes essentielles.
 
-Ne se sacrifient jamais : le gel et le tag `v1.0`, les soutenances avec leurs deux questions individuelles, les fiches d'évaluation par les pairs. Si les passages d'une salle prennent du retard, on raccourcit la plénière avant de toucher à un passage.
+Ne se sacrifient jamais : le gel et le tag `v1.0`, les soutenances avec leurs deux questions individuelles, les fiches d'évaluation par les pairs. Si les passages prennent du retard, on renvoie le questionnaire après la séance et on réduit la clôture avant de toucher à un passage.
 
 Peuvent glisser : le retour d'expérience collectif, par questionnaire en ligne, et la communication des notes, après la séance.
 
@@ -249,10 +244,11 @@ Ces chapitres s'appuient sur ceux des séances précédentes : la CI et la publi
 | 5. Porter un regard critique sur son usage de l'IA et sur les limites de son outil, chiffres à l'appui | @sec-sout-9 |
 
 ::: {.callout-note title="État des connaissances"}
-Les chapitres de cette partie sont sourcés, et chacun signale ses points non vérifiés en fin de document. Quatre réserves valent pour l'ensemble.
+Les chapitres de cette partie sont sourcés, et chacun signale ses points non vérifiés en fin de document. Cinq réserves valent pour l'ensemble.
 
 - **L'organisation et la notation viennent du programme.** La grille, l'échelle de compréhension, le barème des fiches des pairs et le budget indicatif d'un passage sont repris du programme détaillé (@sec-programme-detaille), qui fait foi.
 - **Le gel a été essayé avec un dépôt distant local.** La séquence du tag `v1.0` a été exécutée le 27 novembre 2026 sous Linux (git 2.53.0, messages en français), sur une copie du dépôt-modèle : rien n'a été écrit sur GitHub. La page des tags de GitHub et la pastille du commit tagué n'ont pas été observées sur un dépôt d'équipe.
+- **Le format de la soutenance n'a jamais été joué.** Une salle, un seul évaluateur, de l'ordre de 20 minutes par équipe : ce format n'a pas été essayé ; le temps qui reste pour la partie commune et la transition est un calcul, pas une mesure.
 - **L'enregistrement d'une démonstration n'a pas été essayé.**
 - **Les dates sont déduites.** Les échéances du mercredi 27 et du jeudi 28 janvier 2027 sont déduites de la date de la séance, le vendredi 29 janvier 2027.
 :::
