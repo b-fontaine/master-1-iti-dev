@@ -91,6 +91,11 @@ jobs:
     steps:
       - name: Récupérer le dépôt
         uses: actions/checkout@v7
+        with:
+          # Tout l'historique : le contrôle suivant compare la PR à sa branche cible.
+          fetch-depth: 0
+
+      # […] ici, l'étape « Refuser la modification d'un instantané déjà fusionné »
 
       - name: Installer Flutter 3.50.1
         uses: subosito/flutter-action@v2
@@ -108,7 +113,9 @@ jobs:
 
 Le nom d'un **job** (`analyse-et-tests`) est le nom du **contrôle** que vous verrez sur la page de la PR, et c'est ce nom que la protection de `main` exige. Chaque `- name:` est une **étape**, avec le libellé que vous lirez dans le journal du contrôle.
 
-La suite reprend les étapes que votre CI minimale avait déjà depuis la séance 2 : instantanés du schéma de la base (`make-migrations` ne doit rien changer), mise en forme, analyse. Une seule étape change, la dernière :
+L'étape « Refuser la modification d'un instantané déjà fusionné », non recopiée ici, vient elle aussi de votre CI minimale : elle compare la PR à `main` et refuse qu'un instantané de `drift_schemas/` déjà fusionné soit modifié ou supprimé (séance 3, chapitre 4, section 7.2). C'est pour elle que le dépôt est récupéré avec tout son historique (`fetch-depth: 0`).
+
+La suite reprend les autres étapes que votre CI minimale avait déjà depuis la séance 2 : instantanés du schéma de la base (`make-migrations` ne doit rien changer), mise en forme, analyse. Une seule étape change, la dernière :
 
 ```yaml
       - name: Tester et mesurer la couverture
@@ -601,7 +608,7 @@ Dans le terminal, `gh pr checks` donne la même liste, et son option `--web` ouv
 
 | Contrôle rouge | Ce que cela veut dire | Ligne à chercher | Première chose à faire |
 |---|---|---|---|
-| `analyse-et-tests` | Une des six commandes de « Vérifier avant une PR » échoue | Le nom de l'étape rouge, puis la fin de son journal (`Some tests failed.`, un `info` ou `error` de l'analyse, un fichier à remettre en forme) | Relancer **la même commande** sur votre poste, sur la branche de la PR, et lire la même erreur ; la fiche N de la séance 3 traite les cas courants |
+| `analyse-et-tests` | Une des six commandes de « Vérifier avant une PR » échoue, ou un instantané de `drift_schemas/` déjà fusionné a été modifié (étape « Refuser la modification d'un instantané déjà fusionné » ; séance 3, chapitre 4, section 7.2) | Le nom de l'étape rouge, puis la fin de son journal (`Some tests failed.`, un `info` ou `error` de l'analyse, un fichier à remettre en forme) | Relancer **la même commande** sur votre poste, sur la branche de la PR, et lire la même erreur ; la fiche N de la séance 3 traite les cas courants |
 | `securite` | Une dépendance a une vulnérabilité connue, ou gitleaks a trouvé une forme de secret dans l'historique de `main` ou de la PR | L'étape rouge (osv-scanner ou gitleaks), puis `WRN leaks found` ou la liste des bibliothèques signalées | Section 7.3 ou 7.5 ; ne rien pousser d'autre tant que ce n'est pas compris |
 | `site-web` | La version web ne se construit pas ; la PR ne peut pas être fusionnée (contrôle exigé) | La fin de l'étape « Construire la version web » | Relancer la commande de la section 5.1 sur votre poste |
 | `publication` | Le site n'a pas pu être déposé sur Pages | `Ensure GitHub Pages has been enabled` (section 5.2) | Prévenir l'enseignant, puis « Re-run failed jobs » |

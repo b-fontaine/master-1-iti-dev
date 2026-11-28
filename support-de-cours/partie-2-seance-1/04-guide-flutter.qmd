@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-1/04-guide-flutter.md · synchro: 2026-11-27 -->
+<!-- source: cours/supports/day-1/04-guide-flutter.md · synchro: 2026-11-28 -->
 
 # Guide Flutter {#sec-guide-flutter}
 
@@ -302,6 +302,7 @@ Dans Flutter, **tout ce que vous voyez est un widget** : un texte, un bouton, un
 Analogie : une poupée russe, ou l'organigramme d'une entreprise. La racine, c'est l'application ; en dessous, un écran ; dans l'écran, une colonne ; dans la colonne, trois éléments, etc.
 
 ```{mermaid}
+%%| fig-width: 5.6
 flowchart TD
     A["MaterialApp"] --> B["Scaffold"]
     B --> C["AppBar"]

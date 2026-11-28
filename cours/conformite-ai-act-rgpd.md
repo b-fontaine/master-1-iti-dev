@@ -38,7 +38,7 @@ Conséquence pédagogique : même si le haut risque n'est obligatoire qu'à part
 Trois raisons, qui correspondent aux trois objectifs de la formation.
 
 1. **Connaître les limites de ses projets.** L'IA permet de fabriquer vite un outil jetable. Elle ne rend pas l'outil légal, sûr ou hébergeable. Un outil « pour une semaine » traite des données comme un outil pour dix ans.
-2. **Faire valider par le RSSI.** Réflexe professionnel : aucun applicatif ne touche des données réelles ni n'est mis à disposition d'autres personnes sans validation du responsable de la sécurité des systèmes d'information (et du DPO si des données personnelles sont en jeu). Dans la formation, le RSSI est **simulé par l'enseignant** ou **tenu par le RSSI de l'établissement** (choix à faire par l'enseignant avant S3 ; dans les deux cas le déroulé est le même). En S4, trois tables en parallèle : un RSSI par table (enseignant, RSSI de l'établissement, aide ou second intervenant ; à défaut étudiant volontaire avec la grille).
+2. **Faire valider par le RSSI.** Réflexe professionnel : aucun applicatif ne touche des données réelles ni n'est mis à disposition d'autres personnes sans validation du responsable de la sécurité des systèmes d'information (et du DPO si des données personnelles sont en jeu). Dans la formation, le RSSI est **simulé par l'enseignant** (choix fait avant S3), et non tenu par le RSSI de l'établissement. En S4, trois tables en parallèle : l'enseignant en tient une, deux étudiants volontaires munis de la grille go/no-go tiennent les deux autres.
 3. **Connaître ses droits de citoyen européen.** Ces règles protègent aussi les étudiants : ils sont des personnes concernées (courriels, notes, vœux, données de connexion, usage de services d'IA).
 
 **Règle d'or dès S1** : aucune donnée personnelle ni confidentielle dans un prompt ni dans un dépôt public. Les dépôts de la formation sont publics : tout ce qui y entre est publié. Il en va de même du build web Flutter publié sur GitHub Pages : il est public, tout ce qu'il contient (code, données embarquées, fichiers d'actifs) est lisible par n'importe qui. Donnée fictive uniquement, aucun secret dans l'application ni dans le bundle web.
@@ -177,7 +177,7 @@ Chemin unique pour toutes les équipes. Les rubriques résumées dans `themes.md
 
 | Question | Réponse |
 |---|---|
-| **Qui** | Le RSSI (simulé par l'enseignant), avec le DPO le cas échéant. En S4, trois tables en parallèle : un RSSI par table (enseignant, RSSI de l'établissement, aide ou second intervenant ; à défaut étudiant volontaire avec la grille) |
+| **Qui** | Le RSSI (simulé par l'enseignant), avec le DPO le cas échéant. En S4, trois tables en parallèle : l'enseignant en tient une, deux étudiants volontaires munis de la grille go/no-go tiennent les deux autres |
 | **Quand** | Début de fiche en S3 (avec le modèle de données) ; passage devant le RSSI en S4 (mercredi 16 décembre 2026) ; v1 de la fiche en pull request le vendredi 18 décembre 2026 ; réponse du RSSI au plus tard une semaine avant S5 ; mise à jour avant la soutenance en S5, le vendredi 29 janvier 2027 après-midi |
 | **Quoi** | La fiche, le dépôt (aucun secret, aucune donnée réelle), la CI verte, l'analyse des données |
 | **Critères go** | Données fictives ou justifiées ; finalité unique ; durée et suppression définies ; pas de donnée personnelle dans les prompts ; rôle AI Act et classement qualifiés et argumentés ; accès par rôle testé ; limites d'usage écrites |
@@ -188,7 +188,7 @@ Une validation « go sous conditions » doit lister des actions datées. Sans r�
 
 **Portée d'un « go »** : il vaut uniquement pour le périmètre pédagogique à données fictives. Tout passage à des données réelles impose une nouvelle fiche et une nouvelle validation.
 
-**Format du passage devant le RSSI (S4)** : 3 tables en parallèle (8 équipes réparties 3-3-2), 10 à 12 min par équipe : environ 4 min de présentation de la fiche, 5 min de questions, 2 min de décision. Chaque table a son RSSI (enseignant, RSSI de l'établissement, second intervenant à confirmer ; à défaut, étudiant volontaire avec la grille go/no-go) ; les équipes non présentantes tiennent le rôle d'observateurs ou avancent l'audit croisé. Durée totale : 3 passages de 12 min au plus par table, soit 36 min, plus 4 min de rotation et de consignes : **bloc de 40 min en S4**, jeu de rôle intégré (voir §8.2).
+**Format du passage devant le RSSI (S4)** : 3 tables en parallèle (8 équipes réparties 3-3-2), 10 à 12 min par équipe : environ 4 min de présentation de la fiche, 5 min de questions, 2 min de décision. Chaque table a son RSSI : l'enseignant à l'une, un étudiant volontaire muni de la grille go/no-go à chacune des deux autres (un volontaire ne juge pas sa propre équipe ; la décision rendue à une table est provisoire, la réponse écrite est celle de l'enseignant) ; les équipes non présentantes tiennent le rôle d'observateurs ou avancent l'audit croisé. Durée totale : 3 passages de 12 min au plus par table, soit 36 min, plus 4 min de rotation et de consignes : **bloc de 40 min en S4**, jeu de rôle intégré (voir §8.2).
 
 ## 7. Application aux trois thèmes du projet fil rouge
 
@@ -225,7 +225,7 @@ Le monde est inventé, ses utilisateurs ne le sont pas : la fiche de conformité
 
 ### 8.2 Jeu de rôle « passage devant le RSSI » (bloc de 40 min en S4)
 Le jeu de rôle est le passage devant le RSSI lui-même (pas une activité en plus).
-- **Dispositif** : 3 tables en parallèle (8 équipes réparties 3-3-2), un RSSI par table (enseignant, RSSI de l'établissement, second intervenant à confirmer ; à défaut, étudiant volontaire), observateurs avec la grille go/no-go (les équipes non présentantes).
+- **Dispositif** : 3 tables en parallèle (8 équipes réparties 3-3-2), un RSSI par table (l'enseignant à l'une, un étudiant volontaire muni de la grille à chacune des deux autres), observateurs avec la grille go/no-go (les équipes non présentantes).
 - **Déroulé par équipe (10 à 12 min)** : environ 4 min de présentation de la fiche ; 5 min de questions du RSSI (« où partent les prompts ? » ; « qui peut contester ? » ; « que se passe-t-il le jour de la fin de vie ? ») ; 2 min de décision (retour des observateurs inclus dans les questions ou la décision).
 - **Temps total** : 3 passages de 12 min au plus par table = 36 min, plus 4 min de rotation et de consignes = 40 min.
 - **Règle** : le RSSI peut décider un no-go ; l'équipe doit alors dire quoi corriger et sous quel délai. Le « go » ne vaut que pour le périmètre pédagogique à données fictives.

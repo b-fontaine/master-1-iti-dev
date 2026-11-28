@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-2/01-git-pas-a-pas.md · synchro: 2026-11-27 -->
+<!-- source: cours/supports/day-2/01-git-pas-a-pas.md · synchro: 2026-11-28 -->
 
 # Git pas à pas {#sec-git}
 
@@ -66,6 +66,7 @@ Un **commit** est une photo de l'ensemble du projet à un instant donné, accomp
 Entre vos fichiers et l'historique, il y a une étape intermédiaire, l'**index** (ou *staging area*, zone de préparation) : la liste de ce qui entrera dans la prochaine photo. Vous modifiez trois fichiers, mais deux seulement forment un tout cohérent ? Vous n'ajoutez que ces deux-là à l'index, puis vous commitez.
 
 ```{mermaid}
+%%| fig-width: 5.6
 flowchart LR
     A["Dossier de travail<br/>vos fichiers, tels que vous les voyez"] -- "git add" --> B["Index<br/>ce qui sera photographié"]
     B -- "git commit" --> C["Historique<br/>la suite des commits, dans .git"]
@@ -110,7 +111,8 @@ Tant que vous n'avez pas poussé, personne ne voit votre travail, et il n'existe
 Une **pull request** (PR) n'est pas une commande de git : c'est une page de GitHub sur laquelle vous dites « voici ma branche, voici ce qu'elle change et pourquoi ; relisez-la, puis fusionnons ». On y voit le **diff** (la différence ligne à ligne), on y discute, un relecteur approuve, puis la branche est fusionnée dans `main`.
 
 ```{mermaid}
-flowchart LR
+%%| fig-width: 3.4
+flowchart TD
     A["Branche locale<br/>vos commits"] -- "git push" --> B["Branche sur GitHub"]
     B -- "gh pr create" --> C["PR ouverte<br/>titre, description, diff"]
     C --> D{"Relecture<br/>par un coéquipier"}
@@ -598,17 +600,14 @@ Un dépôt public n'oublie rien. On regarde avant d'ajouter, et les secrets vive
 
 Premier réflexe dans tous les cas : `git status`, et lire ce que git propose.
 
-```{mermaid}
-flowchart TD
-    A["Quelque chose ne va pas"] --> B["git status"]
-    B --> C{"Que dit git ?"}
-    C -- "fusion en cours, conflit" --> D["Résoudre, git add, git commit<br/>ou git merge --abort"]
-    C -- "modifications non voulues<br/>dans un fichier" --> E["git restore fichier"]
-    C -- "fichier indexé par erreur" --> F["git restore --staged fichier"]
-    C -- "mauvaise branche,<br/>rien de commité" --> G["git switch -c bonne-branche"]
-    C -- "push refusé" --> H["Lire le motif :<br/>upstream, fetch first, branche protégée"]
-    C -- "rien à signaler,<br/>mais le dernier commit est faux" --> I["Pas encore poussé : git commit --amend<br/>Déjà poussé : git revert"]
-```
+| Que dit git ? | Geste |
+|---|---|
+| Fusion en cours, conflit | Résoudre, `git add`, `git commit`, ou `git merge --abort` |
+| Modifications non voulues dans un fichier | `git restore fichier` |
+| Fichier indexé par erreur | `git restore --staged fichier` |
+| Mauvaise branche, rien de commité | `git switch -c bonne-branche` |
+| Push refusé | Lire le motif : upstream, fetch first, branche protégée |
+| Rien à signaler, mais le dernier commit est faux | Pas encore poussé : `git commit --amend`. Déjà poussé : `git revert` |
 
 ### « Please tell me who you are »
 

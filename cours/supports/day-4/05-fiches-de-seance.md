@@ -455,7 +455,7 @@ L'exemple du thème B (rubrique 9, version 0.2, puis rubrique 8 pour la v1) est 
 
 **Toute l'équipe, à sa table. Fini quand :** votre équipe est passée devant le RSSI, a posé la question « système d'IA ? » avant de classer, a proposé un classement et un rôle, a discuté la rubrique 8 ; la décision provisoire et ses conditions sont notées ; chacun connaît la date de dépôt de la v1, **vendredi 18 décembre 2026 à 18h**.
 
-*Sensibilisation, pas avis juridique. Le RSSI est simulé par l'enseignant (ou un intervenant, ou un étudiant volontaire muni de la grille).*
+*Sensibilisation, pas avis juridique. Le RSSI est simulé par l'enseignant ou, à deux des trois tables, par un étudiant volontaire muni de la grille.*
 
 **Étape 1 · Les tables.** Trois tables en parallèle, un RSSI par table ; les équipes passent à tour de rôle. Si l'attribution réelle des numéros s'en écarte, l'annonce de l'enseignant fait foi.
 
@@ -658,7 +658,7 @@ Les preuves de chaque ligne : fiches P (`.feature`, verrous), Q (`gh pr checks <
 | **Du samedi 19 décembre 2026 au dimanche 3 janvier 2027 inclus** | Vacances : aucun travail imposé au-delà de ce que l'équipe choisit |
 | **Au plus tard une semaine avant la séance 5** | Réponse du RSSI, et **gel des fonctionnalités au soir** (ensuite : correctifs, documentation, préparation de la démonstration) |
 | **L'avant-veille de la séance 5, 18h** | Tag `v1.0-rc` et dossier de rendu |
-| **La veille de la séance 5** | Lecture des dépôts par les évaluateurs ; PR tirées au sort communiquées avant 9h |
+| **La veille de la séance 5** | Lecture des dépôts par l'enseignant ; PR tirées au sort communiquées avant 9h |
 | **Vendredi 29 janvier 2027, après-midi** | Séance 5 |
 
 Avant la séance 5 : une répétition de la démonstration, en équipe, avec chronomètre. Règle de prudence : ne pas commencer un gros chantier au dernier moment.

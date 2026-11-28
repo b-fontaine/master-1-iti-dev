@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-1/08-ci-cd-devops.md · synchro: 2026-11-25 -->
+<!-- source: cours/supports/day-1/08-ci-cd-devops.md · synchro: 2026-11-28 -->
 
 # CI/CD et DevOps {#sec-ci-cd}
 
@@ -89,11 +89,7 @@ DevOps n'est ni un métier, ni un logiciel que l'on achète. C'est un ensemble d
 
 On représente classiquement DevOps comme une **boucle infinie** (un « 8 couché ») :
 
-```{mermaid}
-flowchart LR
-    P["Planifier"] --> C["Coder"] --> B["Construire"] --> T["Tester"] --> PU["Publier"] --> D["Déployer"] --> E["Exploiter"] --> S["Surveiller"]
-    S -. "retours, incidents, mesures" .-> P
-```
+**Planifier → Coder → Construire → Tester → Publier → Déployer → Exploiter → Surveiller**, puis la boucle se referme sur **Planifier** (retours, incidents, mesures).
 
 Retenez l'idée plus que les huit mots exacts (les schémas varient selon les auteurs : *présentation conventionnelle, pas une norme*). La moitié gauche est la **CI/CD** (construire, tester, publier). La moitié droite est l'**exploitation** : faire tourner, surveiller (*monitoring* : mesurer en continu l'état du service), alerter. Le fait important : **la boucle est fermée**. Ce qui se passe en production nourrit la planification suivante.
 
@@ -369,7 +365,7 @@ Un agent de code peut ouvrir dix PR avant le déjeuner. La **revue humaine devie
 
 Une **version** est un état identifié du logiciel. La convention la plus répandue est le **versionnage sémantique** (*Semantic Versioning*, `MAJEUR.MINEUR.CORRECTIF`, par exemple `1.4.2`) : on augmente le chiffre de **correctif** pour une réparation sans changement visible, le **mineur** pour une nouveauté compatible, le **majeur** pour un changement qui peut casser l'existant (spécification publiée sur semver.org ; *règle rappelée de mémoire, à relire sur la source avant toute citation précise*).
 
-Dans ce cours, le calendrier prévoit des **tags** git : une **release** `v0.1` en séance 4 si `main` est verte, un `v1.0-rc` (*release candidate*, candidat à la version finale) l'avant-veille de la séance 5, puis `v1.0` en séance 5 (@sec-programme-detaille). Un **tag** est une étiquette posée sur un commit précis pour le retrouver à jamais.
+Dans ce cours, le calendrier prévoit des **tags** git : une **release** `v0.1` en séance 4 si `main` est verte, un `v1.0-rc` (*release candidate*, candidat à la version finale) l'avant-veille de la séance 5 à 18 h, puis `v1.0` en séance 5, le vendredi 29 janvier 2027 après-midi (@sec-programme-detaille). Un **tag** est une étiquette posée sur un commit précis pour le retrouver à jamais.
 
 ### Une release GitHub
 

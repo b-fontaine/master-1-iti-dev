@@ -33,7 +33,7 @@ Ce chapitre ne contient presque pas d'explications : il rassemble ce que vous ga
 |---|---|---|
 | « au plus tard une semaine avant S5 » | **Vendredi 22 janvier 2027** | Réponse du RSSI et **gel des fonctionnalités au soir** (« ensuite : correctifs, documentation, préparation de la démonstration ») |
 | « l'avant-veille de S5 à 18h » | **Mercredi 27 janvier 2027 à 18h** | Tag `v1.0-rc` et dossier de rendu |
-| « la veille de S5 », « avant 9h » | **Jeudi 28 janvier 2027 avant 9h** | Lecture des dépôts par les évaluateurs ; communication des PR tirées au sort |
+| « la veille de S5 », « avant 9h » | **Jeudi 28 janvier 2027 avant 9h** | Lecture des dépôts par l'enseignant ; communication des PR tirées au sort |
 | | **Vendredi 29 janvier 2027, après-midi** | Séance 5 : retouches bloquantes, `v1.0`, soutenance |
 
 Règle de prudence du programme : **« ne pas commencer un gros chantier au dernier moment »**. Proposition, au-delà du programme : après le gel des fonctionnalités, ce qui n'est pas fini va dans la colonne « abandonné » du backlog, et l'équipe l'assume (objectif 1 de la séance).
@@ -79,7 +79,7 @@ Built with build_runner/aot in 29s; wrote 83 outputs.
 
 **Étape 4 · La répétition chronométrée.** Programme : **« Répétition de la démonstration avant S5 : une fois, en équipe, avec chronomètre. »** Proposition, au-delà du programme (chapitre 2, section 10.1) : répétez sur l'état que vous allez taguer `v1.0-rc`, donc **avant** l'étape 5. Ce que la répétition doit vous apprendre :
 
-- si la partie commune tient en « une dizaine de minutes » : notez la durée de chacun de ses trois temps (fiche Y, étape 3) ;
+- si la partie commune tient dans ce qui reste une fois les questions comptées (avec la transition, de l'ordre de 8 minutes pour une équipe de 4, 5 pour une équipe de 5 : fiche Y, étape 2) : notez la durée de chacun de ses trois temps (fiche Y, étape 3) ;
 - si le scénario passe du début à la fin, sur la machine et par la voie prévues ;
 - si vous savez repartir de zéro avec le jeu de données de secours (fiche Y, étape 4) ;
 - qui parle, et qui tient le clavier.
@@ -224,14 +224,13 @@ Le programme fixe l'échéance (l'avant-veille à 18h) sans dire comment l'heure
 
 ## Fiche X · Retouches bloquantes, gel et `v1.0`
 
-**Toute l'équipe, en début de séance ; un seul membre pose le tag, un coéquipier le vérifie (proposition des supports). Fini quand :** chacun connaît sa salle, son ordre de passage, le format et les critères ; les correctifs bloquants sont fusionnés par PR et le dernier commit de `main` a sa coche verte ; `v1.0` est posé sur ce commit, poussé, visible sur GitHub, **avant le premier passage** ; plus personne ne pousse.
+**Toute l'équipe, en début de séance ; un seul membre pose le tag, un coéquipier le vérifie (proposition des supports). Fini quand :** chacun connaît son ordre de passage, le format et les critères ; les correctifs bloquants sont fusionnés par PR et le dernier commit de `main` a sa coche verte ; `v1.0` est posé sur ce commit, poussé, visible sur GitHub, **avant le premier passage** ; plus personne ne pousse.
 
-**Étape 1 · Le briefing** (bloc 1). Le programme y met : **« Affectation aux salles (salle 1 : équipes 01, 03, 05, 07 ; salle 2 : 02, 04, 06, 08), ordre de passage, format, critères. »** Notez :
+**Étape 1 · Le briefing** (bloc 1). Le programme y met : **« Ordre de passage, format, critères. »** Notez :
 
 | Ce qu'on vous annonce | Où le retrouver ensuite |
 |---|---|
-| Votre salle | Fiche Y, étape 1 |
-| Votre ordre de passage, tiré au sort à l'avance | L'annonce de l'enseignant |
+| Votre ordre de passage, tiré au sort à l'avance | L'affichage dans la salle ; fiche Y, étape 1 |
 | Le format (partie commune, questions individuelles, transition) | Fiche Y, étapes 2 et 3 |
 | Les critères (grille sur 20, échelle de 0 à 4) | Fiche Z, étape 3 ; chapitre 3, section 8 |
 
@@ -339,7 +338,7 @@ Le même identifiant sur les deux lignes : le tag reçu par le dépôt distant e
 
 **Étape 4 · Constater.**
 
-1. **Ce qui sépare `v1.0-rc` de `v1.0`** : ce que les évaluateurs n'ont pas lu la veille.
+1. **Ce qui sépare `v1.0-rc` de `v1.0`** : ce que l'enseignant n'a pas lu la veille.
 
    ```bash
    $ git log --oneline v1.0-rc..v1.0
@@ -413,28 +412,18 @@ Si votre `main` local a lui aussi divergé : fiche C de la séance 2, étape 4.
 
 ## Fiche Y · Répétition et soutenance d'équipe
 
-**Toute l'équipe, dans sa salle. Fini quand :** la démonstration a été vérifiée sur l'affichage de la salle, avec le jeu de données de secours et la démonstration enregistrée ; l'équipe est passée (partie commune en trois temps, puis questions individuelles) ; chacun a tenu sa place dans le public pendant les autres passages.
+**Toute l'équipe, dans la salle. Fini quand :** la démonstration a été vérifiée sur l'affichage de la salle, avec le jeu de données de secours et la démonstration enregistrée ; l'équipe est passée (partie commune en trois temps, puis questions individuelles) ; chacun a tenu sa place dans le public pendant les autres passages.
 
-**Étape 1 · Votre salle.** Si l'attribution réelle des numéros s'en écarte, l'annonce de l'enseignant fait foi.
+**Étape 1 · Une salle, votre rang de passage.** Toutes les équipes passent dans la même salle, l'une après l'autre, devant l'enseignant, seul évaluateur, sans observateur. L'ordre de passage est « tiré au sort à l'avance et affiché dans la salle » ; s'il change, l'annonce de l'enseignant fait foi. La salle a un vidéoprojecteur, un chronomètre visible de tous et une machine de secours. L'enseignant chronomètre lui-même et note les écarts ; il peut confier le chronomètre et la fiche d'observation, facultative, à un étudiant volontaire d'une équipe qui ne passe pas.
 
-| 8 équipes de 4 | 7 équipes (4 équipes de 5 et 3 de 4), affectation indicative |
+**Étape 2 · Le budget indicatif.** Programme, mot pour mot : de l'ordre de **« 20 minutes par équipe »**, **« transition comprise : une partie commune brève, puis trois minutes de questions par étudiant »**. Ces chiffres sont des **« ordres de grandeur à ajuster »** selon les équipes. Même budget à 7 équipes : « Une équipe de 5 a quinze minutes de questions : sa partie commune est d'autant plus brève. »
+
+| Moment du passage | Ordre de grandeur |
 |---|---|
-| Salle 1 : 01, 03, 05, 07 | Salle 1 (4 équipes : 4, 4, 4, 5) : 02, 04, 06 puis 01 |
-| Salle 2 : 02, 04, 06, 08 | Salle 2 (3 équipes : 5, 5, 5) : 03, 05 et 07 |
+| Questions individuelles, deux par étudiant (question 1 brève, question 2 très brève) | Trois minutes par étudiant (programme) : 12 minutes pour une équipe de 4, 15 pour une équipe de 5 |
+| Partie commune, toute l'équipe, puis transition avec l'équipe suivante | Ce qui reste (calcul des fiches) : de l'ordre de 8 minutes pour une équipe de 4, 5 pour une équipe de 5 |
 
-À 7 équipes, le programme précise que la salle 1 est « la salle la plus chargée : elle tient sans marge, il ne faut pas laisser les passages déborder ». L'ordre de passage est « tiré au sort à l'avance » ; à 7 équipes, le programme écrit pourtant « 02, 04, 06 puis 01 » : l'annonce de l'enseignant fait foi. Chaque salle a un vidéoprojecteur, un chronomètre visible et une machine de secours ; un évaluateur y siège avec un second évaluateur ou un observateur.
-
-**Étape 2 · Le budget indicatif.** Programme, mot pour mot : de l'ordre de **« 30 minutes pour une équipe de 4 »** et **« 34 minutes pour une équipe de 5 »**, selon la formule **« une partie commune d'une dizaine de minutes + quatre minutes de questions par étudiant + une transition de quatre minutes »**. Ces chiffres sont des **« ordres de grandeur à ajuster »** selon les équipes et les évaluateurs.
-
-| Moment du passage | Ordre de grandeur du programme |
-|---|---|
-| Partie commune, toute l'équipe | Une dizaine de minutes |
-| Questions individuelles, deux par étudiant | Quatre minutes par étudiant |
-| Transition avec l'équipe suivante | Quatre minutes |
-
-Le programme ne découpe pas la partie commune : c'est votre répétition chronométrée (fiche W, étape 4) qui fixe la durée de chacun de ses trois temps.
-
-Si le second évaluateur est absent, l'enseignant annonce le **format dégradé** : une salle, de l'ordre de « 20 minutes par équipe (démonstration brève, « sous le capot » et conformité très courts, trois minutes de questions par étudiant) ».
+Le programme ne découpe ni la partie commune ni la transition : c'est votre répétition chronométrée (fiche W, étape 4) qui fixe la durée de chacun de ses trois temps.
 
 **Étape 3 · La partie commune, en trois temps.** La colonne du milieu est le texte du programme ; la colonne de droite reprend les preuves que propose le chapitre 2 (sections 4, 6 et 8). Aucune ne demande d'ouvrir du code.
 
@@ -469,15 +458,15 @@ Proposition des supports : ouvrez ces pages dans des onglets **avant** de passer
 
 - [ ] La démonstration enregistrée existe, et elle se lit sur le poste de la démonstration.
 - [ ] Le jeu de données de secours existe, il est fictif de bout en bout, et vous savez **repartir de zéro** avec lui : base vide, seed, import, écran attendu.
-- [ ] Vous savez où est la machine de secours de votre salle.
+- [ ] Vous savez où est la machine de secours de la salle.
 
 Proposition, au-delà du programme (chapitre 2, section 5.2) : le jeu de données de secours est ce que votre scénario consomme (le seed à graine fixe et le fichier CSV fictif que vous importez) ; l'enregistrement se garde hors du dépôt, à un endroit qui ne dépend pas du réseau.
 
-**Étape 5 · La répétition technique** (bloc 4). Programme : **« Répétition technique par les équipes, chacune vérifiant sa démonstration dans sa salle (affichage, jeu de données de secours, plan B enregistré). »** Pendant ce temps, les évaluateurs se calibrent entre eux. Les trois vérifications sont celles du programme ; la colonne de droite est une proposition des supports.
+**Étape 5 · La répétition technique** (bloc 4). Programme : **« Répétition technique par les équipes, chacune vérifiant sa démonstration (affichage, jeu de données de secours, plan B enregistré) ; le branchement au vidéoprojecteur se vérifie à tour de rôle. »** Pendant ce temps, l'enseignant relit l'échelle sur ses deux exemples de réponses. Les trois vérifications sont celles du programme ; la colonne de droite est une proposition des supports.
 
 | Vérification | Geste | Ce que vous devez voir |
 |---|---|---|
-| Affichage | Brancher le poste de la démonstration sur le vidéoprojecteur, lancer l'application | Le premier écran, lisible depuis le fond de la salle |
+| Affichage | À votre tour, brancher le poste de la démonstration sur le vidéoprojecteur, lancer l'application | Le premier écran, lisible depuis le fond de la salle |
 | Jeu de données de secours | Repartir de zéro une fois | L'application montre l'état de départ du scénario |
 | Plan B enregistré | Ouvrir l'enregistrement sur le poste | Il se lit sur le poste de démonstration, sans dépendre du réseau |
 
@@ -485,7 +474,7 @@ Lecture des supports : `v1.0` est posé, donc la répétition ne corrige plus ri
 
 Si la séance prend du retard, la répétition technique est « faite en équipe avant la séance ou pendant le passage de l'équipe précédente ».
 
-**Étape 6 · Le passage** (bloc 5). Programme : **« démonstration en direct, « sous le capot », conformité, puis questions individuelles. Une pause entre deux séries de passages, au moment le moins gênant. »**
+**Étape 6 · Le passage** (bloc 5). Programme : **« démonstration en direct, « sous le capot », conformité, puis questions individuelles. Une pause au milieu des passages, au moment le moins gênant. »**
 
 1. Pendant la transition : brancher le poste, ouvrir l'application et les onglets préparés.
 2. La partie commune, dans l'ordre de l'étape 3.
@@ -493,7 +482,7 @@ Si la séance prend du retard, la répétition technique est « faite en équipe
 
 Le programme ne dit pas qui parle : décidez-le à la répétition (chapitre 2, section 10).
 
-**Étape 7 · Pendant que les autres passent.** Programme : **« Les étudiants restent dans la salle de leurs quatre équipes : ils forment le public et remplissent les fiches d'évaluation par les pairs. »** Vous restez dans votre salle pendant les passages des autres équipes. La fiche des pairs porte sur les membres de **votre** équipe (fiche Z, étape 5) ; le programme les place à la fois pendant les passages et au bloc 6 : l'enseignant dit quand les remplir (chapitre 3, section 12).
+**Étape 7 · Pendant que les autres passent.** Programme : **« Tous les étudiants sont dans la salle : ils forment le public et remplissent les fiches d'évaluation par les pairs. »** Vous restez dans la salle pendant les passages des autres équipes. La fiche des pairs porte sur les membres de **votre** équipe (fiche Z, étape 5) ; le programme les place à la fois pendant les passages et au bloc 6 : l'enseignant dit quand les remplir (chapitre 3, section 12).
 
 **Si ça coince.** Les quatre premières lignes sont une proposition, au-delà du programme (chapitre 2, section 5.3) : décidez à l'avance ce qui prend le relais, et qui prononce « on bascule ».
 
@@ -504,11 +493,11 @@ Le programme ne dit pas qui parle : décidez-le à la répétition (chapitre 2, 
 | Le poste de l'équipe est en panne, ou ne s'affiche pas | Panne de matériel | La machine de secours de la salle, avec la version publiée et le jeu de données de secours |
 | Plus rien ne permet de montrer l'application en direct | Panne générale | La démonstration enregistrée, commentée à voix haute |
 | La répétition technique n'a pas eu lieu | La séance a pris du retard | La faire « pendant le passage de l'équipe précédente » |
-| À la répétition, la partie commune dépasse nettement « une dizaine de minutes » | Scénario trop long | Proposition des supports : retirer du contenu, garder les trois temps |
+| À la répétition, la partie commune et la transition dépassent nettement ce qui reste une fois les questions comptées (fiche Y, étape 2) | Scénario trop long | Proposition des supports : retirer du contenu, garder les trois temps |
 | Un défaut apparaît à la répétition | `v1.0` est posé, on ne pousse plus | Proposition des supports : le contourner dans le scénario, ou le nommer comme une limite |
 | Un membre de l'équipe est absent | | « l'équipe passe normalement » ; l'absent est interrogé dans les 15 jours (fiche Z) |
 
-*Explications : chapitre 2, sections 2 (dispositif, budget, variante à 7 équipes, format dégradé, public), 3 à 5 (partie commune, démonstration, plan de secours), 6 à 9 (« sous le capot », mesures, conformité, regard critique), 10 (répéter) et 11 (le passage).*
+*Explications : chapitre 2, sections 2 (dispositif à une salle, budget, variante à 7 équipes, public), 3 à 5 (partie commune, démonstration, plan de secours), 6 à 9 (« sous le capot », mesures, conformité, regard critique), 10 (répéter) et 11 (le passage).*
 
 ---
 
@@ -549,7 +538,7 @@ Le programme ne dit pas qui parle : décidez-le à la répétition (chapitre 2, 
 
 **Étape 3 · L'échelle de compréhension, de 0 à 4** (programme, mot pour mot). « Chaque question est notée de 0 à 4, la note est la moyenne des deux questions arrondie au demi-point. La question 1, préparée à l'avance sur une PR communiquée 24 h avant, porte l'essentiel de la note ; la question 2 vérifie la compréhension sur le vif ».
 
-| Niveau | Ce que l'évaluateur entend |
+| Niveau | Ce que l'enseignant entend |
 |---|---|
 | **0** | ne reconnaît pas la PR ou le projet, aucune explication. |
 | **1** | lit à voix haute sans dire pourquoi. |
@@ -559,9 +548,9 @@ Le programme ne dit pas qui parle : décidez-le à la répétition (chapitre 2, 
 
 Règle « Responsabilité » du programme : **« L'étudiant qui ouvre ou approuve une PR en est responsable et doit pouvoir l'expliquer. « C'est l'agent qui l'a écrit » n'est pas une réponse recevable. »**
 
-**Étape 4 · Le passage.** Les questions individuelles suivent la partie commune de votre équipe (fiche Y, étape 6). L'évaluateur a devant lui une fiche de notation pré-remplie à votre nom, avec votre PR tirée au sort et l'échelle de 0 à 4 pour les deux questions. Ordre de grandeur : quatre minutes par étudiant.
+**Étape 4 · Le passage.** Les questions individuelles suivent la partie commune de votre équipe (fiche Y, étape 6). L'enseignant, seul évaluateur, a devant lui une fiche de notation pré-remplie à votre nom, avec votre PR tirée au sort et l'échelle de 0 à 4 pour les deux questions. Ordre de grandeur : trois minutes par étudiant pour les deux questions (question 1 brève, question 2 très brève).
 
-**Étape 5 · La fiche d'évaluation par les pairs** (**Indispensable** : 1 point de la note). Programme, mot pour mot : **« chaque étudiant note les autres membres de son équipe de 0 à 2 sur trois questions fixes. Pour chaque étudiant noté, on calcule la somme des trois notes donnée par chaque évaluateur (0 à 6), puis la médiane de ces sommes sur les évaluateurs, convertie ainsi : 0 point si la médiane vaut 0 à 2, 0,5 point si elle vaut 3 à 4, 1 point si elle vaut 5 à 6. Les fiches restent confidentielles. »** Dans cette phrase, « évaluateur » désigne le coéquipier qui note, pas le jury.
+**Étape 5 · La fiche d'évaluation par les pairs** (**Indispensable** : 1 point de la note). Programme, mot pour mot : **« chaque étudiant note les autres membres de son équipe de 0 à 2 sur trois questions fixes. Pour chaque étudiant noté, on calcule la somme des trois notes donnée par chaque évaluateur (0 à 6), puis la médiane de ces sommes sur les évaluateurs, convertie ainsi : 0 point si la médiane vaut 0 à 2, 0,5 point si elle vaut 3 à 4, 1 point si elle vaut 5 à 6. Les fiches restent confidentielles. »** Dans cette phrase, « évaluateur » désigne le coéquipier qui note, pas l'enseignant.
 
 | Médiane des sommes | Point obtenu |
 |---|---|
@@ -571,7 +560,7 @@ Règle « Responsabilité » du programme : **« L'étudiant qui ouvre ou approu
 
 Les trois questions figurent sur la fiche distribuée en séance. Vous notez chacun des autres membres de votre équipe, pas vous-même. Proposition des supports : remplissez la vôtre seul. Le programme place ces fiches à la fois pendant les passages et au bloc 6 : l'enseignant dit quand les remplir (chapitre 3, section 12).
 
-**Étape 6 · Retour d'expérience et clôture** (blocs 7 et 8). En plénière, si le temps le permet : « Ce qui a marché, ce qui a échoué, ce que je ferais autrement ; l'IA, les limites, la conformité ; ce que je dirais à une équipe de développement. » Puis les consignes pour la suite : questionnaire de fin de formation en ligne, notes.
+**Étape 6 · Retour d'expérience écrit et clôture** (blocs 7 et 8). Pas de plénière : un questionnaire en ligne, rempli en fin de séance s'il reste du temps, sinon après : « Ce qui a marché, ce qui a échoué, ce que je ferais autrement ; l'IA, les limites, la conformité ; ce que je dirais à une équipe de développement. » Puis les consignes pour la suite : questionnaire de fin de formation en ligne, notes.
 
 **Le livrable de fin de séance** (programme, mot pour mot). Tag `v1.0`, dossier de rendu à jour (section 7) et soutenance passée. « Section 7 » est celle du programme : la liste du dossier de rendu est dans la fiche W, étape 2.
 
@@ -584,11 +573,11 @@ Les trois questions figurent sur la fiche distribuée en séance. Vous notez cha
 
 Les preuves de chaque ligne : fiches W (étapes 2, 3, 5 et 6) et X (étapes 3 et 4) pour la première, fiche W (étape 2) pour la deuxième et la quatrième, cette fiche pour la troisième. Le test à froid suit le `README` de votre dépôt, `build_runner` compris (fiche W, étape 3).
 
-**Ne se sacrifient jamais** (programme) : le gel et le tag `v1.0`, les soutenances avec leurs deux questions individuelles, les fiches d'évaluation par les pairs. Si les passages d'une salle prennent du retard, on raccourcit la plénière avant de toucher à un passage.
+**Ne se sacrifient jamais** (programme) : le gel et le tag `v1.0`, les soutenances avec leurs deux questions individuelles, les fiches d'évaluation par les pairs. Si les passages prennent du retard, on renvoie le questionnaire après la séance et on réduit la clôture avant de toucher à un passage.
 
 **Peut glisser** (programme) : le retour d'expérience collectif (par questionnaire en ligne) et la communication des notes après la séance.
 
-**Si la séance prend du retard**, l'ordre de coupe du programme est : la plénière (remplacée par le questionnaire en ligne) ; le bloc des retouches (réduit aux seuls correctifs bloquants) ; la répétition technique (faite avant la séance ou pendant le passage de l'équipe précédente) ; la clôture (réduite aux consignes essentielles).
+**Si la séance prend du retard**, l'ordre de coupe du programme est : le retour d'expérience écrit (rempli après la séance) ; le bloc des retouches (réduit aux seuls correctifs bloquants) ; la répétition technique (faite avant la séance ou pendant le passage de l'équipe précédente) ; la clôture (réduite aux consignes essentielles).
 
 **L'absent** (programme) : « l'équipe passe normalement ; l'étudiant absent le jour de la soutenance est interrogé dans les 15 jours avec la même trame. »
 
@@ -604,18 +593,17 @@ Les preuves de chaque ligne : fiches W (étapes 2, 3, 5 et 6) et X (étapes 3 et
 | On vous demande « que se passe-t-il si je supprime cette ligne ? » | C'est le niveau 3 de l'échelle | Répondre par ce qui s'observerait : le test qui rougirait, l'écran qui changerait. Dire ce que vous ne savez pas plutôt que l'inventer |
 | Vous êtes absent le jour de la séance | | Votre équipe passe ; vous êtes interrogé dans les 15 jours, avec la même trame |
 
-*Explications : chapitre 3, sections 2 à 4 (les deux questions, la PR tirée au sort, la préparer), 5 et 6 (l'échelle, la question 2), 7 (les règles d'usage de l'IA), 9 (contribution vérifiée, évaluation par les pairs), 11 (absent, format dégradé) et 12 (après les passages) ; definition of done : chapitre 1, section 11 ; chapitre 2, section 12 ; chapitre 3, section 13.*
+*Explications : chapitre 3, sections 2 à 4 (les deux questions, la PR tirée au sort, la préparer), 5 et 6 (l'échelle, la question 2), 7 (les règles d'usage de l'IA), 9 (contribution vérifiée, évaluation par les pairs), 11 (absent, un seul évaluateur) et 12 (après les passages) ; definition of done : chapitre 1, section 11 ; chapitre 2, section 12 ; chapitre 3, section 13.*
 
 ---
 
 ## Glossaire
 
-- **Candidat à la version finale** (*release candidate*, `-rc`) : version que l'on pense pouvoir livrer telle quelle, déposée pour être vérifiée avant la version finale ; ici, le tag `v1.0-rc`, que les évaluateurs lisent la veille de la séance.
+- **Candidat à la version finale** (*release candidate*, `-rc`) : version que l'on pense pouvoir livrer telle quelle, déposée pour être vérifiée avant la version finale ; ici, le tag `v1.0-rc`, que l'enseignant lit la veille de la séance.
 - **Correctif bloquant** : correction sans laquelle la version ne peut pas être livrée ou montrée. Le programme n'en donne pas de définition ; celle-ci est une proposition (chapitre 1, section 8.2). Avec la documentation, la mise à jour de la fiche de conformité et la finition, c'est tout ce que le bloc 2 autorise en séance avant `v1.0`. Entre `v1.0-rc` et le début de la séance, le programme ne dit pas ce qui est permis (chapitre 1, section 2).
 - **Dossier de rendu** : les pièces que l'équipe livre avec le tag : dépôt à jour, `README`, `CLAUDE.md`, `docs/ARCHITECTURE.md`, fiche de conformité avec la réponse du RSSI, `JOURNAL.md`, PR avec leurs sections de suivi.
 - **`erreur-agent`** : étiquette GitHub posée sur une PR qui documente une erreur de l'agent repérée par l'équipe ; elle sert à retrouver ces cas (chapitre 3 de la séance 2, section 9.3).
 - **Fiche d'évaluation par les pairs** : fiche confidentielle sur laquelle chaque étudiant note les autres membres de son équipe ; elle compte pour 1 point.
-- **Format dégradé** : format à une salle et un seul évaluateur, à budget réduit, quand le second évaluateur est absent ; il est signalé aux étudiants.
 - **Gel du code** : moment de la séance 5 où le tag `v1.0` est posé ; « à partir de là, on ne pousse plus ». À distinguer du gel des fonctionnalités, au plus tard une semaine avant la séance, après lequel on ne fait plus que des correctifs, de la documentation et la préparation de la démonstration.
 - **HEAD détachée** : état d'un dépôt local placé sur un commit précis (par exemple un tag) et non sur une branche. Normal pour relire, à éviter pour travailler.
 - **Médiane** : valeur du milieu d'une série de nombres rangés par ordre croissant.
@@ -652,12 +640,11 @@ Les autres termes (tag, PR, commit de fusion, contrôle exigé, CI, harnais, gri
 - **Entre `v1.0-rc` et la séance** : le programme ne dit pas ce qui est permis ; appliquer déjà la règle du bloc 2 est une proposition.
 - **« `v1.0` au début de S5 » et « avant le premier passage »** : les fiches lisent ces deux formules comme compatibles (gel en début de séance, après les retouches, avant les passages), sans horaire.
 - **La CI rouge à l'heure du gel** : le programme ne dit pas quoi faire ; la fiche X renvoie à l'enseignant.
-- **Variante à 7 équipes** : le programme écrit « 02, 04, 06 puis 01 », ce qui place l'équipe 01 en dernier dans la salle 1, alors que l'ordre de passage est dit « tiré au sort à l'avance ». Les fiches ne tranchent pas.
 - **L'échelle de 0 à 4 suppose une lecture ligne à ligne** (« lit à voix haute », « si je supprime cette ligne »), alors que les étudiants ne sont pas développeurs. Elle est citée mot pour mot ; la préparation proposée passe par les preuves.
 - **Fiches d'évaluation par les pairs.** Le programme parle de « trois questions fixes » sans les écrire : elles figurent sur la fiche distribuée en séance. Il place le remplissage à la fois pendant les passages et au bloc 6. Il ne dit pas comment convertir une médiane qui tombe entre deux tranches (2,5 ou 4,5, possible quand un étudiant est noté par un nombre pair de coéquipiers, dans une équipe de 5 ou de 3).
-- **Autres points du programme, détaillés dans les chapitres** : quel tag sert aux critères lus dans le dépôt, et la definition of done quand un étudiant est absent (chapitre 1) ; le format dégradé pour une équipe de 5, le rôle du second évaluateur, la phrase « sans plan B live », la place du RSSI dans le jury (chapitre 2) ; une PR à l'oral et trois PR pour la contribution vérifiée, la « moyenne des deux questions », les fichiers « générés » du seuil de 20 lignes, l'échelle appliquée à la question 2, les sujets de la question 2, moins de trois PR, le plafonnement, le bonus, le caractère nominatif de la fiche des pairs (chapitre 3).
-- **Soutenance** : rien du déroulement réel n'a été observé ; aucun enregistrement de démonstration n'a été essayé, et aucun outil n'est recommandé pour le faire.
-- **Textes proposés, à valider par l'enseignant** : un seul membre pose le tag, un autre vérifie ; le test à froid confié au gardien de la démonstration, et fait par un membre qui n'a pas écrit le `README` ; le sort de ce qui n'est pas fini au gel des fonctionnalités (colonne « abandonné ») ; la règle du bloc 2 appliquée dès `v1.0-rc` ; les preuves écrites en face de chaque pièce du dossier de rendu ; répéter avant de taguer, et la liste de ce que la répétition doit apprendre ; les quatre vérifications avant de taguer ; la définition de « bloquant » et le test d'abord pour un correctif ; « ni commit, ni fusion, ni tag » après `v1.0` ; la colonne « Ce que vous montrez » de la partie commune ; les onglets ouverts avant de passer ; la composition du jeu de données de secours, « repartir de zéro » et l'enregistrement gardé hors du dépôt ; la colonne « Ce que vous devez voir » de la répétition technique, et « la répétition ne corrige plus rien » ; les quatre relais en cas de panne ; la façon de se préparer à la question 2 ; les six gestes de préparation de la PR et les quatre phrases ; « remplissez la vôtre seul » ; les gestes des tableaux « Si ça coince » qui ne citent pas le programme.
+- **Autres points du programme, détaillés dans les chapitres** : quel tag sert aux critères lus dans le dépôt, et la definition of done quand un étudiant est absent (chapitre 1) ; le temps qui reste pour la partie commune d'une équipe de 5, la phrase « sans plan B live » (chapitre 2) ; une PR à l'oral et trois PR pour la contribution vérifiée, la « moyenne des deux questions », les fichiers « générés » du seuil de 20 lignes, l'échelle appliquée à la question 2, les sujets de la question 2, moins de trois PR, le plafonnement, le bonus, le caractère nominatif de la fiche des pairs (chapitre 3).
+- **Soutenance** : rien du déroulement réel n'a été observé, et aucune soutenance n'a été jouée dans le format retenu (une salle, un seul évaluateur) ; le temps qui reste pour la partie commune et la transition (de l'ordre de 8 minutes pour une équipe de 4, 5 pour une équipe de 5) est un calcul des fiches ; aucun enregistrement de démonstration n'a été essayé, et aucun outil n'est recommandé pour le faire.
+- **Textes proposés, à valider par l'enseignant** : un seul membre pose le tag, un autre vérifie ; le test à froid confié au gardien de la démonstration, et fait par un membre qui n'a pas écrit le `README` ; le sort de ce qui n'est pas fini au gel des fonctionnalités (colonne « abandonné ») ; la règle du bloc 2 appliquée dès `v1.0-rc` ; les preuves écrites en face de chaque pièce du dossier de rendu ; répéter avant de taguer, et la liste de ce que la répétition doit apprendre ; les quatre vérifications avant de taguer ; la définition de « bloquant » et le test d'abord pour un correctif ; « ni commit, ni fusion, ni tag » après `v1.0` ; la colonne « Ce que vous montrez » de la partie commune ; les onglets ouverts avant de passer ; la composition du jeu de données de secours, « repartir de zéro » et l'enregistrement gardé hors du dépôt ; la colonne « Ce que vous devez voir » de la répétition technique, et « la répétition ne corrige plus rien » ; les quatre relais en cas de panne ; la façon de se préparer à la question 2 ; les six gestes de préparation de la PR et les quatre phrases ; « remplissez la vôtre seul » ; le calcul du temps qui reste pour la partie commune et la transition (fiche Y, étape 2) ; les gestes des tableaux « Si ça coince » qui ne citent pas le programme.
 
 ---
 

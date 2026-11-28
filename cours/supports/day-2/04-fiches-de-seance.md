@@ -56,7 +56,7 @@ Une ligne en rouge que vous ne savez pas corriger : signalez-la en réponse au c
 
 ## Fiche A · Git guidé en cinq étapes
 
-**En binômes, chacun sur son poste, dans son propre dépôt d'essai. Fini quand :** au moins 3 commits, 1 PR fusionnée, 1 conflit résolu, montrés à un encadrant avec `git log --oneline --graph`.
+**En binômes, chacun sur son poste, dans son propre dépôt d'essai. Fini quand :** au moins 3 commits, 1 PR fusionnée, 1 conflit résolu, montrés à l'enseignant avec `git log --oneline --graph`.
 
 **Étape 0 · Vérifier son identité** (réglée en séance 1 ; les dépôts sont publics, d'où l'adresse anonyme de GitHub).
 

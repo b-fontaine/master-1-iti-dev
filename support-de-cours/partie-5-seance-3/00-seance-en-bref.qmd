@@ -1,4 +1,4 @@
-<!-- source: cours/presentations/day-3/index.html, cours/presentations/day-3/notes.html · synchro: 2026-11-27 -->
+<!-- source: cours/presentations/day-3/index.html, cours/presentations/day-3/notes.html · synchro: 2026-11-28 -->
 
 # La séance 3 en bref {#sec-s3}
 

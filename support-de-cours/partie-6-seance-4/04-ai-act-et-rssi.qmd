@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-4/04-ai-act-et-rssi.md · synchro: 2026-11-27 -->
+<!-- source: cours/supports/day-4/04-ai-act-et-rssi.md · synchro: 2026-11-28 -->
 
 # L'AI Act et le passage devant le RSSI {#sec-ai-act-rssi}
 
@@ -30,8 +30,8 @@ En séance 3, vous avez répondu à la question « quelles données mon outil tr
 Le module fixe le réflexe professionnel que la séance met en scène : **aucun applicatif ne touche des données réelles ni n'est mis à disposition d'autres personnes sans validation du RSSI** (et du DPO si des données personnelles sont en jeu) (module de conformité, section [-@sec-conf-pourquoi]). Le passage de la séance 4 en est une répétition à taille réelle : même dossier, mêmes questions, décision possible dans les deux sens.
 
 ```{mermaid}
-%%| fig-width: 6
-flowchart LR
+%%| fig-width: 1.6
+flowchart TD
     A["AI Act en une page<br>bloc 8"] --> B["Atelier : 10 cartes<br>bloc 9"]
     B --> C["Classement provisoire<br>de votre projet<br>rubrique 9"]
     C --> D["Passage devant le RSSI<br>décision provisoire<br>bloc 10"]
@@ -417,7 +417,7 @@ Le module (section [-@sec-conf-validation]) fixe le dossier et les critères. Le
 | Accès par rôle testé | |
 | Limites d'usage écrites | |
 
-Ces deux listes sont la **grille go/no-go** dont se servent les observateurs (section [-@sec-aiact-8-3]) et, à défaut d'intervenant, l'étudiant volontaire qui tient une table.
+Ces deux listes sont la **grille go/no-go** dont se servent les observateurs (section [-@sec-aiact-8-3]) et les deux étudiants volontaires qui tiennent chacun une table.
 
 ### Ce qu'il faut pouvoir montrer, écran par écran {#sec-aiact-7-2}
 
@@ -478,7 +478,7 @@ Préparez les preuves (des écrans, pas des promesses), une trame de quatre minu
 
 ### Le dispositif {#sec-aiact-8-1}
 
-**Trois tables en parallèle**, un RSSI par table : l'enseignant, le RSSI de l'établissement s'il est invité, un second intervenant ou une aide (à confirmer) ; à défaut, un étudiant volontaire muni de la grille go/no-go. Les équipes passent à tour de rôle devant leur table ; le jeu de rôle **est** le passage, ce n'est pas une activité en plus (programme, bloc 10 ; module de conformité, section [-@sec-conf-jeu-role]).
+**Trois tables en parallèle**, un RSSI par table : l'enseignant à l'une, un étudiant volontaire muni de la grille go/no-go à chacune des deux autres (un volontaire ne juge pas sa propre équipe). La décision rendue à une table, quelle qu'elle soit, est provisoire : la réponse écrite est celle de l'enseignant. Les équipes passent à tour de rôle devant leur table ; le jeu de rôle **est** le passage, ce n'est pas une activité en plus (programme, bloc 10 ; module de conformité, section [-@sec-conf-jeu-role]).
 
 Dans la formation, la répartition des équipes entre les tables est la suivante (chapitre [-@sec-programme-detaille]) :
 
@@ -645,7 +645,7 @@ Et, pour vous-même, ce que ce chapitre ajoute : la décision provisoire et ses 
 - **Choix de la case pour le thème C.** Le module ne dit pas quelle case cocher quand l'outil est traité « comme si » haut risque. La consigne de la section [-@sec-aiact-5-2] (cocher « hors champ » si l'étape 0 répond « non », avec la mention de la démarche de précaution) découle de ce que la démarche n'est « pas une qualification juridique » ; elle est à faire confirmer par votre enseignant ou votre référent.
 - **Rubrique 8 : discutée ou remplie en séance 4 ?** Le programme se contredit : le bloc 9 et le livrable de la séance 4 disent que la rubrique 8 est « discutée devant le RSSI », alors que sa section [-@sec-pd-conformite] annonce « classement et rôle provisoires (rubriques 8 et 9) ». Ce chapitre suit le bloc 9 et le livrable : la rubrique 8 est rédigée pour la v1.
 - **Exemples rédigés pour ce chapitre** : la fiche du thème B (rubrique 9 en version 0.2, rubrique 8 pour la v1), le squelette de la rubrique 8 et les trois réponses du thème C (section [-@sec-aiact-5-2]), la trame de quatre minutes, la répartition de la parole, les réponses préparées aux trois questions pour le thème B, la façon de transformer des conditions en issues et les exemples de conditions de la section [-@sec-aiact-9-2]. Ils sont à faire valider par votre enseignant ou votre référent.
-- **Organisation de la séance.** Les intervenants des tables 2 et 3 sont « à confirmer » dans le programme ; l'ordre de passage dans une table n'est fixé par aucun document, d'où la consigne de la section [-@sec-aiact-3-5] pour l'équipe qui passe la première (rubrique 9 rédigée pendant la mise en commun de l'atelier, ou présentée à l'oral et rédigée après le passage) ; la présence d'un DPO au passage du thème C n'est pas organisée par le programme.
+- **Organisation de la séance.** Le programme fait désigner en début de séance les deux étudiants volontaires qui tiennent deux des trois tables, sans dire comment ils sont choisis, ni si un volontaire passe aussi avec son équipe ; l'ordre de passage dans une table n'est fixé par aucun document, d'où la consigne de la section [-@sec-aiact-3-5] pour l'équipe qui passe la première (rubrique 9 rédigée pendant la mise en commun de l'atelier, ou présentée à l'oral et rédigée après le passage) ; la présence d'un DPO au passage du thème C n'est pas organisée par le programme.
 - **Calendrier** (séance 4, dépôt de la fiche v1, vacances, séance 5 et soutenance) : repris du programme, susceptible d'ajustement par l'enseignant.
 
 :::

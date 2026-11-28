@@ -1,4 +1,4 @@
-<!-- source: cours/projets/themes.md, cours/presentations/themes/ · synchro: 2026-11-27 -->
+<!-- source: cours/projets/themes.md, cours/presentations/themes/ · synchro: 2026-11-28 -->
 
 # Les trois thèmes du projet {#sec-themes}
 
@@ -241,7 +241,7 @@ Dans ce thème, vous n'écrivez pas un outil *à propos* d'un monde imaginaire :
   - S4 : le gardien produit écrit les 7 cas d'acceptation avant le code de l'agent sur les sous-règles restantes. Peut glisser dans le sprint : publication GitHub Pages si elle n'est pas terminée, release v0.1, contrôles d'accès fins au-delà du minimum.
   - Sprint final : import CSV des passeurs, registre, tableau de bord, export, `docs/monde.md` et lexique, cas d'acceptation non encore verts à la fin de S4, README testé à froid, bonus éventuel.
 - **Livrable minimum viable** : inscription d'un passeur, jugement d'une traversée avec les règles 1 à 6, fiche avec historique, contrôle d'accès, CI verte, import CSV des passeurs, une page `docs/monde.md`, fiche de conformité déposée et soumise au RSSI. Sans le registre filtrable, l'export ni les vues 3 et 4.
-- **Effet « wow » pour la soutenance** : l'équipe présente son comptoir en une minute (son nom, ses routes, ce qui rôde dans sa brume), puis le jury **lit la lune** : il tire un jeton numéroté de 1 à 20 (ou lance un dé à vingt faces) et dicte l'éclat ; l'équipe le saisit, la fiche du passeur change en direct (souffle, renom, changement de rang). Le jury demande ensuite de rejuger la même nuit et obtient le même résultat, grâce à une règle sans aléa interne. Deux équipes, deux mondes, la même Coutume.
+- **Effet « wow » pour la soutenance** : l'équipe présente son comptoir en une minute (son nom, ses routes, ce qui rôde dans sa brume), puis l'enseignant **lit la lune** : il tire un jeton numéroté de 1 à 20 (ou lance un dé à vingt faces) et dicte l'éclat ; l'équipe le saisit, la fiche du passeur change en direct (souffle, renom, changement de rang). Le jury demande ensuite de rejuger la même nuit et obtient le même résultat, grâce à une règle sans aléa interne. Deux équipes, deux mondes, la même Coutume.
 
 ## Thème B · Ligne 4 : le TRS de l'atelier de câblage {#sec-theme-b}
 
@@ -339,7 +339,7 @@ Dans ce thème, vous n'écrivez pas un outil *à propos* d'un monde imaginaire :
   - S4 : le gardien produit écrit les 8 cas d'acceptation avant le code de l'agent sur les sous-règles restantes. Peut glisser dans le sprint : publication GitHub Pages si elle n'est pas terminée, release v0.1, export CSV.
   - Sprint final : CRUD postes, quarts, OF, déclarations et arrêts, import CSV des déclarations, quatre vues, cas d'acceptation non encore verts à la fin de S4, README testé à froid, bonus éventuel.
 - **Livrable minimum viable** : quart, déclaration, arrêts, TRS avec les règles 1 à 6 sur le cas nominal et les cas dégénérés, vue 1, CI verte, fiche de conformité déposée et soumise au RSSI. L'import CSV des déclarations fait partie du socle obligatoire ; sans Pareto et sans test du changement d'heure si l'équipe est en retard (mais le cas 8 reste écrit).
-- **Effet « wow » pour la soutenance** : l'équipe importe le CSV de déclarations d'un quart de nuit chaotique, saisit ses arrêts, affiche le TRS et son Pareto, puis le jury modifie une durée d'arrêt : l'OEE et la répartition des pertes changent aussitôt. Le cas du 24 au 25 octobre montre qu'une nuit peut durer 9 heures.
+- **Effet « wow » pour la soutenance** : l'équipe importe le CSV de déclarations d'un quart de nuit chaotique, saisit ses arrêts, affiche le TRS et son Pareto, puis l'enseignant modifie une durée d'arrêt : l'OEE et la répartition des pertes changent aussitôt. Le cas du 24 au 25 octobre montre qu'une nuit peut durer 9 heures.
 - **Mini-glossaire** :
   - **OF** (ordre de fabrication) : instruction de produire une quantité d'un produit sur un poste.
   - **Gamme** : liste ordonnée des opérations d'un produit avec leurs temps standards, dont le temps de cycle idéal.
@@ -462,4 +462,4 @@ Tous les étudiants sont des pseudonymes (`etu_001`, `etu_002`...), tous les suj
   - S4 : le gardien produit écrit les 7 cas d'acceptation avant le code de l'agent sur les sous-règles restantes ; contrôle du téléversement ; analyse de l'art. 22. Peut glisser dans le sprint : publication GitHub Pages si elle n'est pas terminée, release v0.1.
   - Sprint final : CRUD sujets et étudiants, import CSV des étudiants et de leurs vœux, quatre vues, cas d'acceptation non encore verts à la fin de S4, explications par étudiant, README testé à froid, bonus éventuel.
 - **Livrable minimum viable** : création des sujets, import des étudiants et de leurs vœux, répartition avec les règles 1 à 5, affichage des affectations et des motifs, explication par étudiant, rôles de base, statut `brouillon` / `publie`, CI verte, fiche de conformité déposée et soumise au RSSI. Sans statut de sujet, sans vue de satisfaction ni export.
-- **Effet « wow » pour la soutenance** : l'équipe répartit 80 étudiants en quelques secondes, puis le jury change le rang de deux étudiants : le résultat change et l'outil explique pourquoi chacun a obtenu son sujet. L'écran des sujets `sous_effectif` montre ce qu'il resterait à arbitrer.
+- **Effet « wow » pour la soutenance** : l'équipe répartit 80 étudiants en quelques secondes, puis l'enseignant change le rang de deux étudiants : le résultat change et l'outil explique pourquoi chacun a obtenu son sujet. L'écran des sujets `sous_effectif` montre ce qu'il resterait à arbitrer.

@@ -18,7 +18,7 @@ Ce chapitre accompagne la fin du sprint et les blocs 1, 2 et 3 de la séance : l
 
 ## 1. Pourquoi ce chapitre
 
-Le programme pose le principe du rendu en deux phrases, citées mot pour mot : « Le **tag `v1.0-rc` et le dossier de rendu sont déposés l'avant-veille de S5 à 18h**, pour que les évaluateurs lisent les dépôts avant la séance. Au début de S5, seuls des correctifs bloquants sont autorisés avant le tag final `v1.0`. » Le premier objectif de la séance dit ce que l'on attend de vous : l'étudiant « gèle un périmètre et livre une version stable (`v1.0`), en assumant ce qui est laissé de côté ».
+Le programme pose le principe du rendu en deux phrases, citées mot pour mot : « Le **tag `v1.0-rc` et le dossier de rendu sont déposés l'avant-veille de S5 à 18h**, pour que l'enseignant lise les dépôts avant la séance. Au début de S5, seuls des correctifs bloquants sont autorisés avant le tag final `v1.0`. » Le premier objectif de la séance dit ce que l'on attend de vous : l'étudiant « gèle un périmètre et livre une version stable (`v1.0`), en assumant ce qui est laissé de côté ».
 
 Les gestes ont déjà été enseignés. On ne les redit pas, on y renvoie :
 
@@ -41,7 +41,7 @@ Ce que ce chapitre ajoute : le calendrier des derniers jours (section 2), la fa�
 
 ## 2. Le calendrier de la fin du sprint
 
-Le programme donne le calendrier du sprint en une phrase (section 5). Sa fin, mot pour mot : « **au plus tard une semaine avant S5**, réponse du RSSI et **gel des fonctionnalités au soir** (ensuite : correctifs, documentation, préparation de la démonstration) ; **l'avant-veille de S5 à 18h**, tag `v1.0-rc` et dossier de rendu ; **la veille de S5**, lecture des dépôts par les évaluateurs et communication des PR tirées au sort avant 9h. »
+Le programme donne le calendrier du sprint en une phrase (section 5). Sa fin, mot pour mot : « **au plus tard une semaine avant S5**, réponse du RSSI et **gel des fonctionnalités au soir** (ensuite : correctifs, documentation, préparation de la démonstration) ; **l'avant-veille de S5 à 18h**, tag `v1.0-rc` et dossier de rendu ; **la veille de S5**, lecture des dépôts par l'enseignant et communication des PR tirées au sort avant 9h. »
 
 La séance 5 a lieu le vendredi 29 janvier 2027 après-midi (de 13h45 à 17h45). Les trois échéances qui la précèdent se déduisent de cette date :
 
@@ -49,11 +49,11 @@ La séance 5 a lieu le vendredi 29 janvier 2027 après-midi (de 13h45 à 17h45).
 |---|---|---|
 | Au plus tard une semaine avant la séance 5, soit le **vendredi 22 janvier 2027** | Réponse du RSSI ; **gel des fonctionnalités au soir** | « correctifs, documentation, préparation de la démonstration » |
 | L'avant-veille de la séance 5 à 18h, soit le **mercredi 27 janvier 2027 à 18h** | Tag `v1.0-rc` et dossier de rendu déposés | Voir la remarque sous le tableau |
-| La veille de la séance 5 avant 9h, soit le **jeudi 28 janvier 2027 avant 9h** | PR tirées au sort communiquées aux étudiants ; ce jour-là, lecture des dépôts par les évaluateurs | Préparer sa PR (chapitre 3, sections 3 et 4) |
+| La veille de la séance 5 avant 9h, soit le **jeudi 28 janvier 2027 avant 9h** | PR tirées au sort communiquées aux étudiants ; ce jour-là, lecture des dépôts par l'enseignant | Préparer sa PR (chapitre 3, sections 3 et 4) |
 | **Vendredi 29 janvier 2027**, début de séance | Briefing (bloc 1), retouches bloquantes (bloc 2) | Correctifs bloquants, documentation, mise à jour de la fiche, finition ; aucune nouvelle fonctionnalité |
 | Vendredi 29 janvier 2027, avant le premier passage | Gel du code, tag `v1.0` (bloc 3) | Rien : « à partir de là, on ne pousse plus » |
 
-**Entre `v1.0-rc` et le début de la séance**, le programme ne dit pas ce qui est permis ; proposition des supports : appliquer déjà la règle du bloc 2. Les évaluateurs lisent votre dépôt le jeudi : ce que vous fusionnez après le tag, ils ne l'ont peut-être pas lu.
+**Entre `v1.0-rc` et le début de la séance**, le programme ne dit pas ce qui est permis ; proposition des supports : appliquer déjà la règle du bloc 2. L'enseignant lit votre dépôt le jeudi : ce que vous fusionnez après le tag, il ne l'a peut-être pas lu.
 
 Avant la séance, le programme demande aussi une **répétition de la démonstration** : « une fois, en équipe, avec chronomètre » (chapitre 2, section 10). Il ne donne pas d'horaire aux blocs de la séance : ce sont des blocs pondérés, pas un minutage. Les blocs 1 et 2 sont **Importants**, le bloc 3 est **Indispensable**.
 
@@ -292,13 +292,13 @@ Deux autres endroits où le voir. **Sur GitHub**, la page du dépôt liste les t
 
 Le tag que vous posez est un tag « léger », comme `s2-fin` et `v0.1` : un simple nom posé sur un commit. Il ne porte pas de date propre. Quand on demande à git la date d'un tag, il répond celle du **commit tagué**. Essai : `git show --no-patch --format='%h %ad %s' --date=iso v1.0-rc` répond `b53f271 2026-11-27 16:01:08 +0100 Dépôt d'équipe créé depuis le modèle`, soit la date du commit, pas celle du moment où `git tag` a été tapé. Le programme fixe l'échéance de 18h mais ne dit pas comment l'heure de dépôt est constatée (voir « Points non vérifiés »). Conséquence pratique, proposition : ne jouez pas avec la limite, posez le tag avec de la marge.
 
-> **À retenir.** `git pull`, `git status`, taguer, `git fetch` et deux lignes identiques, pousser, puis `git ls-remote`. Le tag n'existe pour les évaluateurs que s'il apparaît dans cette dernière réponse.
+> **À retenir.** `git pull`, `git status`, taguer, `git fetch` et deux lignes identiques, pousser, puis `git ls-remote`. Le tag n'existe pour l'enseignant que s'il apparaît dans cette dernière réponse.
 
 ---
 
 ## 6. Vérifier le rendu comme le fera un évaluateur
 
-Le programme dit pourquoi le tag est déposé deux jours avant : « pour que les évaluateurs lisent les dépôts avant la séance ». L'évaluateur n'a ni votre poste, ni vos branches locales, ni vos explications. Il a trois choses : le tag, la page GitHub du dépôt (PR, issues, coche du commit), l'adresse publiée. Mettez-vous à sa place, juste après avoir poussé le tag.
+Le programme dit pourquoi le tag est déposé deux jours avant : « pour que l'enseignant lise les dépôts avant la séance ». L'enseignant n'a ni votre poste, ni vos branches locales, ni vos explications. Il a trois choses : le tag, la page GitHub du dépôt (PR, issues, coche du commit), l'adresse publiée. Mettez-vous à sa place, juste après avoir poussé le tag.
 
 ### 6.1 Cloner le tag, à froid
 
@@ -347,12 +347,12 @@ Le site publié suit `main`, pas les tags : il montre le dernier commit de `main
 
 La séance s'ouvre par un briefing, de poids **Important**. Le programme, mot pour mot :
 
-- *Contenu.* « Affectation aux salles (salle 1 : équipes 01, 03, 05, 07 ; salle 2 : 02, 04, 06, 08), ordre de passage, format, critères. »
-- *Intention.* « Que chacun sache où il passe, dans quel ordre et selon quels critères. »
+- *Contenu.* « Ordre de passage, format, critères. »
+- *Intention.* « Que chacun sache dans quel ordre il passe et selon quels critères. »
 
-Pour `equipe_04` : salle 2. L'ordre de passage est « tiré au sort à l'avance » (programme, matériel de la séance) ; vous l'apprenez au briefing. Avec 7 équipes, l'affectation aux salles change (chapitre 2, section 2). Ce que votre équipe doit avoir noté en sortant du briefing (proposition) : sa salle, son rang de passage dans cette salle, et le moment prévu pour le gel. Le rang compte pour la suite : l'équipe qui passe en premier a le moins de temps entre le gel et son passage. Le format de la soutenance est détaillé au chapitre 2 (section 2), les critères au chapitre 3 (section 8).
+Toutes les équipes passent dans la même salle, l'une après l'autre, devant l'enseignant, seul évaluateur (chapitre 2, section 2). L'ordre de passage est « tiré au sort à l'avance et affiché dans la salle » (programme, format de la soutenance) ; le briefing le rappelle. Ce que votre équipe doit avoir noté en sortant du briefing (proposition) : son rang de passage et le moment prévu pour le gel. Le rang compte pour la suite : l'équipe qui passe en premier a le moins de temps entre le gel et son passage. Le format de la soutenance est détaillé au chapitre 2 (section 2), les critères au chapitre 3 (section 8).
 
-> **À retenir.** Après le briefing, chacun sait où il passe, dans quel ordre et selon quels critères. Sinon, on demande.
+> **À retenir.** Après le briefing, chacun sait dans quel ordre il passe et selon quels critères. Sinon, on demande.
 
 ---
 
@@ -476,7 +476,7 @@ Le même identifiant sur les deux lignes : sur le dépôt distant, `v1.0` désig
 
 ### 9.4 Ce qui sépare `v1.0-rc` de `v1.0`
 
-Les évaluateurs ont lu `v1.0-rc`. La question qu'ils peuvent poser : « qu'avez-vous changé depuis ? » Trois commandes y répondent, du plus court au plus détaillé :
+L'enseignant a lu `v1.0-rc`. La question qu'il peut poser : « qu'avez-vous changé depuis ? » Trois commandes y répondent, du plus court au plus détaillé :
 
 ```bash
 git diff --name-only v1.0-rc v1.0
@@ -612,7 +612,7 @@ Les autres termes (tag, release, contrôle exigé, plan B de publication, PR, co
 
 ## Pour aller plus loin
 
-- Chapitre 2 de cette séance : section 2 (salles, ordre de passage, format), sections 4 et 5 (la démonstration, où elle tourne, le plan de secours), section 6 (« sous le capot » : la décision sur les données, l'historique git), section 7 (compiler les mesures des PR), section 8 (présenter la fiche et l'avis du RSSI), section 9 (le regard critique, dont ce qui a été laissé de côté), section 10 (la répétition).
+- Chapitre 2 de cette séance : section 2 (une salle, ordre de passage, format), sections 4 et 5 (la démonstration, où elle tourne, le plan de secours), section 6 (« sous le capot » : la décision sur les données, l'historique git), section 7 (compiler les mesures des PR), section 8 (présenter la fiche et l'avis du RSSI), section 9 (le regard critique, dont ce qui a été laissé de côté), section 10 (la répétition).
 - Chapitre 3 de cette séance : sections 3 et 4 (la PR tirée au sort et sa préparation), section 7 (les cinq règles d'usage de l'IA), section 8 (la grille sur 20, critère par critère).
 - Chapitre 4 de cette séance : fiche W (avant la séance : `v1.0-rc` et dossier de rendu) et fiche X (retouches bloquantes, gel et `v1.0`).
 - Chapitre 8 de la séance 1, section 8 : versions, tags et releases. Chapitre 3 de la séance 2 : sections 9 (la PR et son suivi), 10 (la protection de `main`), 11 (`JOURNAL.md` et le tag `s2-fin`) ; chapitre 4 de la séance 2, fiche C (étape 4), si votre `main` local s'est écarté du dépôt distant.
@@ -627,8 +627,8 @@ Les autres termes (tag, release, contrôle exigé, plan B de publication, PR, co
 - **La fusion du correctif est simulée.** Le commit `Merge pull request #42 from equipe/correctif/titre-ecran` a été créé en local pour imiter une fusion de PR ; le numéro et le nom sont fictifs. Les séquences de gel (sections 5.2, 9.2, 9.3 et 10.2) ont été rejouées sur une copie séparée, où ce commit a été poussé sur `main` ; la sortie de `git push -u origin correctif/titre-ecran` vient d'un autre essai.
 - **Les trois dates.** Vendredi 22 janvier 2027, mercredi 27 janvier 2027 à 18h et jeudi 28 janvier 2027 avant 9h sont déduites de la date de la séance (vendredi 29 janvier 2027) et des formules du programme (« une semaine avant », « l'avant-veille », « la veille »). Le programme fait foi ; si la date de la séance change, elles changent avec elle.
 - **L'heure de dépôt de `v1.0-rc`.** Le programme fixe l'échéance (l'avant-veille à 18h) sans dire comment elle est constatée. Un tag léger ne porte pas de date propre : git affiche celle du commit tagué (section 5.3). Ce chapitre n'invente pas de règle ; la question est à poser à l'enseignant.
-- **Entre `v1.0-rc` et le début de la séance.** Le programme dit ce qui est permis après le gel des fonctionnalités et pendant le bloc 2, pas ce qui l'est le jeudi et le vendredi matin, alors que les évaluateurs lisent les dépôts la veille. Il ne dit pas non plus si la description d'une PR peut encore être complétée après `v1.0-rc`. Les deux prudences proposées (sections 2 et 4.7) ne sont pas des règles du programme.
-- **Quel tag sert à l'évaluation du dépôt.** Les évaluateurs lisent `v1.0-rc` la veille, mais le bloc 3 veut « Figer ce qui sera évalué » avec `v1.0` ; la grille dit « CI verte sur le tag », au singulier, la definition of done « sur les deux tags ». Le programme ne dit pas lequel des deux états sert aux critères lus dans le dépôt.
+- **Entre `v1.0-rc` et le début de la séance.** Le programme dit ce qui est permis après le gel des fonctionnalités et pendant le bloc 2, pas ce qui l'est le jeudi et le vendredi matin, alors que l'enseignant lit les dépôts la veille. Il ne dit pas non plus si la description d'une PR peut encore être complétée après `v1.0-rc`. Les deux prudences proposées (sections 2 et 4.7) ne sont pas des règles du programme.
+- **Quel tag sert à l'évaluation du dépôt.** L'enseignant lit `v1.0-rc` la veille, mais le bloc 3 veut « Figer ce qui sera évalué » avec `v1.0` ; la grille dit « CI verte sur le tag », au singulier, la definition of done « sur les deux tags ». Le programme ne dit pas lequel des deux états sert aux critères lus dans le dépôt.
 - **Le test à froid de la definition of done.** Elle cite « (`git clone`, `flutter pub get`, `flutter run -d chrome`) », sans la génération du code. Sans `dart run build_runner build --delete-conflicting-outputs`, `flutter test` ne compile pas sur un clone neuf (vérifié sur le dépôt-modèle) ; la checklist d'audit de la séance 4 et le `README` du dépôt-modèle citent bien la commande. Ce chapitre suit le `README`. L'échec de `flutter run -d chrome` sans génération n'a pas été rejoué.
 - **« Au début de S5 » et « avant le premier passage ».** Le dossier de rendu, la definition of done et le bloc 3 situent `v1.0` par trois formules. Ce chapitre les lit comme compatibles (gel en début de séance, après les retouches, avant les passages) ; le programme ne donne pas d'heure.
 - **Definition of done et étudiant absent.** « Chaque étudiant a répondu à **deux questions individuelles** » ne peut pas être vrai le jour même si un absent est interrogé « dans les 15 jours ».

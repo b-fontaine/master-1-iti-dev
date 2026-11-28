@@ -1,4 +1,4 @@
-<!-- source: README.md, glossaires des chapitres, cours/supports/day-3/01-travailler-a-plusieurs.md, cours/supports/day-3/02-premiere-user-story.md, cours/supports/day-3/03-rgpd-applique-au-projet.md, cours/supports/day-3/04-les-donnees.md, cours/supports/day-3/05-fiches-de-seance.md, cours/supports/day-4/01-test-d-acceptation.md, cours/supports/day-4/02-ci-cd-et-publication.md, cours/supports/day-4/03-securite-et-audit-croise.md, cours/supports/day-4/04-ai-act-et-rssi.md, cours/supports/day-4/05-fiches-de-seance.md, cours/supports/day-5/01-geler-et-livrer.md, cours/supports/day-5/02-la-soutenance-d-equipe.md, cours/supports/day-5/03-l-oral-individuel-et-la-note.md, cours/supports/day-5/04-fiches-de-seance.md · synchro: 2026-11-27 -->
+<!-- source: README.md, glossaires des chapitres, cours/supports/day-3/01-travailler-a-plusieurs.md, cours/supports/day-3/02-premiere-user-story.md, cours/supports/day-3/03-rgpd-applique-au-projet.md, cours/supports/day-3/04-les-donnees.md, cours/supports/day-3/05-fiches-de-seance.md, cours/supports/day-4/01-test-d-acceptation.md, cours/supports/day-4/02-ci-cd-et-publication.md, cours/supports/day-4/03-securite-et-audit-croise.md, cours/supports/day-4/04-ai-act-et-rssi.md, cours/supports/day-4/05-fiches-de-seance.md, cours/supports/day-5/01-geler-et-livrer.md, cours/supports/day-5/02-la-soutenance-d-equipe.md, cours/supports/day-5/03-l-oral-individuel-et-la-note.md, cours/supports/day-5/04-fiches-de-seance.md · synchro: 2026-11-28 -->
 
 # Glossaire {#sec-glossaire}
 
@@ -125,7 +125,7 @@ Brownfield / greenfield
 :   projet existant, avec son code ancien (brownfield, « friche ») ; projet neuf (greenfield, « terrain vierge »). (voir @sec-craft-ia)
 
 Budget indicatif
-:   ordre de grandeur du temps prévu par équipe pour dimensionner les salles et le jury ; ce n'est pas un minutage. (voir @sec-soutenance-equipe)
+:   ordre de grandeur du temps prévu par équipe pour organiser la succession des passages (à la séance 5, de l'ordre de 20 minutes par équipe, transition comprise) ; ce n'est pas un minutage. (voir @sec-soutenance-equipe)
 
 Build
 :   opération qui transforme le code source en livrable exécutable. (voir @sec-ci-cd)
@@ -149,10 +149,10 @@ Cache de prompt
 :   relecture à tarif réduit du début inchangé des requêtes. (voir @sec-outils-agentiques)
 
 Calibrage
-:   courte séance où les évaluateurs appliquent l'échelle aux mêmes exemples de réponses, pour noter de la même façon. (voir @sec-oral-individuel)
+:   relecture, par l'enseignant avant les passages, de l'échelle de compréhension sur ses deux exemples de réponses, pour noter de la même façon du premier au dernier passage. (voir @sec-oral-individuel)
 
 Candidat à la version finale (*release candidate*, `-rc`)
-:   version que l'on pense pouvoir livrer telle quelle, déposée pour être vérifiée avant la version finale ; ici, le tag `v1.0-rc`, que les évaluateurs lisent la veille de la séance 5. (voir @sec-geler-livrer)
+:   version que l'on pense pouvoir livrer telle quelle, déposée pour être vérifiée avant la version finale ; ici, le tag `v1.0-rc`, que l'enseignant lit la veille de la séance 5. (voir @sec-geler-livrer)
 
 CanvasKit
 :   le moteur de rendu de Flutter dans le navigateur ; embarqué grâce à `--no-web-resources-cdn`. (voir @sec-ci-publication)
@@ -445,11 +445,14 @@ Faux positif
 Fiche d'évaluation par les pairs
 :   fiche confidentielle sur laquelle chaque étudiant note les autres membres de son équipe ; elle compte pour 1 point. (voir @sec-fiches)
 
+Fiche d'observation
+:   fiche facultative d'un passage de la soutenance, où l'on note le début et la fin de chaque moment et les écarts ; l'enseignant, seul évaluateur, peut la confier, avec le chronomètre, à un étudiant volontaire d'une équipe qui ne passe pas. (voir @sec-soutenance-equipe)
+
 Fiche de conformité
 :   document de la formation, à 13 rubriques, dans `docs/fiche_conformite.md` ; version pédagogique et allégée d'un registre, pas le registre officiel. (voir @sec-rgpd-projet)
 
 Fiche de notation pré-remplie
-:   feuille de l'évaluateur, une par étudiant : équipe, étudiant, PR tirée au sort, échelle de 0 à 4 pour les deux questions. (voir @sec-oral-individuel)
+:   feuille de l'enseignant, seul évaluateur, une par étudiant : équipe, étudiant, PR tirée au sort, échelle de 0 à 4 pour les deux questions. (voir @sec-oral-individuel)
 
 Fichier `.feature`
 :   scénarios de comportement rédigés en phrases (Soit, Quand, Alors). (voir @sec-demarrer-projet)
@@ -474,9 +477,6 @@ Fonctionnalité (*feature*)
 
 Fork
 :   copie d'un dépôt par un tiers. (voir @sec-ci-cd)
-
-Format dégradé
-:   soutenances dans une seule salle, avec un seul évaluateur, quand le second évaluateur est absent ; même barème, temps réduit ; il est signalé aux étudiants. (voir @sec-soutenance-equipe)
 
 Fournisseur
 :   celui qui développe un système d'IA ou le met sur le marché sous son nom (art. 3). (voir @sec-ai-act-rssi)
@@ -534,9 +534,6 @@ Grille go/no-go
 
 Hallucination
 :   contenu généré faux ou sans fondement, présenté comme plausible. (voir @sec-histoire-ia)
-
-Harmonisation
-:   mise en accord des notes entre les évaluateurs des deux salles, après les passages (second calibrage). (voir @sec-oral-individuel)
 
 Harnais (*harness*)
 :   tout ce qui entoure le modèle dans un agent (outils, règles, contexte, permissions, contrôles). (voir @sec-histoire-ia)
@@ -635,7 +632,7 @@ LLM / SLM
 :   grand modèle de langage / petit modèle de langage. (voir @sec-edge-ai)
 
 Machine de secours
-:   poste disponible dans chaque salle pour remplacer un poste en panne. (voir @sec-soutenance-equipe)
+:   poste disponible dans la salle pour remplacer un poste en panne. (voir @sec-soutenance-equipe)
 
 Maîtrise de l'IA
 :   obligation, pour les fournisseurs et déployeurs, de favoriser la capacité de leurs personnels à utiliser l'IA (art. 4). (voir @sec-ai-act-rssi)
@@ -693,9 +690,6 @@ Null / null safety
 
 Obligations de transparence
 :   obligations de l'art. 50 pour les agents conversationnels et les contenus générés : informer, marquer, signaler. (voir @sec-ai-act-rssi)
-
-Observateur
-:   personne qui, à côté de l'évaluateur, chronomètre le passage et note les écarts. (voir @sec-soutenance-equipe)
 
 Omnibus numérique sur l'IA
 :   texte modificatif de l'AI Act, le règlement (UE) 2026/1744, qui a reporté une partie des obligations de haut risque. (voir @sec-ai-act-rssi)
@@ -807,6 +801,9 @@ Release / tag
 
 Relecture (*review*)
 :   vérification d'une PR par un autre que son auteur, par les preuves (ce qu'elle annonce, son fonctionnement, la liste des fichiers touchés), conclue par un commentaire, une approbation ou une demande de modifications. (voir @sec-git)
+
+Relecture des notes extrêmes
+:   après les passages de la soutenance, l'enseignant relit les notes les plus hautes et les plus basses à partir des fiches de notation pré-remplies. (voir @sec-oral-individuel)
 
 Répétition technique
 :   vérification, dans la salle, de l'affichage, du jeu de données de secours et de l'enregistrement (bloc 4 de la séance 5). (voir @sec-soutenance-equipe)

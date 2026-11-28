@@ -1,4 +1,4 @@
-<!-- source: cours/supports/day-1/09-design-patterns.md · synchro: 2026-11-25 -->
+<!-- source: cours/supports/day-1/09-design-patterns.md · synchro: 2026-11-28 -->
 
 # Design patterns {#sec-design-patterns}
 
@@ -41,6 +41,7 @@ Le dernier élément est le plus oublié : **chaque patron a un coût** (plus de
 | **Comportement** | 11 | Comment des objets collaborent-ils ? | Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor |
 
 ```{mermaid}
+%%| fig-width: 5.6
 mindmap
   root((23 patrons GoF))
     Création : 5
@@ -169,7 +170,8 @@ final perso = PersonnageBuilder()
 ```
 
 ```{mermaid}
-flowchart LR
+%%| fig-width: 1.8
+flowchart TD
     A["PersonnageBuilder"] -->|"nom('Aria')"| B["PersonnageBuilder"]
     B -->|"classe('Mage')"| C["PersonnageBuilder"]
     C -->|"niveau(3)"| D["PersonnageBuilder"]
@@ -332,6 +334,7 @@ ListenableBuilder(
 ```
 
 ```{mermaid}
+%%| fig-width: 5.6
 sequenceDiagram
     participant E as Écran
     participant P as Pv (ChangeNotifier)
@@ -456,15 +459,16 @@ Les autres patrons de comportement du livre (Chain of Responsibility, Interprete
 Les patrons du livre portent sur quelques classes. D'autres, plus récents, organisent **tout un projet**. Le projet du cours est construit en couches : la **présentation** (pages, widgets, BLoC), le **domaine** (entités, cas d'usage, interfaces) et les **données** (accès à l'API, base de données). La règle centrale : **le domaine ne dépend de rien** ; la présentation et les données dépendent de lui.
 
 ```{mermaid}
+%%| fig-width: 5.6
 flowchart LR
     subgraph Presentation
-        PG["Pages et widgets"] --> BL["BLoC"]
-    end
-    subgraph Domaine["Domaine (ne dépend de rien)"]
-        UC["Cas d'usage"] --> PORT["Port : interface Repository"]
+        PG["Pages et<br/>widgets"] --> BL["BLoC"]
     end
     subgraph Donnees["Données"]
-        REPO["Repository (adaptateur)"] --> API["API, base locale"]
+        REPO["Repository<br/>(adaptateur)"] --> API["API, base<br/>locale"]
+    end
+    subgraph Domaine["Domaine (ne dépend de rien)"]
+        UC["Cas<br/>d'usage"] --> PORT["Port :<br/>interface<br/>Repository"]
     end
     BL --> UC
     REPO -. implémente .-> PORT
